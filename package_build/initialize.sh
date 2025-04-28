@@ -29,7 +29,6 @@ do
   ln -sf $BASEDIR/tfx $BASEDIR/package_build/$CONFIG_NAME/
   ln -sf $BASEDIR/MANIFEST.in $BASEDIR/package_build/$CONFIG_NAME/
   ln -sf $BASEDIR/README*.md $BASEDIR/package_build/$CONFIG_NAME/
-  ln -sf $BASEDIR/LICENSE $BASEDIR/package_build/$CONFIG_NAME/
 
   rm -rf $BASEDIR/package_build/$CONFIG_NAME/build
   mkdir $BASEDIR/package_build/$CONFIG_NAME/build
