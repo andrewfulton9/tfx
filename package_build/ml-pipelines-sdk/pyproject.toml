@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "ml-pipelines-sdk"
 dynamic = ["version", "dependencies", "optional-dependencies", "scripts"]
 description = "A dependency-light distribution of the core pipeline authoring functionality of TensorFlow Extended (TFX)."
-readme = "README.md"
+readme = {file = "../README.ml-pipelines-sdk.md", content-type="text/markdown"}
 license = { file = "LICENSE" }
 authors = [
     { name = "Google LLC", email = "tensorflow-extended-dev@googlegroups.com" }

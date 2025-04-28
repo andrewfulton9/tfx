@@ -182,12 +182,6 @@ _PIPELINES_SDK_DESCRIPTION = (
     'A dependency-light distribution of the core pipeline authoring '
     'functionality of TensorFlow Extended (TFX).')
 
-# Get the long descriptions from README files.
-with open('README.md') as fp:
-  _TFX_LONG_DESCRIPTION = fp.read()
-with open('README.ml-pipelines-sdk.md') as fp:
-  _PIPELINES_SDK_LONG_DESCRIPTION = fp.read()
-
 tfx_extras_requires = {
     # In order to use 'docker-image' or 'all', system libraries specified
     # under 'tfx/tools/docker/Dockerfile' are required
@@ -272,7 +266,6 @@ if package_name == 'tfx-dev':
   # "tfx-pipeline-sdk" packages.
   install_requires = dependencies.make_required_install_packages()
   extras_require = tfx_extras_requires
-  long_description = _TFX_LONG_DESCRIPTION
   packages = find_namespace_packages(
       include=TFX_NAMESPACE_PACKAGES, exclude=EXCLUDED_PACKAGES)
   # Do not support wheel builds for "tfx-dev".
@@ -284,7 +277,6 @@ elif package_name == 'ml-pipelines-sdk':
   # packages like "tensorflow" and "apache-beam".
   install_requires = dependencies.make_pipeline_sdk_required_install_packages()
   extras_require = {}
-  long_description = _PIPELINES_SDK_LONG_DESCRIPTION
   packages = find_namespace_packages(
       include=ML_PIPELINES_SDK_PACKAGES, exclude=EXCLUDED_PACKAGES)
   # Use the default pip wheel building command.
@@ -298,7 +290,6 @@ elif package_name == 'tfx':
   install_requires = (['ml-pipelines-sdk==%s' % version.__version__] +
                       dependencies.make_required_install_packages())
   extras_require = tfx_extras_requires
-  long_description = _TFX_LONG_DESCRIPTION
   packages = find_namespace_packages(
       include=TFX_NAMESPACE_PACKAGES,
       exclude=ML_PIPELINES_SDK_PACKAGES + EXCLUDED_PACKAGES)
@@ -323,8 +314,6 @@ setup(
     },
     packages=packages,
     include_package_data=True,
-    long_description=long_description,
-    long_description_content_type='text/markdown',
     keywords='tensorflow tfx',
     url='https://www.tensorflow.org/tfx',
     download_url='https://github.com/tensorflow/tfx/tags',
