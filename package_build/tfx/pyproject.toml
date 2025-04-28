@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "tfx"
 dynamic = ["version", "dependencies", "optional-dependencies", "scripts"]
 description = "TensorFlow Extended (TFX) is a TensorFlow-based general-purpose machine learning platform implemented at Google."
-readme = "README.md"
+readme = {file = "../README.md", content-type="text/markdown"}
 license = { file = "../LICENSE" }
 authors = [
     { name = "Google LLC", email = "tensorflow-extended-dev@googlegroups.com" }
@@ -32,6 +32,7 @@ classifiers = [
 ]
 keywords = ["tensorflow", "tfx"]
 requires-python = ">=3.9,<3.11"
+
 [project.urls]
 Homepage = "https://www.tensorflow.org/tfx"
 Repository = "https://github.com/tensorflow/tfx"
