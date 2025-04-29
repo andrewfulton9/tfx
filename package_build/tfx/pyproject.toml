@@ -147,8 +147,10 @@ markers = [
 
 [tool.cibuildwheel]
 platform=auto
+build=["cp39", "cp310"]
 build_frontend=build
 before_build="${which bazel} run --compilation_mode opt //build:gen_proto"
 enable=[tfx]
+
 
 
