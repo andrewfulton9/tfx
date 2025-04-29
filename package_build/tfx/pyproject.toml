@@ -1,6 +1,9 @@
+#[build-system]
+#requires = ["hatchling"]
+#build-backend = "hatchling.build"
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=72", "wheel", "tomli"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "tfx"
@@ -110,8 +113,42 @@ kfp = [
     "kfp>=2",
     "kfp-pipeline-spec>=0.2.2",
 ]
-
-[tool.hatch.build.wheel]
-require-runtime-features = [
-    "tfx"
+test = [
+    # include kfp
+    "pytest>=5,<=8",
+    "pytest-subtests==0.13.1",
 ]
+docker = [
+    # include kfp
+    "python-snappy>=0.7",
+    # Required for tfx/examples/penguin/penguin_utils_cloud_tuner.py
+    "tensorflow-cloud>=0.1,<0.2",
+    "tensorflow-io>=0.9.0, <=0.24.0",
+]
+tfjs = [
+    "tensorflowjs>=4.5,<5",
+]
+tflite_support = [
+    "flatbuffers>=1.12",
+    "tflite-support>=0.4.3,<0.4.5",
+]
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = "tfx"
+python_files = "*_test.py"
+norecursedirs = ["custom_components", ".*", "*.egg", "tfx/orchestration/experimental/core"]
+markers = [
+    "e2e: end-to-end tests which are slow and require more dependencies (deselect with '-m \"not end_to_end\"')",
+    "serial: mark tests that should not run in parallel",
+    "integration: integration tests that are slow and require more dependencies (deselect with `-m 'not integration'`)",
+    "perf: performance 'perf' tests that are slow and require more dependencies (deselect with `-m 'not perf'`)",
+]
+
+[tool.cibuildwheel]
+platform=auto
+build_frontend=build
+before_build="${which bazel} run --compilation_mode opt //build:gen_proto"
+enable=[tfx]
+
+
