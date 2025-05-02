@@ -23,10 +23,22 @@ from typing import List
 import absl
 
 
-from tfx import dependencies
 from tfx import version
 from tfx.dsl.io import fileio
 from tfx.utils import io_utils
+
+from importlib.metadata import requires
+
+def make_required_install_packages() -> List[str]:
+  requirements = requires('tfx')
+  required = []
+  for req in requirements:
+    # if the requirement has no extra specifiers, or the extra specifier is "tfx", add it to the required list
+    if "extra" not in req or 'extra == "tfx"' in req:
+      required.append(req.split(';')[0])  # Remove any environment markers
+  return required
+  # 
+
 
 
 def make_beam_dependency_flags(beam_pipeline_args: List[str]) -> List[str]:
@@ -112,7 +124,7 @@ def build_ephemeral_package() -> str:
   os.chmod(tmp_dir, 0o720)
   setup_file = os.path.join(tmp_dir, 'setup.py')
   absl.logging.info('Generating a temp setup file at %s', setup_file)
-  install_requires = dependencies.make_required_install_packages()
+  install_requires = make_required_install_packages()
   io_utils.write_string_file(
       setup_file,
       _ephemeral_setup_file.format(

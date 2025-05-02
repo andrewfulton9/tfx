@@ -20,7 +20,6 @@ import subprocess
 import sys
 
 import setuptools
-from setuptools import find_namespace_packages
 from setuptools import setup
 from setuptools.command import develop
 # pylint: disable=g-bad-import-order
@@ -37,18 +36,16 @@ from wheel import bdist_wheel
 # the logic below switching on `package_config.PACKAGE_NAME`) and the overall
 # package build README at `package_build/README.md`.
 sys.path.insert(0, os.path.dirname(__file__))
-# pylint: disable=g-bad-import-order,g-import-not-at-top
+# # pylint: disable=g-bad-import-order,g-import-not-at-top
 
-from tfx import dependencies
-from tfx import version
-# pylint: enable=g-bad-import-order,g-import-not-at-top
+# from tfx import dependencies
+# from tfx import version
+# # pylint: enable=g-bad-import-order,g-import-not-at-top
 
-import tomli
+# import tomli
 
-pyproject_toml = tomli.load(open('pyproject.toml', 'rb'))
-package_name = pyproject_toml['project']['name']
-
-print("package_name: ", package_name)
+# pyproject_toml = tomli.load(open('pyproject.toml', 'rb'))
+# package_name = pyproject_toml['project']['name']
 
 
 class _BdistWheelCommand(bdist_wheel.bdist_wheel):
@@ -182,141 +179,34 @@ _PIPELINES_SDK_DESCRIPTION = (
     'A dependency-light distribution of the core pipeline authoring '
     'functionality of TensorFlow Extended (TFX).')
 
-tfx_extras_requires = {
-    # In order to use 'docker-image' or 'all', system libraries specified
-    # under 'tfx/tools/docker/Dockerfile' are required
-    'docker-image': dependencies.make_extra_packages_docker_image(),
-    'airflow': dependencies.make_extra_packages_airflow(),
-    'flax': dependencies.make_extra_packages_flax(),
-    'kfp': dependencies.make_extra_packages_kfp(),
-    'tfjs': dependencies.make_extra_packages_tfjs(),
-    'tf-ranking': dependencies.make_extra_packages_tf_ranking(),
-    'tfdf': dependencies.make_extra_packages_tfdf(),
-    'tflite-support': dependencies.make_extra_packages_tflite_support(),
-    'examples': dependencies.make_extra_packages_examples(),
-    'test': dependencies.make_extra_packages_test(),
-    'docs': dependencies.make_extra_packages_docs(),
-    'all': dependencies.make_extra_packages_all(),
-}
+# tfx_extras_requires = {
+#     # In order to use 'docker-image' or 'all', system libraries specified
+#     # under 'tfx/tools/docker/Dockerfile' are required
+#     'docker-image': dependencies.make_extra_packages_docker_image(),
+#     'airflow': dependencies.make_extra_packages_airflow(),
+#     'flax': dependencies.make_extra_packages_flax(),
+#     'kfp': dependencies.make_extra_packages_kfp(),
+#     'tfjs': dependencies.make_extra_packages_tfjs(),
+#     'tf-ranking': dependencies.make_extra_packages_tf_ranking(),
+#     'tfdf': dependencies.make_extra_packages_tfdf(),
+#     'tflite-support': dependencies.make_extra_packages_tflite_support(),
+#     'examples': dependencies.make_extra_packages_examples(),
+#     'test': dependencies.make_extra_packages_test(),
+#     'docs': dependencies.make_extra_packages_docs(),
+#     'all': dependencies.make_extra_packages_all(),
+# }
 
-# Packages included the TFX namespace.
-TFX_NAMESPACE_PACKAGES = [
-    'tfx', 'tfx.*', 'tfx.orchestration', 'tfx.orchestration.*'
-]
-# Packages within the TFX namespace that are to be included in the base
-# "ml-pipelines-sdk" pip package (and excluded from the "tfx" pip package,
-# which takes "ml-pipelines-sdk" as a dependency).
-ML_PIPELINES_SDK_PACKAGES = [
-    # This adds `tfx.version` which is needed in several places.
-    'tfx',
-    # Core DSL subpackage.
-    'tfx.dsl',
-    'tfx.dsl.*',
-    # The "ml-pipelines-sdk" package currently only supports local execution.
-    # These are the subpackages of `tfx.orchestration` necessary.
-    'tfx.orchestration',
-    'tfx.orchestration.config',
-    'tfx.orchestration.launcher',
-    'tfx.orchestration.local',
-    'tfx.orchestration.local.legacy',
-    'tfx.orchestration.portable',
-    'tfx.orchestration.portable.*',
-    # Note that `tfx.proto` contains TFX first-party component-specific
-    # protobuf definitions, but `tfx.proto.orchestration` contains portable
-    # execution protobuf definitions which are needed in the base package.
-    'tfx.proto.orchestration',
-    # TODO(b/176814928): Consider moving relevant modules under
-    # `tfx.orchestration.*` to `tfx.dsl.*` as appropriate.
-    'tfx.proto.orchestration.*',
-    # TODO(b/176795329): Move `tfx.utils` to a location that emphasizes that
-    # these are internal utilities.
-    'tfx.utils',
-    'tfx.utils.*',
-    # TODO(b/176795331): Move `Artifact` and `ComponentSpec` classes into
-    # `tfx.dsl.*`.
-    'tfx.types',
-    'tfx.types.*',
-]
+# Use the pip wheel building command that includes proto generation.
+build_wheel_command = _BdistWheelCommand  # pylint: disable=invalid-name
+# Include TFX entrypoints.
 
-EXCLUDED_PACKAGES = [
-    'tfx.benchmarks',
-    'tfx.benchmarks.*',
-]
-
-# Below console_scripts, each line identifies one console script. The first
-# part before the equals sign (=) which is 'tfx', is the name of the script
-# that should be generated, the second part is the import path followed by a
-# colon (:) with the Click command group. After installation, the user can
-# invoke the CLI using "tfx <command_group> <sub_command> <flags>"
-TFX_ENTRY_POINTS = {
-    "console_scripts": ["tfx=tfx.tools.cli.cli_main:cli_group"]
-}
-ML_PIPELINES_SDK_ENTRY_POINTS = None
-
-# This `setup.py` file can be used to build packages in 3 configurations. See
-# the discussion in `package_build/README.md` for an overview. The `tfx` and
-# `ml-pipelines-sdk` pip packages can be built for distribution using the
-# selectable `package_name` specifier. Additionally, for
-# development convenience, the `tfx-dev` package containing the union of the
-# the `tfx` and `ml-pipelines-sdk` package can be installed as an editable
-# package using `pip install -e .`, but should not be built for distribution.
-if package_name == 'tfx-dev':
-  # Monolithic development package with the entirety of `tfx.*` and the full
-  # set of dependencies. Functionally equivalent to the union of the "tfx" and
-  # "tfx-pipeline-sdk" packages.
-  install_requires = dependencies.make_required_install_packages()
-  extras_require = tfx_extras_requires
-  packages = find_namespace_packages(
-      include=TFX_NAMESPACE_PACKAGES, exclude=EXCLUDED_PACKAGES)
-  # Do not support wheel builds for "tfx-dev".
-  build_wheel_command = _UnsupportedDevBuildWheelCommand  # pylint: disable=invalid-name
-  # Include TFX entrypoints.
-  entry_points = TFX_ENTRY_POINTS
-elif package_name == 'ml-pipelines-sdk':
-  # Core TFX pipeline authoring SDK, without dependency on component-specific
-  # packages like "tensorflow" and "apache-beam".
-  install_requires = dependencies.make_pipeline_sdk_required_install_packages()
-  extras_require = {}
-  packages = find_namespace_packages(
-      include=ML_PIPELINES_SDK_PACKAGES, exclude=EXCLUDED_PACKAGES)
-  # Use the default pip wheel building command.
-  build_wheel_command = bdist_wheel.bdist_wheel  # pylint: disable=invalid-name
-  # Include ML Pipelines SDK entrypoints.
-  entry_points = ML_PIPELINES_SDK_ENTRY_POINTS
-elif package_name == 'tfx':
-  # Recommended installation package for TFX. This package builds on top of
-  # the "ml-pipelines-sdk" pipeline authoring SDK package and adds first-party
-  # TFX components and additional functionality.
-  install_requires = (['ml-pipelines-sdk==%s' % version.__version__] +
-                      dependencies.make_required_install_packages())
-  extras_require = tfx_extras_requires
-  packages = find_namespace_packages(
-      include=TFX_NAMESPACE_PACKAGES,
-      exclude=ML_PIPELINES_SDK_PACKAGES + EXCLUDED_PACKAGES)
-  # Use the pip wheel building command that includes proto generation.
-  build_wheel_command = _BdistWheelCommand  # pylint: disable=invalid-name
-  # Include TFX entrypoints.
-  entry_points = TFX_ENTRY_POINTS
-else:
-  raise ValueError('Invalid package config: %r.' % package_name)
-
-logging.info('Executing build for package %r.', package_name)
+#logging.info('Executing build for package %r.', package_name)
 setup(
-    version=version.__version__,
-    namespace_packages=[],
-    install_requires=install_requires,
-    extras_require=extras_require,
+    # version=version.__version__,
     cmdclass={
         'bdist_wheel': build_wheel_command,
         'build': _BuildCommand,
         'develop': _DevelopCommand,
         'gen_proto': _GenProtoCommand,
     },
-    packages=packages,
-    include_package_data=True,
-    keywords='tensorflow tfx',
-    url='https://www.tensorflow.org/tfx',
-    download_url='https://github.com/tensorflow/tfx/tags',
-    requires=[],
-    entry_points=entry_points,
 )

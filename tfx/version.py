@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Contains the version string of TFX."""
+from importlib.metadata import metadata
+
 
 # Note that setup.py uses this version.
-__version__ = '1.17.0.dev'
+__version__ = metadata('tfx')["Version"]
