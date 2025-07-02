@@ -110,6 +110,66 @@ ignore = [
     "W191",   # Indentation contains tabs; unnecessary when running ruff-format
 
     # FIX AND REMOVE BELOW CODES:
+    "ANN001", # Missing type annotation for function argument
+    "ANN102", # Missing type annotation for `cls` in classmethod
+    "ANN202", # Missing return type annotation for private function
+    "ANN205", # Missing return type annotation for staticmethod
+    "ANN206", # Missing return type annotation for classmethod
+    "ANN401", # Dynamically typed expressions (typing.Any) are disallowed
+    "ARG001", # Unused function argument
+    "ARG002", # Unused method argument
+    "ARG003", # Unused class method argument
+    "ARG005", # Unused lambda argument
+    "D101",   # Missing docstring in public class
+    "D102",   # Missing docstring in public method
+    "D103",   # Missing docstring in public function
+    "D106",   # Missing docstring in public nested class
+    "D107",   # Missing docstring in `__init__`
+    "D200",   # One-line docstring should fit on one line
+    "D401",   # First line of docstring should be in imperative mood
+    "D402",   # First line should not be the function's signature
+    "D404",   # First word of the docstring should not be "This"
+    "D417",   # Missing argument description in the docstring
+    "E721",   # Use `is` and `is not` for type comparisons
+    "E722",   # Do not use bare `except`
+    "E731",   # Do not assign a `lambda` expression, use a `def`
+    "E741",   # Ambiguous variable name
+    "ERA001", # Found commented-out code
+    "F401",   # Module imported but unused
+    "FIX002", # Line contains TODO, consider resolving the issue
+    "N802",   # Function name should be lowercase
+    "N806",   # Variable in function should be lowercase
+    "N816",   # Variable in global scope should not be mixedCase
+    "N818",   # Exception name should be named with an Error suffix
+    "PD004",  # .notna is preferred to .notnull
+    "PD011",  # Use .to_numpy() instead of .values
+    "PT004",  # Fixture does not return anything, add leading underscore
+    "PT009",  # Use a regular `assert` instead of unittest-style
+    "PT018",  # Assertion should be broken down into multiple parts
+    "PT027",  # Use `pytest.raises` instead of unittest-style `assertRaises`
+    "RET503", # Missing explicit `return` at the end of function
+    "RET504", # Unnecessary assignment before `return` statement
+    "RET505", # Unnecessary `elif` after `return` statement
+    "RET506", # Unnecessary `elif` after `raise` statement
+    "RET507", # Unnecessary `elif` after `continue` statement
+    "SIM101", # Multiple isinstance calls should be merged
+    "SIM102", # Use a single `if` statement instead of nested `if` statements
+    "SIM103", # Return the negated condition directly
+    "SIM105", # Use `contextlib.suppress` instead of `try`-`except`-`pass`
+    "SIM109", # Use 'in' operator for multiple equality comparisons
+    "SIM113", # Use enumerate() instead of manually incrementing counter
+    "SIM115", # Use context handler for opening files
+    "SIM116", # Use a dictionary instead of consecutive `if` statements
+    "SIM117", # Use a single `with` statement with multiple contexts
+    "SIM118", # Use `key in dict` instead of `key in dict.keys()`
+    "SIM401", # Use dictionary get method instead of if-else block
+    "UP006",  # Use builtin collection types instead of typing.* for type annotation
+    "UP007",  # Use `X | Y` for type annotations
+    "UP008",  # Use super() instead of super(__class__, self)
+    "UP022",  # Use capture_output instead of stdout/stderr with PIPE
+    "UP031",  # Use format specifiers instead of percent format
+    "UP032",  # Use f-string instead of `format` call
+    "UP035",  # `typing.Type/Dict/List/Tuple` is deprecated, use builtin types instead
 ]
 
 [tool.ruff.lint.per-file-ignores]
