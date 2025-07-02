@@ -16,14 +16,13 @@
 import os
 
 import apache_beam as beam
-from apache_beam.testing import util
 import tensorflow as tf
+from apache_beam.testing import util
+
 from tfx.components.example_gen.custom_executors import parquet_executor
 from tfx.dsl.io import fileio
 from tfx.proto import example_gen_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
 from tfx.utils import proto_utils
 
 
@@ -48,8 +47,8 @@ class ExecutorTest(tf.test.TestCase):
       def check_result(got):
         # We use Python assertion here to avoid Beam serialization error in
         # pickling tf.test.TestCase.
-        assert (10000 == len(got)), 'Unexpected example count'
-        assert (18 == len(got[0].features.feature)), 'Example not match'
+        assert (len(got) == 10000), 'Unexpected example count'
+        assert (len(got[0].features.feature) == 18), 'Example not match'
 
       util.assert_that(examples, check_result)
 

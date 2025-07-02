@@ -14,10 +14,11 @@
 """Tests for tfx.components.example_gen.input_processor."""
 
 from typing import Optional
+
 import tensorflow as tf
+
 from tfx.components.example_gen import input_processor
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
+from tfx.proto import example_gen_pb2, range_config_pb2
 
 
 class TestInputProcessor(input_processor.InputProcessor):

@@ -14,22 +14,17 @@
 """TFX Resolver definition."""
 
 import abc
-from typing import Any, Dict, List, Optional, Type, Mapping
-
-from tfx import types
-from tfx.dsl.components.base import base_driver
-from tfx.dsl.components.base import base_node
-from tfx.dsl.input_resolution import resolver_op
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.types import channel as channel_types
-from tfx.types import channel_utils
-from tfx.types import resolved_channel
-from tfx.utils import doc_controls
-from tfx.utils import json_utils
-from tfx.utils import typing_utils
+from typing import Any, Dict, List, Mapping, Optional, Type
 
 import ml_metadata as mlmd
+
+from tfx import types
+from tfx.dsl.components.base import base_driver, base_node
+from tfx.dsl.input_resolution import resolver_op
+from tfx.orchestration import data_types, metadata
+from tfx.types import channel as channel_types
+from tfx.types import channel_utils, resolved_channel
+from tfx.utils import doc_controls, json_utils, typing_utils
 
 # Constant to access resolver class from resolver exec_properties.
 RESOLVER_STRATEGY_CLASS = 'resolver_class'
@@ -76,10 +71,12 @@ class ResolverStrategy(abc.ABC):
     is to preserve all keys in the input_dict unless you have specific reason.
 
     Args:
+    ----
       store: An MLMD MetadataStore.
       input_dict: The input_dict to resolve from.
 
     Returns:
+    -------
       If all entries has enough data after the resolving, returns the resolved
         input_dict. Otherise, return None.
     """
@@ -227,6 +224,7 @@ class Resolver(base_node.BaseNode):
     """Init function for Resolver.
 
     Args:
+    ----
       strategy_class: Optional `ResolverStrategy` which contains the artifact
           resolution logic.
       config: Optional dict of key to Jsonable type for constructing

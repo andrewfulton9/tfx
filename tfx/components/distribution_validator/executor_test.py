@@ -19,20 +19,15 @@ import tempfile
 
 from absl import flags
 from absl.testing import parameterized
+from google.protobuf import text_format
 from tensorflow_data_validation.anomalies.proto import custom_validation_config_pb2
+from tensorflow_metadata.proto.v0 import anomalies_pb2, statistics_pb2
+
 from tfx.components.distribution_validator import executor
 from tfx.dsl.io import fileio
 from tfx.proto import distribution_validator_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import json_utils
-from tfx.utils import test_case_utils
-
-from google.protobuf import text_format
-from tensorflow_metadata.proto.v0 import anomalies_pb2
-from tensorflow_metadata.proto.v0 import statistics_pb2
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
+from tfx.utils import io_utils, json_utils, test_case_utils
 
 FLAGS = flags.FLAGS
 

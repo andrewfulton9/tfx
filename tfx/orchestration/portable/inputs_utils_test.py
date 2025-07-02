@@ -15,20 +15,17 @@
 import collections
 import os
 
+from google.protobuf import text_format
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.compiler import placeholder_utils
 from tfx.orchestration import metadata
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import inputs_utils
+from tfx.orchestration.portable import data_types, execution_publish_utils, inputs_utils
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.orchestration.portable.mlmd import context_lib
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.utils import test_case_utils
-
-from google.protobuf import text_format
-from ml_metadata.proto import metadata_store_pb2
-
 
 _TESTDATA_DIR = os.path.join(os.path.dirname(__file__), 'testdata')
 

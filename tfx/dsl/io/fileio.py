@@ -15,14 +15,12 @@
 
 from typing import Any, Callable, Iterable, List, Optional, Tuple, Type
 
-from tfx.dsl.io import filesystem
-from tfx.dsl.io import filesystem_registry
-from tfx.dsl.io.filesystem import PathType
+import tfx.dsl.io.plugins.local  # noqa: F401, E402
 
 # Import modules that may provide filesystem plugins.
 import tfx.dsl.io.plugins.tensorflow_gfile  # noqa: F401, E402
-import tfx.dsl.io.plugins.local  # noqa: F401, E402
-
+from tfx.dsl.io import filesystem, filesystem_registry
+from tfx.dsl.io.filesystem import PathType
 
 # Expose `NotFoundError` as `fileio.NotFoundError`.
 NotFoundError = filesystem.NotFoundError

@@ -22,8 +22,7 @@ from tfx.extensions.google_cloud_ai_platform.bulk_inferrer import executor
 from tfx.orchestration import data_types
 from tfx.proto import bulk_inferrer_pb2
 from tfx.types import standard_artifacts
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ExecutionParameter
+from tfx.types.component_spec import ChannelParameter, ExecutionParameter
 from tfx.utils import json_utils
 
 
@@ -92,6 +91,7 @@ class CloudAIBulkInferrerComponent(base_component.BaseComponent):
     """Construct an BulkInferrer component.
 
     Args:
+    ----
       examples: A Channel of type [`standard_artifacts.Examples`][tfx.v1.types.standard_artifacts.Examples], usually
         produced by an ExampleGen component. _required_
       model: A Channel of type [`standard_artifacts.Model`][tfx.v1.types.standard_artifacts.Model], usually produced by
@@ -109,6 +109,7 @@ class CloudAIBulkInferrerComponent(base_component.BaseComponent):
         [https://cloud.google.com/ml-engine/reference/rest/v1/projects.models](https://cloud.google.com/ml-engine/reference/rest/v1/projects.models)
 
     Raises:
+    ------
       ValueError: Must not specify inference_result or output_examples depends
         on whether output_example_spec is set or not.
     """

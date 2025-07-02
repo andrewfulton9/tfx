@@ -16,12 +16,9 @@
 from typing import Optional
 
 from tfx import types
-from tfx.components.model_validator import driver
-from tfx.components.model_validator import executor
-from tfx.dsl.components.base import base_beam_component
-from tfx.dsl.components.base import executor_spec
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.components.model_validator import driver, executor
+from tfx.dsl.components.base import base_beam_component, executor_spec
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import deprecation_utils
 
 
@@ -72,6 +69,7 @@ class ModelValidator(base_beam_component.BaseBeamComponent):
     """Construct a ModelValidator component.
 
     Args:
+    ----
       examples: A BaseChannel of type `standard_artifacts.Examples`, usually
         produced by an
         [ExampleGen](../../../guide/examplegen) component.

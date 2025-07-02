@@ -24,16 +24,12 @@ import json
 from typing import Any, Dict, List, Optional, Type, Union
 
 from absl import logging
+from google.protobuf import json_format, message, struct_pb2
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.types import artifact_property
 from tfx.types.system_artifacts import SystemArtifact
-from tfx.utils import doc_controls
-from tfx.utils import json_utils
-from tfx.utils import proto_utils
-
-from google.protobuf import struct_pb2
-from google.protobuf import json_format
-from google.protobuf import message
-from ml_metadata.proto import metadata_store_pb2
+from tfx.utils import doc_controls, json_utils, proto_utils
 
 Property = artifact_property.Property
 PropertyType = artifact_property.PropertyType
@@ -180,6 +176,7 @@ class Artifact(json_utils.Jsonable):
     users.
 
     Args:
+    ----
       mlmd_artifact_type: Proto message defining the underlying ArtifactType.
         Optional and intended for internal use.
     """
@@ -215,8 +212,8 @@ class Artifact(json_utils.Jsonable):
   @classmethod
   def _get_artifact_type(cls):
     existing_artifact_type = getattr(cls, '_MLMD_ARTIFACT_TYPE', None)
-    if (not existing_artifact_type) or (cls.TYPE_NAME !=
-                                        existing_artifact_type.name):
+    if (not existing_artifact_type) or (existing_artifact_type.name !=
+                                        cls.TYPE_NAME):
       type_name = cls.TYPE_NAME
       if not (type_name and isinstance(type_name, str)):
         raise ValueError(
@@ -639,7 +636,7 @@ class Artifact(json_utils.Jsonable):
   @property
   @doc_controls.do_not_doc_in_subclasses
   def external_id(self) -> str:
-    """external id of the underlying artifact."""
+    """External id of the underlying artifact."""
     return self._artifact.external_id
 
   # LINT.IfChange
@@ -834,6 +831,7 @@ def _ArtifactType(  # pylint: disable=invalid-name
   parameter.
 
   Args:
+  ----
     name: Name of the artifact type in MLMD. Must be provided unless a protobuf
       message is provided in the "mlmd_artifact_type" parameter.
     annotation: Annotation of the artifact type. It can be any of the system
@@ -845,6 +843,7 @@ def _ArtifactType(  # pylint: disable=invalid-name
       message corresponding to the type being created.
 
   Returns:
+  -------
     An Artifact class corresponding to the specified type.
   """
   if mlmd_artifact_type:

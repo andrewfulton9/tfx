@@ -16,18 +16,18 @@
 import functools
 import os
 import sys
-import click
 from typing import Optional
 
+import click
 from google.cloud import aiplatform
 from google.cloud.aiplatform import pipeline_jobs
 
 from tfx.dsl.io import fileio
 from tfx.tools.cli import labels
 from tfx.tools.cli.container_builder import builder
-from tfx.tools.cli.handler import base_handler
-from tfx.tools.cli.handler import kubeflow_v2_dag_runner_patcher
+from tfx.tools.cli.handler import base_handler, kubeflow_v2_dag_runner_patcher
 from tfx.utils import io_utils
+
 
 def create_container_image(image: str, base_image: Optional[str]) -> str:
   built_image = builder.build(target_image=image, base_image=base_image)
@@ -41,6 +41,7 @@ class VertexHandler(base_handler.BaseHandler):
     """Creates or updates a pipeline to use in Vertex Pipelines.
 
     Args:
+    ----
       update: set as true to update pipeline.
     """
     if self.flags_dict.get(labels.BUILD_IMAGE):
@@ -159,7 +160,6 @@ class VertexHandler(base_handler.BaseHandler):
 
   def _prepare_pipeline_dir(self, pipeline_name: str, required: bool) -> str:
     """Create a directory for pipeline definition in the handler directory."""
-
     self._check_pipeline_existence(pipeline_name, required)
 
     handler_pipeline_path = self._get_pipeline_dir(pipeline_name)

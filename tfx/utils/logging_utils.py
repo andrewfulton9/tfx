@@ -45,8 +45,11 @@ class LoggerConfig:
     """Updates the log config parameters via elements in a dict.
 
     Args:
+    ----
       config: Dict of parameter tuples to assign to the logging config.
+
     Raises:
+    ------
       ValueError if key is not a supported logging parameter.
     """
     if config:
@@ -65,10 +68,13 @@ def get_logger(config):
   """Create and configure a TFX-specific logger.
 
   Args:
+  ----
     config: LoggingConfig class used to configure logger
   Returns:
     A logger that outputs to log_dir/log_file_name.
+
   Raises:
+  ------
     RuntimeError: if log dir exists as a file.
 
   """

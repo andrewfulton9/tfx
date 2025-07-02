@@ -56,7 +56,7 @@ class _TfxArtifact(Artifact):
         # Do not allow usage of TFX-specific artifact if only the core pipeline
         # SDK package is installed.
         try:
-            import setuptools # pytype: disable=import-error  # noqa: F401
+            import setuptools  # pytype: disable=import-error  # noqa: F401
 
             # Test import only when setuptools is available.
             try:
@@ -131,12 +131,15 @@ class Examples(_TfxArtifact):
         a directory of the returned path value before writing.
 
         Args:
+        ----
           split: A name of the split, e.g. `"train"`, `"validation"`, `"test"`.
 
         Raises:
+        ------
           ValueError: if the `split` is not in the `self.splits`.
 
         Returns:
+        -------
           A path to `{self.uri}/Split-{split}`.
         """
         if split not in self.splits:

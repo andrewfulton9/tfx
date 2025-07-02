@@ -17,11 +17,11 @@ import os
 from typing import Any, Dict, List
 
 from absl import logging
+
 from tfx import types
 from tfx.components.schema_gen import executor as schema_gen_executor
 from tfx.dsl.components.base import base_executor
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_component_specs
 from tfx.utils import io_utils
 
 
@@ -36,6 +36,7 @@ class Executor(base_executor.BaseExecutor):
     This generate Schema artifact with given schema_file.
 
     Args:
+    ----
       input_dict: Should be empty.
       output_dict: Output dict from key to a list of artifacts, including:
         - schema: A list of 'Schema' artifact of size one.
@@ -43,6 +44,7 @@ class Executor(base_executor.BaseExecutor):
         - schema_file: Source schema file path.
 
     Returns:
+    -------
       None
     """
     source_file_path = exec_properties.get(

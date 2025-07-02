@@ -21,26 +21,18 @@ import itertools
 import re
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
-from absl import logging
-from tfx import types
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
-from tfx.orchestration.portable import outputs_utils
-from tfx.orchestration.portable.mlmd import artifact_lib
-from tfx.orchestration.portable.mlmd import common_utils
-from tfx.orchestration.portable.mlmd import event_lib
-from tfx.orchestration.portable.mlmd import filter_query_builder as q
-from tfx.utils import metrics_utils
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.utils import proto_utils
-from tfx.utils import typing_utils
-
-from tfx.utils import telemetry_utils
-from google.protobuf import json_format
 import ml_metadata as mlmd
+from absl import logging
+from google.protobuf import json_format
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx import types
+from tfx.orchestration import data_types_utils, metadata
+from tfx.orchestration.portable import outputs_utils
+from tfx.orchestration.portable.mlmd import artifact_lib, common_utils, event_lib
+from tfx.orchestration.portable.mlmd import filter_query_builder as q
+from tfx.proto.orchestration import execution_result_pb2, pipeline_pb2
+from tfx.utils import metrics_utils, proto_utils, telemetry_utils, typing_utils
 
 ArtifactState = types.artifact.ArtifactState
 
@@ -55,9 +47,11 @@ def is_execution_successful(execution: metadata_store_pb2.Execution) -> bool:
   """Whether or not an execution is successful.
 
   Args:
+  ----
     execution: An execution message.
 
   Returns:
+  -------
     A bool value indicating whether or not the execution is successful.
   """
   return (execution.last_known_state == metadata_store_pb2.Execution.COMPLETE or
@@ -68,9 +62,11 @@ def is_execution_active(execution: metadata_store_pb2.Execution) -> bool:
   """Returns `True` if an execution is active.
 
   Args:
+  ----
     execution: An execution message.
 
   Returns:
+  -------
     A bool value indicating whether or not the execution is active.
   """
   return (execution.last_known_state == metadata_store_pb2.Execution.NEW or
@@ -81,9 +77,11 @@ def is_execution_running(execution: metadata_store_pb2.Execution) -> bool:
   """Returns `True` if an execution is running.
 
   Args:
+  ----
     execution: An execution message.
 
   Returns:
+  -------
     A bool value indicating whether or not the execution is running.
   """
   return execution.last_known_state == metadata_store_pb2.Execution.RUNNING
@@ -93,9 +91,11 @@ def is_execution_canceled(execution: metadata_store_pb2.Execution) -> bool:
   """Whether or not an execution is canceled.
 
   Args:
+  ----
     execution: An execution message.
 
   Returns:
+  -------
     A bool value indicating whether or not the execution is canceled.
   """
   return execution.last_known_state == metadata_store_pb2.Execution.CANCELED
@@ -105,9 +105,11 @@ def is_execution_failed(execution: metadata_store_pb2.Execution) -> bool:
   """Whether or not an execution is failed.
 
   Args:
+  ----
     execution: An execution message.
 
   Returns:
+  -------
     A bool value indicating whether or not the execution is failed.
   """
   return execution.last_known_state == metadata_store_pb2.Execution.FAILED
@@ -138,9 +140,11 @@ def sort_executions_newest_to_oldest(
   """Returns MLMD executions in sorted order, newest to oldest.
 
   Args:
+  ----
     executions: An iterable of MLMD executions.
 
   Returns:
+  -------
     Executions sorted newest to oldest (based on MLMD execution creation time).
   """
   return sorted(
@@ -158,6 +162,7 @@ def prepare_execution(
   """Creates an execution proto based on the information provided.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     execution_type: A metadata_pb2.ExecutionType message describing the type of
       the execution.
@@ -166,6 +171,7 @@ def prepare_execution(
     execution_name: Name of the execution.
 
   Returns:
+  -------
     A metadata_store_pb2.Execution message.
   """
   execution = metadata_store_pb2.Execution()
@@ -225,6 +231,7 @@ def _create_artifact_and_event_pairs(
   The result of this function will be used in a MLMD put_execution() call.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     artifact_dict: The source of artifacts to work on. For each unique artifact
       in the dict, creates a tuple for that. Note that all artifacts of the same
@@ -234,6 +241,7 @@ def _create_artifact_and_event_pairs(
     event_type: The event type of the event to be attached to the artifact
 
   Returns:
+  -------
     A list of [Artifact, Event] tuples
   """
   if not artifact_dict:
@@ -288,6 +296,7 @@ def put_execution(
   execution centric subgraph to MLMD.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     execution: The execution to be written to MLMD.
     contexts: MLMD contexts to associated with the execution.
@@ -303,6 +312,7 @@ def put_execution(
     output_event_type: The type of the output event, default to be OUTPUT.
 
   Returns:
+  -------
     An MLMD execution that is written to MLMD, with id populated.
   """
   artifact_and_events = []
@@ -363,6 +373,7 @@ def put_executions(
   the execution centric subgraph to MLMD.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     executions: A list of executions to be written to MLMD.
     contexts: A list of MLMD contexts to associated with all the executions.
@@ -376,6 +387,7 @@ def put_executions(
     output_event_type: The type of the output event, default to be OUTPUT.
 
   Returns:
+  -------
     A list of MLMD executions that are written to MLMD, with id pupulated.
   """
   if input_artifacts_maps and len(executions) != len(input_artifacts_maps):
@@ -499,12 +511,14 @@ def register_output_artifacts(
   output artifact dicts.
 
   Args:
+  ----
     metadata_handle: A handle to access MLMD
     execution_id: The ID of an existing execution to apply output artifacts to.
     output_artifacts: The output artifact dict to register. Artifacts will be
       modified in place to add IDs after creation in MLMD.
 
   Raises:
+  ------
     ValueError if the specified execution is not active, or if this function
     was called once before for the same execution but with a different output
     artifact dict.
@@ -633,10 +647,12 @@ def get_executions_associated_with_all_contexts(
   """Returns executions that are associated with all given contexts.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     contexts: MLMD contexts for which to fetch associated executions.
 
   Returns:
+  -------
     A list of executions associated with all given contexts.
   """
   execution_query = q.And(
@@ -662,11 +678,13 @@ def get_input_artifacts(
   Artifacts and event information are fetched from the MLMD.
 
   Args:
+  ----
     metadata_handle: A Metadata instance that is in entered state.
     execution_id: A valid MLMD execution ID. If the execution_id does not exist,
         this function will return an empty dict instead of raising an error.
 
   Returns:
+  -------
     A reconstructed input artifacts multimap.
   """
   events = metadata_handle.store.get_events_by_execution_ids([execution_id])
@@ -688,11 +706,13 @@ def get_output_artifacts(
   IR. Artifacts and event information are fetched from the MLMD.
 
   Args:
+  ----
     metadata_handle: A Metadata instance that is in entered state.
     execution_id: A valid MLMD execution ID. If the execution_id does not exist,
         this function will return an empty dict instead of raising an error.
 
   Returns:
+  -------
     A reconstructed output artifacts multimap.
   """
   events = metadata_handle.store.get_events_by_execution_ids([execution_id])
@@ -718,6 +738,7 @@ def get_pending_output_artifacts(
   pipeline IR. Artifacts and event information are fetched from MLMD.
 
   Args:
+  ----
     metadata_handle: A Metadata instance that is in entered state.
     execution_id: A valid MLMD execution ID. If the execution_id does not exist,
       this function will return an empty dict instead of raising an error.
@@ -725,6 +746,7 @@ def get_pending_output_artifacts(
       to all artifact states.
 
   Returns:
+  -------
     A reconstructed pending output artifacts multimap.
   """
   events = metadata_handle.store.get_events_by_execution_ids([execution_id])
@@ -756,6 +778,7 @@ def set_execution_result(
   """Sets execution result as a custom property of execution.
 
   Args:
+  ----
     execution_result: The result of execution. It is typically generated by
       executor.
     execution: The execution to set to.
@@ -793,11 +816,13 @@ def get_execution_result(
   ignore_parse_errors=True, JSON parsing errors will lead to returning `None`.
 
   Args:
+  ----
     execution: The execution from which to read execution result.
     ignore_parse_errors: If True, JSON parsing errors are ignored and a None is
       returned.
 
   Returns:
+  -------
     An `ExecutionResult` object if one exists.
   """
   value = execution.custom_properties.get(_EXECUTION_RESULT)

@@ -17,7 +17,16 @@ import abc
 import functools
 import inspect
 import sys
-from typing import Any, Callable, Generic, Optional, TypeVar, Union, get_args, get_origin
+from typing import (
+  Any,
+  Callable,
+  Generic,
+  Optional,
+  TypeVar,
+  Union,
+  get_args,
+  get_origin,
+)
 
 from tfx.utils import pure_typing_utils
 
@@ -54,6 +63,7 @@ class Provider(abc.ABC, Generic[_T]):
     Cyclic depedency would result in infinite recursive call thus not allowed.
 
     Args:
+    ----
       name: A name of the injection argument.
       type_hint: A type hint for the injection argument.
     """
@@ -90,7 +100,7 @@ class ValueProvider(Provider[_T]):
 
 
 def _is_subclass(cls: type[Any], type_hint: Any) -> bool:
-  """issubclass that supports Union and Optional correctly."""
+  """Issubclass that supports Union and Optional correctly."""
   if inspect.isclass(type_hint) or sys.version_info >= (3, 10):
     # issubclass recognizes Optional / Union type in python>=3.10
     return issubclass(cls, type_hint)

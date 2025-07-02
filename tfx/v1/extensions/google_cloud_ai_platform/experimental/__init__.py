@@ -25,8 +25,8 @@ from tfx.extensions.google_cloud_ai_platform.constants import (
 )
 from tfx.extensions.google_cloud_ai_platform.tuner.executor import (
     REMOTE_TRIALS_WORKING_DIR_KEY,
+    TUNING_ARGS_KEY,
 )
-from tfx.extensions.google_cloud_ai_platform.tuner.executor import TUNING_ARGS_KEY
 
 __all__ = [
     "BULK_INFERRER_SERVING_ARGS_KEY",

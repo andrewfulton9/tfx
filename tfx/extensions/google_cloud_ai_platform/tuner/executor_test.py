@@ -19,14 +19,17 @@ from typing import Any, Dict
 from unittest import mock
 
 import tensorflow as tf
+
 from tfx.extensions.google_cloud_ai_platform import constants
-from tfx.extensions.google_cloud_ai_platform.trainer import executor as ai_platform_trainer_executor
-from tfx.extensions.google_cloud_ai_platform.tuner import executor as ai_platform_tuner_executor
+from tfx.extensions.google_cloud_ai_platform.trainer import (
+  executor as ai_platform_trainer_executor,
+)
+from tfx.extensions.google_cloud_ai_platform.tuner import (
+  executor as ai_platform_tuner_executor,
+)
 from tfx.proto import tuner_pb2
 from tfx.types import standard_component_specs
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-from tfx.utils import proto_utils
+from tfx.utils import json_utils, name_utils, proto_utils
 
 
 class ExecutorTest(tf.test.TestCase):

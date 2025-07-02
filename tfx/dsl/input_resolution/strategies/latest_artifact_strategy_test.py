@@ -13,12 +13,12 @@
 # limitations under the License.
 """Test for LatestArtifactStrategy."""
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
 from tfx.orchestration import metadata
 from tfx.types import standard_artifacts
 from tfx.utils import test_case_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class LatestArtifactStrategyTest(test_case_utils.TfxTest):

@@ -15,8 +15,7 @@
 
 from typing import Optional
 
-from tfx.components.example_gen import component
-from tfx.components.example_gen import utils
+from tfx.components.example_gen import component, utils
 from tfx.dsl.components.base import executor_spec
 from tfx.examples.custom_components.presto_example_gen.presto_component import executor
 from tfx.examples.custom_components.presto_example_gen.proto import presto_config_pb2
@@ -44,6 +43,7 @@ class PrestoExampleGen(component.QueryBasedExampleGen):  # pylint: disable=prote
     """Constructs a PrestoExampleGen component.
 
     Args:
+    ----
       conn_config: Parameters for Presto connection client.
       query: Presto sql string, query result will be treated as a single split,
         can be overwritten by input_config.
@@ -55,6 +55,7 @@ class PrestoExampleGen(component.QueryBasedExampleGen):  # pylint: disable=prote
         size 2:1.
 
     Raises:
+    ------
       RuntimeError: Only one of query and input_config should be set. Or
       required host field in connection_config should be set.
     """

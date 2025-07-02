@@ -18,6 +18,7 @@ import os
 import sys
 
 import tensorflow as tf
+
 from tfx.utils import import_utils
 from tfx.utils.testdata import test_fn
 

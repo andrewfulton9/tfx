@@ -18,13 +18,12 @@ import os
 from typing import Dict, List, Optional, Tuple
 
 from absl import logging
+
 from tfx import types
 from tfx.components.example_gen import utils as example_gen_utils
 from tfx.proto import example_gen_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact_utils, standard_artifacts
 from tfx.utils import io_utils
-
 
 _DEFAULT_PAYLOAD_FORMAT = example_gen_pb2.PayloadFormat.FORMAT_TF_EXAMPLE
 _DEFAULT_FILE_FORMAT = 'tfrecords_gzip'
@@ -43,9 +42,11 @@ def get_payload_format(examples: types.Artifact) -> int:
   tf.Example format.
 
   Args:
+  ----
     examples: A standard_artifacts.Examples artifact.
 
   Returns:
+  -------
     payload_format: One of the enums in example_gen_pb2.PayloadFormat.
   """
   assert examples.type_name == standard_artifacts.Examples.TYPE_NAME, (
@@ -72,6 +73,7 @@ def set_payload_format(examples: types.Artifact, payload_format: int):
   """Sets the payload format custom property for `examples`.
 
   Args:
+  ----
     examples: A standard_artifacts.Examples artifact.
     payload_format: One of the enums in example_gen_pb2.PayloadFormat.
   """
@@ -89,9 +91,11 @@ def get_file_format(examples: types.Artifact) -> str:
   it is made by OSS ExampleGen and can be treated as 'tfrecords_gzip' format.
 
   Args:
+  ----
     examples: A standard_artifacts.Examples artifact.
 
   Returns:
+  -------
     One of the file format that tfx_bsl understands.
   """
   assert examples.type_name == standard_artifacts.Examples.TYPE_NAME, (
@@ -107,6 +111,7 @@ def set_file_format(examples: types.Artifact, file_format: str):
   """Sets the file format custom property for `examples`.
 
   Args:
+  ----
     examples: A standard_artifacts.Examples artifact.
     file_format: One of the file format that tfx_bsl understands.
   """
@@ -122,11 +127,13 @@ def get_custom_split_patterns_key_and_property(
   """Get a custom property name and value encoding custom split patterns.
 
   Args:
+  ----
     split_to_pattern: A dictionary mapping split names to file patterns. These
       patterns should be relative to the artifact's uri, which is expected to be
       an ancestor directory of split patterns.
 
   Returns:
+  -------
     A tuple consisting of a property name and value appropriate for
     artifact.set_string_custom_property.
   """

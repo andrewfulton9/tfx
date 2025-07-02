@@ -16,13 +16,11 @@
 from typing import Mapping
 
 import tensorflow as tf
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types.artifact import ArtifactState
-
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration import data_types, metadata
+from tfx.types import artifact_utils, standard_artifacts
+from tfx.types.artifact import ArtifactState
 
 
 class MetadataTest(tf.test.TestCase):

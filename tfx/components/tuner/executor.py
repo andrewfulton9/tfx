@@ -18,17 +18,15 @@ import os
 from typing import Any, Callable, Dict, List, Optional
 
 from absl import logging
-from keras_tuner.engine import base_tuner
-from keras_tuner.engine import trial
+from keras_tuner.engine import base_tuner, trial
+
 from tfx import types
 from tfx.components.trainer import fn_args_utils
 from tfx.components.util import udf_utils
 from tfx.dsl.components.base import base_executor
 from tfx.proto import tuner_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import proto_utils
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, proto_utils
 
 # Default file name for generated best hyperparameters file.
 _DEFAULT_BEST_HP_FILE_NAME = 'best_hyperparameters.txt'
@@ -59,7 +57,6 @@ def write_best_hyperparameters(
     tuner: base_tuner.BaseTuner,
     output_dict: Dict[str, List[types.Artifact]]) -> None:
   """Writes out best hyperpeameters and tuner results."""
-
   # Saves the best hyperParameters known to the given tuner instance.
   best_hparams_config = tuner.get_best_hyperparameters()[0].get_config()
   logging.info('Best HyperParameters: %s', best_hparams_config)

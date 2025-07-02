@@ -16,15 +16,31 @@
 # This is much like an __init__ file in that it only re-exports symbols. But
 # for historical reasons, it's not actually in the __init__ file.
 # pylint: disable=g-multiple-import,g-importing-member,unused-import,g-bad-import-order,redefined-builtin
-from tfx.dsl.placeholder.placeholder_base import Placeholder, Predicate, ListPlaceholder
-from tfx.dsl.placeholder.placeholder_base import dirname
-from tfx.dsl.placeholder.placeholder_base import logical_not, logical_and, logical_or
-from tfx.dsl.placeholder.placeholder_base import join, join_path, make_list
-from tfx.dsl.placeholder.placeholder_base import ListSerializationFormat, ProtoSerializationFormat
 from tfx.dsl.placeholder.artifact_placeholder import ArtifactPlaceholder, input, output
-from tfx.dsl.placeholder.runtime_placeholders import environment_variable, EnvironmentVariablePlaceholder
-from tfx.dsl.placeholder.runtime_placeholders import execution_invocation, ExecInvocationPlaceholder
-from tfx.dsl.placeholder.runtime_placeholders import exec_property, ExecPropertyPlaceholder
-from tfx.dsl.placeholder.runtime_placeholders import runtime_info, RuntimeInfoPlaceholder, RuntimeInfoKeys
-from tfx.dsl.placeholder.proto_placeholder import make_proto, MakeProtoPlaceholder
+from tfx.dsl.placeholder.placeholder_base import (
+    ListPlaceholder,
+    ListSerializationFormat,
+    Placeholder,
+    Predicate,
+    ProtoSerializationFormat,
+    dirname,
+    join,
+    join_path,
+    logical_and,
+    logical_not,
+    logical_or,
+    make_list,
+)
+from tfx.dsl.placeholder.proto_placeholder import MakeProtoPlaceholder, make_proto
+from tfx.dsl.placeholder.runtime_placeholders import (
+    EnvironmentVariablePlaceholder,
+    ExecInvocationPlaceholder,
+    ExecPropertyPlaceholder,
+    RuntimeInfoKeys,
+    RuntimeInfoPlaceholder,
+    environment_variable,
+    exec_property,
+    execution_invocation,
+    runtime_info,
+)
 from tfx.types.channel import ChannelWrappedPlaceholder

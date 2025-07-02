@@ -51,6 +51,7 @@ def generate_avro(src_file: str, output_file: str):
   """Generates avro file based on src file.
 
   Args:
+  ----
     src_file: path to Chicago taxi dataset.
     output_file: output path for avro file.
   """

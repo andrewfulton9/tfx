@@ -20,7 +20,6 @@ import papermill as pm
 import tensorflow_data_validation as tfdv
 import tensorflow_model_analysis as tfma
 import utils
-
 from ml_metadata.metadata_store import metadata_store
 from ml_metadata.proto import metadata_store_pb2
 
@@ -55,9 +54,11 @@ class TFXReadonlyMetadataStore(utils.ReadonlyMetadataStore):
     """Returns a `TFXReadonlyMetadataStore` based off a SQLITE db uri.
 
     Args:
+    ----
       filename_uri: A `str` indicating the path to the SQLITE db.
 
     Returns:
+    -------
       A `TFXReadonlyMetadataStore` based off a SQLITE db uri.
     """
     c = metadata_store_pb2.ConnectionConfig()
@@ -68,11 +69,13 @@ class TFXReadonlyMetadataStore(utils.ReadonlyMetadataStore):
     """Displays TFMA metrics for `model_id` sliced by `slicing_column`.
 
     Args:
+    ----
       model_id: A `int` indicating the id of a `TFXArtifactTypes.MODEL` artifact
       slicing_column: (Optional) A `str` indicating the slicing column for the
         TFMA metrics.
 
     Returns:
+    -------
       A SlicingMetricsViewer object if in Jupyter notebook; None if in Colab.
     """
     tfma_artifact = self.get_dest_artifact_of_type(model_id,
@@ -86,11 +89,13 @@ class TFXReadonlyMetadataStore(utils.ReadonlyMetadataStore):
     """Compares TFMA metrics for `model_id` and `other_model_id`.
 
     Args:
+    ----
       model_id: A `int` indicating the id of a `TFXArtifactTypes.MODEL` artifact
       other_model_id: A `int` indicating the id of another
         `TFXArtifactTypes.MODEL` artifact.
 
     Returns:
+    -------
       A TimeSeriesViewer object if in Jupyter notebook; None if in Colab.
     """
     tfma_artifact, other_tfma_artifact = (self.get_dest_artifact_of_type(
@@ -110,6 +115,7 @@ class TFXReadonlyMetadataStore(utils.ReadonlyMetadataStore):
     """Displays stats for `examples_id`.
 
     Args:
+    ----
       examples_id: A `int` indicating the id of a `TFXArtifactTypes.EXAMPLES`
         artifact.
       split: A `string` specifying the split name, by default 'train' is used.
@@ -129,6 +135,7 @@ class TFXReadonlyMetadataStore(utils.ReadonlyMetadataStore):
     """Compares stats for `examples_id` and `other_examples_id`.
 
     Args:
+    ----
       examples_id: A `int` indicating the id of one `TFXArtifactTypes.EXAMPLES`
         artifact.
       other_examples_id: A `int` indicating the id of another
@@ -174,6 +181,7 @@ class TFXReadonlyMetadataStore(utils.ReadonlyMetadataStore):
     """Returns a Tensorboard link for `model_id` and `other_model_ids`.
 
     Args:
+    ----
       model_id: A `int` indicating the id of a `TFXArtifactTypes.MODEL`
         artifact.
       *other_model_ids: (Optional) A list of `int` indicating the ids of other

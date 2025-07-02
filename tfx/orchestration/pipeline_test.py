@@ -18,20 +18,18 @@ import os
 from typing import Any, Dict, Optional, Type
 
 from tfx import types
-from tfx.dsl.components.base import base_beam_component
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import base_node
-from tfx.dsl.components.base import executor_spec
-from tfx.dsl.context_managers import dsl_context_registry
-from tfx.dsl.context_managers import test_utils
+from tfx.dsl.components.base import (
+  base_beam_component,
+  base_component,
+  base_executor,
+  base_node,
+  executor_spec,
+)
+from tfx.dsl.context_managers import dsl_context_registry, test_utils
 from tfx.dsl.placeholder import placeholder as ph
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ExecutionParameter
+from tfx.orchestration import metadata, pipeline
+from tfx.types.component_spec import ChannelParameter, ExecutionParameter
 from tfx.utils import test_case_utils
-
 
 Node = test_utils.Node
 TestContext = test_utils.TestContext

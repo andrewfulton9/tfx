@@ -16,23 +16,23 @@
 from typing import Any, Dict, NamedTuple, Optional
 
 from keras_tuner.engine import base_tuner
+
 from tfx import types
 from tfx.components.tuner import executor
 from tfx.components.util import udf_utils
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
-from tfx.proto import trainer_pb2
-from tfx.proto import tuner_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.dsl.components.base import base_component, executor_spec
+from tfx.proto import trainer_pb2, tuner_pb2
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
+
 
 # tuner: A BaseTuner that will be used for tuning.
 # fit_kwargs: Args to pass to tuner's run_trial function for fitting the
 #             model , e.g., the training and validation dataset. Required
 #             args depend on the tuner's implementation.
-TunerFnResult = NamedTuple('TunerFnResult', [('tuner', base_tuner.BaseTuner),
-                                             ('fit_kwargs', Dict[str, Any])])
+class TunerFnResult(NamedTuple):
+  tuner: base_tuner.BaseTuner
+  fit_kwargs: Dict[str, Any]
 """
 Return type of tuner_fn.
 
@@ -77,6 +77,7 @@ class Tuner(base_component.BaseComponent):
     """Construct a Tuner component.
 
     Args:
+    ----
       examples: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Examples`][tfx.v1.types.standard_artifacts.Examples], serving as
         the source of examples that are used in tuning (required).
       schema:  An optional [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Schema`][tfx.v1.types.standard_artifacts.Schema],

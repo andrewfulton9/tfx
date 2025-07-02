@@ -16,12 +16,13 @@
 import os
 from unittest import mock
 
-
 import tensorflow as tf
+from tensorflow.python.lib.io import (
+  file_io,  # pylint: disable=g-direct-tensorflow-import
+)
+
 from tfx.dsl.io import fileio
 from tfx.utils import io_utils
-
-from tensorflow.python.lib.io import file_io  # pylint: disable=g-direct-tensorflow-import
 
 
 class IoUtilsTest(tf.test.TestCase):

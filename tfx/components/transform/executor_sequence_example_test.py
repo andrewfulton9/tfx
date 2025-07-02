@@ -14,6 +14,7 @@
 """Tests for tfx.components.transform.executor with sequnce examples."""
 
 import os
+
 from tfx.components.testdata.module_file import transform_sequence_module
 from tfx.components.transform import executor_test
 from tfx.proto import example_gen_pb2

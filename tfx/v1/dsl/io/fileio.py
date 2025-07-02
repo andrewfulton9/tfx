@@ -14,21 +14,23 @@
 """TFX DSL file I/O module."""
 
 # pylint: disable=unused-import
-from tfx.dsl.io.fileio import copy
-from tfx.dsl.io.fileio import exists
-from tfx.dsl.io.fileio import glob
-from tfx.dsl.io.fileio import isdir
-from tfx.dsl.io.fileio import listdir
-from tfx.dsl.io.fileio import makedirs
-from tfx.dsl.io.fileio import mkdir
-from tfx.dsl.io.fileio import NotFoundError
-from tfx.dsl.io.fileio import open  # noqa: A002
-from tfx.dsl.io.fileio import PathType
-from tfx.dsl.io.fileio import remove
-from tfx.dsl.io.fileio import rename
-from tfx.dsl.io.fileio import rmtree
-from tfx.dsl.io.fileio import stat
-from tfx.dsl.io.fileio import walk
+from tfx.dsl.io.fileio import (
+    NotFoundError,
+    PathType,
+    copy,
+    exists,
+    glob,
+    isdir,
+    listdir,
+    makedirs,
+    mkdir,
+    open,  # noqa: A002
+    remove,
+    rename,
+    rmtree,
+    stat,
+    walk,
+)
 
 __all__ = [
     "NotFoundError",

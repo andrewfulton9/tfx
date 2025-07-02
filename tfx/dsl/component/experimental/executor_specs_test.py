@@ -14,12 +14,10 @@
 """Tests for tfx.dsl.component.experimental.executor_specs."""
 
 import tensorflow as tf
+
 from tfx import types
-from tfx.dsl.component.experimental import executor_specs
-from tfx.dsl.component.experimental import placeholders
-from tfx.types import channel
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
+from tfx.dsl.component.experimental import executor_specs, placeholders
+from tfx.types import channel, component_spec, standard_artifacts
 
 
 class TestComponentSpec(types.ComponentSpec):

@@ -16,14 +16,14 @@
 
 import os
 
-from absl import flags
 import tensorflow as tf
+from absl import flags
+from google.protobuf import text_format
+
 from tfx.components.distribution_validator import utils
 from tfx.proto import distribution_validator_pb2
 from tfx.types import standard_artifacts
 from tfx.utils import io_utils
-
-from google.protobuf import text_format
 
 FLAGS = flags.FLAGS
 

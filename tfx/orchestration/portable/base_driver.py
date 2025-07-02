@@ -27,6 +27,7 @@ class BaseDriver(abc.ABC):
     """Constructor.
 
     Args:
+    ----
       mlmd_connection: ML metadata connection.
     """
     self._mlmd_connection = mlmd_connection
@@ -38,10 +39,12 @@ class BaseDriver(abc.ABC):
     """Invokes the driver with inputs provided by the Launcher.
 
     Args:
+    ----
       execution_info: a `data_types.ExecutionInfo` instance representing the
         execution info needed for the driver execution.
 
     Returns:
+    -------
       An DriverOutput instance.
     """
     pass

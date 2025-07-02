@@ -15,10 +15,10 @@
 
 from unittest import mock
 
-import tensorflow as tf
-from tfx.orchestration import mlmd_connection_manager as mlmd_cm
-
 import ml_metadata as mlmd
+import tensorflow as tf
+
+from tfx.orchestration import mlmd_connection_manager as mlmd_cm
 
 
 class MlmdConnectionManagerTest(tf.test.TestCase):

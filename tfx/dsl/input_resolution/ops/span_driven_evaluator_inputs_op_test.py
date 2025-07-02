@@ -14,11 +14,8 @@
 """Tests for tfx.dsl.input_resolution.ops.span_driven_evaluator_inputs_op."""
 from typing import List, Optional
 
-
 from tfx import types
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import ops_utils
-from tfx.dsl.input_resolution.ops import test_utils
+from tfx.dsl.input_resolution.ops import ops, ops_utils, test_utils
 from tfx.orchestration.portable.input_resolution import exceptions
 
 

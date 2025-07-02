@@ -18,22 +18,19 @@ import json
 import os
 from typing import Any, Dict, List, MutableMapping, Optional, Union
 
+import yaml
 from absl import logging
+from google.protobuf import json_format
 from kfp.pipeline_spec import pipeline_spec_pb2
+
 from tfx import version
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_node
+from tfx.dsl.components.base import base_component, base_node
 from tfx.dsl.io import fileio
 from tfx.orchestration import pipeline as tfx_pipeline
 from tfx.orchestration import tfx_runner
 from tfx.orchestration.config import pipeline_config
 from tfx.orchestration.kubeflow.v2 import pipeline_builder
-from tfx.utils import telemetry_utils
-from tfx.utils import version_utils
-import yaml
-
-from google.protobuf import json_format
-
+from tfx.utils import telemetry_utils, version_utils
 
 KUBEFLOW_TFX_CMD = (
     'python',
@@ -80,6 +77,7 @@ def _write_pipeline_spec_to_file(
   """Writes PipelineSpec into a YAML or JSON (deprecated) file.
 
   Args:
+  ----
       pipeline_job_dict: The json dict of PipelineJob.
       pipeline_description: Description from pipeline docstring.
       package_path: The path to which to write the PipelineSpec.
@@ -104,10 +102,12 @@ def _extract_comments_from_pipeline_spec(
   """Extracts comments from the pipeline spec.
 
   Args:
+  ----
     pipeline_spec: The json dict of PipelineSpec.
     pipeline_description: Description from pipeline docstring.
 
   Returns:
+  -------
     Returns the comments from the pipeline spec
   """
   map_headings = {
@@ -198,6 +198,7 @@ class KubeflowV2DagRunnerConfig(pipeline_config.PipelineConfig):
     """Constructs a Kubeflow V2 runner config.
 
     Args:
+    ----
       display_name: Optional human-readable pipeline name. Defaults to the
         pipeline name passed into `KubeflowV2DagRunner.run()`.
       default_image: The default TFX image to be used if not overriden by per
@@ -246,6 +247,7 @@ class KubeflowV2DagRunner(tfx_runner.TfxRunner):
     """Constructs an KubeflowV2DagRunner for compiling pipelines.
 
     Args:
+    ----
       config: An KubeflowV2DagRunnerConfig object to specify runtime
         configuration when running the pipeline in Kubeflow.
       output_dir: An optional output directory into which to output the pipeline
@@ -269,6 +271,7 @@ class KubeflowV2DagRunner(tfx_runner.TfxRunner):
     gaurantee.
 
     Args:
+    ----
       exit_handler: exit handler component.
     """
     if not exit_handler:
@@ -285,6 +288,7 @@ class KubeflowV2DagRunner(tfx_runner.TfxRunner):
     """Compiles a pipeline DSL object into pipeline file.
 
     Args:
+    ----
       pipeline: TFX pipeline object.
       parameter_values: mapping from runtime parameter names to its values.
       write_out: set to True to actually write out the file to the place
@@ -292,9 +296,11 @@ class KubeflowV2DagRunner(tfx_runner.TfxRunner):
         JSON-serialized pipeline job spec.
 
     Returns:
+    -------
       Returns the JSON/YAML pipeline job spec.
 
     Raises:
+    ------
       RuntimeError: if trying to write out to a place occupied by an existing
       file.
     """

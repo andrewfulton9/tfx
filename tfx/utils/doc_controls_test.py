@@ -16,9 +16,11 @@
 
 
 import tensorflow as tf
+from tensorflow.tools.docs import (
+  doc_controls,  # pylint: disable=g-direct-tensorflow-import,g-import-not-at-top
+)
 
 from tfx.utils import doc_controls as tfx_doc_controls
-from tensorflow.tools.docs import doc_controls  # pylint: disable=g-direct-tensorflow-import,g-import-not-at-top
 
 
 class DocControlsTest(tf.test.TestCase):

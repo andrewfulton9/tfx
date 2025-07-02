@@ -14,6 +14,7 @@
 """Tests for tfx.components.util.examples_utils."""
 
 import tensorflow as tf
+
 from tfx.components.example_gen import utils
 from tfx.components.util import examples_utils
 from tfx.proto import example_gen_pb2

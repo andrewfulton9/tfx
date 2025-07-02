@@ -27,9 +27,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed features.
   """
   return {
@@ -42,10 +44,12 @@ def stats_options_updater_fn(unused_stats_type, stats_options):
   """Callback function for setting pre and post-transform stats options.
 
   Args:
+  ----
     unused_stats_type: a stats_options_util.StatsType object.
     stats_options: a tfdv.StatsOptions object.
 
   Returns:
+  -------
     An updated tfdv.StatsOptions object.
   """
   return stats_options

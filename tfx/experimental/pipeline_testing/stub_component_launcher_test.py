@@ -14,21 +14,17 @@
 """Tests for tfx.experimental.pipeline_testing.stub_component_launcher."""
 
 import os
-
 from unittest import mock
+
 import tensorflow as tf
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx.dsl.io import fileio
 from tfx.experimental.pipeline_testing import stub_component_launcher
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.orchestration import publisher
+from tfx.orchestration import data_types, metadata, publisher
 from tfx.orchestration.launcher import test_utils
 from tfx.types import channel_utils
-from tfx.utils import io_utils
-from tfx.utils import name_utils
-
-from ml_metadata.proto import metadata_store_pb2
+from tfx.utils import io_utils, name_utils
 
 
 class StubComponentLauncherTest(tf.test.TestCase):

@@ -15,17 +15,15 @@
 
 import os
 
-
 import tensorflow_data_validation as tfdv
 import tensorflow_model_analysis as tfma
+from tensorflow_metadata.proto.v0 import anomalies_pb2
 
 from tfx import types
 from tfx.components.statistics_gen import stats_artifact_utils
 from tfx.orchestration.experimental.interactive import visualizations
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact_utils, standard_artifacts
 from tfx.utils import io_utils
-from tensorflow_metadata.proto.v0 import anomalies_pb2
 
 
 class ExampleAnomaliesVisualization(visualizations.ArtifactVisualization):
@@ -34,8 +32,10 @@ class ExampleAnomaliesVisualization(visualizations.ArtifactVisualization):
   ARTIFACT_TYPE = standard_artifacts.ExampleAnomalies
 
   def display(self, artifact: types.Artifact):
-    from IPython.core.display import display  # pylint: disable=g-import-not-at-top
-    from IPython.core.display import HTML  # pylint: disable=g-import-not-at-top
+    from IPython.core.display import (
+      HTML,  # pylint: disable=g-import-not-at-top
+      display,  # pylint: disable=g-import-not-at-top
+    )
     for split in artifact_utils.decode_split_names(artifact.split_names):
       display(HTML('<div><b>%r split:</b></div><br/>' % split))
       anomalies_path = io_utils.get_only_uri_in_dir(
@@ -56,8 +56,10 @@ class ExampleStatisticsVisualization(visualizations.ArtifactVisualization):
   ARTIFACT_TYPE = standard_artifacts.ExampleStatistics
 
   def display(self, artifact: types.Artifact):
-    from IPython.core.display import display  # pylint: disable=g-import-not-at-top
-    from IPython.core.display import HTML  # pylint: disable=g-import-not-at-top
+    from IPython.core.display import (
+      HTML,  # pylint: disable=g-import-not-at-top
+      display,  # pylint: disable=g-import-not-at-top
+    )
     # Workaround needed to improve TFDV notebook visualization legibility in
     # dark mode.
     display(HTML('<style>html[theme=dark] iframe {background: white;}</style>'))
@@ -73,8 +75,10 @@ class ModelEvaluationVisualization(visualizations.ArtifactVisualization):
   ARTIFACT_TYPE = standard_artifacts.ModelEvaluation
 
   def display(self, artifact: types.Artifact):
-    from IPython.core.display import display  # pylint: disable=g-import-not-at-top
-    from IPython.core.display import HTML  # pylint: disable=g-import-not-at-top
+    from IPython.core.display import (
+      HTML,  # pylint: disable=g-import-not-at-top
+      display,  # pylint: disable=g-import-not-at-top
+    )
     # Workaround needed to improve TFMA notebook visualization legibility in
     # dark mode.
     display(HTML('<style>html[theme=dark] iframe {background: white;}</style>'))

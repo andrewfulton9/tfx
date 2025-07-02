@@ -18,11 +18,10 @@ import sys
 import time
 from typing import Any, Dict, Optional, Union
 
+import tensorflow as tf
 from absl import logging
 from google.cloud import aiplatform
-from googleapiclient import discovery
-from googleapiclient import errors
-import tensorflow as tf
+from googleapiclient import discovery, errors
 
 _POLLING_INTERVAL_IN_SECONDS = 30
 
@@ -51,6 +50,7 @@ def _get_tf_runtime_version(tf_version: str) -> str:
   This is only used for prediction service.
 
   Args:
+  ----
     tf_version: version string returned from `tf.__version__`.
   Returns: same major.minor version of installed tensorflow, except when
     overriden by _TF_COMPATIBILITY_OVERRIDE.
@@ -74,6 +74,7 @@ class AbstractPredictionClient(abc.ABC):
     """Deploys a model for serving with AI Platform.
 
     Args:
+    ----
       serving_path: The path to the model. Must be a GCS URI.
       model_version_name: Model version for CAIP model being deployed, or model
         name for the Vertex model being deployed. Must be different from what is
@@ -91,9 +92,11 @@ class AbstractPredictionClient(abc.ABC):
       **kwargs: Extra keyword args.
 
     Returns:
+    -------
       The resource name of the deployed CAIP model version or Vertex model.
 
     Raises:
+    ------
       RuntimeError: if an error is encountered when trying to push.
     """
     pass
@@ -105,15 +108,18 @@ class AbstractPredictionClient(abc.ABC):
     """Creates a new CAIP model or Vertex endpoint for serving with AI Platform if not exists.
 
     Args:
+    ----
       labels: The dict of labels that will be attached to this CAIP job or
         Vertex endpoint.
       ai_platform_serving_args: Dictionary containing arguments for pushing to
         AI Platform.
 
     Returns:
+    -------
       Whether a new CAIP model or Vertex endpoint is created.
 
     Raises:
+    ------
       RuntimeError if CAIP model or Vertex endpoint creation failed.
     """
     pass
@@ -128,6 +134,7 @@ class AbstractPredictionClient(abc.ABC):
     """Deletes a CAIP model and model version or Vertex endpoint and model if exists.
 
     Args:
+    ----
       ai_platform_serving_args: Dictionary containing arguments for pushing to
         AI Platform.
       model_version_name: Model version or Vertex endpoint being deleted.
@@ -136,6 +143,7 @@ class AbstractPredictionClient(abc.ABC):
         deleted.
 
     Raises:
+    ------
       RuntimeError: if an error is encountered when trying to delete.
     """
     pass
@@ -159,6 +167,7 @@ class CAIPTfxPredictionClient(AbstractPredictionClient):
     """Deploys a model for serving with AI Platform.
 
     Args:
+    ----
       serving_path: The path to the model. Must be a GCS URI.
       model_version_name: Version of the model being deployed. Must be different
         from what is currently being served.
@@ -182,9 +191,11 @@ class CAIPTfxPredictionClient(AbstractPredictionClient):
       **kwargs: Extra keyword args.
 
     Returns:
+    -------
       The resource name of the deployed model version.
 
     Raises:
+    ------
       RuntimeError: if an error is encountered when trying to push.
     """
     logging.info(
@@ -254,14 +265,17 @@ class CAIPTfxPredictionClient(AbstractPredictionClient):
     """Creates a new model for serving with AI Platform if not exists.
 
     Args:
+    ----
       labels: The dict of labels that will be attached to this job.
       ai_platform_serving_args: Dictionary containing arguments for pushing to
         AI Platform.
 
     Returns:
+    -------
       Whether a new model is created.
 
     Raises:
+    ------
       RuntimeError if model creation failed.
     """
     model_name = ai_platform_serving_args['model_name']
@@ -288,13 +302,16 @@ class CAIPTfxPredictionClient(AbstractPredictionClient):
     """Wait for a long running operation.
 
     Args:
+    ----
       operation: The operation to wait for.
       method_name: Operation method name for logging.
 
     Returns:
+    -------
       Operation completion status.
 
     Raises:
+    ------
       RuntimeError: If the operation completed with an error.
     """
     status_resc = self._client.projects().operations().get(
@@ -318,6 +335,7 @@ class CAIPTfxPredictionClient(AbstractPredictionClient):
     """Deletes a model from Google Cloud AI Platform if exists.
 
     Args:
+    ----
       ai_platform_serving_args: Dictionary containing arguments for pushing to
         AI Platform. For the full set of parameters supported, refer to
         https://cloud.google.com/ml-engine/reference/rest/v1/projects.models
@@ -328,6 +346,7 @@ class CAIPTfxPredictionClient(AbstractPredictionClient):
         model version with model_version_name.
 
     Raises:
+    ------
       RuntimeError: if an error is encountered when trying to delete.
     """
     model_name = ai_platform_serving_args['model_name']
@@ -391,6 +410,7 @@ class VertexPredictionClient(AbstractPredictionClient):
     """Deploys a model for serving with AI Platform.
 
     Args:
+    ----
       serving_path: The path to the model. Must be a GCS URI. Required for model
         creation. If not specified, it is assumed that model with model_name
         exists in AIP.
@@ -420,6 +440,7 @@ class VertexPredictionClient(AbstractPredictionClient):
       **kwargs: Extra keyword args.
 
     Returns:
+    -------
       The resource name of the deployed model.
     """
     logging.info(
@@ -491,14 +512,17 @@ class VertexPredictionClient(AbstractPredictionClient):
     """Creates a new endpoint for serving with AI Platform if not exists.
 
     Args:
+    ----
       labels: The dict of labels that will be attached to this Vertex endpoint.
       ai_platform_serving_args: Dictionary containing arguments for pushing to
         AI Platform.
 
     Returns:
+    -------
       The endpoint if it's created, otherwise None.
 
     Raises:
+    ------
       RuntimeError if endpoint creation failed.
     """
     endpoint = None
@@ -529,6 +553,7 @@ class VertexPredictionClient(AbstractPredictionClient):
     """Deletes a model from Google Cloud AI Platform if model exists.
 
     Args:
+    ----
       ai_platform_serving_args: Dictionary containing arguments for pushing to
         AI Platform. For the full set of parameters supported, refer to
         https://googleapis.dev/python/aiplatform/latest/aiplatform.html?highlight=deploy#google.cloud.aiplatform.Model.deploy.
@@ -539,6 +564,7 @@ class VertexPredictionClient(AbstractPredictionClient):
         the model with model_version_name at the endpoint.
 
     Raises:
+    ------
       RuntimeError: if an error is encountered when trying to delete.
     """
     endpoint = self._get_endpoint(ai_platform_serving_args)
@@ -599,14 +625,17 @@ class VertexPredictionClient(AbstractPredictionClient):
     """Gets an endpoint from Google Cloud AI Platform if endpoint exists.
 
     Args:
+    ----
       ai_platform_serving_args: Dictionary containing arguments for pushing to
         AI Platform. For the full set of parameters supported, refer to
         https://googleapis.dev/python/aiplatform/latest/aiplatform.html?highlight=deploy#google.cloud.aiplatform.Model.deploy.
 
     Raises:
+    ------
       RuntimeError: if an error is encountered when trying to get the endpoint
 
     Returns:
+    -------
       The endpoint
     """
     endpoint_name = ai_platform_serving_args['endpoint_name']
@@ -631,10 +660,12 @@ def get_prediction_client(
   """Gets the job client.
 
   Args:
+  ----
     api: Google API client resource.
     enable_vertex: Whether to enable Vertex
 
   Returns:
+  -------
     The corresponding prediction client.
   """
   if enable_vertex:

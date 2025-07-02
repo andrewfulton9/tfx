@@ -14,9 +14,9 @@
 """Module for DslContextRegistry."""
 
 import collections
-from collections.abc import Iterable, Iterator
 import contextlib
 import threading
+from collections.abc import Iterable, Iterator
 from typing import Any, Optional
 
 from tfx.dsl.context_managers import dsl_context
@@ -122,6 +122,7 @@ class DslContextRegistry:
     pipeline lowering and compilation. Do not use it directly.
 
     Args:
+    ----
       node_ids: Node IDs to remove.
     """
     self._check_mutable()
@@ -151,10 +152,15 @@ class DslContextRegistry:
     """Gets all BaseNodes that belongs to the context.
 
     Args:
+    ----
       context: A DslContext that has been put to the registry.
+
     Raises:
+    ------
       ValueError: If the context is unknown to the registry.
+
     Returns:
+    -------
       Nodes that belong to the context, possibly empty list.
     """
     if context not in self._all_contexts:
@@ -165,10 +171,15 @@ class DslContextRegistry:
     """Gets all dsl_context.DslContexts that the node belongs to.
 
     Args:
+    ----
       node: A BaseNode that has been put to the registry.
+
     Raises:
+    ------
       ValueError: If the node is unknown to the registry.
+
     Returns:
+    -------
       List of DslContexts that wraps the node, ordered by outer-most to
       inner-most, possibly empty list.
     """
@@ -197,10 +208,12 @@ class DslContextRegistry:
     contexts from subpipeline registry.
 
     Args:
+    ----
       nodes: List of nodes that the pipeline contains. The pipeline itself does
         not belong to the list.
 
     Returns:
+    -------
       A new DSL context registry that contains the argument nodes.
     """
     # pylint:disable=protected-access

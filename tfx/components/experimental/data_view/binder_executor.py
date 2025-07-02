@@ -16,12 +16,12 @@ import json
 from typing import Any, Dict, List
 
 from absl import logging
+
 from tfx import types
 from tfx.components.experimental.data_view import constants
 from tfx.dsl.components.base import base_executor
 from tfx.orchestration import data_types_utils
 from tfx.types import artifact_utils
-
 
 # Keys for input_dict.
 _INPUT_EXAMPLES_KEY = 'input_examples'

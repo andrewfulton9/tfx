@@ -20,9 +20,11 @@ def is_model_blessed(model_blessing: types.Artifact) -> bool:
   """Returns whether model is blessed by upstream ModelValidator.
 
   Args:
+  ----
     model_blessing: model blessing artifact from model_validator.
 
   Returns:
+  -------
     True if the model is blessed by validator.
   """
   return model_blessing.get_int_custom_property('blessed') == 1
@@ -35,9 +37,11 @@ def is_infra_validated(infra_blessing: types.Artifact) -> bool:
   """Returns whether model is infra blessed by upstream InfraValidator.
 
   Args:
+  ----
     infra_blessing: A `InfraBlessing` artifact from infra validator.
 
   Returns:
+  -------
     Whether model is infra validated or not.
   """
   return infra_blessing.get_int_custom_property('blessed') == 1

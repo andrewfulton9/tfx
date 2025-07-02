@@ -20,22 +20,21 @@ from typing import Any, Mapping, Sequence
 from unittest import mock
 
 from absl.testing import parameterized
+from google.protobuf import json_format, struct_pb2
 from kfp.pipeline_spec import pipeline_spec_pb2
+
 from tfx import version
 from tfx.components.evaluator import constants
 from tfx.components.evaluator import executor as evaluator_executor
 from tfx.dsl.io import fileio
 from tfx.orchestration.kubeflow.v2.container import kubeflow_v2_run_executor
-from tfx.types import artifact
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import name_utils
-from tfx.utils import test_case_utils
-
-from google.protobuf import struct_pb2
-from google.protobuf import json_format
+from tfx.types import (
+  artifact,
+  artifact_utils,
+  standard_artifacts,
+  standard_component_specs,
+)
+from tfx.utils import io_utils, name_utils, test_case_utils
 
 _TEST_OUTPUT_METADATA_JSON = "testdir/outputmetadata.json"
 
@@ -192,7 +191,6 @@ class KubeflowV2RunExecutorTest(
   )
   def testDynamicExecutionProperties(self, use_pipeline_spec_2_1):
     """Test the entrypoint with dynamic execution properties."""
-
     test_value_artifact_float_dir = os.path.join(self.tmp_dir,
                                                  "test_value_artifact_float")
     test_value_artifact_string_dir = os.path.join(self.tmp_dir,

@@ -14,8 +14,9 @@
 """Tests for tfx.extensions.google_cloud_big_query.utils."""
 
 import tensorflow as tf
-from tfx.extensions.google_cloud_big_query import utils
 from google.protobuf import text_format
+
+from tfx.extensions.google_cloud_big_query import utils
 
 _EXAMPLE_1 = text_format.Parse(
     """

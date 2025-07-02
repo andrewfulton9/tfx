@@ -17,6 +17,8 @@ import collections
 import enum
 from typing import Dict, List, Optional, Tuple
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.input_resolution import resolver_op
 from tfx.dsl.input_resolution.ops import ops_utils
@@ -24,11 +26,8 @@ from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.orchestration.portable.input_resolution.mlmd_resolver import metadata_resolver
 from tfx.orchestration.portable.mlmd import event_lib
 from tfx.orchestration.portable.mlmd import filter_query_builder as q
-from tfx.types import artifact_utils
-from tfx.types import external_artifact_utils
+from tfx.types import artifact_utils, external_artifact_utils
 from tfx.utils import typing_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 # Valid artifact states for LatestPolicyModel.
 #
@@ -300,11 +299,13 @@ class LatestPolicyModel(
     and ModelPush artifacts are supported.
 
     Args:
+    ----
       input_dict: An input dict containing "model", "model_blessing",
         "model_infra_blessing" as keys and lists of Model, ModelBlessing, and
         ModelInfraBlessing artifacts as values, respectively.
 
     Returns:
+    -------
       A dictionary containing the latest Model artifact, as well as the
       ModelBlessing, ModelInfraBlessing, and/or ModelPush based on the Policy.
 
@@ -323,6 +324,7 @@ class LatestPolicyModel(
       }
 
     Raises:
+    ------
       InvalidArgument: If the models are not Model artifacts.
       SkipSignal: If raise_skip_signal is True and one of the following:
         1. The input_dict is empty.

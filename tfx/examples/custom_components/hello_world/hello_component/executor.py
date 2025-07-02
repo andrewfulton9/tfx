@@ -24,7 +24,6 @@ import json
 import os
 from typing import Any, Dict, List
 
-
 from tfx import types
 from tfx.dsl.components.base import base_executor
 from tfx.dsl.io import fileio
@@ -48,6 +47,7 @@ class Executor(base_executor.BaseExecutor):
     might read and write artifacts of other types.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts, including:
         - input_data: A list of type `standard_artifacts.Examples` which will
           often contain two splits, 'train' and 'eval'.
@@ -59,9 +59,11 @@ class Executor(base_executor.BaseExecutor):
           are declared in the same pipeline.
 
     Returns:
+    -------
       None
 
     Raises:
+    ------
       OSError and its subclasses
     """
     self._log_startup(input_dict, output_dict, exec_properties)

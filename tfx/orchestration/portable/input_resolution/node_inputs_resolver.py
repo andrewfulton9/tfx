@@ -155,20 +155,21 @@ import textwrap
 from typing import Any, Dict, Iterable, List, Mapping, Sequence, Tuple, TypeVar
 
 from absl import logging
+
 from tfx import types
 from tfx.dsl.compiler import placeholder_utils
 from tfx.orchestration import metadata
 from tfx.orchestration import mlmd_connection_manager as mlmd_cm
 from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable.input_resolution import exceptions
-from tfx.orchestration.portable.input_resolution import input_graph_resolver
-from tfx.orchestration.portable.input_resolution import partition_utils
-from tfx.orchestration.portable.input_resolution import channel_resolver
+from tfx.orchestration.portable.input_resolution import (
+  channel_resolver,
+  exceptions,
+  input_graph_resolver,
+  partition_utils,
+)
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.types import artifact_utils
-from tfx.utils import topsort
-from tfx.utils import typing_utils
-from tfx.utils import governance_utils
+from tfx.utils import governance_utils, topsort, typing_utils
 
 _T = TypeVar('_T')
 _DataType = pipeline_pb2.InputGraph.DataType
@@ -352,6 +353,7 @@ def _resolve_input_graph_ref(
   (i.e. `InputGraphRef` with the same `graph_id`).
 
   Args:
+  ----
     handle_like: A `mlmd_cm.HandleLike` instance.
     node_inputs: A `NodeInputs` proto.
     input_key: A target input key whose corresponding `InputSpec` has an

@@ -17,9 +17,7 @@ import tensorflow as tf
 
 from tfx.components.bulk_inferrer import component
 from tfx.proto import bulk_inferrer_pb2
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import channel_utils, standard_artifacts, standard_component_specs
 
 
 class ComponentTest(tf.test.TestCase):

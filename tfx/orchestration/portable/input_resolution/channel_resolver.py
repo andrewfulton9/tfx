@@ -15,16 +15,16 @@
 
 from typing import List, Optional, Sequence, Tuple
 
+import ml_metadata as mlmd
 from absl import logging
+from ml_metadata import errors
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.orchestration import mlmd_connection_manager as mlmd_cm
 from tfx.orchestration.portable.mlmd import event_lib
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.types import artifact_utils
-
-import ml_metadata as mlmd
-from ml_metadata import errors
-from ml_metadata.proto import metadata_store_pb2
 
 
 # TODO(b/233044350): Move to a general metadata utility.

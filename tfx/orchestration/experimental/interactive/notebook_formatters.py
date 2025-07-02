@@ -26,7 +26,7 @@ from tfx.orchestration.experimental.interactive.execution_result import Executio
 from tfx.types.artifact import Artifact
 from tfx.types.channel import Channel
 
-STATIC_HTML_CONTENTS = u"""<style>
+STATIC_HTML_CONTENTS = """<style>
 .tfx-object.expanded {
   padding: 4px 8px 4px 8px;
   background: white;
@@ -109,6 +109,7 @@ class NotebookFormatter:
     """Constructs a NotebookFormatter.
 
     Args:
+    ----
       cls: The TFX class to be formated by this NotebookFormatter instance.
       attributes: A list of string attributes that are to be displayed by this
         formatter. Can be a nested field specifier with nested attribute names
@@ -145,12 +146,14 @@ class NotebookFormatter:
     """Render a given object as an HTML string.
 
     Args:
+    ----
       obj: The object to be rendered.
       expanded: Whether the object is to be expanded by default.
       seen_elements: Optionally, a set of seen elements to not re-render to
         prevent a rendering cycle.
 
     Returns:
+    -------
       Formatted HTML string representing the object, for notebook display.
     """
     seen_elements = seen_elements or set()

@@ -17,17 +17,15 @@ import collections
 from typing import Any, Dict, Optional, cast
 
 from absl import logging
+from google.protobuf import message
 from kubernetes import client
+
 from tfx.dsl.compiler import placeholder_utils
 from tfx.dsl.component.experimental import executor_specs
 from tfx.orchestration.launcher import container_common
-from tfx.orchestration.portable import base_executor_operator
-from tfx.orchestration.portable import data_types
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_result_pb2
+from tfx.orchestration.portable import base_executor_operator, data_types
+from tfx.proto.orchestration import executable_spec_pb2, execution_result_pb2
 from tfx.utils import kube_utils
-
-from google.protobuf import message
 
 
 class KubernetesExecutorOperator(base_executor_operator.BaseExecutorOperator):
@@ -53,17 +51,19 @@ class KubernetesExecutorOperator(base_executor_operator.BaseExecutorOperator):
     `Succeeded` or `Failed` state.
 
     Args:
+    ----
       execution_info: All the information that the launcher provides.
 
     Raises:
+    ------
       RuntimeError: when the pod is in `Failed` state or unexpected failure from
       Kubernetes API.
 
     Returns:
+    -------
       An ExecutorOutput instance
 
     """
-
     context = placeholder_utils.ResolutionContext(
         exec_info=execution_info,
         executor_spec=self._executor_spec,
@@ -171,10 +171,12 @@ class KubernetesExecutorOperator(base_executor_operator.BaseExecutorOperator):
     the pod spec from component config.
 
     Args:
+    ----
       pod_name: The name of the pod.
       container_spec: The resolved executor container spec.
 
     Returns:
+    -------
       The pod manifest in dictionary format.
     """
     pod_manifest = collections.defaultdict(dict)

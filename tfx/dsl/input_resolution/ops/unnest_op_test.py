@@ -14,10 +14,9 @@
 """Tests for tfx.dsl.input_resolution.ops.unnest_op."""
 
 import tensorflow as tf
-from tfx.dsl.input_resolution import resolver_function
-from tfx.dsl.input_resolution import resolver_op
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import test_utils
+
+from tfx.dsl.input_resolution import resolver_function, resolver_op
+from tfx.dsl.input_resolution.ops import ops, test_utils
 from tfx.orchestration.portable.input_resolution import exceptions
 
 

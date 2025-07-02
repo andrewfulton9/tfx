@@ -23,11 +23,10 @@ import re
 from typing import List
 
 from absl import logging
-from packaging import version
-from tfx.types import artifact as artifact_lib
-
 from ml_metadata.proto import metadata_store_pb2
+from packaging import version
 
+from tfx.types import artifact as artifact_lib
 
 _Artifact = artifact_lib.Artifact
 
@@ -73,13 +72,16 @@ def get_split_uris(artifact_list: List[_Artifact], split: str) -> List[str]:
   """Get the uris of Artifacts with matching split from given list.
 
   Args:
+  ----
     artifact_list: A list of Artifact objects.
     split: Name of split.
 
   Returns:
+  -------
     A list of uris of Artifact object in artifact_list with matching split.
 
   Raises:
+  ------
     ValueError: If number of artifacts matching the split is not equal to
       number of input artifacts.
   """
@@ -105,13 +107,16 @@ def get_split_uri(artifact_list: List[_Artifact], split: str) -> str:
   """Get the uri of Artifact with matching split from given list.
 
   Args:
+  ----
     artifact_list: A list of Artifact objects whose length must be one.
     split: Name of split.
 
   Returns:
+  -------
     The uri of Artifact object in artifact_list with matching split.
 
   Raises:
+  ------
     ValueError: If number with matching split in artifact_list is not one.
   """
   artifact_split_uris = get_split_uris(artifact_list, split)

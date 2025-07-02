@@ -14,22 +14,19 @@
 """Tests for tfx.types.artifact."""
 
 import gc
-import json
 import importlib
-import pytest
+import json
 import textwrap
 from unittest import mock
 
-from absl import logging
+import pytest
 import tensorflow as tf
-from tfx.types import artifact
-from tfx.types import system_artifacts
-from tfx.types import value_artifact
-from tfx.utils import json_utils
-
-from google.protobuf import struct_pb2
-from google.protobuf import json_format
+from absl import logging
+from google.protobuf import json_format, struct_pb2
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.types import artifact, system_artifacts, value_artifact
+from tfx.utils import json_utils
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -151,7 +148,7 @@ class _MyValueArtifact(value_artifact.ValueArtifact):
 
 
 # Mock values for string artifact.
-_STRING_VALUE = u'This is a string'
+_STRING_VALUE = 'This is a string'
 _BYTE_VALUE = b'This is a string'
 
 # Mock paths for string artifact.

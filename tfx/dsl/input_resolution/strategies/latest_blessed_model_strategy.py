@@ -15,15 +15,17 @@
 
 from typing import Dict, List, Optional
 
+import ml_metadata as mlmd
+
 from tfx import types
 from tfx.dsl.components.common import resolver
 from tfx.types import standard_artifacts
 from tfx.utils import doc_controls
 
-import ml_metadata as mlmd
-
 try:
-  from tfx.components.evaluator import constants as eval_consts  # pylint: disable=g-import-not-at-top
+  from tfx.components.evaluator import (
+    constants as eval_consts,  # pylint: disable=g-import-not-at-top
+  )
   _CURRENT_MODEL_ID = eval_consts.ARTIFACT_PROPERTY_CURRENT_MODEL_ID_KEY
   _BLESSED = eval_consts.ARTIFACT_PROPERTY_BLESSED_KEY
 except ImportError:
@@ -81,14 +83,17 @@ class LatestBlessedModelStrategy(resolver.ResolverStrategy):
     """Resolves artifacts from channels by querying MLMD.
 
     Args:
+    ----
       store: An MLMD MetadataStore object.
       input_dict: The input_dict to resolve from.
 
     Returns:
+    -------
       The latest blessed Model and its corresponding [ModelBlessing][tfx.v1.types.standard_artifacts.ModelBlessing], respectively
         in the same input channel they were contained to.
 
     Raises:
+    ------
       RuntimeError: if input_dict contains unsupported artifact types.
     """
     model_channel_key = None

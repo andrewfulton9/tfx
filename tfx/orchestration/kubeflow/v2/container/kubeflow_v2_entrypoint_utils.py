@@ -16,19 +16,16 @@
 import hashlib
 from typing import Any, Dict, List, Mapping, MutableMapping, Optional
 
+import yaml
 from absl import logging
+from google.protobuf import json_format, struct_pb2
 from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.components.evaluator import constants
 from tfx.orchestration.kubeflow.v2 import compiler_utils
-from tfx.types import artifact
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
+from tfx.types import artifact, artifact_utils, standard_component_specs
 from tfx.utils import import_utils
-import yaml
-
-from google.protobuf import struct_pb2
-from google.protobuf import json_format
-from ml_metadata.proto import metadata_store_pb2
 
 # Old execution property name. This is mapped to utils.INPUT_BASE_KEY.
 _OLD_INPUT_BASE_PROPERTY_NAME = 'input_base_uri'
@@ -48,10 +45,12 @@ def parse_raw_artifact_dict(
   TFX Artifact Python objects.
 
   Args:
+  ----
     inputs_dict: the mapping field in the proto message.
     name_from_id: the dict used to store the id to string-typed name mapping.
 
   Returns:
+  -------
     dictionary of the parsed Python Artifact objects.
   """
   if name_from_id is None:
@@ -124,6 +123,7 @@ def parse_execution_properties(
   proto messages, to a Python dict, whose value is a Python primitive object.
 
   Args:
+  ----
     google_parameters: the mapping field in the proto message, representing the
       execution properties of the component.
     kubeflow_parameters: the mapping field in the proto message, representing
@@ -133,6 +133,7 @@ def parse_execution_properties(
       types of exec_properties.
 
   Returns:
+  -------
     dictionary of the parsed execution properties.
   """
   result = {}

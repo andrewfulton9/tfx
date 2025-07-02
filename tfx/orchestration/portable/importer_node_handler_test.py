@@ -17,8 +17,7 @@ import os
 from tfx import version as tfx_version
 from tfx.dsl.compiler import constants
 from tfx.orchestration import metadata
-from tfx.orchestration.portable import importer_node_handler
-from tfx.orchestration.portable import runtime_parameter_utils
+from tfx.orchestration.portable import importer_node_handler, runtime_parameter_utils
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.utils import test_case_utils
 

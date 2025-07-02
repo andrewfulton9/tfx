@@ -16,8 +16,11 @@
 from typing import Any, Dict, List, Optional, Union
 
 import tensorflow as tf
-from tfx.dsl.component.experimental.json_compat import check_strict_json_compat
-from tfx.dsl.component.experimental.json_compat import is_json_compatible
+
+from tfx.dsl.component.experimental.json_compat import (
+  check_strict_json_compat,
+  is_json_compatible,
+)
 
 
 class JsonCompatTest(tf.test.TestCase):

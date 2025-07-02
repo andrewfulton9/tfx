@@ -17,8 +17,8 @@ import json
 from typing import Any, Dict, Optional
 
 import apache_beam as beam
-from google.cloud import bigquery
 import tensorflow as tf
+from google.cloud import bigquery
 
 from tfx.components.example_gen import base_example_gen_executor
 from tfx.extensions.google_cloud_big_query import utils
@@ -31,6 +31,7 @@ class _BigQueryConverter:
     """Instantiate a _BigQueryConverter object.
 
     Args:
+    ----
       query: the query statement to get the type information.
       project_id: optional. The GCP project ID to run the query job. Default to
         the GCP project ID set by the gcloud environment on the machine.
@@ -56,11 +57,13 @@ def _BigQueryToExample(pipeline: beam.Pipeline, exec_properties: Dict[str, Any],
   """Read from BigQuery and transform to TF examples.
 
   Args:
+  ----
     pipeline: beam pipeline.
     exec_properties: A dict of execution properties.
     split_pattern: Split.pattern in Input config, a BigQuery sql string.
 
   Returns:
+  -------
     PCollection of TF examples.
   """
   project = utils.parse_gcp_project(exec_properties['_beam_pipeline_args'])

@@ -16,11 +16,9 @@ from typing import Optional
 
 from tfx import types
 from tfx.components.experimental.data_view import binder_executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, executor_spec
 from tfx.types import standard_artifacts
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ComponentSpec
+from tfx.types.component_spec import ChannelParameter, ComponentSpec
 
 
 class _DataViewBinderComponentSpec(ComponentSpec):
@@ -46,6 +44,7 @@ class DataViewBinder(base_component.BaseComponent):
   except for the additional information attached.
 
   Example:
+  -------
   ```
     # We assume Examples are imported by ExampleGen
     example_gen = ...

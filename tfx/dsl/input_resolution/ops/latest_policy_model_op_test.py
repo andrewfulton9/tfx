@@ -15,17 +15,19 @@
 
 from typing import Dict, List, Optional
 
-from absl.testing import parameterized
 import tensorflow as tf
+from absl.testing import parameterized
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.input_resolution import resolver_op
-from tfx.dsl.input_resolution.ops import latest_policy_model_op
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import ops_utils
-from tfx.dsl.input_resolution.ops import test_utils
+from tfx.dsl.input_resolution.ops import (
+    latest_policy_model_op,
+    ops,
+    ops_utils,
+    test_utils,
+)
 from tfx.orchestration.portable.input_resolution import exceptions
-
-from ml_metadata.proto import metadata_store_pb2
 
 _LATEST_EXPORTED = latest_policy_model_op.Policy.LATEST_EXPORTED
 _LATEST_EVALUATOR_BLESSED = latest_policy_model_op.Policy.LATEST_EVALUATOR_BLESSED

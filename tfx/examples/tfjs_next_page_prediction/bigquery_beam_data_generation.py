@@ -16,8 +16,8 @@
 from typing import Any, Dict, List, Union
 
 import apache_beam as beam
-from apache_beam.io.gcp.internal.clients import bigquery
 import tensorflow as tf
+from apache_beam.io.gcp.internal.clients import bigquery
 
 
 def _sanitize_page_path(page_path: str):
@@ -78,7 +78,6 @@ class ExampleGeneratingDoFn(beam.DoFn):
 
 def run_beam_pipeline():
   """Run the apache beam pipeline with the specified flags."""
-
   # Params used for running the Beam pipeline. Update these based on your
   # requirements.
   params = {}

@@ -16,6 +16,7 @@
 from typing import Optional, Sequence, Union
 
 from absl import logging
+
 from tfx.dsl.input_resolution import resolver_function
 from tfx.dsl.input_resolution.ops import ops
 from tfx.types import artifact
@@ -27,10 +28,12 @@ def latest_created(artifacts, n: int = 1):
   """Returns the n latest createst artifacts, ties broken by artifact id.
 
   Args:
+  ----
     artifacts: The artifacts to filter.
     n: The number of latest artifacts to return, must be > 0.
 
   Returns:
+  -------
     The n latest artifacts.
   """
   return ops.LatestCreateTime(artifacts, n=n)
@@ -41,10 +44,12 @@ def latest_version(artifacts, n: int = 1):
   """Returns the n latest version artifacts, ties broken by artifact id.
 
   Args:
+  ----
     artifacts: The artifacts to filter.
     n: The number of latest artifacts to return, must be > 0.
 
   Returns:
+  -------
     The n latest artifacts.
   """
   return ops.LatestVersion(artifacts, n=n)
@@ -104,6 +109,7 @@ def static_range(
       versions = [0, 0, 3, 0]
 
   Args:
+  ----
     artifacts: The artifacts to filter.
     start_span_number: The smallest span number to keep, inclusive. If < 0, set
       to the smallest span in the artifacts.
@@ -120,6 +126,7 @@ def static_range(
       considered.
 
   Returns:
+  -------
     Artifacts with spans in [start_span, end_span] inclusive.
   """
   resolved_artifacts = ops.StaticSpanRange(
@@ -249,6 +256,7 @@ def rolling_range(
     Note min_spans=1, so a SkipSignal will not be present in the compiled IR.
 
   Args:
+  ----
     artifacts: The artifacts to filter.
     start_span_number: The smallest span number to keep, inclusive. Defaults to
       0.
@@ -269,6 +277,7 @@ def rolling_range(
       number and break ties by create time and id.
 
   Returns:
+  -------
     Artifacts with spans in the rolling range.
   """
   resolved_artifacts = ops.LatestSpan(
@@ -320,9 +329,11 @@ def all_spans(artifacts):
     latest version is returned. Spans are sorted in ascending order.
 
   Args:
+  ----
     artifacts: The artifacts to filter.
 
   Returns:
+  -------
     Sorted Artifacts with unique spans.
   """
   return ops.AllSpans(artifacts)
@@ -343,9 +354,11 @@ def shuffle(artifacts):
     spans = [3, 4, 2, 1]
 
   Args:
+  ----
     artifacts: The artifacts to filter.
 
   Returns:
+  -------
     The randomly shuffled artifacts.
   """
   return ops.Shuffle(artifacts)
@@ -374,12 +387,14 @@ def latest_pipeline_run_outputs(pipeline, output_keys: Sequence[str] = ()):
     )
 
   Args:
+  ----
     pipeline: The pipeline producing the artifacts
     output_keys: (Optional) A list of output keys. If provided, only the
       artifacts of the key in this list will return by this function, otherwise,
       all available output keys of the producer pipeline will be used.
 
   Returns:
+  -------
     The artifacts in the latest COMPLETE pipeline run.
   """
   for output_key in output_keys:
@@ -398,12 +413,14 @@ def _infer_latest_pipeline_run_type(pipeline, output_keys: Sequence[str] = ()):
   """Output type inferrer of resolver function latest_pipeline_run_outputs.
 
   Args:
+  ----
     pipeline: The pipeline producing the artifacts.
     output_keys: (Optional) A list of output keys. If provided, only the
       artifacts of the key in this list will return by this function, otherwise,
       all available output keys of the producer pipeline will be used.
 
   Returns:
+  -------
     A Dict: key is output key, value is output type.
   """
   if not output_keys:
@@ -476,6 +493,7 @@ def sequential_rolling_range(
       trainer = Trainer(examples=shuffle(examples_window))
 
   Args:
+  ----
     artifacts: The artifacts to filter.
     start_span_number: The smallest span number to keep, inclusive. Optional, if
       not set then defaults to the minimum span. If the start_span_number is
@@ -495,6 +513,7 @@ def sequential_rolling_range(
     stride: The step size of the sliding window. Must be > 0, defaults to 1.
 
   Returns:
+  -------
     Artifacts with spans in the sequential rolling range.
   """
   resolved_artifacts = ops.ConsecutiveSpans(
@@ -586,12 +605,14 @@ def paired_spans(
   NOTE: `paired_spans` can pair Artifacts from N >= 2 channels.
 
   Args:
+  ----
     artifacts: A dictionary of artifacts.
     match_version: Whether the version of each span should exactly match.
     keep_all_versions: Whether to pair up all versions of artifacts, or only the
       latest version. Defaults to False. Requires match_version = True.
 
   Returns:
+  -------
     A list of artifact dicts where each dict has as its key the channel key,
     and as its value has a list with a single artifact having the same span and
     version across the dict.
@@ -634,11 +655,13 @@ def filter_property_equal(
   will return [C].
 
   Args:
+  ----
     artifacts: The list of artifacts to filter.
     key: The property key to match by.
     value: The expected property value to match by.
 
   Returns:
+  -------
     Artifact(s) with matching custom property (or property) values.
   """
   return ops.EqualPropertyValues(
@@ -679,11 +702,13 @@ def filter_custom_property_equal(
   will return [C].
 
   Args:
+  ----
     artifacts: The list of artifacts to filter.
     key: The property key to match by.
     value: The expected property value to match by.
 
   Returns:
+  -------
     Artifact(s) with matching custom property (or property) values.
   """
   return ops.EqualPropertyValues(
@@ -735,10 +760,12 @@ def pick(channel: channel_types.BaseChannel, i: int, /):
   ```
 
   Args:
+  ----
     channel: A channel instance (e.g. `my_component.outputs['x']`).
     i: An index to pick. Can be negative.
 
   Returns:
+  -------
     A channel that represents `inputs[i]`.
   """
   return _slice(channel, start=i, stop=(i + 1) or None, min_count=1)
@@ -776,6 +803,7 @@ def slice(  # noqa: A002, A001
   ```
 
   Args:
+  ----
     channel: A channel instance (e.g. `my_component.outputs['x']`).
     start: A start index (inclusive) of the range. Can be negative.
     stop: A stop index (exclusive) of the range. Can be negative.
@@ -784,6 +812,7 @@ def slice(  # noqa: A002, A001
       met. Asynchronous (continuous) pipeine will wait until min_count is met.
 
   Returns:
+  -------
     A channel that represents `inputs[start:stop]` slice range.
   """
   # Slice(start=None, stop=None) is a no-op and we can return the input as is.
@@ -819,10 +848,12 @@ def sliding_window(channel: channel_types.BaseChannel, window_size: int):
   ```
 
   Args:
+  ----
     channel: A channel instance (e.g. `my_component.outputs['x']`).
     window_size: The length of the sliding window, must be > 0.
 
   Returns:
+  -------
     Artifacts with a sliding window applied.
   """
   return ops.SlidingWindow(channel, window_size=window_size)

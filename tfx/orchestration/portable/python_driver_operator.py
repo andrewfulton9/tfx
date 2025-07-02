@@ -15,15 +15,12 @@
 
 from typing import cast
 
-from tfx.orchestration import metadata
-from tfx.orchestration.portable import base_driver_operator
-from tfx.orchestration.portable import data_types
-from tfx.proto.orchestration import driver_output_pb2
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.utils import import_utils
-
 from google.protobuf import message
+
+from tfx.orchestration import metadata
+from tfx.orchestration.portable import base_driver_operator, data_types
+from tfx.proto.orchestration import driver_output_pb2, executable_spec_pb2, pipeline_pb2
+from tfx.utils import import_utils
 
 
 class PythonDriverOperator(base_driver_operator.BaseDriverOperator):
@@ -38,10 +35,12 @@ class PythonDriverOperator(base_driver_operator.BaseDriverOperator):
     """Constructor.
 
     Args:
+    ----
       driver_spec: The specification of how to initialize the driver.
       mlmd_connection: ML metadata connection.
 
     Raises:
+    ------
       RuntimeError: if the driver_spec is not supported.
     """
     super().__init__(driver_spec, mlmd_connection)

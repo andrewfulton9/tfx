@@ -14,21 +14,19 @@
 """Tests for using parquet_executor with example_gen component."""
 
 import os
-
 from unittest import mock
+
 import tensorflow as tf
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.components.example_gen.component import FileBasedExampleGen
 from tfx.components.example_gen.custom_executors import parquet_executor
 from tfx.dsl.components.base import executor_spec
 from tfx.dsl.io import fileio
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.orchestration import publisher
+from tfx.orchestration import data_types, metadata, publisher
 from tfx.orchestration.launcher import in_process_component_launcher
 from tfx.proto import example_gen_pb2
 from tfx.utils import name_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class ExampleGenComponentWithParquetExecutorTest(tf.test.TestCase):

@@ -15,15 +15,15 @@
 
 import os
 from unittest import mock
+
 import tensorflow as tf
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.components.base import base_driver
 from tfx.dsl.io import fileio
 from tfx.orchestration import data_types
-from tfx.types import channel
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
-from ml_metadata.proto import metadata_store_pb2
+from tfx.types import channel, channel_utils, standard_artifacts
 
 # Mock value for string artifact.
 _STRING_VALUE = 'This is a string'
@@ -213,7 +213,6 @@ class BaseDriverTest(tf.test.TestCase):
   def testPreExecutionCachedMissing(self, _,
                                     mock_artifact_utils_verify_artifacts_fn):
     """With cache enabled, if cached output artifacts are found but are missing, execution decision is to not use cache."""
-
     # mock such that the output artifacts as pulled from cache are not present
     mock_artifact_utils_verify_artifacts_fn.side_effect = RuntimeError()
 

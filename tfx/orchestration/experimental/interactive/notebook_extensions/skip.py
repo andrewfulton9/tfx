@@ -13,9 +13,7 @@
 # limitations under the License.
 """Custom magic for marking cells to be skipped during pipeline export."""
 
-from IPython.core.magic import cell_magic
-from IPython.core.magic import Magics
-from IPython.core.magic import magics_class
+from IPython.core.magic import Magics, cell_magic, magics_class
 
 
 @magics_class

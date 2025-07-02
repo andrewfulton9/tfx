@@ -15,25 +15,21 @@
 
 import json
 import sys
-from typing import Dict, List
 import unittest
+from typing import Dict, List
 
 import tensorflow as tf
+from google.protobuf import json_format
+
 from tfx.dsl.compiler import placeholder_utils
 from tfx.dsl.components.base.testing import test_node
 from tfx.dsl.placeholder import placeholder
 from tfx.orchestration.portable import data_types
 from tfx.proto import example_gen_pb2
-from tfx.types import artifact
-from tfx.types import channel
-from tfx.types import component_spec
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ComponentSpec
-from tfx.types.component_spec import ExecutionParameter
+from tfx.types import artifact, channel, component_spec
+from tfx.types.component_spec import ChannelParameter, ComponentSpec, ExecutionParameter
 from tfx.types.standard_artifacts import Examples
 from tfx.utils import proto_utils
-
-from google.protobuf import json_format
 
 
 class _InputArtifact(artifact.Artifact):

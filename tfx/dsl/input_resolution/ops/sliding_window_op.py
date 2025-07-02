@@ -13,7 +13,7 @@
 # limitations under the License.
 """Module for SlidingWindow operator."""
 
-from typing import Sequence, Mapping
+from typing import Mapping, Sequence
 
 from tfx import types
 from tfx.dsl.input_resolution import resolver_op
@@ -41,7 +41,7 @@ class SlidingWindow(
     """Applies a sliding window of size n and stride m to the list of artifacts.
 
     Examples:
-
+    --------
     a)For artifacts [A, B, C, D] with window_size=2, stride=1,
     produces [[A, B],[B, C], [C, D]].
 
@@ -67,9 +67,11 @@ class SlidingWindow(
     function SlidingWindow is called in.
 
     Args:
+    ----
       input_list: The Artifacts to filter.
 
     Returns:
+    -------
       The artifacts with the sliding window applied, in list of dictionaries
         format.
     """

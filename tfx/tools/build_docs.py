@@ -28,19 +28,18 @@ python build_docs.py
 ```
 
 Note:
+----
   If duplicate or spurious docs are generated, consider
   denylisting them via the `private_map` argument below. Or
   `api_generator.doc_controls`
 """
-from absl import app
-from absl import flags
 import tensorflow_docs.api_generator as api_generator
-from tensorflow_docs.api_generator import generate_lib
-from tfx import v1
-from tfx import version
-from tfx.utils import doc_controls
-
+from absl import app, flags
 from google.protobuf.reflection import GeneratedProtocolMessageType
+from tensorflow_docs.api_generator import generate_lib
+
+from tfx import v1, version
+from tfx.utils import doc_controls
 
 GITHUB_URL_PREFIX = ("https://github.com/tensorflow/tfx/blob/{}/tfx".format(
     version.__version__))
@@ -62,6 +61,7 @@ def ignore_test_objects(path, parent, children):
   """Removes "test" and "example" modules. These are not part of the public api.
 
   Args:
+  ----
     path: A tuple of name parts forming the attribute-lookup path to this
       object. For `tf.keras.layers.Dense` path is:
         ("tf","keras","layers","Dense")
@@ -69,6 +69,7 @@ def ignore_test_objects(path, parent, children):
     children: A list of (name, value) pairs. The attributes of the patent.
 
   Returns:
+  -------
     A filtered list of children `(name, value)` pairs. With all test modules
     removed.
   """
@@ -89,6 +90,7 @@ def ignore_proto_methods(path, parent, children):
   """Remove all the proto inherited methods.
 
   Args:
+  ----
     path: A tuple of name parts forming the attribute-lookup path to this
       object. For `tf.keras.layers.Dense` path is:
         ("tf","keras","layers","Dense")
@@ -96,6 +98,7 @@ def ignore_proto_methods(path, parent, children):
     children: A list of (name, value) pairs. The attributes of the parent.
 
   Returns:
+  -------
     A filtered list of children `(name, value)` pairs. With all proto methods
     removed.
   """

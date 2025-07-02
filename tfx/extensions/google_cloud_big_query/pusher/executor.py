@@ -17,15 +17,11 @@ from typing import Any, Dict, List
 
 from absl import logging
 from google.cloud import bigquery
+
 from tfx import types
 from tfx.components.pusher import executor as tfx_pusher_executor
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import doc_controls
-from tfx.utils import io_utils
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-from tfx.utils import telemetry_utils
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import doc_controls, io_utils, json_utils, name_utils, telemetry_utils
 
 _POLLING_INTERVAL_IN_SECONDS = 30
 
@@ -66,6 +62,7 @@ class Executor(tfx_pusher_executor.Executor):
     """Overrides the tfx_pusher_executor.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts, including:
         - model_export: exported model from trainer.
         - model_blessing: model blessing path from evaluator.
@@ -86,6 +83,7 @@ class Executor(tfx_pusher_executor.Executor):
         Big Query ML, refer to https://cloud.google.com/bigquery-ml/
 
     Returns:
+    -------
       None
     Raises:
       ValueError:

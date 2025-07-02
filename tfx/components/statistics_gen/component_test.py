@@ -14,11 +14,14 @@
 """Tests for tfx.components.statistics_gen.component."""
 import tensorflow as tf
 import tensorflow_data_validation as tfdv
+
 from tfx.components.statistics_gen import component
-from tfx.types import artifact_utils
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import (
+  artifact_utils,
+  channel_utils,
+  standard_artifacts,
+  standard_component_specs,
+)
 
 
 class ComponentTest(tf.test.TestCase):

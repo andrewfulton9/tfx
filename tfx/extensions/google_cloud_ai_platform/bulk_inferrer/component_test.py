@@ -17,8 +17,7 @@ import tensorflow as tf
 
 from tfx.extensions.google_cloud_ai_platform.bulk_inferrer import component
 from tfx.proto import bulk_inferrer_pb2
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import channel_utils, standard_artifacts
 
 
 class ComponentTest(tf.test.TestCase):

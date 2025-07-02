@@ -16,16 +16,14 @@
 import os
 from typing import Any, Dict, List
 
+from google.protobuf import text_format
+
 from tfx import types
 from tfx.dsl.components.base import base_beam_executor
-from tfx.orchestration.portable import beam_executor_operator
-from tfx.orchestration.portable import data_types
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.orchestration.portable import beam_executor_operator, data_types
+from tfx.proto.orchestration import executable_spec_pb2, pipeline_pb2
 from tfx.types import standard_artifacts
 from tfx.utils import test_case_utils
-
-from google.protobuf import text_format
 
 
 class ValidateBeamPipelineArgsExecutor(base_beam_executor.BaseBeamExecutor):

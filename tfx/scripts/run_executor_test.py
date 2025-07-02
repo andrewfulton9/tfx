@@ -21,8 +21,7 @@ import tensorflow as tf
 from tfx import types
 from tfx.dsl.components.base import base_executor
 from tfx.scripts import run_executor
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact_utils, standard_artifacts
 from tfx.utils import name_utils
 
 

@@ -21,7 +21,6 @@ from typing import Dict, Iterable, List, Union
 
 from tfx import types
 from tfx.types import channel_utils
-
 from tfx.utils import deprecation_utils
 
 

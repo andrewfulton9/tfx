@@ -19,10 +19,10 @@ This file defines TFX pipeline and various components in the pipeline.
 from typing import List, Optional
 
 import tensorflow_model_analysis as tfma
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import v1 as tfx
 from tfx.experimental.templates.penguin.models import features
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def create_pipeline(
@@ -41,7 +41,6 @@ def create_pipeline(
     beam_pipeline_args: Optional[List[str]] = None,
 ) -> tfx.dsl.Pipeline:
   """Implements the penguin pipeline with TFX."""
-
   components = []
 
   # Brings data into the pipeline or otherwise joins/converts training data.

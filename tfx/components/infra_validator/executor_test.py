@@ -20,19 +20,18 @@ from typing import Any, Dict
 from unittest import mock
 
 import tensorflow as tf
-from tfx.components.infra_validator import error_types
-from tfx.components.infra_validator import executor
-from tfx.components.infra_validator import request_builder
-from tfx.components.infra_validator import serving_bins
+from google.protobuf import json_format
+
+from tfx.components.infra_validator import (
+  error_types,
+  executor,
+  request_builder,
+  serving_bins,
+)
 from tfx.dsl.io import fileio
 from tfx.proto import infra_validator_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
-
-from google.protobuf import json_format
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
+from tfx.utils import path_utils, proto_utils
 
 
 def _make_serving_spec(

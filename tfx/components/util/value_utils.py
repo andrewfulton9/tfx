@@ -15,20 +15,23 @@
 
 import inspect
 import sys
-from typing import Any, Callable, Sequence, Mapping
+from typing import Any, Callable, Mapping, Sequence
 
 
 def GetValues(inputs: Mapping[str, Sequence[Any]], label: str) -> Sequence[Any]:
   """Retrieves the value of the given labeled input.
 
   Args:
+  ----
     inputs: Dict from label to a value list.
     label: Label of the value to retrieve.
 
   Returns:
+  -------
     A list of values, or empty list if there's no value.
 
   Raises:
+  ------
     ValueError: If label is not one of the valid input labels.
   """
   if label not in inputs:
@@ -45,14 +48,17 @@ def GetSoleValue(inputs: Mapping[str, Sequence[Any]],
   """Helper method for retrieving a sole labeled input.
 
   Args:
+  ----
     inputs: Dict from label to a value list.
     label: Label of the value to retrieve.
     strict: If true, exactly one value should exist for label.
 
   Returns:
+  -------
     A sole labeled value.
 
   Raises:
+  ------
     ValueError: If there is no/multiple input associated with the label.
   """
   values = GetValues(inputs, label)
@@ -73,10 +79,12 @@ def FunctionHasArg(fn: Callable, arg_name: str) -> bool:  # pylint: disable=g-ba
   """Test at runtime if a function's signature contains a certain argument.
 
   Args:
+  ----
     fn: function to be tested.
     arg_name: Name of the argument to be tested.
 
   Returns:
+  -------
     True if the function signature contains that argument.
   """
   if sys.version_info.major == 2:

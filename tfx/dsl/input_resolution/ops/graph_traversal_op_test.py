@@ -17,8 +17,7 @@
 from typing import Sequence
 
 from tfx import types
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import test_utils
+from tfx.dsl.input_resolution.ops import ops, test_utils
 
 
 class GraphTraversalOpTest(

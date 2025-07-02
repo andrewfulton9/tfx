@@ -14,7 +14,6 @@
 """Module for Shuffle operator."""
 
 import random
-
 from typing import Sequence
 
 from tfx import types

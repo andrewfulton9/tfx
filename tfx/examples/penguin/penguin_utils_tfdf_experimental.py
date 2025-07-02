@@ -61,14 +61,13 @@ components.
 from typing import List
 
 import keras_tuner as kt
-
 import tensorflow as tf
 import tensorflow_decision_forests as tfdf
 import tensorflow_transform as tft
+from tfx_bsl.public import tfxio
+
 from tfx import v1 as tfx
 from tfx.examples.penguin import penguin_utils_base as base
-
-from tfx_bsl.public import tfxio
 
 # TFX Transform will call this function.
 # Note: many decision tree algorithms do not benefit from feature preprocessing.
@@ -101,7 +100,8 @@ def _get_hyperparameters() -> kt.HyperParameters:
   for tuning:
   https://github.com/google/yggdrasil-decision-forests/blob/main/documentation/user_manual.md#manual-tuning-of-hyper-parameters
 
-  Returns:
+  Returns
+  -------
     Valid range and default value of few of the GBT hyperparameters.
   """
   hp = kt.HyperParameters()
@@ -156,12 +156,13 @@ def _make_keras_model(hparams: kt.HyperParameters) -> tf.keras.Model:
   """Creates a TF-DF Keras model.
 
   Args:
+  ----
     hparams: Hyperparameters of the model.
 
   Returns:
+  -------
     A Keras Model.
   """
-
   # Note: The input features are not specified. Therefore, all the columns
   # specified in the Transform are used as input features, and their semantic
   # (e.g. numerical, categorical) is inferred automatically.
@@ -195,6 +196,7 @@ def input_fn(file_pattern: List[str],
   """Creates a tf.Dataset for training or evaluation.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     tf_transform_output: A TFTransformOutput.
@@ -202,6 +204,7 @@ def input_fn(file_pattern: List[str],
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -224,6 +227,7 @@ def tuner_fn(fn_args: tfx.components.FnArgs) -> tfx.components.TunerFnResult:
   """Builds a Keras Tuner for the model.
 
   Args:
+  ----
     fn_args: Holds args as name/value pairs.
       - working_dir: working dir for tuning.
       - train_files: List of file paths containing training tf.Example data.
@@ -234,6 +238,7 @@ def tuner_fn(fn_args: tfx.components.FnArgs) -> tfx.components.TunerFnResult:
       - transform_graph_path: optional transform graph produced by TFT.
 
   Returns:
+  -------
     A namedtuple contains the following:
       - tuner: A BaseTuner that will be used for tuning.
       - fit_kwargs: Args to pass to tuner's run_trial function for fitting the
@@ -273,6 +278,7 @@ def run_fn(fn_args: tfx.components.FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   tf_transform_output = tft.TFTransformOutput(fn_args.transform_output)

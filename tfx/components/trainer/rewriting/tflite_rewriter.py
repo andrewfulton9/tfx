@@ -15,11 +15,9 @@
 
 import os
 import time
-
 from typing import Iterable, Optional, Sequence
 
 import numpy as np
-
 import tensorflow as tf
 
 from tfx.components.trainer.rewriting import rewriter
@@ -75,6 +73,7 @@ class TFLiteRewriter(rewriter.BaseRewriter):
     """Create an instance of the TFLiteRewriter.
 
     Args:
+    ----
       name: The name to use when identifying the rewriter.
       filename: The name of the file to use for the tflite model.
       copy_assets: Boolean whether to copy the assets directory to the rewritten
@@ -128,10 +127,12 @@ class TFLiteRewriter(rewriter.BaseRewriter):
     """Performs pre-rewrite checks to see if the model can be rewritten.
 
     Args:
+    ----
       original_model: A `ModelDescription` object describing the model to be
         rewritten.
 
     Raises:
+    ------
       ValueError: If the original model does not have the expected structure.
     """
     if original_model.model_type != rewriter.ModelType.SAVED_MODEL:
@@ -142,12 +143,14 @@ class TFLiteRewriter(rewriter.BaseRewriter):
     """Rewrites the provided model.
 
     Args:
+    ----
       original_model: A `ModelDescription` specifying the original model to be
         rewritten.
       rewritten_model: A `ModelDescription` specifying the format and location
         of the rewritten model.
 
     Raises:
+    ------
       ValueError: If the model could not be sucessfully rewritten.
     """
     if rewritten_model.model_type not in [
@@ -208,10 +211,12 @@ class TFLiteRewriter(rewriter.BaseRewriter):
     """Performs post-rewrite checks to see if the rewritten model is valid.
 
     Args:
+    ----
       rewritten_model: A `ModelDescription` specifying the format and location
         of the rewritten model.
 
     Raises:
+    ------
       ValueError: If the rewritten model is not valid.
     """
     # TODO(dzats): Implement post-rewrite validation.
@@ -231,6 +236,7 @@ class TFLiteRewriter(rewriter.BaseRewriter):
     this supports DYNAMIC_RANGE, FULL_INTEGER and FLOAT16 quantizations.
 
     Args:
+    ----
       saved_model_path: Path for the TF SavedModel.
       quantization_optimizations: Options for optimizations in quantization. If
         empty, no quantization will be applied(float32). Check
@@ -249,12 +255,13 @@ class TFLiteRewriter(rewriter.BaseRewriter):
       **kwargs: Additional arguments to create tflite converter.
 
     Returns:
+    -------
       A TFLite converter with the proper flags being set.
 
     Raises:
+    ------
       NotImplementedError: Raises when full-integer quantization is called.
     """
-
     if signature_key:
       # Need the check here because from_saved_model takes signature_keys list.
       # [None] is not None.

@@ -14,8 +14,8 @@
 """Tests for tfx.orchestration.config.pipeline_config."""
 
 import tensorflow as tf
-from tfx.orchestration.config import docker_component_config
-from tfx.orchestration.config import pipeline_config
+
+from tfx.orchestration.config import docker_component_config, pipeline_config
 from tfx.orchestration.launcher import in_process_component_launcher
 
 

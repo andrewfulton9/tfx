@@ -19,7 +19,6 @@
 # import unittest
 
 import tensorflow as tf
-
 from google.protobuf import text_format
 from tensorflow_serving.apis import input_pb2
 

@@ -13,22 +13,23 @@
 # limitations under the License.
 """Module for TensorFlowServingClient."""
 
-from absl import logging
 import grpc
+from absl import logging
+from tensorflow_serving.apis import (
+  classification_pb2,
+  model_pb2,
+  predict_pb2,
+  prediction_service_pb2_grpc,
+  regression_pb2,
+)
+
 from tfx.components.infra_validator import types
 from tfx.components.infra_validator.model_server_clients import base_client
-
-from tensorflow_serving.apis import classification_pb2
-from tensorflow_serving.apis import model_pb2
-from tensorflow_serving.apis import predict_pb2
-from tensorflow_serving.apis import prediction_service_pb2_grpc
-from tensorflow_serving.apis import regression_pb2
 
 # TODO(b/250016998): Remove this hack after tensorflow-serving-api 1.11 release.
 try:
   # pylint: disable=g-import-not-at-top
-  from tensorflow_serving.apis import get_model_status_pb2
-  from tensorflow_serving.apis import model_service_pb2_grpc
+  from tensorflow_serving.apis import get_model_status_pb2, model_service_pb2_grpc
 except AttributeError as err:
   # pylint: disable=g-import-not-at-top
   # pylint: disable=g-direct-tensorflow-import
@@ -41,8 +42,7 @@ except AttributeError as err:
   old_error_codes_pb2._CODE = new_error_codes_pb2._CODE  # pylint: disable=protected-access  # pytype: disable=module-attr
 
   # Retry.
-  from tensorflow_serving.apis import get_model_status_pb2
-  from tensorflow_serving.apis import model_service_pb2_grpc
+  from tensorflow_serving.apis import get_model_status_pb2, model_service_pb2_grpc
 
 
 State = get_model_status_pb2.ModelVersionStatus.State
@@ -67,7 +67,8 @@ class TensorFlowServingClient(base_client.BaseModelServerClient):
 
     https://github.com/tensorflow/serving/blob/master/tensorflow_serving/apis/model_service.proto
 
-    Returns:
+    Returns
+    -------
       GetModelStatusResponse from GetModelStatus().
     """
     request = get_model_status_pb2.GetModelStatusRequest(
@@ -82,7 +83,8 @@ class TensorFlowServingClient(base_client.BaseModelServerClient):
     become READY therefore returns UNAVAILABLE. Otherwise it will return
     NOT_READY.
 
-    Returns:
+    Returns
+    -------
       A ModelState.
     """
     try:

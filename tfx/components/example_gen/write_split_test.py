@@ -15,10 +15,11 @@
 import os
 
 import apache_beam as beam
-from apache_beam.metrics.metric import MetricsFilter
-from apache_beam.runners.direct import direct_runner
 import pyarrow as pa
 import tensorflow as tf
+from apache_beam.metrics.metric import MetricsFilter
+from apache_beam.runners.direct import direct_runner
+
 from tfx.components.example_gen import write_split
 from tfx.dsl.io import fileio
 from tfx.proto import example_gen_pb2

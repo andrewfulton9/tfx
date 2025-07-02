@@ -18,11 +18,11 @@ import os
 from typing import Iterable, List, Mapping, Optional, Tuple
 
 from absl import logging
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.dsl.compiler import constants as compiler_constants
 from tfx.orchestration import metadata
 from tfx.utils import io_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def get_component_id_from_execution(
@@ -55,14 +55,17 @@ def _get_paths(metadata_connection: metadata.Metadata,
   for saving multiple output artifacts with same key.
 
   Args:
+  ----
     metadata_connection: Instance of metadata.Metadata for I/O to MLMD.
     executions: List of executions of a pipeline run.
     output_dir: Directory path where the pipeline outputs should be recorded.
 
   Yields:
+  ------
     Iterable over tuples of source uri and destination uri.
 
   Raises:
+  ------
     ValueError if artifact key and index are not recorded in MLMD event.
   """
   for execution in executions:
@@ -98,9 +101,11 @@ def _get_execution_dict(
   """Returns a dictionary holding list of executions for all run_id in MLMD.
 
   Args:
+  ----
     metadata_connection: Instance of metadata.Metadata for I/O to MLMD.
 
   Returns:
+  -------
     A dictionary that holds list of executions for a run_id.
   """
   execution_dict = collections.defaultdict(list)
@@ -116,10 +121,12 @@ def get_latest_executions(
   """Fetches executions associated with the latest context.
 
   Args:
+  ----
     metadata_connection: Instance of metadata.Metadata for I/O to MLMD.
     pipeline_name: Name of the pipeline to rerieve the latest executions for.
 
   Returns:
+  -------
     List of executions for the latest run of a pipeline with the given
     pipeline_name.
   """
@@ -161,6 +168,7 @@ def record_pipeline(output_dir: str,
   for the specified pipeline.
 
   Args:
+  ----
     output_dir: Directory path where the pipeline outputs should be recorded.
     metadata_db_uri: Uri to metadata db.
     host: Hostname of the metadata grpc server
@@ -169,6 +177,7 @@ def record_pipeline(output_dir: str,
     run_id: Pipeline execution run_id.
 
   Raises:
+  ------
     ValueError: In cases of invalid arguments:
       - metadata_db_uri is None or host and/or port is None.
       - run_id is None and pipeline_name is None.

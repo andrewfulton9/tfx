@@ -39,6 +39,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+
 def select_constraint(default, nightly=None, git_master=None):
     """Select dependency constraint based on TFX_DEPENDENCY_SELECTOR env var."""
     selector = os.environ.get("TFX_DEPENDENCY_SELECTOR")
@@ -258,7 +259,7 @@ def make_extra_packages_docs() -> list[str]:
     list[str]
         List of packages required for building docs
     """
-    with open(Path(__file__).resolve().parent.parent / "requirements-docs.txt", "r") as fp:
+    with open(Path(__file__).resolve().parent.parent / "requirements-docs.txt") as fp:
         reqs = fp.readlines()
 
     reqs = [req.replace("\n", "") for req in reqs]

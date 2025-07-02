@@ -18,17 +18,14 @@ import os
 import re
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
-from absl import logging
 import numpy as np
+from absl import logging
+from google.protobuf import json_format
+from tensorflow.core.example import example_pb2, feature_pb2
 
 from tfx.dsl.io import fileio
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
+from tfx.proto import example_gen_pb2, range_config_pb2
 from tfx.utils import io_utils
-from google.protobuf import json_format
-from tensorflow.core.example import example_pb2
-from tensorflow.core.example import feature_pb2
-
 
 # Key for the `payload_format` custom property of output examples artifact.
 PAYLOAD_FORMAT_PROPERTY_NAME = 'payload_format'
@@ -141,6 +138,7 @@ def generate_output_split_names(
   otherwise output split will be same as input.
 
   Args:
+  ----
     input_config: example_gen_pb2.Input instance. If any field is provided as a
       RuntimeParameter, input_config should be constructed as a dict with the
       same field names as Input proto message.
@@ -149,9 +147,11 @@ def generate_output_split_names(
       same field names as Output proto message.
 
   Returns:
+  -------
     List of split names.
 
   Raises:
+  ------
     RuntimeError: if configs are not valid, including:
       - Missing field.
       - Duplicated split.
@@ -363,7 +363,6 @@ def _find_matched_span_version_from_path(
     is_match_date: bool, is_match_version: bool
 ) -> Tuple[Optional[List[str]], Optional[int], Optional[str], Optional[int]]:
   """Finds the span tokens and number given a file path and split regex."""
-
   result = re.search(split_regex_pattern, file_path)
   if result is None:
     raise ValueError('Glob pattern does not match regex pattern')
@@ -481,6 +480,7 @@ def _create_matching_glob_and_regex(
   specs in the glob and regex patterns.
 
   Args:
+  ----
     uri: The base path from which files will be searched.
     split: An example_gen_pb2.Input.Split object which contains a split pattern,
       to be searched on.
@@ -493,6 +493,7 @@ def _create_matching_glob_and_regex(
       unset, search for latest span number with no restrictions.
 
   Returns:
+  -------
     Tuple of two strings, first of which is a glob pattern to identify relevant
     files for process, the second of which is a regex pattern containing capture
     groups, for span, date, and/or version (if their respective matching flags
@@ -584,6 +585,7 @@ def _get_target_span_version(
   into a span number by counting the number of days since 01/01/1970.
 
   Args:
+  ----
     uri: The base path from which files will be searched.
     split: An example_gen_pb2.Input.Split object which contains a split pattern,
       to be searched on.
@@ -592,11 +594,13 @@ def _get_target_span_version(
       unset, search for latest span number with no restrictions.
 
   Returns:
+  -------
     Tuple of two ints, Span (optional) and Version (optional). Note
       that this function will update the {SPAN} or Date tags as well as the
       {VERSION} tags in the split config to actual Span and Version numbers.
 
   Raises:
+  ------
     ValueError: if any of the following occurs:
       - If either Span or Version spec is occurs in the split pattern
         more than once.
@@ -676,6 +680,7 @@ def calculate_splits_fingerprint_span_and_version(
   recent version for that span.
 
   Args:
+  ----
     input_base_uri: The base path from which files will be searched.
     splits: An iterable collection of example_gen_pb2.Input.Split objects.
     range_config: An instance of range_config_pb2.RangeConfig, which specifies
@@ -683,6 +688,7 @@ def calculate_splits_fingerprint_span_and_version(
       unset, search for latest span number with no restrictions.
 
   Returns:
+  -------
     A Tuple of [fingerprint, select_span, select_version], where select_span
     is either the value matched with the {SPAN} placeholder, the value mapped
     from matching the calendar date with the date placeholders {YYYY}, {MM},
@@ -692,7 +698,6 @@ def calculate_splits_fingerprint_span_and_version(
     {SPAN} or Date tags as well as the {VERSION} tags in the split configs to
     actual Span and Version numbers.
   """
-
   split_fingerprints = []
   select_span = 0
   select_version = None

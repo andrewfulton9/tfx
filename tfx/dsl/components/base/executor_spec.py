@@ -14,18 +14,15 @@
 """Executor specifications for defining what to to execute."""
 
 import copy
-from typing import cast, Iterable, List, Optional, Type, Union
+from typing import Iterable, List, Optional, Type, Union, cast
+
+from google.protobuf import message
 
 from tfx import types
 from tfx.dsl.components.base import base_executor
 from tfx.dsl.placeholder import placeholder as ph
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import placeholder_pb2
-from tfx.utils import import_utils
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-
-from google.protobuf import message
+from tfx.proto.orchestration import executable_spec_pb2, placeholder_pb2
+from tfx.utils import import_utils, json_utils, name_utils
 
 
 class ExecutorSpec(json_utils.Jsonable):
@@ -42,9 +39,11 @@ class ExecutorSpec(json_utils.Jsonable):
     This method will be used by DSL compiler to generate the corresponding IR.
 
     Args:
+    ----
       component_spec: Optional. The ComponentSpec to help with the encoding.
 
     Returns:
+    -------
       An executor spec proto.
     """
     # TODO(b/158712976, b/161286496): Serialize executor specs for different
@@ -61,7 +60,8 @@ class ExecutorSpec(json_utils.Jsonable):
     it is OK to make a shallow copy as long as the subfield is consider
     globally immutable.
 
-    Returns:
+    Returns
+    -------
       A copy of ExecutorSpec.
 
     """
@@ -71,7 +71,8 @@ class ExecutorSpec(json_utils.Jsonable):
 class ExecutorClassSpec(ExecutorSpec):
   """A specification of executor class.
 
-  Attributes:
+  Attributes
+  ----------
     executor_class: a subclass of base_executor.BaseExecutor used to execute
       this component (required).
     extra_flags: extra flags to be set in the Python base executor.
@@ -106,7 +107,8 @@ class ExecutorClassSpec(ExecutorSpec):
 
     <executor_class_module>.<executor_class_name>
 
-    Returns:
+    Returns
+    -------
       Fully qualified class name for the executor class.
     """
     self._set_class_path()
@@ -146,7 +148,8 @@ class ExecutorClassSpec(ExecutorSpec):
 class BeamExecutorSpec(ExecutorClassSpec):
   """A specification of Beam executor.
 
-  Attributes:
+  Attributes
+  ----------
     executor_class: a subclass of base_executor.BaseExecutor used to execute
       this component (required).
     extra_flags: extra flags to be set in the Python base executor.
@@ -201,7 +204,8 @@ class ExecutorContainerSpec(ExecutorSpec):
     command=['cowsay'],
     args=['hello wolrd'])
 
-  Attributes:
+  Attributes
+  ----------
     image: Container image that has executor application. Assumption is that
       this container image is separately release-managed, and tagged/versioned
       accordingly.

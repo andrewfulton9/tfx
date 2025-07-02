@@ -44,12 +44,15 @@ class SkipIfLessThanNSpans(
     Corresponds to min_spans in the TFX RangeConfig proto.
 
     Args:
+    ----
       input_list: The artifacts to check.
 
     Returns:
+    -------
       The same artifacts passed in, unmodified.
 
     Raises:
+    ------
       SkipSignal if the artifacts have less than n unique spans.
     """
     spans = set()

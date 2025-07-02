@@ -20,12 +20,10 @@ an example and will not be supported by TFX team.
 from typing import Optional
 
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, executor_spec
 from tfx.examples.custom_components.slack.slack_component import executor
 from tfx.types import standard_artifacts
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ExecutionParameter
+from tfx.types.component_spec import ChannelParameter, ExecutionParameter
 
 
 class SlackComponentSpec(types.ComponentSpec):
@@ -88,6 +86,7 @@ class SlackComponent(base_component.BaseComponent):
     """Construct a SlackComponent.
 
     Args:
+    ----
       model: A Channel of type `standard_artifacts.Model`, usually produced by
         a Trainer component.
       model_blessing: A Channel of type `standard_artifacts.ModelBlessing`,

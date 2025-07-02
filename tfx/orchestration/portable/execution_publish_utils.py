@@ -13,18 +13,17 @@
 # limitations under the License.
 """Portable library for registering and publishing executions."""
 
-from typing import Mapping, Optional, Sequence
 import uuid
+from typing import Mapping, Optional, Sequence
+
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx import types
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
+from tfx.orchestration import data_types_utils, metadata
 from tfx.orchestration.portable import merge_utils
 from tfx.orchestration.portable.mlmd import execution_lib
 from tfx.proto.orchestration import execution_result_pb2
 from tfx.utils import typing_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def publish_cached_executions(
@@ -38,6 +37,7 @@ def publish_cached_executions(
   """Marks an existing execution as using cached outputs from a previous execution.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     contexts: MLMD contexts to associated with the execution.
     executions: Executions that will be published as CACHED executions.
@@ -88,6 +88,7 @@ def publish_succeeded_execution(
   `COMPLETE` and the output artifacts will be marked as `LIVE`.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     execution_id: The id of the execution to mark successful.
     contexts: MLMD contexts to associated with the execution.
@@ -103,11 +104,14 @@ def publish_succeeded_execution(
       artifact should not change the type of the artifact.
 
   Returns:
+  -------
     The tuple containing the maybe updated output_artifacts (note that only
     outputs whose key are in executor_output will be updated and others will be
     untouched, that said, it can be partially updated) and the written
     execution.
+
   Raises:
+  ------
     RuntimeError: if the executor output to a output channel is partial.
   """
   unpacked_output_artifacts = (
@@ -168,6 +172,7 @@ def publish_failed_execution(
   """Marks an existing execution as failed.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     contexts: MLMD contexts to associated with the execution.
     execution_id: The id of the execution.
@@ -189,6 +194,7 @@ def publish_internal_execution(
   """Marks an exeisting execution as as success and links its output to an INTERNAL_OUTPUT event.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     contexts: MLMD contexts to associated with the execution.
     execution_id: The id of the execution.
@@ -222,6 +228,7 @@ def register_execution(
   -  the contexts will be linked to both the execution and its input artifacts.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     execution_type: The type of the execution.
     contexts: MLMD contexts to associated with the execution.
@@ -231,6 +238,7 @@ def register_execution(
     last_known_state: The last known state of the execution.
 
   Returns:
+  -------
     An MLMD execution that is registered in MLMD, with id populated.
   """
   # Setting exec_name is required to make sure that only one execution is

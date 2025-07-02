@@ -20,14 +20,12 @@ import os
 import sys
 from typing import List, Optional
 
-from tfx.dsl.components.base import base_beam_executor
-from tfx.dsl.components.base import base_executor
+from google.protobuf import message
+
+from tfx.dsl.components.base import base_beam_executor, base_executor
 from tfx.types import channel_utils
 from tfx.types.artifact import PropertyType
-from tfx.utils import import_utils
-from tfx.utils import proto_utils
-
-from google.protobuf import message
+from tfx.utils import import_utils, proto_utils
 
 
 def run_component(full_component_class_name: str,
@@ -63,6 +61,7 @@ def run_component(full_component_class_name: str,
     )
 
   Args:
+  ----
     full_component_class_name: The component class name including module name.
     temp_directory_path: Optional. Temporary directory path for the executor.
     beam_pipeline_args: Optional. Arguments to pass to the Beam pipeline.

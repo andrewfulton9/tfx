@@ -13,6 +13,7 @@
 # limitations under the License.
 """Tests for tfx.components.data_view.provider_component."""
 import tensorflow as tf
+
 from tfx.components.experimental.data_view import provider_component
 from tfx.types import standard_artifacts
 

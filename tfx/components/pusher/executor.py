@@ -18,17 +18,14 @@ import time
 from typing import Any, Dict, List, Optional
 
 from absl import logging
+
 from tfx import types
 from tfx.components.util import model_utils
 from tfx.dsl.components.base import base_executor
 from tfx.dsl.io import fileio
 from tfx.proto import pusher_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
-
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, path_utils, proto_utils
 
 # Aliasing of enum for better readability.
 _Versioning = pusher_pb2.Versioning
@@ -64,6 +61,7 @@ class Executor(base_executor.BaseExecutor):
     """Check that model is blessed by upstream validators.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts:
         - model_blessing: A `ModelBlessing` artifact from model validator or
           evaluator.
@@ -75,6 +73,7 @@ class Executor(base_executor.BaseExecutor):
           server to which Pusher is going to push.
 
     Returns:
+    -------
       True if the model is blessed by validator.
     """
     # TODO(jyzhao): should this be in driver or executor.
@@ -109,11 +108,16 @@ class Executor(base_executor.BaseExecutor):
     acquire the source model path.
 
     Args:
+    ----
       input_dict: A dictionary of artifacts that is given as the fisrt argument
           to the Executor.Do() method.
+
     Returns:
+    -------
       A resolved input model path.
+
     Raises:
+    ------
       RuntimeError: If no model path is found from input_dict.
     """
     # Check input_dict['model'] first.
@@ -141,6 +145,7 @@ class Executor(base_executor.BaseExecutor):
     """Push model to target directory if blessed.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts, including:
         - model: exported model from trainer.
         - model_blessing: model blessing path from model_validator.  A push
@@ -154,6 +159,7 @@ class Executor(base_executor.BaseExecutor):
           providing instruction of destination to push model.
 
     Returns:
+    -------
       None
     """
     self._log_startup(input_dict, output_dict, exec_properties)

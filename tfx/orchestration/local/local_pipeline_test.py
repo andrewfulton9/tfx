@@ -31,10 +31,12 @@ import absl.testing.absltest
 
 from tfx import types
 from tfx.dsl.compiler import compiler
-from tfx.dsl.component.experimental.annotations import InputArtifact
-from tfx.dsl.component.experimental.annotations import OutputArtifact
-from tfx.dsl.component.experimental.annotations import OutputDict
-from tfx.dsl.component.experimental.annotations import Parameter
+from tfx.dsl.component.experimental.annotations import (
+  InputArtifact,
+  OutputArtifact,
+  OutputDict,
+  Parameter,
+)
 from tfx.dsl.component.experimental.decorators import component
 from tfx.dsl.io import fileio
 from tfx.orchestration import pipeline as pipeline_py
@@ -115,7 +117,6 @@ def DummyTrainComponent(
     num_iterations: Parameter[int] = 10) -> OutputDict(
         loss=float, accuracy=float):
   """Simple fake trainer component."""
-
   records = training_data.read()
   model_obj, loss, accuracy = train_dummy_model(records, num_iterations)
   model.write(model_obj)

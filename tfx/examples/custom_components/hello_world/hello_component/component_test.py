@@ -18,9 +18,7 @@ import json
 import tensorflow as tf
 
 from tfx.examples.custom_components.hello_world.hello_component import component
-from tfx.types import artifact
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact, channel_utils, standard_artifacts
 
 
 class HelloComponentTest(tf.test.TestCase):
@@ -37,7 +35,7 @@ class HelloComponentTest(tf.test.TestCase):
     this_component = component.HelloComponent(
         input_data=channel_utils.as_channel([input_data]),
         output_data=channel_utils.as_channel([output_data]),
-        name=u'Testing123')
+        name='Testing123')
     self.assertEqual(standard_artifacts.Examples.TYPE_NAME,
                      this_component.outputs['output_data'].type_name)
     artifact_collection = this_component.outputs['output_data'].get()

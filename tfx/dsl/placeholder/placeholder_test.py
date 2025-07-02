@@ -19,19 +19,18 @@ import os
 from typing import Callable, Sequence, TypeVar, Union
 
 import tensorflow as tf
-from tfx.dsl.placeholder import placeholder as ph
-from tfx.dsl.placeholder import placeholder_base
-from tfx.dsl.placeholder import proto_placeholder
-from tfx.proto import transform_pb2
-from tfx.proto.orchestration import execution_invocation_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.proto.orchestration import placeholder_pb2
-from tfx.types import standard_component_specs
-
-from google.protobuf import message
-from google.protobuf import text_format
+from google.protobuf import message, text_format
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.dsl.placeholder import placeholder as ph
+from tfx.dsl.placeholder import placeholder_base, proto_placeholder
+from tfx.proto import transform_pb2
+from tfx.proto.orchestration import (
+  execution_invocation_pb2,
+  pipeline_pb2,
+  placeholder_pb2,
+)
+from tfx.types import standard_component_specs
 
 _DictNode = functools.partial(ph.make_proto, pipeline_pb2.InputGraph.DictNode())
 _ExecutionInvocation = functools.partial(

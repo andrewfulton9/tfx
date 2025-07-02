@@ -23,8 +23,7 @@ from apache_beam.utils import retry
 from kubernetes import client as k8s_client
 from kubernetes.client import rest
 
-from tfx.components.infra_validator import error_types
-from tfx.components.infra_validator import serving_bins
+from tfx.components.infra_validator import error_types, serving_bins
 from tfx.components.infra_validator.model_server_runners import base_runner
 from tfx.proto import infra_validator_pb2
 from tfx.utils import kube_utils
@@ -117,6 +116,7 @@ class KubernetesRunner(base_runner.BaseModelServerRunner):
     """Create a kubernetes model server runner.
 
     Args:
+    ----
       model_path: An IV-flavored model path. (See model_path_utils.py)
       serving_binary: A ServingBinary to run.
       serving_spec: A ServingSpec instance.

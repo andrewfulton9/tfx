@@ -19,35 +19,21 @@ import absl
 import attr
 import pyarrow as pa
 import tensorflow as tf
+from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx_bsl.tfxio import dataset_options
+
 from tfx import types
 from tfx.components.util import tfxio_utils
 from tfx.proto import trainer_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import json_utils
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
-from tfx_bsl.tfxio import dataset_options
-
-from tensorflow_metadata.proto.v0 import schema_pb2
-
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, json_utils, path_utils, proto_utils
 
 _TELEMETRY_DESCRIPTORS = ['Trainer']
 
-DataAccessor = NamedTuple(
-    'DataAccessor',
-    [('tf_dataset_factory', Callable[[
-        List[str],
-        dataset_options.TensorFlowDatasetOptions,
-        Optional[schema_pb2.Schema],
-    ], tf.data.Dataset]),
-     ('record_batch_factory', Callable[[
-         List[str],
-         dataset_options.RecordBatchesOptions,
-         Optional[schema_pb2.Schema],
-     ], Iterator[pa.RecordBatch]]),
-     ('data_view_decode_fn', Optional[Callable[[tf.Tensor], Dict[str, Any]]])])
+class DataAccessor(NamedTuple):
+  tf_dataset_factory: Callable[[List[str], dataset_options.TensorFlowDatasetOptions, Optional[schema_pb2.Schema]], tf.data.Dataset]
+  record_batch_factory: Callable[[List[str], dataset_options.RecordBatchesOptions, Optional[schema_pb2.Schema]], Iterator[pa.RecordBatch]]
+  data_view_decode_fn: Optional[Callable[[tf.Tensor], Dict[str, Any]]]
 """
 For accessing the data on disk.
 
@@ -61,7 +47,8 @@ of how the data is stored on disk.
 class FnArgs:
   """Args to pass to user defined training/tuning function(s).
 
-  Attributes:
+  Attributes
+  ----------
     working_dir: Working dir.
     train_files: A list of patterns for train files.
     eval_files: A list of patterns for eval files.

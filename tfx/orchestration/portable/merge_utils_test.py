@@ -15,14 +15,12 @@
 from typing import Dict, Mapping, Optional, Sequence
 
 from absl.testing import parameterized
-from tfx import types
-from tfx.orchestration.portable import merge_utils
-from tfx.orchestration.portable import outputs_utils
-from tfx.types import standard_artifacts
-from tfx.utils import test_case_utils
-from tfx.utils import typing_utils
-
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx import types
+from tfx.orchestration.portable import merge_utils, outputs_utils
+from tfx.types import standard_artifacts
+from tfx.utils import test_case_utils, typing_utils
 
 _DEFAULT_ARTIFACT_TYPE = standard_artifacts.Examples
 _RUNTIME_RESOLVED_URI = outputs_utils.RESOLVED_AT_RUNTIME

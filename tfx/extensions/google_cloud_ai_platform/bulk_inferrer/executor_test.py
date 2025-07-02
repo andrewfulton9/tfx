@@ -15,20 +15,16 @@
 
 import hashlib
 import os
-
 from unittest import mock
+
 import tensorflow as tf
+from tfx_bsl.public.proto import model_spec_pb2
+
 from tfx.extensions.google_cloud_ai_platform import constants
 from tfx.extensions.google_cloud_ai_platform.bulk_inferrer import executor
 from tfx.proto import bulk_inferrer_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
-from tfx.utils import telemetry_utils
-from tfx_bsl.public.proto import model_spec_pb2
+from tfx.types import artifact_utils, standard_artifacts
+from tfx.utils import json_utils, name_utils, path_utils, proto_utils, telemetry_utils
 
 
 class ExecutorTest(tf.test.TestCase):

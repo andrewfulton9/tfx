@@ -18,20 +18,19 @@ from typing import Any, Dict
 from unittest import mock
 
 import tensorflow as tf
+from google.protobuf import json_format
+
+# TODO(b/140306674): Stop using the internal TF API
+from tensorflow.core.protobuf import (
+  meta_graph_pb2,  # pylint: disable=g-direct-tensorflow-import
+  saved_model_pb2,  # pylint: disable=g-direct-tensorflow-import
+)
+from tensorflow_serving.apis import classification_pb2, predict_pb2, regression_pb2
+
 from tfx.components.infra_validator import request_builder
 from tfx.proto import infra_validator_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact_utils, standard_artifacts
 from tfx.utils import path_utils
-
-from google.protobuf import json_format
-# TODO(b/140306674): Stop using the internal TF API
-from tensorflow.core.protobuf import meta_graph_pb2  # pylint: disable=g-direct-tensorflow-import
-from tensorflow.core.protobuf import saved_model_pb2  # pylint: disable=g-direct-tensorflow-import
-from tensorflow_serving.apis import classification_pb2
-from tensorflow_serving.apis import predict_pb2
-from tensorflow_serving.apis import regression_pb2
-
 
 _TEST_DATA_ROOT = os.path.join(
     os.path.dirname(os.path.dirname(__file__)), 'testdata')

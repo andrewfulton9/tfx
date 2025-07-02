@@ -16,20 +16,15 @@
 import os
 from typing import Type, TypeVar
 
-from absl.testing import parameterized
 import tensorflow as tf
+from absl.testing import parameterized
+from google.protobuf import message, text_format
+
 from tfx.dsl.components.base.testing import test_node
 from tfx.dsl.placeholder import placeholder as ph
 from tfx.proto.orchestration import placeholder_pb2
-from tfx.types import channel
-from tfx.types import channel_utils
-from tfx.types.artifact import Artifact
-from tfx.types.artifact import Property
-from tfx.types.artifact import PropertyType
-
-from google.protobuf import message
-from google.protobuf import text_format
-
+from tfx.types import channel, channel_utils
+from tfx.types.artifact import Artifact, Property, PropertyType
 
 _P = TypeVar('_P', bound=message.Message)
 

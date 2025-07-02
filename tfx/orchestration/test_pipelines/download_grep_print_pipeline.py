@@ -17,7 +17,6 @@ from tfx.dsl.component.experimental import container_component
 from tfx.dsl.placeholder import placeholder as ph
 from tfx.types import standard_artifacts
 
-
 downloader_component = container_component.create_container_component(
     name='DownloadFromHttp',
     outputs={
@@ -117,7 +116,6 @@ print_component = container_component.create_container_component(
 
 def create_pipeline_component_instances(text_url: str, pattern: str):
   """Creates tasks for the download_grep_print pipeline."""
-
   downloader_task = downloader_component(url=text_url)
   grep_task = grep_component(
       text=downloader_task.outputs['data'],

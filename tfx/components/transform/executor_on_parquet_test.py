@@ -18,14 +18,13 @@ from typing import List
 import pyarrow as pa
 import pyarrow.parquet as pq
 import tensorflow as tf
-from tfx.components.transform import executor
-from tfx.components.transform import executor_test
+from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx_bsl.coders import example_coder
+
+from tfx.components.transform import executor, executor_test
 from tfx.dsl.io import fileio
 from tfx.proto import example_gen_pb2
 from tfx.utils import io_utils
-from tfx_bsl.coders import example_coder
-
-from tensorflow_metadata.proto.v0 import schema_pb2
 
 
 def _copy_examples_as_parquet(examples_path: str, output_paths: List[str],

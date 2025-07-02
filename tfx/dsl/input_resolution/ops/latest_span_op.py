@@ -63,9 +63,11 @@ class LatestSpan(
     skip_num_recent_spans in the TFX RollingRange proto.
 
     Args:
+    ----
       input_list: The list of Artifacts to parse.
 
     Returns:
+    -------
       Artifacts with the n latest spans, all versions included.
     """
     # Verify that min_span and skip_last_n are >= to their minimum values.

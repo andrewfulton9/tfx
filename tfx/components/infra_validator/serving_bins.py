@@ -19,8 +19,10 @@ from typing import Any, Dict, List, Optional
 
 from docker import types as docker_types
 
-from tfx.components.infra_validator.model_server_clients import base_client
-from tfx.components.infra_validator.model_server_clients import tensorflow_serving_client
+from tfx.components.infra_validator.model_server_clients import (
+  base_client,
+  tensorflow_serving_client,
+)
 from tfx.proto import infra_validator_pb2
 from tfx.utils.model_paths import tf_serving_flavor
 
@@ -76,9 +78,11 @@ class ServingBinary(abc.ABC):
     Only applies to docker compatible serving binaries.
 
     Args:
+    ----
       *args: List of unresolved variables to configure environment variables.
 
     Returns:
+    -------
       A dictionary of environment variables inside container.
     """
     raise NotImplementedError('{} is not docker compatible.'.format(
@@ -91,9 +95,11 @@ class ServingBinary(abc.ABC):
     Only applies to docker compatible serving binaries.
 
     Args:
+    ----
       *args: List of unresolved variables to configure docker run parameters.
 
     Returns:
+    -------
       A dictionary of docker run parameters.
     """
     raise NotImplementedError('{} is not docker compatible.'.format(
@@ -163,10 +169,12 @@ class TensorFlowServing(ServingBinary):
     """Make parameters for docker `client.containers.run`.
 
     Args:
+    ----
       model_path: A path to the model.
       needs_mount: If True, model_path will be mounted to the container.
 
     Returns:
+    -------
       A dictionary of docker run parameters.
     """
     result = dict(

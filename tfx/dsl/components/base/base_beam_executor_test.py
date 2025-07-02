@@ -18,13 +18,14 @@ import sys
 from typing import Any, Dict, List
 from unittest import mock
 
-from apache_beam.options.pipeline_options import DirectOptions
-from apache_beam.options.pipeline_options import GoogleCloudOptions
-from apache_beam.options.pipeline_options import StandardOptions
 import tensorflow as tf
+from apache_beam.options.pipeline_options import (
+  DirectOptions,
+  GoogleCloudOptions,
+  StandardOptions,
+)
 
-from tfx import types
-from tfx import version
+from tfx import types, version
 from tfx.components.statistics_gen.executor import Executor as StatisticsGenExecutor
 from tfx.dsl.components.base import base_beam_executor
 from tfx.utils import name_utils

@@ -21,9 +21,11 @@ import click
 
 from tfx.dsl.io import fileio
 from tfx.tools.cli import labels
-from tfx.tools.cli.handler import base_handler
-from tfx.tools.cli.handler import beam_dag_runner_patcher
-from tfx.tools.cli.handler import dag_runner_patcher
+from tfx.tools.cli.handler import (
+  base_handler,
+  beam_dag_runner_patcher,
+  dag_runner_patcher,
+)
 from tfx.utils import io_utils
 
 
@@ -37,6 +39,7 @@ class BeamHandler(base_handler.BaseHandler):
     """Creates pipeline in Beam.
 
     Args:
+    ----
       overwrite: set as true to update pipeline.
     """
     patcher = self._get_dag_runner_patcher()
@@ -56,7 +59,6 @@ class BeamHandler(base_handler.BaseHandler):
 
   def update_pipeline(self) -> None:
     """Updates pipeline in Beam."""
-
     # Set overwrite as True to update the pipeline.
     self.create_pipeline(overwrite=True)
 
@@ -97,7 +99,7 @@ class BeamHandler(base_handler.BaseHandler):
     # Check if pipeline exists.
     self._check_pipeline_existence(pipeline_name)
 
-    with open(self._get_pipeline_args_path(pipeline_name), 'r') as f:
+    with open(self._get_pipeline_args_path(pipeline_name)) as f:
       pipeline_args = json.load(f)
 
     # Run pipeline dsl.

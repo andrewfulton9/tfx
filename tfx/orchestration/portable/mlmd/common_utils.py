@@ -16,12 +16,11 @@
 import copy
 from typing import Any, TypeVar
 
-from absl import logging
-from tfx.orchestration import metadata
-
 import ml_metadata as mlmd
+from absl import logging
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.orchestration import metadata
 
 MetadataType = TypeVar(
     'MetadataType',
@@ -51,13 +50,16 @@ def register_type_if_not_exist(
   to register new metadata type.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     metadata_type: The metadata type to register if does not exist.
 
   Returns:
+  -------
     A MetadataType with id
 
   Raises:
+  ------
     RuntimeError: If new metadata type conflicts with existing schema in MLMD.
     ValueError: If metadata type is not expected.
   """
@@ -89,17 +91,20 @@ def register_type_if_not_exist(
 def _put_type_handler(
     get_type_handler: Any, put_type_handler: Any, metadata_type: MetadataType
 ) -> MetadataType:
-  """register the type with error handling.
+  """Register the type with error handling.
 
   Args:
+  ----
     get_type_handler: A handler to access MLMD store.
     put_type_handler: A handler to access MLMD store.
     metadata_type: The metadata type to register if does not exist.
 
   Returns:
+  -------
     A MetadataType with id
 
   Raises:
+  ------
     RuntimeError: If new metadata type conflicts with existing schema in MLMD.
     ValueError: If metadata type is not expected.
   """

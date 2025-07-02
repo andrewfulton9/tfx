@@ -16,11 +16,10 @@
 import os
 
 import tensorflow as tf
+
 from tfx.components.schema_gen import executor
 from tfx.dsl.io import fileio
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
 
 

@@ -18,13 +18,13 @@ import os
 from typing import Any, Dict
 from unittest import mock
 
-from google.cloud import bigquery
 import tensorflow as tf
+from google.cloud import bigquery
+
 from tfx.dsl.io import fileio
 from tfx.extensions.google_cloud_big_query.pusher import executor
 from tfx.types import standard_artifacts
-from tfx.utils import io_utils
-from tfx.utils import json_utils
+from tfx.utils import io_utils, json_utils
 
 
 class ExecutorTest(tf.test.TestCase):

@@ -46,7 +46,8 @@ class Slice(
     return Slice(artifacts, stop=n, min_count=n)
   ```
 
-  Attributes:
+  Attributes
+  ----------
     start: A start index (inclusive) of the slice range. Can be negative (index
       from the backward), or omitted (range from the beginning).
     stop: A stop index (exclusive) of the slice range. Can be negative (index

@@ -13,8 +13,8 @@
 # limitations under the License.
 """Tests for tfx.orchestration.launcher.container_common."""
 
-from kubernetes import client
 import tensorflow as tf
+from kubernetes import client
 
 from tfx.dsl.components.base import executor_spec
 from tfx.orchestration.launcher import container_common

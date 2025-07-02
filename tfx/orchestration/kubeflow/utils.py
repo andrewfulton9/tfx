@@ -37,12 +37,15 @@ def fix_brackets(placeholder: str) -> str:
   missing. This function fix the missing bracket.
 
   Args:
+  ----
     placeholder: string placeholder of RuntimeParameter
 
   Returns:
+  -------
     Placeholder with re-balanced brackets.
 
   Raises:
+  ------
     RuntimeError: if left brackets are less than right brackets.
   """
   lcount = placeholder.count('{')

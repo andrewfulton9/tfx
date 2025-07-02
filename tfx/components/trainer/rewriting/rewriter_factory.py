@@ -70,13 +70,17 @@ def create_rewriter(rewriter_type: str, *args,
   """Instantiates a new rewriter with the given type and constructor arguments.
 
   Args:
+  ----
     rewriter_type: The rewriter subclass to instantiate (can be all lowercase).
     *args: Positional initialization arguments to pass to the rewriter.
     **kwargs: Keyward initialization arguments to pass to the rewriter.
 
   Returns:
+  -------
     The instantiated rewriter.
+
   Raises:
+  ------
     ValueError: If unable to instantiate the rewriter.
   """
   return _RewriterFactory.get_rewriter_cls(rewriter_type)(*args, **kwargs)

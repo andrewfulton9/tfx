@@ -14,11 +14,12 @@
 """Tests for tfx.orchestration.portable.mlmd.context_lib."""
 import os
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.orchestration import metadata
 from tfx.orchestration.portable.mlmd import context_lib
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.utils import test_case_utils
-from ml_metadata.proto import metadata_store_pb2
 
 
 class ContextLibTest(test_case_utils.TfxTest):

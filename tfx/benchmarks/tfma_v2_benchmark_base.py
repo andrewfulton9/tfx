@@ -16,25 +16,27 @@
 import copy
 import time
 
-
 import apache_beam as beam
 import numpy as np
 import tensorflow as tf
 import tensorflow_model_analysis as tfma
-from tensorflow_model_analysis.evaluators import metrics_plots_and_validations_evaluator
-from tensorflow_model_analysis.evaluators import poisson_bootstrap
-from tensorflow_model_analysis.extractors import example_weights_extractor
-from tensorflow_model_analysis.extractors import features_extractor
-from tensorflow_model_analysis.extractors import labels_extractor
-from tensorflow_model_analysis.extractors import legacy_input_extractor
-from tensorflow_model_analysis.extractors import predictions_extractor
-from tensorflow_model_analysis.extractors import unbatch_extractor
-import tfx
-from tfx.benchmarks import benchmark_utils
-from tfx.benchmarks import benchmark_base
+from tensorflow_model_analysis.evaluators import (
+  metrics_plots_and_validations_evaluator,
+  poisson_bootstrap,
+)
+from tensorflow_model_analysis.extractors import (
+  example_weights_extractor,
+  features_extractor,
+  labels_extractor,
+  legacy_input_extractor,
+  predictions_extractor,
+  unbatch_extractor,
+)
 from tfx_bsl.coders import example_coder
-from tfx_bsl.tfxio import record_based_tfxio
-from tfx_bsl.tfxio import test_util
+from tfx_bsl.tfxio import record_based_tfxio, test_util
+
+import tfx
+from tfx.benchmarks import benchmark_base, benchmark_utils
 
 constants = tfma.constants
 metric_specs_util = tfma.metrics.metric_specs
@@ -149,6 +151,7 @@ class TFMAV2BenchmarkBase(benchmark_base.BenchmarkBase):
     taken for the whole pipeline.
 
     Args:
+    ----
       multi_model: True if multiple models should be used in the benchmark.
     """
     self._init_model(multi_model, validation=False)

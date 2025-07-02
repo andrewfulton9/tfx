@@ -22,27 +22,25 @@ import time
 from typing import Any, Dict, List, Optional
 
 from absl import logging
+from tensorflow_serving.apis import (
+  classification_pb2,
+  predict_pb2,
+  prediction_log_pb2,
+  regression_pb2,
+)
+
 from tfx import types
-from tfx.components.infra_validator import error_types
-from tfx.components.infra_validator import request_builder
-from tfx.components.infra_validator import serving_bins
+from tfx.components.infra_validator import error_types, request_builder, serving_bins
 from tfx.components.infra_validator import types as iv_types
-from tfx.components.infra_validator.model_server_runners import kubernetes_runner
-from tfx.components.infra_validator.model_server_runners import local_docker_runner
+from tfx.components.infra_validator.model_server_runners import (
+  kubernetes_runner,
+  local_docker_runner,
+)
 from tfx.dsl.components.base import base_executor
 from tfx.proto import infra_validator_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, path_utils, proto_utils
 from tfx.utils.model_paths import tf_serving_flavor
-
-from tensorflow_serving.apis import classification_pb2
-from tensorflow_serving.apis import predict_pb2
-from tensorflow_serving.apis import prediction_log_pb2
-from tensorflow_serving.apis import regression_pb2
-
 
 _DEFAULT_NUM_TRIES = 5
 _DEFAULT_POLLING_INTERVAL_SEC = 1
@@ -70,12 +68,14 @@ def _create_model_server_runner(
   """Create a ModelServerRunner from a model, a ServingBinary and a ServingSpec.
 
   Args:
+  ----
     model_path: An IV-flavored model path. (See model_path_utils.py)
     serving_binary: One of ServingBinary instances parsed from the
         `serving_spec`.
     serving_spec: A ServingSpec instance of this infra validation.
 
   Returns:
+  -------
     A ModelServerRunner.
   """
   platform = serving_spec.WhichOneof('serving_platform')
@@ -149,6 +149,7 @@ class Executor(base_executor.BaseExecutor):
     """Contract for running InfraValidator Executor.
 
     Args:
+    ----
       input_dict:
         - `model`: Single `Model` artifact that we're validating.
         - `examples`: `Examples` artifacts to be used for test requests.

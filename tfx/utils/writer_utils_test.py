@@ -14,12 +14,13 @@
 """Tests for tfx.utils.writer_utils."""
 
 import os
-from absl import flags
+
 import tensorflow as tf
-from tfx.utils import io_utils
-from tfx.utils import writer_utils
+from absl import flags
 from google.protobuf import text_format
 from tensorflow_metadata.proto.v0 import anomalies_pb2
+
+from tfx.utils import io_utils, writer_utils
 
 FLAGS = flags.FLAGS
 

@@ -13,11 +13,12 @@
 # limitations under the License.
 """Tests for tfx.dsl.input_resolution.resolver_op."""
 import copy
-from typing import Optional, Mapping, Set
+from typing import Mapping, Optional, Set
 
 import tensorflow as tf
-from tfx.dsl.input_resolution import resolver_op
+
 import tfx.types
+from tfx.dsl.input_resolution import resolver_op
 from tfx.types import standard_artifacts
 
 

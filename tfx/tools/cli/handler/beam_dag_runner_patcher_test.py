@@ -16,6 +16,7 @@
 from unittest import mock
 
 import tensorflow as tf
+
 from tfx.orchestration import pipeline as tfx_pipeline
 from tfx.orchestration.beam import beam_dag_runner
 from tfx.tools.cli.handler import beam_dag_runner_patcher

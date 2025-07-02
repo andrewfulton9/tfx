@@ -19,11 +19,10 @@ from collections.abc import Mapping, Sequence
 from typing import Callable, Optional, Union
 
 import attr
-from tfx.orchestration import data_types_utils
-from tfx.proto.orchestration import execution_hook_pb2
-
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.orchestration import data_types_utils
+from tfx.proto.orchestration import execution_hook_pb2
 
 _PrimitiveFlagValueType = Union[int, float, str, bool]
 _FlagMap = Union[

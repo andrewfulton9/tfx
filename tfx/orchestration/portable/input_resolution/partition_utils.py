@@ -69,6 +69,7 @@ def join(
   """Join values by the partition key.
 
   Example:
+  -------
     join(
         [
             ({x=1, y=1}, 'xy-11'),
@@ -89,11 +90,13 @@ def join(
     ]
 
   Args:
+  ----
     lhs: LHS values.
     rhs: RHS values.
     merge_fn: A merge function that is called for each joined pair of values.
 
   Returns:
+  -------
     A inner-joined value with merged Partition and values.
   """
   if not lhs or not rhs:

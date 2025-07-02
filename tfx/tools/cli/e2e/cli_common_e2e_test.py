@@ -17,15 +17,14 @@ import codecs
 import locale
 import os
 
-from click import testing as click_testing
+import pytest
 import tensorflow as tf
+from click import testing as click_testing
 
 from tfx.tools.cli.cli_main import cli_group
 
-import pytest
 
-
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class CliCommonEndToEndTest(tf.test.TestCase):
 
   def setUp(self):

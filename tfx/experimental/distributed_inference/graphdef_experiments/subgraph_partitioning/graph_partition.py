@@ -46,9 +46,13 @@ The current implementation has some key limitations:
 
 import collections
 from typing import Dict, List, Mapping, Set
+
 import tensorflow as tf
+
 from tfx.dsl.io import fileio
-from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import execution_spec
+from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import (
+  execution_spec,
+)
 
 
 def get_graph_name_to_graph_def(
@@ -57,10 +61,12 @@ def get_graph_name_to_graph_def(
   """Gets the `GraphDef` protos from files.
 
   Args:
+  ----
     graph_name_to_filepath: A mapping from graph names to filepaths. Each
       filepath points to a `GraphDef` proto in binary.
 
   Returns:
+  -------
     A mapping from graph names to `GraphDef` protos.
   """
   graph_name_to_graph_def = {
@@ -89,11 +95,13 @@ def partition_all_graphs(
   ExecutionSpecs and execute the partitioned subgraphs.
 
   Args:
+  ----
     graph_name_to_graph_def: A mapping from graph names to `GraphDef` protos.
     graph_name_to_output_names: A mapping from graph names to lists of their
       output node names.
 
   Returns:
+  -------
     A mapping from graph names to a list of ExecutionSpecs, where the order
     of the list represents the order of execution.
   """
@@ -111,10 +119,12 @@ def _partition_one_graph(
   """Partitions one graph.
 
   Args:
+  ----
     graph_def: A `GraphDef` proto for that graph.
     output_names: A list of graph's output node names.
 
   Returns:
+  -------
     A list of ExecutionSpecs.
   """
   graph = _get_graph(graph_def)
@@ -152,9 +162,11 @@ def _get_remote_op_to_immediate_dep(
   a remote op.
 
   Args:
+  ----
     node_name_to_node_def: A mapping from node names to `NodeDef` protos.
 
   Returns:
+  -------
     A mapping from a remote op name to a set of remote op immediate
     dependencies' names.
   """
@@ -174,10 +186,12 @@ def _get_remote_op_immediate_dep(
   """Finds the remote op immediate dependencies for a remote op.
 
   Args:
+  ----
     remote_op_name: The name of the child remote op.
     node_name_to_node_def: A mapping from node names to `NodeDef` protos.
 
   Returns:
+  -------
     A list of remote op immediate dependencies' names.
   """
   queue = collections.deque([remote_op_name])
@@ -234,6 +248,7 @@ def _get_execution_specs(
   because each remote op essentially represents a graph.
 
   Args:
+  ----
     graph_def: A `GraphDef` proto.
     graph_output_names: A list of graph output node names.
     graph: A tf.Graph representing the same graph as graph_def.
@@ -242,6 +257,7 @@ def _get_execution_specs(
       remote op immediate dependencies' names.
 
   Returns:
+  -------
     A list of ExecutionSpecs, where the order of the list represents the
     order of execution.
   """
@@ -287,10 +303,12 @@ def _get_previous_subgraph_layer_output_node_names(
   remote op layer, subgraph layer, remote op layer, ...
 
   Args:
+  ----
     remote_op_layer: A set of remote op names for a remote op layer.
     node_name_to_node_def: A mapping from node names to `NodeDef` protos.
 
   Returns:
+  -------
     A set of output node names of the previous subgraph layer.
   """
   previous_subgraph_layer_output_node_names = set()
@@ -328,6 +346,7 @@ def _get_execution_spec_for_subgraph_layer(
   layer.
 
   Args:
+  ----
     graph_def: A `GraphDef` proto for the original graph.
     graph: A tf.Graph instance for the original graph.
     node_name_to_node_def: A mapping from node names to `NodeDef` protos.
@@ -335,6 +354,7 @@ def _get_execution_spec_for_subgraph_layer(
     output_node_names: A set of output node names for the current subgraph.
 
   Returns:
+  -------
     An ExecutionSpec representing a subgraph layer.
   """
   subgraph = tf.compat.v1.GraphDef()
@@ -380,10 +400,12 @@ def _create_placeholder_node_from_existing_node(
   inside partitioned subgraphs, and can be loaded by feed dicts at the runtime.
 
   Args:
+  ----
     node: A `NodeDef` proto for the existing node.
     graph: A tf.Graph instance for the graph that contains the existing node.
 
   Returns:
+  -------
     A `NodeDef` proto that stores a placeholder node.
   """
   operation = graph.get_operation_by_name('import/%s' % (node.name))
@@ -421,10 +443,12 @@ def _get_execution_specs_for_remote_op_layer(
   we use multiple ExecutionSpecs to represent a remote op layer.
 
   Args:
+  ----
     remote_op_layer: A set of remote op names for a remote op layer.
     node_name_to_node_def: A mapping from node names to `NodeDef` protos.
 
   Returns:
+  -------
     A list of ExecutionSpecs representing a remote op layer.
   """
   list_of_specs = []
@@ -449,6 +473,7 @@ def _modify_execution_specs_for_input_validity(
   We'd like to add it to previous spec's outputs.
 
   Args:
+  ----
     specs: A list of ExecutionSpecs, where order of the list represents the
       order of the execution.
   """
@@ -482,6 +507,7 @@ class _RemoteOpLayers:
     """Initializes the class.
 
     Args:
+    ----
       remote_op_to_immediate_dep: A mapping from a remote op name to a list of
         remote op immediate dependencies' names.
     """
@@ -494,7 +520,8 @@ class _RemoteOpLayers:
   def __next__(self) -> Set[str]:
     """Gets the remote op names for the next remote op layer.
 
-    Returns:
+    Returns
+    -------
       A set of remote op names.
     """
     if not self._not_processed:

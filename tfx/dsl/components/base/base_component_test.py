@@ -18,9 +18,7 @@
 import tensorflow as tf
 
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.proto import example_gen_pb2
 from tfx.types import component_spec
 from tfx.types.system_executions import SystemExecution

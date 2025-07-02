@@ -17,10 +17,9 @@ import collections
 import contextlib
 from typing import Dict, List, Optional, Sequence, Tuple, TypeVar
 
-from tfx import types
-
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx import types
 
 _VALID_OUTPUT_EVENT_TYPES = frozenset([
     metadata_store_pb2.Event.OUTPUT, metadata_store_pb2.Event.INTERNAL_OUTPUT,
@@ -132,10 +131,12 @@ def is_valid_output_event(event: metadata_store_pb2.Event,
   which excludes events of type PENDING_OUTPUT.
 
   Args:
+  ----
     event: The event to evaluate.
     expected_output_key: The expected output key.
 
   Returns:
+  -------
     A bool value indicating result
   """
   if event.type not in _VALID_OUTPUT_EVENT_TYPES:
@@ -155,10 +156,12 @@ def is_valid_input_event(event: metadata_store_pb2.Event,
   """Evaluates whether an event is an input event with the right input key.
 
   Args:
+  ----
     event: The event to evaluate.
     expected_input_key: The expected input key.
 
   Returns:
+  -------
     A bool value indicating result
   """
   if event.type not in _VALID_INPUT_EVENT_TYPES:
@@ -199,6 +202,7 @@ def generate_event(
   """Generates a MLMD event given type, key and index.
 
   Args:
+  ----
     event_type: The type of the event. e.g., INPUT, OUTPUT, etc.
     key: The key of the input or output channel. Usually a key can uniquely
       identify a channel of a TFX node.
@@ -209,6 +213,7 @@ def generate_event(
     execution_id: Optional execution id for the event.
 
   Returns:
+  -------
     A metadata_store_pb2.Event message.
   """
   event = metadata_store_pb2.Event()

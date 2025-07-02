@@ -18,15 +18,15 @@ import random
 from unittest import mock
 
 import apache_beam as beam
-from apache_beam.testing import util
 import prestodb
 import tensorflow as tf
+from apache_beam.testing import util
+
 from tfx.dsl.io import fileio
 from tfx.examples.custom_components.presto_example_gen.presto_component import executor
 from tfx.examples.custom_components.presto_example_gen.proto import presto_config_pb2
 from tfx.proto import example_gen_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact_utils, standard_artifacts
 from tfx.utils import proto_utils
 
 

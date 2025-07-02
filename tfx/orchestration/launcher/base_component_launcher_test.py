@@ -14,20 +14,19 @@
 """Tests for tfx.orchestration.component_launcher."""
 
 import os
-
 from unittest import mock
+
 import tensorflow as tf
+from ml_metadata.proto import metadata_store_pb2
+from tensorflow.python.lib.io import (
+  file_io,  # pylint: disable=g-direct-tensorflow-import
+)
+
 from tfx.dsl.io import fileio
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.orchestration import publisher
-from tfx.orchestration.launcher import in_process_component_launcher
-from tfx.orchestration.launcher import test_utils
+from tfx.orchestration import data_types, metadata, publisher
+from tfx.orchestration.launcher import in_process_component_launcher, test_utils
 from tfx.types import channel_utils
 from tfx.utils import name_utils
-
-from ml_metadata.proto import metadata_store_pb2
-from tensorflow.python.lib.io import file_io  # pylint: disable=g-direct-tensorflow-import
 
 
 class ComponentRunnerTest(tf.test.TestCase):

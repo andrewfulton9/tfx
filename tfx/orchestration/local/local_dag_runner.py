@@ -17,16 +17,18 @@ import datetime
 from typing import Optional
 
 from absl import logging
+
 from tfx.dsl.compiler import constants
 from tfx.orchestration import metadata
 from tfx.orchestration.local import runner_utils
-from tfx.orchestration.portable import launcher
-from tfx.orchestration.portable import partial_run_utils
-from tfx.orchestration.portable import runtime_parameter_utils
-from tfx.orchestration.portable import tfx_runner
+from tfx.orchestration.portable import (
+  launcher,
+  partial_run_utils,
+  runtime_parameter_utils,
+  tfx_runner,
+)
 from tfx.proto.orchestration import pipeline_pb2
-from tfx.utils import doc_controls
-from tfx.utils import telemetry_utils
+from tfx.utils import doc_controls, telemetry_utils
 
 
 class LocalDagRunner(tfx_runner.IrBasedRunner):
@@ -45,10 +47,12 @@ class LocalDagRunner(tfx_runner.IrBasedRunner):
     """Runs given pipeline locally.
 
     Args:
+    ----
       pipeline: Pipeline IR containing pipeline args and components.
       run_options: Optional args for the run.
 
     Raises:
+    ------
       ValueError: If run_options is provided, and partial_run_options.from_nodes
         and partial_run_options.to_nodes are both empty.
     """

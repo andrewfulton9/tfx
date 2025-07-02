@@ -17,15 +17,15 @@ import os
 from typing import Any, Dict, List, Optional
 
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_driver
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import (
+  base_component,
+  base_driver,
+  base_executor,
+  executor_spec,
+)
 from tfx.dsl.io import fileio
 from tfx.orchestration import data_types
-from tfx.types import artifact_utils
-from tfx.types import channel_utils
-from tfx.types import component_spec
+from tfx.types import artifact_utils, channel_utils, component_spec
 
 
 class _InputArtifact(types.Artifact):

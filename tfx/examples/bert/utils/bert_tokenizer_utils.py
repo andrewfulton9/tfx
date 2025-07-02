@@ -18,9 +18,9 @@ import os
 import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text as text
-
-from tensorflow.python.eager.context import eager_mode  # pylint: disable=g-direct-tensorflow-import
-
+from tensorflow.python.eager.context import (
+  eager_mode,  # pylint: disable=g-direct-tensorflow-import
+)
 
 _CLS = '[CLS]'
 _PAD = '[PAD]'
@@ -58,12 +58,14 @@ class BertPreprocessor:
     Add special tokens according to config.
 
     Args:
+    ----
       sequence: Tensor of shape [batch_size, 1].
       max_len: The number of tokens after padding and truncating.
       add_cls: Whether to add CLS token at the front of each sequence.
       add_sep: Whether to add SEP token at the end of each sequence.
 
     Returns:
+    -------
       word_ids: Ragged tokenized sequences [batch_size, None].
     """
     vocab_file_path = self._model.resolved_object.vocab_file.asset_path
@@ -99,12 +101,14 @@ class BertPreprocessor:
     Add special tokens according to config.
 
     Args:
+    ----
       sequence: Tensor of shape [batch_size, 1].
       max_len: The number of tokens after padding and truncating.
       add_cls: Whether to add CLS token at the front of each sequence.
       add_sep: Whether to add SEP token at the end of each sequence.
 
     Returns:
+    -------
       word_ids: Tokenized sequences [batch_size, max_len].
       input_mask: Mask padded tokens [batch_size, max_len].
       segment_ids: Distinguish multiple sequences [batch_size, max_len].
@@ -130,11 +134,13 @@ class BertPreprocessor:
     sequences and at the end of the second sequence.
 
     Args:
+    ----
       sequence_a: [batch_size, 1]
       sequence_b: [batch_size, 1]
       max_len: The length of the concatenated tokenized sentences.
 
     Returns:
+    -------
       word_ids: Tokenized sequences [batch_size, max_len].
       input_mask: Mask padded tokens [batch_size, max_len].
       segment_ids: Distinguish multiple sequences [batch_size, max_len].

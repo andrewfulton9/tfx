@@ -14,12 +14,12 @@
 
 """DSL for composing execution hooks tests."""
 
-from absl.testing import parameterized
 import tensorflow as tf
+from absl.testing import parameterized
+from google.protobuf import json_format
 
 from tfx.dsl import hooks
 from tfx.proto.orchestration import execution_hook_pb2
-from google.protobuf import json_format
 
 
 class HooksTest(tf.test.TestCase, parameterized.TestCase):

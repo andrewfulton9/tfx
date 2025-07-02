@@ -16,11 +16,10 @@
 import os
 
 import tensorflow as tf
+
 from tfx.components.trainer import fn_args_utils
 from tfx.proto import trainer_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
 from tfx.utils import proto_utils
 
 

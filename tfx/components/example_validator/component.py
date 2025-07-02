@@ -17,12 +17,11 @@ from typing import List, Optional
 
 from absl import logging
 from tensorflow_data_validation.anomalies.proto import custom_validation_config_pb2
+
 from tfx import types
 from tfx.components.example_validator import executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.dsl.components.base import base_component, executor_spec
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
 
 
@@ -76,6 +75,7 @@ class ExampleValidator(base_component.BaseComponent):
     """Construct an ExampleValidator component.
 
     Args:
+    ----
       statistics: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.ExampleStatistics`][tfx.v1.types.standard_artifacts.ExampleStatistics].
       schema: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Schema`]. _required_
       exclude_splits: Names of splits that the example validator should not

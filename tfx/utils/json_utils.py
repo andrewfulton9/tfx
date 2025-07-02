@@ -16,13 +16,11 @@
 import importlib
 import inspect
 import json
-from typing import Any, Dict, Type, Union, Mapping, Sequence
-
-from tfx.utils import deprecation_utils
-from tfx.utils import doc_controls
-from tfx.utils import proto_utils
+from typing import Any, Dict, Mapping, Sequence, Type, Union
 
 from google.protobuf import message
+
+from tfx.utils import deprecation_utils, doc_controls, proto_utils
 
 # This is the special key to indicate the serialized object type.
 # Depending on which, the utility knows how to deserialize it back to its

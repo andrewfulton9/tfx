@@ -16,13 +16,12 @@
 from typing import List, Optional, Tuple
 
 from tensorflow_data_validation.anomalies.proto import custom_validation_config_pb2
+
 from tfx import types
 from tfx.components.distribution_validator import executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, executor_spec
 from tfx.proto import distribution_validator_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
 
 
@@ -56,6 +55,7 @@ class DistributionValidator(base_component.BaseComponent):
     reasons, DistributionValidator will rubber stamp.
 
     Args:
+    ----
       statistics: A BaseChannel of type `standard_artifacts.ExampleStatistics`.
       baseline_statistics: A BaseChannel of type
         `standard_artifacts.ExampleStatistics` to which the distribution from

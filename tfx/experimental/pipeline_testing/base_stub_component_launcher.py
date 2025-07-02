@@ -64,6 +64,7 @@ class BaseStubComponentLauncher(
     BaseStubComponentLauncher class, including test_component_ids.
 
     Args:
+    ----
       test_data_dir: The directory where pipeline outputs are recorded
         (pipeline_recorder.py).
       test_component_ids: List of ids of components that are to be tested. In
@@ -71,6 +72,7 @@ class BaseStubComponentLauncher(
         list will be replaced with a BaseStubExecutor.
 
     Returns:
+    -------
       None
     """
     cls.test_component_ids = test_component_ids

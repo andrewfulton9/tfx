@@ -15,8 +15,7 @@
 
 from unittest import mock
 
-from tfx.utils import deprecation_utils
-from tfx.utils import test_case_utils
+from tfx.utils import deprecation_utils, test_case_utils
 
 
 class DependencyUtilsTest(test_case_utils.TfxTest):

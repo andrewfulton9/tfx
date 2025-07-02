@@ -16,10 +16,10 @@
 import abc
 from typing import Sequence, Union
 
+from google.protobuf import message
+
 from tfx.dsl.compiler import constants as compiler_constants
 from tfx.proto.orchestration import pipeline_pb2
-
-from google.protobuf import message
 
 
 class NodeProtoView(abc.ABC):

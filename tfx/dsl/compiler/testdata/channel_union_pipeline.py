@@ -15,15 +15,13 @@
 
 import os
 
-from tfx.components import CsvExampleGen
-from tfx.components import StatisticsGen
+from tfx.components import CsvExampleGen, StatisticsGen
 from tfx.dsl.component.experimental import annotations
 from tfx.dsl.component.experimental.decorators import component
 from tfx.dsl.components.common import resolver
 from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
 from tfx.orchestration import pipeline
-from tfx.types import channel
-from tfx.types import standard_artifacts
+from tfx.types import channel, standard_artifacts
 
 _pipeline_name = 'channel_union_pipeline'
 

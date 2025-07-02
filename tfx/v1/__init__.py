@@ -17,19 +17,13 @@
 
 try:
   # These modules may not be available in some environments.
-  from tfx.v1 import components
-  from tfx.v1 import extensions
-  from tfx.v1 import orchestration
+  from tfx.v1 import components, extensions, orchestration
 except ImportError as e:
   # 'tfx.v1' is needed for the error during the circular dependency resolution.
   if e.name not in ['tfx.v1', 'components', 'extensions', 'orchestration']:
     raise
 
-from tfx.v1 import dsl
-from tfx.v1 import proto
-from tfx.v1 import testing
-from tfx.v1 import types
-from tfx.v1 import utils
+from tfx.v1 import dsl, proto, testing, types, utils
 
 # Import version string.
 from tfx.version import __version__

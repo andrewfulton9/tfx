@@ -22,16 +22,17 @@ import subprocess
 import tempfile
 from typing import List
 
-from absl import app
-from absl.flags import argparse_flags
 import requests
 import tensorflow_data_validation as tfdv
+from absl import app
+from absl.flags import argparse_flags
+from google.protobuf import text_format
+from tensorflow.python.lib.io import (
+  file_io,  # pylint: disable=g-direct-tensorflow-import
+)
+from tensorflow_metadata.proto.v0 import schema_pb2
 from tensorflow_transform import coders as tft_coders
 from tensorflow_transform.tf_metadata import schema_utils
-
-from google.protobuf import text_format
-from tensorflow.python.lib.io import file_io  # pylint: disable=g-direct-tensorflow-import
-from tensorflow_metadata.proto.v0 import schema_pb2
 
 _LOCAL_INFERENCE_TIMEOUT_SECONDS = 5.0
 
@@ -53,9 +54,11 @@ def _read_schema(path):
   """Reads a schema from the provided location.
 
   Args:
+  ----
     path: The location of the file holding a serialized Schema proto.
 
   Returns:
+  -------
     An instance of Schema or None if the input argument is None
   """
   result = schema_pb2.Schema()
@@ -66,7 +69,6 @@ def _read_schema(path):
 
 def _do_local_inference(host, port, serialized_examples):
   """Performs inference on a model hosted by the host:port server."""
-
   json_examples = []
   for serialized_example in serialized_examples:
     # The encoding follows the guidelines in:
@@ -107,6 +109,7 @@ def _do_inference(model_handle, examples_file, num_examples, schema):
   """Sends requests to the model and prints the results.
 
   Args:
+  ----
     model_handle: handle to the model. This can be either
      "aiplatform:model:version" or "host:port"
     examples_file: path to csv file containing examples, with the first line
@@ -115,6 +118,7 @@ def _do_inference(model_handle, examples_file, num_examples, schema):
     schema: a Schema describing the input data
 
   Returns:
+  -------
     Response from model server
   """
   filtered_features = [
@@ -125,7 +129,7 @@ def _do_inference(model_handle, examples_file, num_examples, schema):
 
   proto_coder = _make_proto_coder(schema)
 
-  csv_reader = csv.DictReader(open(examples_file, 'r'))
+  csv_reader = csv.DictReader(open(examples_file))
 
   dataset_stats = tfdv.generate_statistics_from_csv(examples_file)
   serialized_examples = []
@@ -158,7 +162,7 @@ def _do_inference(model_handle, examples_file, num_examples, schema):
           if top_values:
             one_example[name] = [top_values[0].value.encode('utf8')]
           else:
-            one_example[name] = [''.encode('utf8')]
+            one_example[name] = [b'']
 
     serialized_example = proto_coder.encode(one_example)
     serialized_examples.append(serialized_example)

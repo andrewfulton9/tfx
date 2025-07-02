@@ -15,18 +15,19 @@
 
 from typing import Any, Dict, Optional, cast
 
-from absl import logging
 import docker
+from absl import logging
+from google.protobuf import message
+
 from tfx.dsl.compiler import placeholder_utils
 from tfx.dsl.component.experimental import executor_specs
-from tfx.orchestration.portable import base_executor_operator
-from tfx.orchestration.portable import data_types
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import platform_config_pb2
+from tfx.orchestration.portable import base_executor_operator, data_types
+from tfx.proto.orchestration import (
+  executable_spec_pb2,
+  execution_result_pb2,
+  platform_config_pb2,
+)
 from tfx.utils import proto_utils
-
-from google.protobuf import message
 
 
 class DockerExecutorOperator(base_executor_operator.BaseExecutorOperator):
@@ -51,7 +52,6 @@ class DockerExecutorOperator(base_executor_operator.BaseExecutorOperator):
       self, execution_info: data_types.ExecutionInfo
   ) -> execution_result_pb2.ExecutorOutput:
     """Execute underlying component implementation."""
-
     context = placeholder_utils.ResolutionContext(
         exec_info=execution_info,
         executor_spec=self._executor_spec,

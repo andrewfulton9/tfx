@@ -18,14 +18,12 @@ import inspect
 import sys
 import types
 from typing import Any, Dict, Optional, Type
-from tfx import types as tfx_types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
-from tfx.types import artifact
-from tfx.types import component_spec
-from tfx.types import system_executions
+
 from google.protobuf import message
+
+from tfx import types as tfx_types
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
+from tfx.types import artifact, component_spec, system_executions
 
 
 class ArgFormats(enum.Enum):
@@ -42,9 +40,11 @@ def assert_is_functype(func: Any) -> None:
   """Asserts func is an instance of FunctionType.
 
   Args:
+  ----
     func: The function to be checked.
 
   Raises:
+  ------
     ValueError: if func is not FunctionType.
   """
   if not isinstance(func, types.FunctionType):
@@ -60,11 +60,13 @@ def assert_no_varargs_varkw(
   """Asserts no arbitrary positional arguments (*args) and no arbitrary keyword arguments (**kwargs).
 
   Args:
+  ----
     argspec: An `inspect.FullArgSpec` instance describing the function. Usually
       obtained from `inspect.getfullargspec(func)`.
     subject_message: An error message subject.
 
   Raises:
+  ------
     ValueError if either arbitrary position arguments or arbitrary keywords
     arguments are found.
   """
@@ -79,10 +81,12 @@ def extract_arg_defaults(argspec: inspect.FullArgSpec) -> Dict[str, Any]:
   """Extracts arg default values as a dict from arg name to its default value.
 
   Args:
+  ----
     argspec: An `inspect.FullArgSpec` instance describing the function. Usually
       obtained from `inspect.getfullargspec(func)`.
 
   Returns:
+  -------
     A dict from arg name to its default value. Args without default values are
     omitted in the dict.
   """
@@ -104,6 +108,7 @@ def parse_parameter_arg(
   """Parses and validates a function arg annotated with Parameter[T].
 
   Args:
+  ----
     arg: The arg name.
     arg_defaults: A dict from arg name to its default value.
     arg_typehint: The typehint for the arg.
@@ -137,9 +142,11 @@ def assert_is_top_level_func(func: types.FunctionType) -> None:
   their qualified module path.
 
   Args:
+  ----
     func: The function to be checked.
 
   Raises:
+  ------
     ValueError if the func is not defined at top level.
   """
   # See https://www.python.org/dev/peps/pep-3155/ for details about the special
@@ -155,11 +162,12 @@ def assert_is_top_level_func(func: types.FunctionType) -> None:
 def assert_no_private_func_in_main(func: types.FunctionType) -> None:
   """Asserts the func is not a private function in the main file.
 
-
   Args:
+  ----
     func: The function to be checked.
 
   Raises:
+  ------
     ValueError if the func was defined in main and whose name starts with '_'.
   """
   if func.__module__ == '__main__' and func.__name__.startswith('_'):
@@ -183,6 +191,7 @@ def _create_component_spec_class(
   """Creates the ComponentSpec class for the func-generated component.
 
   Args:
+  ----
     func: The function which component will be generated based on.
     arg_defaults: A dict from func arg name to its default value.
     inputs: A dict from input name to its Artifact type.
@@ -198,6 +207,7 @@ def _create_component_spec_class(
       `tfx.dsl.component.experimental.json_compat.is_json_compatible`.
 
   Returns:
+  -------
     a subclass of ComponentSpec.
   """
   spec_inputs = {}
@@ -253,6 +263,7 @@ def _create_executor_spec_instance(
   """Creates the executor spec instance for the func-generated component.
 
   Args:
+  ----
     func: The function which executor spec instance will be generated based on.
     base_executor_class: base class of the generated executor class.
     executor_spec_class: class of the generated executor spec instance.
@@ -268,6 +279,7 @@ def _create_executor_spec_instance(
       `tfx.dsl.component.experimental.json_compat.is_json_compatible`.
 
   Returns:
+  -------
     an instance of `executor_spec_class` whose executor_class is a subclass of
     `base_executor_class`.
   """
@@ -317,6 +329,7 @@ def create_component_class(
   """Creates the component class for the func-generated component.
 
   Args:
+  ----
     func: The function which the component class will be generated based on.
     arg_defaults: A dict from func arg name to its default value.
     arg_formats: An updated dict from arg name to its format. The format is the
@@ -341,9 +354,9 @@ def create_component_class(
       values returned from the user function to whether they are `Optional`.
 
   Returns:
+  -------
     a subclass of `base_component_class`.
   """
-
   component_spec_class = _create_component_spec_class(
       func,
       arg_defaults,

@@ -16,9 +16,7 @@
 from unittest import mock
 
 from tfx.types import standard_artifacts
-from tfx.utils import channel
-from tfx.utils import deprecation_utils
-from tfx.utils import test_case_utils
+from tfx.utils import channel, deprecation_utils, test_case_utils
 
 
 class ChannelTest(test_case_utils.TfxTest):

@@ -14,6 +14,7 @@
 """Tests for third_party.components.trainer.rewriting.rewriter."""
 
 from absl.testing import absltest
+
 from tfx.components.trainer.rewriting import rewriter
 
 
@@ -27,6 +28,7 @@ class PerformRewriteTest(absltest.TestCase):
       """Initializes the MyRewriter class.
 
       Args:
+      ----
         pre_rewrite_validate_raises_error: Boolean specifying if
           pre_rewrite_validate raises ValueError.
         rewrite_raises_error: Boolean specifying if rewrite raises ValueError.

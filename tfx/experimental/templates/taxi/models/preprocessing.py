@@ -28,10 +28,12 @@ def _fill_in_missing(x):
   Fills in missing values of `x` with '' or 0, and converts to a dense tensor.
 
   Args:
+  ----
     x: A `SparseTensor` of rank 2.  Its dense shape should have size at most 1
       in the second dimension.
 
   Returns:
+  -------
     A rank 1 tensor where missing values of `x` have been filled in.
   """
   if not isinstance(x, tf.sparse.SparseTensor):
@@ -49,9 +51,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature operations.
   """
   outputs = {}

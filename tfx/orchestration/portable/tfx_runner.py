@@ -39,6 +39,7 @@ class TfxRunner(metaclass=abc.ABCMeta):
     """Runs a TFX pipeline on a specific platform.
 
     Args:
+    ----
       pipeline: a pipeline.Pipeline instance representing a pipeline definition.
       run_options: an Optional pipeline.RunOptions object. See
         the class definition pipeline.RunOptions for details. If None,
@@ -46,6 +47,7 @@ class TfxRunner(metaclass=abc.ABCMeta):
       **kwargs: extra orchestrator backend-specific keyword arguments.
 
     Returns:
+    -------
       Optional platform-specific object.
     """
     pass
@@ -99,12 +101,14 @@ class IrBasedRunner(TfxRunner, metaclass=abc.ABCMeta):
     """Runs a TFX pipeline on a specific platform.
 
     Args:
+    ----
       pipeline: a pipeline_pb2.Pipeline instance representing a pipeline
         definition.
       run_options: Optional args for the run.
       **kwargs: extra orchestrator backend-specific keyword arguments.
 
     Returns:
+    -------
       Optional platform-specific object.
     """
     pass

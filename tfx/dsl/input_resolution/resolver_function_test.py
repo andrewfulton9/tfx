@@ -16,11 +16,10 @@
 from typing import Mapping, Set
 
 import tensorflow as tf
-from tfx.dsl.control_flow import for_each
-from tfx.dsl.control_flow import for_each_internal
-from tfx.dsl.input_resolution import resolver_function
-from tfx.dsl.input_resolution import resolver_op
+
 import tfx.types
+from tfx.dsl.control_flow import for_each, for_each_internal
+from tfx.dsl.input_resolution import resolver_function, resolver_op
 from tfx.types import resolved_channel
 from tfx.utils import typing_utils
 

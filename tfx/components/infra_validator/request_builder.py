@@ -17,23 +17,21 @@ import abc
 import os
 from typing import Any, Iterable, List, Mapping, Optional
 
-from absl import logging
 import tensorflow as tf
-from tfx import types
-from tfx.components.infra_validator import types as iv_types
-from tfx.components.util import examples_utils
-from tfx.components.util import tfxio_utils
-from tfx.dsl.io import fileio
-from tfx.proto import example_gen_pb2
-from tfx.proto import infra_validator_pb2
-from tfx.types import artifact_utils
-from tfx.utils import path_utils
+from absl import logging
+from tensorflow.python.saved_model import (
+  loader_impl,  # pylint: disable=g-direct-tensorflow-import
+)
+from tensorflow_serving.apis import classification_pb2, predict_pb2, regression_pb2
 from tfx_bsl.tfxio import dataset_options
 
-from tensorflow.python.saved_model import loader_impl  # pylint: disable=g-direct-tensorflow-import
-from tensorflow_serving.apis import classification_pb2
-from tensorflow_serving.apis import predict_pb2
-from tensorflow_serving.apis import regression_pb2
+from tfx import types
+from tfx.components.infra_validator import types as iv_types
+from tfx.components.util import examples_utils, tfxio_utils
+from tfx.dsl.io import fileio
+from tfx.proto import example_gen_pb2, infra_validator_pb2
+from tfx.types import artifact_utils
+from tfx.utils import path_utils
 
 # TODO(b/140306674): Stop using the internal TF API
 
@@ -60,12 +58,14 @@ def build_requests(  # pylint: disable=invalid-name
   compatible with request type to build.
 
   Args:
+  ----
     model_name: A model name that model server recognizes.
     model: A model artifact for model signature analysis.
     examples: An `Examples` artifact for request data source.
     request_spec: A `RequestSpec` config.
 
   Returns:
+  -------
     A list of request protos.
   """
   split_name = request_spec.split_name or None
@@ -104,11 +104,13 @@ def _parse_saved_model_signatures(  # pylint: disable=invalid-name
   all given signature names.
 
   Args:
+  ----
     model_path: A path to the SavedModel directory.
     tag_set: A set of tags MetaGraphDef should have.
     signature_names: A list of signature names to retrieve.
 
   Returns:
+  -------
     A mapping from signature name to SignatureDef.
   """
   if not tag_set:
@@ -149,12 +151,14 @@ class _BaseRequestBuilder(abc.ABC):
     gzipped TFRecord files.
 
     Args:
+    ----
       examples: `Examples` artifact.
       num_examples: Number of examples to read. If the specified value is larger
           than the actual number of examples, all examples would be read.
       split_name: Name of the split to read from the Examples artifact.
 
     Raises:
+    ------
       RuntimeError: If read twice.
     """
     if self._records:
@@ -281,9 +285,11 @@ class _TFServingRpcRequestBuilder(_BaseRequestBuilder):
     have dtype=DT_STRING and shape=TensorShape([None]).
 
     Args:
+    ----
       signature_def: A SignatureDef proto message.
 
     Returns:
+    -------
       An input key for the serialized input.
     """
     signature_input_keys = list(signature_def.inputs.keys())

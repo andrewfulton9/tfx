@@ -16,17 +16,26 @@
 from __future__ import annotations
 
 import collections
-from typing import Callable, Dict, Generic, Iterable, Iterator, Mapping, MutableSequence, Optional, Sequence, TypeVar, Union
+from typing import (
+  Callable,
+  Dict,
+  Generic,
+  Iterable,
+  Iterator,
+  Mapping,
+  MutableSequence,
+  Optional,
+  Sequence,
+  TypeVar,
+  Union,
+)
+
+from google.protobuf import any_pb2, descriptor_pb2, message, message_factory
+from google.protobuf import descriptor as descriptor_lib
 
 from tfx.dsl.placeholder import placeholder_base
 from tfx.proto.orchestration import placeholder_pb2
 from tfx.utils import proto_utils
-
-from google.protobuf import any_pb2
-from google.protobuf import descriptor_pb2
-from google.protobuf import descriptor as descriptor_lib
-from google.protobuf import message
-from google.protobuf import message_factory
 
 _types = placeholder_base.types
 _T = TypeVar('_T', bound=message.Message)
@@ -75,6 +84,7 @@ def make_proto(
     after receiving the instance from the factory. (And you shouldn't need to.)
 
   Args:
+  ----
     base_message: An instance of the proto type that the constructed placeholder
       resolves to. This can already have some fields populated, which will be
       passed through to the output, though of course those can't contain any
@@ -90,6 +100,7 @@ def make_proto(
       instances can be passed to populate sub-message fields.
 
   Returns:
+  -------
     A placeholder that, at runtime, will evaluate to a proto message of the
     same type as the `base_message`. It will have the `base_message`'s fields
     populated, but with the `kwargs` fields merged on top.
@@ -319,7 +330,7 @@ class MakeProtoPlaceholder(Generic[_T], placeholder_base.Placeholder):
         yield from value.traverse()
 
   def encode(
-      self, component_spec: Optional[type['_types.ComponentSpec']] = None
+      self, component_spec: Optional[type[_types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     # In a tree of MakeProtoPlaceholder.encode() calls, only the root will
     # create a _DescriptorCollector(). This will cause all of the sub-calls to

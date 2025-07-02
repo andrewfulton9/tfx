@@ -14,8 +14,8 @@
 """Tests for tfx.dsl.context_managers.dsl_context_registry."""
 
 import tensorflow as tf
-from tfx.dsl.context_managers import dsl_context_registry
-from tfx.dsl.context_managers import test_utils
+
+from tfx.dsl.context_managers import dsl_context_registry, test_utils
 
 Node = test_utils.Node
 TestContext = test_utils.TestContext

@@ -18,14 +18,12 @@ import os
 import subprocess
 import sys
 import tempfile
-
 from unittest import mock
+
 import tensorflow as tf
 
 from tfx.components.util import udf_utils
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.types import component_spec
 from tfx.utils import import_utils
 

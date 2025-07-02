@@ -15,12 +15,10 @@
 
 import os
 import re
-
-from typing import List, Iterable, Tuple
+from typing import Iterable, List, Tuple
 
 from tfx.tools.cli.e2e import test_utils as cli_test_utils
-from tfx.utils import io_utils
-from tfx.utils import test_case_utils
+from tfx.utils import io_utils, test_case_utils
 
 
 class BaseEndToEndTest(test_case_utils.TfxTest):
@@ -86,10 +84,12 @@ class BaseEndToEndTest(test_case_utils.TfxTest):
     # OTHER STUFF
 
     Args:
+    ----
       filepath: file to modify.
       variables: List of variables.
 
     Returns:
+    -------
       Absolute path of the modified file.
     """
     path = os.path.join(self._project_dir, filepath)

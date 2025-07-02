@@ -18,9 +18,10 @@ import os
 
 from airflow import models
 
-
-from tfx.orchestration.airflow.airflow_dag_runner import AirflowDagRunner
-from tfx.orchestration.airflow.airflow_dag_runner import AirflowPipelineConfig
+from tfx.orchestration.airflow.airflow_dag_runner import (
+  AirflowDagRunner,
+  AirflowPipelineConfig,
+)
 from tfx.utils import test_case_utils
 
 
@@ -45,7 +46,9 @@ class TaxiPipelineSimpleTest(test_case_utils.TfxTest):
     # Patch $HOME directory for pipeline DAG construction.
     original_home = os.environ['HOME']
     os.environ['HOME'] = self._test_dir
-    from tfx.examples.chicago_taxi_pipeline import taxi_pipeline_simple  # pylint: disable=g-import-not-at-top
+    from tfx.examples.chicago_taxi_pipeline import (
+      taxi_pipeline_simple,  # pylint: disable=g-import-not-at-top
+    )
     os.environ['HOME'] = original_home
 
     logical_pipeline = taxi_pipeline_simple._create_pipeline(

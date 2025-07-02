@@ -14,14 +14,13 @@
 """Tests for tfx.components.model_validator.executor."""
 
 import os
+
 import pytest
 import tensorflow as tf
 
-from tfx.components.model_validator import constants
-from tfx.components.model_validator import executor
+from tfx.components.model_validator import constants, executor
 from tfx.dsl.io import fileio
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact_utils, standard_artifacts
 
 
 @pytest.mark.xfail(run=False,

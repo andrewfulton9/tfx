@@ -14,17 +14,13 @@
 """Tests for tfx.components.example_gen.component."""
 
 import tensorflow as tf
-from tfx.components.example_gen import base_example_gen_executor
-from tfx.components.example_gen import component
-from tfx.components.example_gen import driver
-from tfx.dsl.components.base import executor_spec
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import proto_utils
-
 from google.protobuf import any_pb2
+
+from tfx.components.example_gen import base_example_gen_executor, component, driver
+from tfx.dsl.components.base import executor_spec
+from tfx.proto import example_gen_pb2, range_config_pb2
+from tfx.types import standard_artifacts, standard_component_specs
+from tfx.utils import proto_utils
 
 
 class TestExampleGenExecutor(base_example_gen_executor.BaseExampleGenExecutor):

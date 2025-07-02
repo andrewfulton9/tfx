@@ -16,16 +16,14 @@
 from typing import Any, Dict, List, Optional, Type, Union
 
 import absl
-from tfx import types
-from tfx.dsl.components.base import base_driver
-from tfx.dsl.components.base import base_node
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.types import channel_utils
-from tfx.utils import doc_controls
-
 from ml_metadata import errors
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx import types
+from tfx.dsl.components.base import base_driver, base_node
+from tfx.orchestration import data_types, metadata
+from tfx.types import channel_utils
+from tfx.utils import doc_controls
 
 # Constant to access Importer importing result from Importer output dict.
 IMPORT_RESULT_KEY = 'result'
@@ -71,6 +69,7 @@ def _prepare_artifact(
   `reimport` argument is set to True.
 
   Args:
+  ----
     metadata_handle: The handler of MLMD.
     uri: The uri of the artifact.
     properties: The properties of the artifact, given as a dictionary from
@@ -84,6 +83,7 @@ def _prepare_artifact(
     mlmd_artifact_type: The MLMD artifact type of the Artifact to be created.
 
   Returns:
+  -------
     An Artifact object representing the imported artifact.
   """
   absl.logging.info(
@@ -178,6 +178,7 @@ def generate_output_dict(
   argument is set to True.
 
   Args:
+  ----
     metadata_handle: The handler of MLMD.
     uri: The uri of the artifact.
     properties: The properties of the artifact, given as a dictionary from
@@ -193,6 +194,7 @@ def generate_output_dict(
       output dictionary. Defaults to 'result'.
 
   Returns:
+  -------
     A dictionary with the only key `output_key` whose value is the Artifact.
   """
   output_key = output_key or IMPORT_RESULT_KEY
@@ -297,6 +299,7 @@ class Importer(base_node.BaseNode):
     """Init function for the Importer.
 
     Args:
+    ----
       source_uri: the URI of the resource that needs to be registered.
       artifact_type: the type of the artifact to import.
       reimport: whether or not to re-import as a new artifact if the URI has

@@ -16,10 +16,11 @@
 import datetime
 import os
 
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
-from tfx.orchestration.airflow.airflow_dag_runner import AirflowDagRunner
-from tfx.orchestration.airflow.airflow_dag_runner import AirflowPipelineConfig
+from tfx.orchestration import metadata, pipeline
+from tfx.orchestration.airflow.airflow_dag_runner import (
+  AirflowDagRunner,
+  AirflowPipelineConfig,
+)
 from tfx.tools.cli.e2e import test_utils
 
 _pipeline_name = 'chicago_taxi_simple'

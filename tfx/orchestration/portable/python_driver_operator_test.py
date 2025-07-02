@@ -16,11 +16,10 @@
 from typing import Any, Dict, List
 
 import tensorflow as tf
+
 from tfx import types
-from tfx.orchestration.portable import base_driver
-from tfx.orchestration.portable import python_driver_operator
-from tfx.proto.orchestration import driver_output_pb2
-from tfx.proto.orchestration import executable_spec_pb2
+from tfx.orchestration.portable import base_driver, python_driver_operator
+from tfx.proto.orchestration import driver_output_pb2, executable_spec_pb2
 
 _DEFAULT_DRIVER_OUTPUT = driver_output_pb2.DriverOutput()
 

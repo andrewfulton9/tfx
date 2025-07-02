@@ -27,9 +27,11 @@ def input(key: str) -> ArtifactPlaceholder:  # noqa: A002, A001
   """Returns a Placeholder that represents an input artifact.
 
   Args:
+  ----
     key: The key of the input artifact.
 
   Returns:
+  -------
     A Placeholder that supports
 
       1. Rendering the whole MLMD artifact proto as text_format.
@@ -57,9 +59,11 @@ def output(key: str) -> ArtifactPlaceholder:
   It is the same as input(...) function, except it is for output artifacts.
 
   Args:
+  ----
     key: The key of the output artifact.
 
   Returns:
+  -------
     A Placeholder that supports
 
       1. Rendering the whole artifact as text_format.
@@ -180,7 +184,7 @@ class _ArtifactUriOperator(placeholder_base.UnaryPlaceholderOperator):
     )
 
   def encode(
-      self, component_spec: Optional[type['_types.ComponentSpec']] = None
+      self, component_spec: Optional[type[_types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     result.operator.artifact_uri_op.expression.CopyFrom(
@@ -209,7 +213,7 @@ class _ArtifactValueOperator(placeholder_base.UnaryPlaceholderOperator):
     )
 
   def encode(
-      self, component_spec: Optional[type['_types.ComponentSpec']] = None
+      self, component_spec: Optional[type[_types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     result.operator.artifact_value_op.expression.CopyFrom(
@@ -243,7 +247,7 @@ class _PropertyOperator(placeholder_base.UnaryPlaceholderOperator):
     )
 
   def encode(
-      self, component_spec: Optional[type['_types.ComponentSpec']] = None
+      self, component_spec: Optional[type[_types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     result.operator.artifact_property_op.expression.CopyFrom(

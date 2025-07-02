@@ -13,12 +13,9 @@
 # limitations under the License.
 """Tool to regenerate datasets used in benchmarks."""
 
-from absl import app
-from absl import flags
-from absl import logging
+from absl import app, flags, logging
 
-from tfx.benchmarks import benchmark_utils
-from tfx.benchmarks import tft_benchmark_base
+from tfx.benchmarks import benchmark_utils, tft_benchmark_base
 
 FLAGS = flags.FLAGS
 

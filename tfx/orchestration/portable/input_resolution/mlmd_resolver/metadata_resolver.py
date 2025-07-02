@@ -16,12 +16,14 @@
 import collections
 from typing import Callable, Dict, List, Optional, Tuple, Union
 
-from tfx.orchestration import mlmd_connection_manager as mlmd_cm
-from tfx.orchestration.portable.input_resolution.mlmd_resolver import metadata_resolver_utils
-from tfx.types import external_artifact_utils
-
 import ml_metadata as mlmd
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration import mlmd_connection_manager as mlmd_cm
+from tfx.orchestration.portable.input_resolution.mlmd_resolver import (
+  metadata_resolver_utils,
+)
+from tfx.types import external_artifact_utils
 
 _MAX_NUM_HOPS = 100
 _MAX_NUM_STARTING_NODES = 100
@@ -46,7 +48,7 @@ class MetadataResolver:
   tracing APIs.
 
   Example:
-
+  -------
   # `store` is a metadata store that has been initialized.
   resolver = MetadataResolver(store)
   # Call functions defined in MetadataResolver. For example:
@@ -75,6 +77,7 @@ class MetadataResolver:
     """Gets downstream or upstream artifacts from external artifact ids.
 
     Args:
+    ----
       external_artifact_ids: A list of external artifact ids.
       max_num_hops: maximum number of hops performed for tracing. `max_num_hops`
         cannot exceed 100 nor be negative.
@@ -90,9 +93,11 @@ class MetadataResolver:
         artifacts.
 
     Returns:
+    -------
       Mapping of artifact ids to a list of downstream or upstream artifacts.
 
     Raises:
+    ------
       ValueError: If mlmd_connection_manager is not initialized.
     """
     if not self._mlmd_connection_manager:
@@ -188,6 +193,7 @@ class MetadataResolver:
     from artifact_1.
 
     Args:
+    ----
         artifacts: a list of starting artifacts. At most 100 ids are supported.
           Returns empty result if `artifacts` is empty.
         max_num_hops: maximum number of hops performed for downstream tracing.
@@ -203,6 +209,7 @@ class MetadataResolver:
           and kept in the path.
 
     Returns:
+    -------
       Mapping of artifact ids to a list of downstream artifacts.
     """
     if not artifacts:
@@ -267,6 +274,7 @@ class MetadataResolver:
     from artifact_1.
 
     Args:
+    ----
         artifact_ids: ids of starting artifacts. At most 100 ids are supported.
           Returns empty result if `artifact_ids` is empty.
         max_num_hops: maximum number of hops performed for downstream tracing.
@@ -283,6 +291,7 @@ class MetadataResolver:
         store: A metadata_store.MetadataStore instance.
 
     Returns:
+    -------
     Mapping of artifact ids to a list of downstream artifacts.
     """
     # Precondition check.
@@ -405,6 +414,7 @@ class MetadataResolver:
     artifact_i -> INPUT_event -> execution_j -> OUTPUT_event -> artifact_k.
 
     Args:
+    ----
         artifact_uri: the uri of starting artifacts. At most 100 artifacts
           matched by the uri are considered as starting artifacts.
         max_num_hops: maximum number of hops performed for downstream tracing. A
@@ -415,6 +425,7 @@ class MetadataResolver:
           `max_num_hops` cannot exceed 100 nor be negative.
 
     Returns:
+    -------
         Mapping of artifact ids to a list of downstream artifacts.
     """
     if not artifact_uri:
@@ -483,6 +494,7 @@ class MetadataResolver:
     from artifact_1.
 
     Args:
+    ----
         artifacts: a list of starting artifacts. At most 100 ids are supported.
           Returns empty result if `artifacts` is empty.
         max_num_hops: maximum number of hops performed for upstream tracing.
@@ -498,6 +510,7 @@ class MetadataResolver:
           and kept in the path.
 
     Returns:
+    -------
       Mapping of artifact ids to a list of upstream artifacts.
     """
     if not artifacts:
@@ -562,6 +575,7 @@ class MetadataResolver:
     from artifact_1.
 
     Args:
+    ----
         artifact_ids: ids of starting artifacts. At most 100 ids are supported.
           Returns empty result if `artifact_ids` is empty.
         max_num_hops: maximum number of hops performed for upstream tracing.
@@ -578,6 +592,7 @@ class MetadataResolver:
         store: A metadata_store.MetadataStore instance.
 
     Returns:
+    -------
     Mapping of artifact ids to a list of upstream artifacts.
     """
     if len(artifact_ids) > _MAX_NUM_STARTING_NODES:
@@ -697,6 +712,7 @@ class MetadataResolver:
     artifact_i -> OUTPUT_event -> execution_j -> INPUT_event -> artifact_k.
 
     Args:
+    ----
         artifact_uri: the uri of starting artifacts. At most 100 artifacts
           matched by the uri are considered as starting artifacts.
         max_num_hops: maximum number of hops performed for upstream tracing. A
@@ -707,6 +723,7 @@ class MetadataResolver:
           `max_num_hops` cannot exceed 100 nor be negative.
 
     Returns:
+    -------
         Mapping of artifact ids to a list of upstream artifacts.
     """
     if not artifact_uri:

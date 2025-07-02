@@ -14,8 +14,13 @@
 """Tests for tfx.extensions.google_cloud_big_query.elwc_example_gen.component.component."""
 
 import tensorflow as tf
-from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.component import component
-from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.proto import elwc_config_pb2
+
+from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.component import (
+  component,
+)
+from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.proto import (
+  elwc_config_pb2,
+)
 from tfx.proto import example_gen_pb2
 from tfx.types import standard_artifacts
 

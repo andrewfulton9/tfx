@@ -13,11 +13,15 @@
 # limitations under the License.
 """Integration tests for metadata resolver."""
 from typing import Dict, List
-from absl.testing import absltest
-from tfx.orchestration.portable.input_resolution.mlmd_resolver import metadata_resolver
-from tfx.orchestration.portable.input_resolution.mlmd_resolver import metadata_resolver_utils
+
 import ml_metadata as mlmd
+from absl.testing import absltest
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration.portable.input_resolution.mlmd_resolver import (
+  metadata_resolver,
+  metadata_resolver_utils,
+)
 
 
 def create_artifact_type(
@@ -62,6 +66,7 @@ def create_execution(
   """Put an Execution in the MLMD database.
 
   Args:
+  ----
       store: metadata store
       execution_type_id: type id of the execution
       name: name of the execution
@@ -72,6 +77,7 @@ def create_execution(
         the valid output event types.
 
   Returns:
+  -------
   Created execution.
   """
   if output_event_type not in metadata_resolver_utils.OUTPUT_EVENT_TYPES:
@@ -116,7 +122,6 @@ def create_context(
     store: mlmd.MetadataStore, context_type_id: int, context_name: str
 ) -> metadata_store_pb2.Context:
   """Put a Context in the MLMD database."""
-
   context = metadata_store_pb2.Context(
       type_id=context_type_id, name=context_name
   )

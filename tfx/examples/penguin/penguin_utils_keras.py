@@ -20,12 +20,11 @@ components.
 import absl
 import keras_tuner
 import tensorflow as tf
-from tensorflow import keras
 import tensorflow_transform as tft
+from tensorflow import keras
 
 from tfx import v1 as tfx
 from tfx.examples.penguin import penguin_utils_base as base
-
 
 # TFX Transform will call this function.
 preprocessing_fn = base.preprocessing_fn
@@ -44,9 +43,11 @@ def _make_keras_model(hparams: keras_tuner.HyperParameters) -> tf.keras.Model:
   """Creates a DNN Keras model for classifying penguin data.
 
   Args:
+  ----
     hparams: Holds HyperParameters for tuning.
 
   Returns:
+  -------
     A Keras Model.
   """
   # The model below is built with Functional API, please refer to
@@ -75,6 +76,7 @@ def tuner_fn(fn_args: tfx.components.FnArgs) -> tfx.components.TunerFnResult:
   """Build the tuner using the KerasTuner API.
 
   Args:
+  ----
     fn_args: Holds args as name/value pairs.
       - working_dir: working dir for tuning.
       - train_files: List of file paths containing training tf.Example data.
@@ -85,6 +87,7 @@ def tuner_fn(fn_args: tfx.components.FnArgs) -> tfx.components.TunerFnResult:
       - transform_graph_path: optional transform graph produced by TFT.
 
   Returns:
+  -------
     A namedtuple contains the following:
       - tuner: A BaseTuner that will be used for tuning.
       - fit_kwargs: Args to pass to tuner's run_trial function for fitting the
@@ -131,6 +134,7 @@ def run_fn(fn_args: tfx.components.FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   tf_transform_output = tft.TFTransformOutput(fn_args.transform_output)

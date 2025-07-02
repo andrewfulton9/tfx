@@ -15,15 +15,14 @@
 
 import os
 
+import pytest
 import tensorflow as tf
+
 from tfx.dsl.component.experimental import executor_specs
 from tfx.dsl.components.base import base_component
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.beam import beam_dag_runner
 from tfx.types import component_spec
-
-import pytest
 
 
 class _HelloWorldSpec(component_spec.ComponentSpec):
@@ -68,7 +67,7 @@ def _create_pipeline(
   )
 
 
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class DockerComponentLauncherE2eTest(tf.test.TestCase):
 
   def setUp(self):

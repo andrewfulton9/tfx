@@ -20,7 +20,6 @@ import tensorflow as tf
 
 from tfx.tools.cli import pip_utils
 
-
 _SAMPLE_PIP_FREEZE_RESULT = b"""# some comment.
 
 -f a link

@@ -15,11 +15,14 @@
 
 from typing import Optional
 
-from tfx.components.example_gen import component
-from tfx.components.example_gen import utils
+from tfx.components.example_gen import component, utils
 from tfx.dsl.components.base import executor_spec
-from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.component import executor
-from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.proto import elwc_config_pb2
+from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.component import (
+  executor,
+)
+from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.proto import (
+  elwc_config_pb2,
+)
 from tfx.proto import example_gen_pb2
 
 
@@ -40,6 +43,7 @@ class BigQueryToElwcExampleGen(component.QueryBasedExampleGen):
     """Constructs a BigQueryElwcExampleGen component.
 
     Args:
+    ----
       query: BigQuery sql string, query result will be treated as a single
         split, can be overwritten by input_config.
       elwc_config: The elwc config contains a list of context feature fields.
@@ -59,10 +63,10 @@ class BigQueryToElwcExampleGen(component.QueryBasedExampleGen):
           proto message.
 
     Raises:
+    ------
       RuntimeError: Only one of query and input_config should be set and
         elwc_config is required.
     """
-
     if bool(query) == bool(input_config):
       raise RuntimeError('Exactly one of query and input_config should be set.')
     if not elwc_config:

@@ -58,12 +58,14 @@ def deprecated(date, instructions, warn_once=True):
   perform such deprecation, decorate its constructor instead.
 
   Args:
+  ----
     date: String date at which function will be removed, or None.
     instructions: Instructions on updating use of deprecated code.
     warn_once: Whether only one warning should be emitted for multiple calls to
       deprecated symbol.
 
   Returns:
+  -------
     Decorated function or method.
   """
 
@@ -115,6 +117,7 @@ def deprecated_alias(deprecated_name, name, func_or_class, warn_once=True):
   """Deprecates a symbol in favor of a renamed function or class.
 
   Args:
+  ----
     deprecated_name: Fully qualified name of deprecated symbol.
     name: New symbol name.
     func_or_class: Non-deprecated function or class, to be used as alias.
@@ -122,6 +125,7 @@ def deprecated_alias(deprecated_name, name, func_or_class, warn_once=True):
       deprecated symbol.
 
   Returns:
+  -------
     Decorated function or method.
   """
   if inspect.isclass(func_or_class):
@@ -168,9 +172,11 @@ def get_first_nondeprecated_class(cls):
   For internal use only, no backwards compatibility guarantees.
 
   Args:
+  ----
     cls: A class which may be marked as a deprecated alias.
 
   Returns:
+  -------
     First class in the given class's class hierarchy (traversed in MRO order)
     that is not a deprecated alias.
   """

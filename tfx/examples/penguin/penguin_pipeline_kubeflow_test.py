@@ -17,6 +17,7 @@ import os
 from unittest import mock
 
 from absl.testing import parameterized
+
 from tfx.dsl.io import fileio
 from tfx.examples.penguin import penguin_pipeline_kubeflow
 from tfx.utils import test_case_utils

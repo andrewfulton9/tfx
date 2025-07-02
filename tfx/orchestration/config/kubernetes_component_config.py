@@ -24,7 +24,8 @@ from tfx.orchestration.launcher import container_common
 class KubernetesComponentConfig(base_component_config.BaseComponentConfig):
   """Component config which holds Kubernetes Pod execution args.
 
-  Attributes:
+  Attributes
+  ----------
     pod: the spec for a Pod. It can either be an instance of client.V1Pod or a
       dict of a Pod spec. The spec details are:
       https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Pod.md

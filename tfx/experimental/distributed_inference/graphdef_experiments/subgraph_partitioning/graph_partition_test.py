@@ -17,11 +17,13 @@ import os
 import tempfile
 
 import tensorflow as tf
+from google.protobuf import text_format
 
 from tfx.dsl.io import fileio
-from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import create_complex_graph
-from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import graph_partition
-from google.protobuf import text_format
+from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import (
+  create_complex_graph,
+  graph_partition,
+)
 
 
 class RemoteOpLayerTest(tf.test.TestCase):

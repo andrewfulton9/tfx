@@ -15,16 +15,16 @@
 
 import sys
 import typing
-from typing import Any, List, Literal, TypedDict
 import unittest
+from typing import Any, List, Literal, TypedDict
 
+import ml_metadata as mlmd
 import tensorflow as tf
+import typing_extensions
+
 import tfx.types
 from tfx.types import standard_artifacts
 from tfx.utils import typing_utils
-import typing_extensions
-
-import ml_metadata as mlmd
 
 
 class TypingUtilsTest(tf.test.TestCase):

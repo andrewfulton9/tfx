@@ -17,12 +17,9 @@ import contextlib
 import filecmp
 import os
 
-
 from tfx import version
-from tfx.tools.cli.container_builder import dockerfile
-from tfx.tools.cli.container_builder import labels
+from tfx.tools.cli.container_builder import dockerfile, labels
 from tfx.utils import test_case_utils
-
 
 _FAKE_VERSION = '0.23.0'
 

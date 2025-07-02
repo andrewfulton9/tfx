@@ -16,10 +16,10 @@
 import time
 
 import tensorflow as tf
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.orchestration.portable.mlmd import store_ext
 from tfx.utils import test_case_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def _sorted_ids(values):

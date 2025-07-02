@@ -14,9 +14,9 @@
 """Tests for slack component."""
 
 import tensorflow as tf
+
 from tfx.examples.custom_components.slack.slack_component import component
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import channel_utils, standard_artifacts
 
 
 class ComponentTest(tf.test.TestCase):

@@ -18,10 +18,11 @@ import functools
 import re
 import sys
 import threading
-from typing import Dict, List, Any, Callable
+from typing import Any, Callable, Dict, List
 
 from absl import logging
 from googleapiclient import http
+
 from tfx import version
 
 # Common label names used.
@@ -68,7 +69,8 @@ def _normalize_label(value: str) -> str:
 def make_labels_dict() -> Dict[str, str]:
   """Get all registered and system generated labels as a dict.
 
-  Returns:
+  Returns
+  -------
     All registered and system generated labels as a dict.
   """
   result = dict(
@@ -93,7 +95,8 @@ def make_labels_dict() -> Dict[str, str]:
 def make_beam_labels_args() -> List[str]:
   """Make Beam arguments for common labels used in TFX pipelines.
 
-  Returns:
+  Returns
+  -------
     New Beam pipeline args with labels.
   """
   labels = make_labels_dict()
@@ -129,6 +132,7 @@ class TFXHttpRequest(http.HttpRequest):
     """Construct a HttpRequest.
 
     Args:
+    ----
         *args: Positional arguments to pass to the base class constructor.
         **kwargs: Keyword arguments to pass to the base class constructor.
     """

@@ -50,9 +50,11 @@ class LatestVersion(
     version = 0, and then the artifact with span = 1 and version = 0.
 
     Args:
+    ----
       input_list: The list of Artifacts to parse.
 
     Returns:
+    -------
       Artifacts with the n latest versions.
     """
     if not input_list:

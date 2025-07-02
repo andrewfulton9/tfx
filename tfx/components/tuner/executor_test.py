@@ -19,21 +19,18 @@ import copy
 import json
 import os
 
-from keras_tuner import HyperParameters
 import tensorflow as tf
+from keras_tuner import HyperParameters
+from tensorflow.python.lib.io import (
+  file_io,  # pylint: disable=g-direct-tensorflow-import
+)
+
 from tfx.components.testdata.module_file import tuner_module
 from tfx.components.tuner import executor
 from tfx.dsl.io import fileio
-from tfx.proto import trainer_pb2
-from tfx.proto import tuner_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import name_utils
-from tfx.utils import proto_utils
-
-from tensorflow.python.lib.io import file_io  # pylint: disable=g-direct-tensorflow-import
+from tfx.proto import trainer_pb2, tuner_pb2
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
+from tfx.utils import io_utils, name_utils, proto_utils
 
 
 class ExecutorTest(tf.test.TestCase):

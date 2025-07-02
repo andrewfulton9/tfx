@@ -19,6 +19,7 @@ from typing import Any, Dict, Iterable, Tuple
 import apache_beam as beam
 import prestodb
 import tensorflow as tf
+
 from tfx.components.example_gen import base_example_gen_executor
 from tfx.examples.custom_components.presto_example_gen.proto import presto_config_pb2
 from tfx.proto import example_gen_pb2
@@ -30,7 +31,8 @@ from tfx.utils import proto_utils
 class _ReadPrestoDoFn(beam.DoFn):
   """Beam DoFn class that reads from Presto.
 
-  Attributes:
+  Attributes
+  ----------
     cursor: A prestodb.dbapi.Cursor object that reads records from Presto table.
   """
 
@@ -41,9 +43,11 @@ class _ReadPrestoDoFn(beam.DoFn):
     """Yields rows from query results.
 
     Args:
+    ----
       query: A SQL query used to return results from Presto table.
 
     Yields:
+    ------
       One row from the query result, represented by a list of tuples. Each tuple
       contains information on column name, column data type, data.
     """
@@ -72,9 +76,11 @@ def _deserialize_conn_config(
   """Deserializes Presto connection config to Presto client.
 
   Args:
+  ----
     conn_config: Protobuf-encoded connection config for Presto client.
 
   Returns:
+  -------
     A prestodb.dbapi.Connection instance initialized with user-supplied
     parameters.
   """
@@ -108,13 +114,16 @@ def _deserialize_auth_config(
   """Extracts from conn config the deserialized Presto Authentication class.
 
   Args:
+  ----
     conn_config: Protobuf-encoded connection config for Presto client.
 
   Returns:
+  -------
     A prestodb.auth.Authentication instance initialized with user-supplied
     parameters.
 
   Raises:
+  ------
     RuntimeError: if authentication type is not currently supported.
   """
   if conn_config.HasField('basic_auth'):
@@ -162,11 +171,13 @@ def _PrestoToExample(  # pylint: disable=invalid-name
   """Read from Presto and transform to TF examples.
 
   Args:
+  ----
     pipeline: beam pipeline.
     exec_properties: A dict of execution properties.
     split_pattern: Split.pattern in Input config, a Presto sql string.
 
   Returns:
+  -------
     PCollection of TF examples.
   """
   conn_config = example_gen_pb2.CustomConfig()

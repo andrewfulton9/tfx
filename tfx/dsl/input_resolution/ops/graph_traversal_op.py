@@ -16,18 +16,16 @@
 from typing import Sequence
 
 from absl import logging
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
-from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.compiler import constants
+from tfx.dsl.compiler import compiler_utils, constants
 from tfx.dsl.input_resolution import resolver_op
 from tfx.dsl.input_resolution.ops import ops_utils
 from tfx.orchestration.portable.input_resolution.mlmd_resolver import metadata_resolver
 from tfx.orchestration.portable.mlmd import event_lib
 from tfx.orchestration.portable.mlmd import filter_query_builder as q
 from tfx.types import artifact_utils
-
-from ml_metadata.proto import metadata_store_pb2
-
 
 # Valid artifact states for GraphTraversal.
 _VALID_ARTIFACT_STATES = [metadata_store_pb2.Artifact.State.LIVE]
@@ -60,9 +58,11 @@ class GraphTraversal(
     """Returns a dict with the upstream (or downstream) and root artifacts.
 
     Args:
+    ----
       input_list: A list with exactly one Artifact to use as the root.
 
     Returns:
+    -------
       A dictionary with the upstream (or downstream) artifacts, and the root
       artifact.
 

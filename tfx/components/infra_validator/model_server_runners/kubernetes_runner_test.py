@@ -17,18 +17,16 @@ import os
 from typing import Any, Dict
 from unittest import mock
 
+import tensorflow as tf
+from google.protobuf import json_format
 from kubernetes import client as k8s_client
 from kubernetes.client import rest
-import tensorflow as tf
-from tfx.components.infra_validator import error_types
-from tfx.components.infra_validator import serving_bins
+
+from tfx.components.infra_validator import error_types, serving_bins
 from tfx.components.infra_validator.model_server_runners import kubernetes_runner
 from tfx.proto import infra_validator_pb2
 from tfx.types import standard_artifacts
-from tfx.utils import kube_utils
-from tfx.utils import path_utils
-
-from google.protobuf import json_format
+from tfx.utils import kube_utils, path_utils
 
 
 def _CreateServingSpec(payload: Dict[str, Any]):

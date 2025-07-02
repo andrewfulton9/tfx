@@ -15,17 +15,14 @@
 
 import os
 import typing
-from typing import Any, Dict, Optional, Union
 import warnings
+from typing import Any, Dict, Optional, Union
 
 from airflow import models
-
 from tfx.dsl.components.base import base_component
-from tfx.orchestration import pipeline
-from tfx.orchestration import tfx_runner
+from tfx.orchestration import pipeline, tfx_runner
 from tfx.orchestration.airflow import airflow_component
-from tfx.orchestration.config import config_utils
-from tfx.orchestration.config import pipeline_config
+from tfx.orchestration.config import config_utils, pipeline_config
 from tfx.orchestration.data_types import RuntimeParameter
 from tfx.utils.json_utils import json
 
@@ -39,12 +36,12 @@ class AirflowPipelineConfig(pipeline_config.PipelineConfig):
     """Creates an instance of AirflowPipelineConfig.
 
     Args:
+    ----
       airflow_dag_config: Configs of Airflow DAG model. See
         https://airflow.apache.org/_api/airflow/models/dag/index.html#airflow.models.dag.DAG
           for the full spec.
       **kwargs: keyword args for PipelineConfig.
     """
-
     super().__init__(**kwargs)
     self.airflow_dag_config = airflow_dag_config or {}
 
@@ -58,6 +55,7 @@ class AirflowDagRunner(tfx_runner.TfxRunner):
     """Creates an instance of AirflowDagRunner.
 
     Args:
+    ----
       config: Optional Airflow pipeline config for customizing the launching of
         each component.
     """
@@ -74,12 +72,13 @@ class AirflowDagRunner(tfx_runner.TfxRunner):
     """Deploys given logical pipeline on Airflow.
 
     Args:
+    ----
       tfx_pipeline: Logical pipeline containing pipeline args and components.
 
     Returns:
+    -------
       An Airflow DAG.
     """
-
     # Merge airflow-specific configs with pipeline args
     airflow_dag = models.DAG(
         dag_id=tfx_pipeline.pipeline_info.pipeline_name,

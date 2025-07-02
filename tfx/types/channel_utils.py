@@ -26,14 +26,24 @@ Consider other symbols as private.
 """
 
 import typing
-from typing import Callable, Dict, Iterable, Iterator, List, Optional, Sequence, Set, Type, cast
+from typing import (
+  Callable,
+  Dict,
+  Iterable,
+  Iterator,
+  List,
+  Optional,
+  Sequence,
+  Set,
+  Type,
+  cast,
+)
+
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx.dsl.placeholder import placeholder as ph
 from tfx.proto.orchestration import placeholder_pb2
-from tfx.types import artifact
-from tfx.types import channel
-
-from ml_metadata.proto import metadata_store_pb2
+from tfx.types import artifact, channel
 
 
 class ChannelForTesting(channel.BaseChannel):
@@ -64,12 +74,15 @@ def as_channel(artifacts: Iterable[artifact.Artifact]) -> channel.Channel:
   """Converts artifact collection of the same artifact type into a Channel.
 
   Args:
+  ----
     artifacts: An iterable of Artifact.
 
   Returns:
+  -------
     A static Channel containing the source artifact collection.
 
   Raises:
+  ------
     ValueError when source is not a non-empty iterable of Artifact.
   """
   try:
@@ -89,9 +102,11 @@ def unwrap_channel_dict(
   """Unwrap dict of channels to dict of lists of Artifact.
 
   Args:
+  ----
     channel_dict: a dict of Text -> Channel
 
   Returns:
+  -------
     a dict of Text -> List[Artifact]
   """
   return dict((k, list(v.get())) for k, v in channel_dict.items())
@@ -120,9 +135,11 @@ def union(channels: Iterable[channel.BaseChannel]) -> channel.UnionChannel:
   ordering of artifacts for the consumer component.
 
   Args:
+  ----
     channels: An iterable of BaseChannels.
 
   Returns:
+  -------
     A BaseChannel that represents the union of channels.
   """
   return channel.UnionChannel(channels)
@@ -156,6 +173,7 @@ def external_pipeline_artifact_query(
   """Helper function to construct a query to get artifacts from an external pipeline.
 
   Args:
+  ----
     artifact_type: Subclass of Artifact for this channel.
     owner: Owner of the pipeline.
     pipeline_name: Name of the pipeline the artifacts belong to.
@@ -169,9 +187,11 @@ def external_pipeline_artifact_query(
       be returned. Only one of pipeline_run_id and pipeline_run_tags can be set.
 
   Returns:
+  -------
     channel.ExternalPipelineChannel instance.
 
   Raises:
+  ------
     ValueError, if owner or pipeline_name is missing, or both pipeline_run_id
       and pipeline_run_tags are set.
   """
@@ -220,12 +240,15 @@ def unwrap_simple_channel_placeholder(
   """Unwraps a `x.future()[0].value` placeholder and returns its `x`.
 
   Args:
+  ----
     placeholder: A placeholder expression.
 
   Returns:
+  -------
     The (only) channel involved in the expression.
 
   Raises:
+  ------
     ValueError: If the input placeholder is anything more complex than
       `some_channel.future()[0].value`, and in particular if it involves
       multiple channels, arithmetic operations or input/output artifacts.
@@ -281,12 +304,14 @@ def encode_placeholder_with_channels(
   function returns.
 
   Args:
+  ----
     placeholder: The placeholder to be encoded.
     channel_to_key_fn: The function used to determine the placeholder key for
       each ChannelWrappedPlaceholder. If None, no attempt to fill in the
       placeholder keys will be made.
 
   Returns:
+  -------
     A PlaceholderExpression proto that represent the given placeholder. Note
     that the given Placeholder remains unchanged.
   """

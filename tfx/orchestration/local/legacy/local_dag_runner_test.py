@@ -20,9 +20,7 @@ from typing import Any, Dict, List
 import absl.testing.absltest
 
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.orchestration import pipeline
 from tfx.orchestration.config import pipeline_config
 from tfx.orchestration.launcher import docker_component_launcher

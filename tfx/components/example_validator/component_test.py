@@ -14,11 +14,14 @@
 """Tests for tfx.components.example_validator.component."""
 
 import tensorflow as tf
+
 from tfx.components.example_validator import component
-from tfx.types import artifact_utils
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import (
+  artifact_utils,
+  channel_utils,
+  standard_artifacts,
+  standard_component_specs,
+)
 
 
 class ExampleValidatorTest(tf.test.TestCase):

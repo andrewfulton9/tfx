@@ -53,6 +53,7 @@ class StaticSpanRange(
     This ResolverOp corresponds to StaticRange in TFX.
 
     Args:
+    ----
       input_list: A list of artifacts.
     """
     valid_artifacts = ops_utils.get_valid_artifacts(

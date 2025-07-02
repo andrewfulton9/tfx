@@ -16,7 +16,7 @@
 from __future__ import annotations
 
 import collections
-from typing import Optional, List, Set, Iterable, Dict
+from typing import Dict, Iterable, List, Optional, Set
 
 from tfx.dsl.compiler import compiler_utils
 from tfx.dsl.components.base import base_node
@@ -197,10 +197,12 @@ class NodeContext:
     node yet.
 
     Arguments:
+    ---------
       channel: A BaseChannel that is used either directly or indirectly for the
           input of the node.
 
     Returns:
+    -------
       A fixed input key for NodeInputs.inputs that corresponds to the channel
       (i.e. the same channel argument would give the same input key).
     """
@@ -222,6 +224,7 @@ class NodeContext:
     """Get NodeInputs.input_graphs key for the given resolver function output.
 
     Arguments:
+    ---------
       traced_output: A resolver function traced result which is stored in
           `ResolvedChannels.output_node`.
       for_each_context: An optional ForEachContext that the resolver function
@@ -229,6 +232,7 @@ class NodeContext:
           `ResolvedChannels.for_each_context`.
 
     Returns:
+    -------
       A fixed input key for NodeInputs.input_graphs.
     """
     key = traced_output, for_each_context

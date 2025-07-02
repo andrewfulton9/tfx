@@ -14,9 +14,9 @@
 """Tests for tfx.dsl.input_resolution.ops.equal_property_values_op."""
 
 import tensorflow as tf
+
 from tfx import v1 as tfx
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import test_utils
+from tfx.dsl.input_resolution.ops import ops, test_utils
 from tfx.types import artifact as tfx_artifact
 
 

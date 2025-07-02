@@ -15,16 +15,15 @@
 
 import functools
 import operator
-from typing import cast, List, Optional, Union
+from typing import List, Optional, Union, cast
+
+from google.protobuf import message
 
 from tfx import types
 from tfx.dsl.component.experimental import placeholders
 from tfx.dsl.components.base import executor_spec
 from tfx.dsl.placeholder import placeholder
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import placeholder_pb2
-
-from google.protobuf import message
+from tfx.proto.orchestration import executable_spec_pb2, placeholder_pb2
 
 
 class TemplatedExecutorContainerSpec(executor_spec.ExecutorSpec):
@@ -38,7 +37,7 @@ class TemplatedExecutorContainerSpec(executor_spec.ExecutorSpec):
   (entrypoint plus arguments) for a program inside the container.
 
   Example:
-
+  -------
   class MyTrainer(base_component.BaseComponent)
     class MyTrainerSpec(types.ComponentSpec):
       INPUTS = {
@@ -65,6 +64,7 @@ class TemplatedExecutorContainerSpec(executor_spec.ExecutorSpec):
     )
 
   Attributes:
+  ----------
     image: Container image name.
     command: Container entrypoint command-line. Not executed within a shell.
       The command-line can use placeholder objects that will be replaced at
@@ -102,10 +102,12 @@ class TemplatedExecutorContainerSpec(executor_spec.ExecutorSpec):
        or placeholder.Placeholder.
 
     Args:
+    ----
       ph: The placeholder to encode.
       component_spec: Optional. The ComponentSpec to help with the encoding.
 
     Returns:
+    -------
       The encoded placeholder in the type of string or placeholder.Placeholder.
     """
     if isinstance(ph, str) or isinstance(ph, placeholder.Placeholder):
@@ -157,9 +159,11 @@ class TemplatedExecutorContainerSpec(executor_spec.ExecutorSpec):
     This method will be used by DSL compiler to generate the corresponding IR.
 
     Args:
+    ----
       component_spec: Optional. The ComponentSpec to help with the encoding.
 
     Returns:
+    -------
       An executor spec proto.
     """
     result = executable_spec_pb2.ContainerExecutableSpec()

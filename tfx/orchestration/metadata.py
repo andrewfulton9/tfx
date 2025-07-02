@@ -24,15 +24,14 @@ import types
 from typing import Any, Dict, List, Optional, Set, Tuple, Type, Union
 
 import absl
+import ml_metadata as mlmd
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.dsl.io import fileio
 from tfx.orchestration import data_types
 from tfx.orchestration.portable.mlmd import event_lib
 from tfx.types import artifact as artifact_lib
 from tfx.types import artifact_utils
-
-import ml_metadata as mlmd
-from ml_metadata.proto import metadata_store_pb2
-
 
 _Artifact = artifact_lib.Artifact
 _ArtifactState = artifact_lib.ArtifactState
@@ -86,9 +85,11 @@ def sqlite_metadata_connection_config(
   """Convenience function to create file based metadata connection config.
 
   Args:
+  ----
     metadata_db_uri: uri to metadata db.
 
   Returns:
+  -------
     A metadata_store_pb2.ConnectionConfig based on given metadata db uri.
   """
   fileio.makedirs(os.path.dirname(metadata_db_uri))
@@ -105,6 +106,7 @@ def mysql_metadata_connection_config(
   """Convenience function to create mysql-based metadata connection config.
 
   Args:
+  ----
     host: The name or network address of the instance of MySQL to connect to.
     port: The port MySQL is using to listen for connections.
     database: The name of the database to use.
@@ -112,6 +114,7 @@ def mysql_metadata_connection_config(
     password: The password for the MySQL account being used.
 
   Returns:
+  -------
     A metadata_store_pb2.ConnectionConfig based on given metadata db uri.
   """
   return metadata_store_pb2.ConnectionConfig(
@@ -175,7 +178,8 @@ class Metadata:
   def store(self) -> mlmd.MetadataStore:
     """Returns underlying MetadataStore.
 
-    Raises:
+    Raises
+    ------
       RuntimeError: if this instance is not in enter state.
     """
     if self._store is None:
@@ -208,6 +212,7 @@ class Metadata:
     artifact type info and artifact id.
 
     Args:
+    ----
       tfx_artifact_list: A list of tfx.types.Artifact. This will be updated with
         MLMD artifact type info and MLMD artifact id.
       state: the artifact state to set.
@@ -229,6 +234,7 @@ class Metadata:
     artifact type info and artifact id.
 
     Args:
+    ----
       tfx_artifact_list: A list of tfx.types.Artifact which will be updated
     """
     self._upsert_artifacts(tfx_artifact_list, _ArtifactState.PUBLISHED)
@@ -279,12 +285,14 @@ class Metadata:
     """Gets qualified artifacts that have the right producer info.
 
     Args:
+    ----
       contexts: context constraints to filter artifacts
       type_name: type constraint to filter artifacts
       producer_component_id: producer constraint to filter artifacts
       output_key: output key constraint to filter artifacts
 
     Returns:
+    -------
       A list of qualified `tfx.types.Artifact`s.
     """
 
@@ -374,10 +382,12 @@ class Metadata:
     to register new execution type.
 
     Args:
+    ----
       type_name: the name of the execution type
       exec_properties: the execution properties included by the execution
 
     Returns:
+    -------
       execution type id
     Raises:
       ValueError if new execution type conflicts with existing schema in MLMD.
@@ -536,6 +546,7 @@ class Metadata:
     artifact.
 
     Args:
+    ----
       artifact_dict: the source of artifacts to work on. For each artifact in
         the dict, creates a tuple for that
       event_type: the event type of the event to be attached to the artifact
@@ -544,6 +555,7 @@ class Metadata:
         are regarded already registered
 
     Returns:
+    -------
       A list of [Artifact, [Optional]Event] tuples
     """
     registered_artifacts_ids = registered_artifacts_ids or {}
@@ -579,6 +591,7 @@ class Metadata:
     be reflected inline.
 
     Args:
+    ----
       execution: the execution to be updated. It is required that the execution
         passed in has an id.
       component_info: the information of the current running component
@@ -590,6 +603,7 @@ class Metadata:
       contexts: a list of contexts the execution and artifacts to be linked to
 
     Raises:
+    ------
       RuntimeError: if the execution to be updated has no id.
     """
     if not execution.id:
@@ -646,6 +660,7 @@ class Metadata:
     """Registers a new execution in metadata.
 
     Args:
+    ----
       pipeline_info: optional pipeline info of the execution.
       component_info: optional component info of the execution.
       contexts: contexts for current run, all contexts will be linked to the
@@ -655,6 +670,7 @@ class Metadata:
       input_artifacts: input artifacts of the execution.
 
     Returns:
+    -------
       execution id of the new execution.
     """
     input_artifacts = input_artifacts or {}
@@ -712,6 +728,7 @@ class Metadata:
     register unseen artifacts and publish events for them.
 
     Args:
+    ----
       component_info: component information.
       output_artifacts: output artifacts produced by the execution.
       exec_properties: execution properties for the execution to be published.
@@ -748,10 +765,12 @@ class Metadata:
     This method will ignore ID and time related fields.
 
     Args:
+    ----
       current_execution: the current execution.
       target_execution: the previous execution to be compared with.
 
     Returns:
+    -------
       whether the previous and current executions are the same.
     """
     current_execution.properties['run_id'].string_value = ''
@@ -785,12 +804,14 @@ class Metadata:
     and is associated with the same pipeline context.
 
     Args:
+    ----
       input_artifacts: inputs used by the run.
       exec_properties: execution properties used by the run.
       pipeline_info: info of the current pipeline run.
       component_info: info of the current component.
 
     Returns:
+    -------
       Dict of cached output artifacts if eligible cached execution is found.
       Otherwise, return None.
     """
@@ -881,9 +902,11 @@ class Metadata:
     """Fetches outputs produced by a historical execution.
 
     Args:
+    ----
       execution_id: the id of the execution that produced the outputs.
 
     Returns:
+    -------
       A dict of key -> List[Artifact] as the result
     """
     events = self.store.get_events_by_execution_ids([execution_id])
@@ -895,9 +918,11 @@ class Metadata:
     """Fetches outputs produced by a list of events.
 
     Args:
+    ----
       events: events related to the execution id.
 
     Returns:
+    -------
       A dictionary mapping execution ID to a list of artifacts produced in that
       execution.
     """
@@ -932,6 +957,7 @@ class Metadata:
     """Search artifacts that matches given info.
 
     Args:
+    ----
       artifact_name: the name of the artifact that set by producer component.
         The name is logged both in artifacts and the events when the execution
         being published.
@@ -939,9 +965,11 @@ class Metadata:
       producer_component_id: the id of the component that produces the artifact
 
     Returns:
+    -------
       A list of Artifacts that matches the given info
 
     Raises:
+    ------
       RuntimeError: when no matching execution is found given producer info.
     """
     producer_execution = None
@@ -990,10 +1018,12 @@ class Metadata:
     """Registers a context type if not exist, otherwise returns existing one.
 
     Args:
+    ----
       context_type_name: the name of the context.
       properties: properties of the context.
 
     Returns:
+    -------
       id of the desired context type.
     """
     context_type = metadata_store_pb2.ContextType(name=context_type_name)
@@ -1050,14 +1080,17 @@ class Metadata:
     """Registers a context if not exist, otherwise returns the existing one.
 
     Args:
+    ----
       context_type_name: the name of the context type desired.
       context_name: the name of the context.
       properties: properties to set in the context.
 
     Returns:
+    -------
       id of the desired context
 
     Raises:
+    ------
       RuntimeError: when meeting unexpected property type.
     """
     context = self._prepare_context(
@@ -1083,9 +1116,11 @@ class Metadata:
     """Gets the context for the component run.
 
     Args:
+    ----
       component_info: component information for the current component run.
 
     Returns:
+    -------
       a matched context or None
     """
     return self.store.get_context_by_type_and_name(
@@ -1097,9 +1132,11 @@ class Metadata:
     """Gets the context for the pipeline run.
 
     Args:
+    ----
       pipeline_info: pipeline information for the current pipeline run.
 
     Returns:
+    -------
       a matched context or None
     """
     return self.store.get_context_by_type_and_name(
@@ -1111,9 +1148,11 @@ class Metadata:
     """Gets the context for the pipeline run.
 
     Args:
+    ----
       pipeline_info: pipeline information for the current pipeline run.
 
     Returns:
+    -------
       a matched context or None
     """
     if pipeline_info.run_id:
@@ -1134,9 +1173,11 @@ class Metadata:
         when run_id is specified.
 
     Args:
+    ----
       pipeline_info: pipeline information for current run.
 
     Returns:
+    -------
       a list (of size one or two) of context.
     """
     # Gets the pipeline level context.

@@ -26,7 +26,6 @@ from tfx.examples.mnist import mnist_utils_native_keras_base as base
 
 def _get_serve_tf_examples_fn(model, tf_transform_output):
   """Returns a function that parses a serialized tf.Example."""
-
   model.tft_layer = tf_transform_output.transform_features_layer()
 
   @tf.function
@@ -46,9 +45,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature operations.
   """
   return base.preprocessing_fn(inputs)
@@ -59,6 +60,7 @@ def run_fn(fn_args: FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   tf_transform_output = tft.TFTransformOutput(fn_args.transform_output)

@@ -17,16 +17,15 @@ import copy
 import hashlib
 from typing import Any, Dict, List, Mapping, Optional, Sequence
 
+from google.protobuf import message
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.io import fileio
 from tfx.orchestration import metadata
-from tfx.orchestration.portable.mlmd import context_lib
-from tfx.orchestration.portable.mlmd import execution_lib
+from tfx.orchestration.portable.mlmd import context_lib, execution_lib
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.types import artifact_utils
-
-from google.protobuf import message
-from ml_metadata.proto import metadata_store_pb2
 
 
 def _get_outputs_of_execution(
@@ -35,10 +34,12 @@ def _get_outputs_of_execution(
   """Fetches outputs produced by a historical execution.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     execution_id: The id of the execution that produced the outputs.
 
   Returns:
+  -------
     A dict of key -> List[Artifact] as the result if qualified outputs found.
     Otherwise returns None.
   """
@@ -95,6 +96,7 @@ def get_cache_context(
   - Serialized module file content if module file is present in parameters.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     pipeline_node: A pipeline_pb2.PipelineNode instance to represent the node.
     pipeline_info: Information of the pipeline.
@@ -106,6 +108,7 @@ def get_cache_context(
     parameters: Parameters of the potential execution.
 
   Returns:
+  -------
     A metadata_store_pb2.Context for the cache key.
   """
   h = hashlib.sha256()
@@ -154,10 +157,12 @@ def get_cached_outputs(
   """Tries to get the cached output artifacts given a cache context.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     cache_context: The context representing the cache key.
 
   Returns:
+  -------
     The cached output artifacts in a dict format. None if no qualified cache
     result is found.
   """

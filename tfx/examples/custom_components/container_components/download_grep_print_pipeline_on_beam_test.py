@@ -18,7 +18,9 @@ import os
 import absl
 import tensorflow as tf
 
-from tfx.examples.custom_components.container_components import download_grep_print_pipeline
+from tfx.examples.custom_components.container_components import (
+  download_grep_print_pipeline,
+)
 from tfx.orchestration import metadata
 from tfx.orchestration import pipeline as pipeline_module
 from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner

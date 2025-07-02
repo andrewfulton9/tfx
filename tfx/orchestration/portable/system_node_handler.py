@@ -15,10 +15,10 @@
 
 import abc
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.orchestration import metadata
 from tfx.proto.orchestration import pipeline_pb2
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class SystemNodeHandler(abc.ABC):
@@ -35,6 +35,7 @@ class SystemNodeHandler(abc.ABC):
     """Runs the system node and return the Execution.
 
     Args:
+    ----
       mlmd_connection: ML metadata connection.
       pipeline_node: The specification of the node that this launcher lauches.
       pipeline_info: The information of the pipeline that this node runs in.
@@ -42,6 +43,7 @@ class SystemNodeHandler(abc.ABC):
         node runs in.
 
     Returns:
+    -------
       The execution of the run.
     """
     pass

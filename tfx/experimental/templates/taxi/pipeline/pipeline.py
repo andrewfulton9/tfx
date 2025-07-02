@@ -19,9 +19,9 @@ This file defines TFX pipeline and various components in the pipeline.
 from typing import Any, Dict, List, Optional
 
 import tensorflow_model_analysis as tfma
-from tfx import v1 as tfx
-
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx import v1 as tfx
 
 
 def create_pipeline(
@@ -44,7 +44,6 @@ def create_pipeline(
     ai_platform_serving_args: Optional[Dict[str, Any]] = None,
 ) -> tfx.dsl.Pipeline:
   """Implements the chicago taxi pipeline with TFX."""
-
   components = []
 
   # Brings data into the pipeline or otherwise joins/converts training data.

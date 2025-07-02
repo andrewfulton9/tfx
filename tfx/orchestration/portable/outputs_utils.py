@@ -18,24 +18,21 @@ import collections
 import copy
 import datetime
 import os
-from typing import Any, Dict, List, Mapping, Optional, Sequence, Union
 import uuid
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Union
 
 from absl import logging
-from tfx import types
-from tfx import version
+from ml_metadata.proto import metadata_store_pb2
+
+from tfx import types, version
 from tfx.dsl.io import fileio
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import node_proto_view
+from tfx.orchestration import data_types_utils, node_proto_view
 from tfx.orchestration.portable import data_types
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.proto.orchestration import execution_result_pb2, pipeline_pb2
 from tfx.types import artifact as tfx_artifact
 from tfx.types import artifact_utils
 from tfx.types.value_artifact import ValueArtifact
 from tfx.utils import proto_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 _SYSTEM = '.system'
 _EXECUTOR_EXECUTION = 'executor_execution'
@@ -188,9 +185,11 @@ class OutputsResolver:
     """Generates stateful working directory.
 
     Args:
+    ----
       execution: execution containing stateful_working_dir_index.
 
     Returns:
+    -------
       Path to stateful working directory.
     """
     return get_stateful_working_directory(
@@ -226,14 +225,15 @@ def generate_output_artifacts(
   """Generates output artifacts.
 
   Args:
+  ----
     execution_id: The id of the execution.
     outputs: Mapping from artifact key to its OutputSpec value in pipeline IR.
     node_dir: The root directory of the node.
 
   Returns:
+  -------
     Mapping from artifact key to the list of TFX artifacts.
   """
-
   output_artifacts = collections.defaultdict(list)
   for key, output_spec in outputs.items():
     artifact = _generate_output_artifact(output_spec)
@@ -280,9 +280,11 @@ def get_stateful_working_dir_index(
   UUID is not found in the execution, a new UUID will be returned.
 
   Args:
+  ----
     execution: execution that stores the stateful_working_dir_index.
 
   Returns:
+  -------
     an index for stateful working dir.
   """
   index = None
@@ -308,10 +310,12 @@ def get_stateful_working_directory(
   generated and used as the directory suffix.
 
   Args:
+  ----
     node_dir: root directory of the node.
     execution: execution containing stateful_working_dir_index.
 
   Returns:
+  -------
     Path to stateful working directory.
   """
   # NOTE: If this directory structure is changed, please update
@@ -392,10 +396,12 @@ def get_orchestrator_generated_bcl_dir(
   """Generates a root directory to hold orchestrator generated BCLs for the given node.
 
   Args:
+  ----
     pipeline_runtime_spec: pipeline runtime specifications.
     node_id: unique id of the node within the pipeline.
 
   Returns:
+  -------
     Path to orchestrator generated bcl root dir, which has the format
     `<node_dir>/.system/orchestrator_generated_bcl`
   """

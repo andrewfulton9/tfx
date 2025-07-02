@@ -15,19 +15,17 @@
 
 import os
 
+import pytest
 from absl.testing import parameterized
+from google.protobuf import json_format
 from kfp.pipeline_spec import pipeline_spec_pb2
+
 from tfx import v1 as tfx
 from tfx.orchestration import test_utils as orchestration_test_utils
 from tfx.orchestration.kubeflow.v2 import test_utils
 from tfx.orchestration.kubeflow.v2.e2e_tests import base_test_case
 from tfx.orchestration.test_pipelines import custom_exit_handler
 from tfx.utils import io_utils
-
-from google.protobuf import json_format
-
-import pytest
-
 
 # The location of test data.
 # This location depends on install path of TFX in the docker image.
@@ -36,7 +34,7 @@ _TEST_DATA_ROOT = '/opt/conda/lib/python3.10/site-packages/tfx/examples/chicago_
 _success_file_name = 'success_final_status.txt'
 
 
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class ExitHandlerE2ETest(
     base_test_case.BaseKubeflowV2Test, parameterized.TestCase
 ):

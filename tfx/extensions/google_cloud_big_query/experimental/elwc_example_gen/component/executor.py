@@ -16,15 +16,17 @@
 from typing import Any, Dict, Iterable, List, Set, Tuple
 
 import apache_beam as beam
-from google.cloud import bigquery
 import tensorflow as tf
-from tfx.components.example_gen import base_example_gen_executor
-from tfx.extensions.google_cloud_big_query import utils
-from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.proto import elwc_config_pb2
-from tfx.proto import example_gen_pb2
-
+from google.cloud import bigquery
 from google.protobuf import json_format
 from tensorflow_serving.apis import input_pb2
+
+from tfx.components.example_gen import base_example_gen_executor
+from tfx.extensions.google_cloud_big_query import utils
+from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.proto import (
+  elwc_config_pb2,
+)
+from tfx.proto import example_gen_pb2
 
 
 # TODO(b/158514307): Revisit when PGBKCVOperation can hold serialized keys.
@@ -80,14 +82,17 @@ def _BigQueryToElwc(pipeline: beam.Pipeline, exec_properties: Dict[str, Any],
   BigQueryExampleGen.
 
   Args:
+  ----
     pipeline: beam pipeline.
     exec_properties: A dict of execution properties.
     split_pattern: Split.pattern in Input config, a BigQuery sql string.
 
   Returns:
+  -------
     PCollection of ExampleListWithContext.
 
   Raises:
+  ------
     RuntimeError: Context features must be included in the queried result.
   """
   project = utils.parse_gcp_project(exec_properties['_beam_pipeline_args'])

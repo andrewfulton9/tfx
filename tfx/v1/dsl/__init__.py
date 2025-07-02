@@ -21,14 +21,10 @@ from tfx.dsl.components.common.resolver import Resolver
 from tfx.dsl.experimental.conditionals.conditional import Cond
 
 # TODO(b/184980265): move Pipeline implementation to tfx/dsl.
-from tfx.orchestration.pipeline import ExecutionMode
-from tfx.orchestration.pipeline import Pipeline
+from tfx.orchestration.pipeline import ExecutionMode, Pipeline
 from tfx.types.artifact import Artifact
 from tfx.types.channel import Channel
-from tfx.v1.dsl import components
-from tfx.v1.dsl import experimental
-from tfx.v1.dsl import io
-from tfx.v1.dsl import placeholders
+from tfx.v1.dsl import components, experimental, io, placeholders
 
 __all__ = [
     "Artifact",

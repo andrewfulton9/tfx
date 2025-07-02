@@ -19,18 +19,18 @@ from typing import Any, Iterable, List, Optional, Type
 import absl
 import apache_beam as beam
 
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_node
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
-from tfx.orchestration import tfx_runner
-from tfx.orchestration.config import base_component_config
-from tfx.orchestration.config import config_utils
-from tfx.orchestration.config import pipeline_config
-from tfx.orchestration.launcher import base_component_launcher
-from tfx.orchestration.launcher import docker_component_launcher
-from tfx.orchestration.launcher import in_process_component_launcher
+from tfx.dsl.components.base import base_component, base_node
+from tfx.orchestration import data_types, metadata, pipeline, tfx_runner
+from tfx.orchestration.config import (
+  base_component_config,
+  config_utils,
+  pipeline_config,
+)
+from tfx.orchestration.launcher import (
+  base_component_launcher,
+  docker_component_launcher,
+  in_process_component_launcher,
+)
 from tfx.utils import telemetry_utils
 
 
@@ -48,6 +48,7 @@ class _ComponentAsDoFn(beam.DoFn):
     """Initialize the _ComponentAsDoFn.
 
     Args:
+    ----
       component: Component that to be executed.
       component_launcher_class: The class of the launcher to launch the
         component.
@@ -71,6 +72,7 @@ class _ComponentAsDoFn(beam.DoFn):
     """Executes component based on signals.
 
     Args:
+    ----
       element: a signal element to trigger the component.
       *signals: side input signals indicate completeness of upstream components.
     """
@@ -93,6 +95,7 @@ class BeamDagRunner(tfx_runner.TfxRunner):
     """Initializes BeamDagRunner as a TFX orchestrator.
 
     Args:
+    ----
       beam_orchestrator_args: beam args for the beam orchestrator. Note that
         this is different from the beam_pipeline_args within
         additional_pipeline_args, which is for beam pipelines in components.
@@ -114,6 +117,7 @@ class BeamDagRunner(tfx_runner.TfxRunner):
     """Deploys given logical pipeline on Beam.
 
     Args:
+    ----
       tfx_pipeline: Logical pipeline containing pipeline args and components.
     """
     tfx_pipeline.pipeline_info.run_id = datetime.datetime.now().isoformat()

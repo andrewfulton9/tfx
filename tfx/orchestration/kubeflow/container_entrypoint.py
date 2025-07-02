@@ -20,27 +20,36 @@ import logging
 import os
 import sys
 import textwrap
-from typing import cast, Dict, List, Mapping, MutableMapping, Optional, Sequence, Tuple, Union
+from typing import (
+  Dict,
+  List,
+  Mapping,
+  MutableMapping,
+  Optional,
+  Sequence,
+  Tuple,
+  Union,
+  cast,
+)
+
+from google.protobuf import json_format
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx import types
 from tfx.dsl.compiler import constants
 from tfx.orchestration import metadata
 from tfx.orchestration.kubeflow.proto import kubeflow_pb2
 from tfx.orchestration.local import runner_utils
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import kubernetes_executor_operator
-from tfx.orchestration.portable import launcher
-from tfx.orchestration.portable import runtime_parameter_utils
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.types import artifact
-from tfx.types import channel
-from tfx.types import standard_artifacts
+from tfx.orchestration.portable import (
+  data_types,
+  execution_publish_utils,
+  kubernetes_executor_operator,
+  launcher,
+  runtime_parameter_utils,
+)
+from tfx.proto.orchestration import executable_spec_pb2, pipeline_pb2
+from tfx.types import artifact, channel, standard_artifacts
 from tfx.utils import telemetry_utils
-
-from google.protobuf import json_format
-from ml_metadata.proto import metadata_store_pb2
 
 _KFP_POD_NAME_ENV_KEY = 'KFP_POD_NAME'
 _KFP_POD_NAME_PROPERTY_KEY = 'kfp_pod_name'
@@ -89,10 +98,12 @@ def _get_metadata_connection_config(
   """Constructs a metadata connection config.
 
   Args:
+  ----
     kubeflow_metadata_config: Configuration parameters to use for constructing a
       valid metadata connection config in a Kubeflow cluster.
 
   Returns:
+  -------
     A Union of metadata_store_pb2.ConnectionConfig and
     metadata_store_pb2.MetadataStoreClientConfig object.
   """
@@ -128,10 +139,12 @@ def _get_grpc_metadata_connection_config(
   """Constructs a metadata grpc connection config.
 
   Args:
+  ----
     kubeflow_metadata_config: Configuration parameters to use for constructing a
       valid metadata connection config in a Kubeflow cluster.
 
   Returns:
+  -------
     A metadata_store_pb2.MetadataStoreClientConfig object.
   """
   connection_config = metadata_store_pb2.MetadataStoreClientConfig()
@@ -162,12 +175,13 @@ def _render_channel_as_mdstr(input_channel: channel.Channel) -> str:
   ......
 
   Args:
+  ----
     input_channel: the channel to be rendered.
 
   Returns:
+  -------
     a md-formatted string representation of the channel.
   """
-
   md_str = '**Type**: {}\n\n'.format(
       _sanitize_underscore(input_channel.type_name))
   rendered_artifacts = []
@@ -189,9 +203,11 @@ def _render_artifact_as_mdstr(single_artifact: artifact.Artifact) -> str:
   ......
 
   Args:
+  ----
     single_artifact: the artifact to be rendered.
 
   Returns:
+  -------
     a md-formatted string representation of the artifact.
   """
   span_str = 'None'
@@ -248,6 +264,7 @@ def _dump_ui_metadata(
   to our output json file.
 
   Args:
+  ----
     node: associated TFX node.
     execution_info: runtime execution info for this component, including
       materialized inputs/outputs/execution properties and id.
@@ -267,10 +284,12 @@ def _dump_ui_metadata(
     """Dump artifacts markdown string for inputs.
 
     Args:
+    ----
       node_inputs: maps from input name to input sepc proto.
       name_to_artifacts: maps from input key to list of populated artifacts.
 
     Returns:
+    -------
       A list of dumped markdown string, each of which represents a channel.
     """
     rendered_list = []
@@ -299,10 +318,12 @@ def _dump_ui_metadata(
     """Dump artifacts markdown string for outputs.
 
     Args:
+    ----
       node_outputs: maps from output name to output sepc proto.
       name_to_artifacts: maps from output key to list of populated artifacts.
 
     Returns:
+    -------
       A list of dumped markdown string, each of which represents a channel.
     """
     rendered_list = []
@@ -361,14 +382,16 @@ def _dump_ui_metadata(
       """Read validated existing KFP UI Metadata file.
 
       Args:
+      ----
         ui_metadata_path: path for ui metadata
 
       Returns:
+      -------
         A list of UI metadata if the file is valid. An empty list otherwise.
       """
       result = []
       try:
-        with open(ui_metadata_path, 'r') as f:
+        with open(ui_metadata_path) as f:
           metadata_dict = json.load(f)
 
         if ('outputs' in metadata_dict and

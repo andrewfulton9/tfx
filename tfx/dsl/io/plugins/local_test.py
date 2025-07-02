@@ -17,6 +17,7 @@ import os
 import tempfile
 
 import tensorflow as tf
+
 from tfx.dsl.io.filesystem import NotFoundError
 from tfx.dsl.io.plugins.local import LocalFilesystem
 

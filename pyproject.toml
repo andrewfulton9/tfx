@@ -167,6 +167,7 @@ ignore = [
     "UP007",  # Use `X | Y` for type annotations
     "UP008",  # Use super() instead of super(__class__, self)
     "UP022",  # Use capture_output instead of stdout/stderr with PIPE
+    "UP030",  # Use implicit references for positional format fields
     "UP031",  # Use format specifiers instead of percent format
     "UP032",  # Use f-string instead of `format` call
     "UP035",  # `typing.Type/Dict/List/Tuple` is deprecated, use builtin types instead

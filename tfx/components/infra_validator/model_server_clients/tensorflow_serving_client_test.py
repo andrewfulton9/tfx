@@ -18,14 +18,17 @@ from unittest import mock
 
 import grpc
 import tensorflow as tf
-from tfx.components.infra_validator import error_types
-from tfx.components.infra_validator import types
-from tfx.components.infra_validator.model_server_clients import tensorflow_serving_client
-
 from google.protobuf import json_format
-from tensorflow_serving.apis import classification_pb2
-from tensorflow_serving.apis import get_model_status_pb2
-from tensorflow_serving.apis import regression_pb2
+from tensorflow_serving.apis import (
+  classification_pb2,
+  get_model_status_pb2,
+  regression_pb2,
+)
+
+from tfx.components.infra_validator import error_types, types
+from tfx.components.infra_validator.model_server_clients import (
+  tensorflow_serving_client,
+)
 
 
 def _make_response(

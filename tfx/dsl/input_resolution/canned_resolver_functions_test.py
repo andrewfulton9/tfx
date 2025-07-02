@@ -15,18 +15,16 @@
 
 from typing import Sequence, Union
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.control_flow import for_each
-from tfx.dsl.input_resolution import canned_resolver_functions
-from tfx.dsl.input_resolution import resolver_op
+from tfx.dsl.input_resolution import canned_resolver_functions, resolver_op
 from tfx.dsl.input_resolution.ops import test_utils
 from tfx.orchestration import pipeline
 from tfx.orchestration.portable import inputs_utils
 from tfx.orchestration.portable.input_resolution import exceptions
-from tfx.types import channel_utils
-from tfx.types import resolved_channel
-
-from ml_metadata.proto import metadata_store_pb2
+from tfx.types import channel_utils, resolved_channel
 
 
 class CannedResolverFunctionsTest(
@@ -86,7 +84,6 @@ class CannedResolverFunctionsTest(
       artifact_type: str = 'DummyArtifact',
   ) -> Sequence[metadata_store_pb2.Artifact]:
     """Inserts artifacts with the given spans and versions into MLMD."""
-
     mlmd_artifacts = []
     for span, version in zip(spans, versions):
       mlmd_artifacts.append(

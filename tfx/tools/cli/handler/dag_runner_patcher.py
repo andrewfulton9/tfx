@@ -50,6 +50,7 @@ class DagRunnerPatcher(abc.ABC):
     Please use subclass of DagRunnerPatcher.
 
     Args:
+    ----
       call_real_run: Specify DagRunner.run() should be called or bypassed.
     """
     self._context = {}
@@ -86,10 +87,10 @@ class DagRunnerPatcher(abc.ABC):
         runner.run(pipeline)
         print( context[patcher.PIPELINE_NAME] ) ...
 
-    Yields:
+    Yields
+    ------
       a MutableMapping that holds information on the pipeline.
     """
-
     runner_class = self.get_runner_class()
     old_run = runner_class.run
     runner_class.run = self._decorate(runner_class.run)

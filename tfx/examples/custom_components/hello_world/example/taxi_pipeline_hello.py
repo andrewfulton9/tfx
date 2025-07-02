@@ -16,11 +16,10 @@
 import os
 
 import absl
-from tfx.components import CsvExampleGen
-from tfx.components import StatisticsGen
+
+from tfx.components import CsvExampleGen, StatisticsGen
 from tfx.examples.custom_components.hello_world.hello_component import component
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
 
 _pipeline_name = 'taxi_hello_pipeline'
@@ -47,7 +46,7 @@ def _create_pipeline(pipeline_name: str, pipeline_root: str, data_root: str,
   example_gen = CsvExampleGen(input_base=data_root)
 
   hello = component.HelloComponent(
-      input_data=example_gen.outputs['examples'], name=u'HelloWorld')
+      input_data=example_gen.outputs['examples'], name='HelloWorld')
 
   # Computes statistics over data for visualization and example validation.
   statistics_gen = StatisticsGen(examples=hello.outputs['output_data'])

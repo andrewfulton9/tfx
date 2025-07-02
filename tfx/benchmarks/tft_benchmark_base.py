@@ -18,26 +18,21 @@ import shutil
 import tempfile
 import time
 
-
-from absl import logging
 import apache_beam as beam
-from apache_beam.utils import shared
 import tensorflow as tf
 import tensorflow_transform as tft
-from tensorflow_transform import graph_tools
-from tensorflow_transform import impl_helper
 import tensorflow_transform.beam as tft_beam
+from absl import logging
+from apache_beam.utils import shared
+from tensorflow_transform import graph_tools, impl_helper
 from tensorflow_transform.beam import impl as tft_beam_impl
-from tensorflow_transform.saved import saved_transform_io
-from tensorflow_transform.saved import saved_transform_io_v2
-from tensorflow_transform.tf_metadata import dataset_metadata
-from tensorflow_transform.tf_metadata import schema_utils
-import tfx
-from tfx.benchmarks import benchmark_utils
-from tfx.benchmarks import benchmark_base
+from tensorflow_transform.saved import saved_transform_io, saved_transform_io_v2
+from tensorflow_transform.tf_metadata import dataset_metadata, schema_utils
 from tfx_bsl.coders import example_coder
-from tfx_bsl.tfxio import tensor_adapter
-from tfx_bsl.tfxio import tf_example_record
+from tfx_bsl.tfxio import tensor_adapter, tf_example_record
+
+import tfx
+from tfx.benchmarks import benchmark_base, benchmark_utils
 
 
 class _CopySavedModel(beam.PTransform):
@@ -75,6 +70,7 @@ class _AnalyzeAndTransformDataset(beam.PTransform):
     """Constructor.
 
     Args:
+    ----
       dataset: BenchmarkDataset object.
       tfxio: A `tfx_bsl.TFXIO` instance.
       preprocessing_fn: preprocessing_fn.
@@ -135,7 +131,6 @@ CommonVariablesTuple = collections.namedtuple("CommonVariablesTuple", [
 
 def _get_common_variables(dataset, force_tf_compat_v1):
   """Returns metadata schema, preprocessing fn, input dataset metadata."""
-
   tf_metadata_schema = benchmark_utils.read_schema(
       dataset.tf_metadata_schema_path())
 
@@ -167,7 +162,6 @@ def regenerate_intermediates_for_dataset(dataset,
                                          force_tf_compat_v1=True,
                                          max_num_examples=None):
   """Regenerate intermediate outputs required for the benchmark."""
-
   common_variables = _get_common_variables(dataset, force_tf_compat_v1)
 
   logging.info("Regenerating intermediate outputs required for benchmark.")
@@ -187,12 +181,14 @@ def _get_batched_records(dataset, force_tf_compat_v1, max_num_examples=None):
   """Returns a (batch_size, iterator for batched records) tuple for the dataset.
 
   Args:
+  ----
     dataset: BenchmarkDataset object.
     force_tf_compat_v1: If False then Transform will use its native TF2 version,
       if True then Transform will use its TF1 version.
     max_num_examples: Maximum number of examples to read from the dataset.
 
   Returns:
+  -------
     Tuple of (batch_size, iterator for batched records), where records are
     decoded tf.train.Examples.
   """

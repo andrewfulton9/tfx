@@ -18,16 +18,13 @@ import datetime
 import os
 from unittest import mock
 
+import tensorflow as tf
+
 from airflow import models
 from airflow.operators import python_operator
-
-import tensorflow as tf
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
+from tfx.orchestration import data_types, metadata
 from tfx.orchestration.airflow import airflow_component
 from tfx.types import component_spec
 

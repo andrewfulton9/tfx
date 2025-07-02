@@ -14,12 +14,10 @@
 """Tests for tfx.components.transform.executor_utils."""
 
 import tensorflow as tf
-from tfx.components.transform import executor_utils
-from tfx.components.transform import labels
+
+from tfx.components.transform import executor_utils, labels
 from tfx.proto import transform_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
 from tfx.utils import proto_utils
 
 

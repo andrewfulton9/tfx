@@ -15,6 +15,7 @@
 """
 import types
 from typing import Any, Callable
+
 from tfx.dsl.component.experimental.decorators import component
 
 
@@ -61,9 +62,11 @@ def exit_handler(func: types.FunctionType) -> Callable[..., Any]:
   Experimental: no backwards compatibility guarantees.
 
   Args:
+  ----
     func: Typehint-annotated component executor function.
 
   Returns:
+  -------
     [`base_component.BaseComponent`][tfx.v1.types.BaseComponent] subclass for the given component executor
     function.
   """

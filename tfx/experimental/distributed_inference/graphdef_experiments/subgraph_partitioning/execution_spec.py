@@ -26,7 +26,8 @@ class ExecutionSpec:
   An ExecutionSpec can either represent a subgraph layer or represent
   part of a remote op layer (only contains one remote op).
 
-  Attributes:
+  Attributes
+  ----------
     subgraph: A `GraphDef` proto if subgraph layer; None if remote op layer.
     input_names: A set of input node names.
     output_names: A set of output node names.

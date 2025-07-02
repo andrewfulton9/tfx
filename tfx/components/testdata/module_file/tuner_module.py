@@ -19,13 +19,12 @@ import absl
 import keras_tuner
 import tensorflow as tf
 from tensorflow import keras
-from tfx.components.trainer.fn_args_utils import DataAccessor
-from tfx.components.trainer.fn_args_utils import FnArgs
-from tfx.components.tuner.component import TunerFnResult
-from tfx.utils import io_utils
+from tensorflow_metadata.proto.v0 import schema_pb2
 from tfx_bsl.tfxio import dataset_options
 
-from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx.components.trainer.fn_args_utils import DataAccessor, FnArgs
+from tfx.components.tuner.component import TunerFnResult
+from tfx.utils import io_utils
 
 _FEATURE_KEYS = [
     'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g'
@@ -40,6 +39,7 @@ def _input_fn(file_pattern: List[str],
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     schema: Schema of the input data.
@@ -47,6 +47,7 @@ def _input_fn(file_pattern: List[str],
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -60,9 +61,11 @@ def _build_keras_model(hparams: keras_tuner.HyperParameters) -> tf.keras.Model:
   """Creates a DNN Keras model for classifying penguin data.
 
   Args:
+  ----
     hparams: Holds HyperParameters for tuning.
 
   Returns:
+  -------
     A Keras Model.
   """
   # The model below is built with Functional API, please refer to
@@ -88,6 +91,7 @@ def tuner_fn(fn_args: FnArgs) -> TunerFnResult:
   """Build the tuner using the KerasTuner API.
 
   Args:
+  ----
     fn_args: Holds args as name/value pairs.
       - working_dir: working dir for tuning.
       - train_files: List of file paths containing training tf.Example data.
@@ -98,6 +102,7 @@ def tuner_fn(fn_args: FnArgs) -> TunerFnResult:
       - transform_graph_path: optional transform graph produced by TFT.
 
   Returns:
+  -------
     A namedtuple contains the following:
       - tuner: A BaseTuner that will be used for tuning.
       - fit_kwargs: Args to pass to tuner's run_trial function for fitting the

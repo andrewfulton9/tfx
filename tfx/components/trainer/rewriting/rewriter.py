@@ -17,7 +17,6 @@ import abc
 import collections
 import enum
 
-
 ModelDescription = collections.namedtuple('ModelDescription',
                                           ['model_type', 'path'])
 
@@ -46,9 +45,11 @@ class BaseRewriter(abc.ABC):
     """Perform pre-rewrite validation to check the model has expected structure.
 
     Args:
+    ----
       original_model: A `ModelDescription` object describing the original model.
 
     Raises:
+    ------
       ValueError: If the original model does not have the expected structure.
     """
     pass
@@ -59,11 +60,13 @@ class BaseRewriter(abc.ABC):
     """Perform the rewrite.
 
     Args:
+    ----
       original_model: A `ModelDescription` object describing the original model.
       rewritten_model: A `ModelDescription` object describing the location and
         type of the rewritten output.
 
     Raises:
+    ------
       ValueError: If the original model was not successfully rewritten.
     """
     pass
@@ -73,10 +76,12 @@ class BaseRewriter(abc.ABC):
     """Perform post-rewrite validation.
 
     Args:
+    ----
       rewritten_model: A `ModelDescription` object describing the location and
         type of the rewritten output.
 
     Raises:
+    ------
       ValueError: If the rewritten model is not valid.
     """
     pass
@@ -86,12 +91,14 @@ class BaseRewriter(abc.ABC):
     """Invoke all validations and perform the rewrite.
 
     Args:
+    ----
       original_model: A `base_rewriter.ModelDescription` object describing the
         original model.
       rewritten_model: A `base_rewriter.ModelDescription` object describing the
         location and type of the rewritten model.
 
     Raises:
+    ------
       ValueError: if the model was not successfully rewritten.
     """
     try:

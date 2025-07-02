@@ -15,18 +15,16 @@
 import os
 import tempfile
 
-from absl.testing import parameterized
 import tensorflow_data_validation as tfdv
+from absl.testing import parameterized
+from google.protobuf import text_format
 from tensorflow_data_validation.skew import feature_skew_detector
+
 from tfx.components.example_diff import executor
 from tfx.dsl.io import fileio
 from tfx.proto import example_diff_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
-
-from google.protobuf import text_format
 
 _EXECUTOR_TEST_PARAMS = [{
     'testcase_name': 'no_sharded_output',

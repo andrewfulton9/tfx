@@ -28,8 +28,11 @@ def get_data_view_uri(examples: types.Artifact) -> Optional[str]:
   Or None, if not attached.
 
   Args:
+  ----
     examples: an Examples artifact.
+
   Returns:
+  -------
     The URI to the DataView or None.
   """
   assert examples.type is standard_artifacts.Examples, (

@@ -14,12 +14,13 @@
 """Tests for AI Platform Training component."""
 
 import tensorflow as tf  # pylint: disable=g-explicit-tensorflow-version-import
+
 from tfx.dsl.component.experimental import placeholders
-from tfx.orchestration.kubeflow.v2.components.experimental import ai_platform_training_component
-from tfx.orchestration.kubeflow.v2.components.experimental import ai_platform_training_executor
-from tfx.types import artifact_utils
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.orchestration.kubeflow.v2.components.experimental import (
+  ai_platform_training_component,
+  ai_platform_training_executor,
+)
+from tfx.types import artifact_utils, channel_utils, standard_artifacts
 from tfx.utils import json_utils
 
 

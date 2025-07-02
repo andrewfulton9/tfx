@@ -17,9 +17,9 @@ import os
 import sys
 from typing import Dict, List, Optional, Union
 
-from absl import flags
-from absl import logging
 import tensorflow_model_analysis as tfma
+from absl import flags, logging
+
 from tfx import v1 as tfx
 
 # TODO(b/197359030): test a persistent volume (PV) mounted scenario.
@@ -179,6 +179,7 @@ def create_pipeline(
   """Implements the penguin pipeline with TFX and Kubeflow Pipeline.
 
   Args:
+  ----
     pipeline_name: name of the TFX pipeline being created.
     pipeline_root: root directory of the pipeline. Should be a valid GCS path.
     data_root: uri of the penguin data.
@@ -204,9 +205,9 @@ def create_pipeline(
     serving_model_dir: file path to write pipeline saved model to.
 
   Returns:
+  -------
     A TFX pipeline object.
   """
-
   # Assert Cloud components exist with either AIP/Vertex configuration.
   if use_cloud_component:
     assert use_aip ^ use_vertex, (

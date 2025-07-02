@@ -16,22 +16,24 @@
 import os
 
 import absl
-from tfx.components import Evaluator
-from tfx.components import ExampleValidator
-from tfx.components import ModelValidator
-from tfx.components import Pusher
-from tfx.components import SchemaGen
-from tfx.components import StatisticsGen
-from tfx.components import Trainer
-from tfx.components import Transform
-from tfx.examples.custom_components.presto_example_gen.presto_component.component import PrestoExampleGen
+
+from tfx.components import (
+  Evaluator,
+  ExampleValidator,
+  ModelValidator,
+  Pusher,
+  SchemaGen,
+  StatisticsGen,
+  Trainer,
+  Transform,
+)
+from tfx.examples.custom_components.presto_example_gen.presto_component.component import (
+  PrestoExampleGen,
+)
 from tfx.examples.custom_components.presto_example_gen.proto import presto_config_pb2
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
-from tfx.proto import evaluator_pb2
-from tfx.proto import pusher_pb2
-from tfx.proto import trainer_pb2
+from tfx.proto import evaluator_pb2, pusher_pb2, trainer_pb2
 
 _pipeline_name = 'chicago_taxi_presto'
 

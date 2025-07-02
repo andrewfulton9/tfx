@@ -18,12 +18,10 @@ from typing import Any, Dict, Optional, Union
 from tfx import types
 from tfx.components.transform import executor
 from tfx.components.util import udf_utils
-from tfx.dsl.components.base import base_beam_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_beam_component, executor_spec
 from tfx.orchestration import data_types
 from tfx.proto import transform_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
 
 
@@ -104,6 +102,7 @@ class Transform(base_beam_component.BaseBeamComponent):
     """Construct a Transform component.
 
     Args:
+    ----
       examples: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Examples`][tfx.v1.types.standard_artifacts.Examples] _required_.
         This should contain custom splits specified in splits_config. If custom
         split is not provided, this should contain two splits 'train' and
@@ -176,6 +175,7 @@ class Transform(base_beam_component.BaseBeamComponent):
         'module_file' is specified.
 
     Raises:
+    ------
       ValueError: When both or neither of 'module_file' and 'preprocessing_fn'
         is supplied.
     """

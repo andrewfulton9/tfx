@@ -15,42 +15,43 @@
 
 import hashlib
 import os
-from typing import Any, Callable, Dict, Iterable, List, Mapping, Optional, Sequence, Set, Tuple, Union
+from typing import (
+  Any,
+  Callable,
+  Dict,
+  Iterable,
+  List,
+  Mapping,
+  Optional,
+  Sequence,
+  Set,
+  Tuple,
+  Union,
+)
 
-from absl import logging
 import apache_beam as beam
 import pyarrow as pa
 import tensorflow as tf
 import tensorflow_data_validation as tfdv
 import tensorflow_transform as tft
-from tensorflow_transform import impl_helper
 import tensorflow_transform.beam as tft_beam
-from tensorflow_transform.beam import analyzer_cache
-from tensorflow_transform.tf_metadata import dataset_metadata
-from tensorflow_transform.tf_metadata import metadata_io
-from tensorflow_transform.tf_metadata import schema_utils
-from tfx import types
-from tfx.components.transform import executor_utils
-from tfx.components.transform import labels
-from tfx.components.transform import stats_options_util
-from tfx.components.util import examples_utils
-from tfx.components.util import udf_utils
-from tfx.components.util import value_utils
-from tfx.components.util import tfxio_utils
-from tfx.dsl.components.base import base_beam_executor
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.io import fileio
-from tfx.proto import example_gen_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
 import tfx_bsl
+from absl import logging
+from google.protobuf import text_format
+from tensorflow_metadata.proto.v0 import anomalies_pb2, schema_pb2
+from tensorflow_transform import impl_helper
+from tensorflow_transform.beam import analyzer_cache
+from tensorflow_transform.tf_metadata import dataset_metadata, metadata_io, schema_utils
 from tfx_bsl.tfxio import tfxio as tfxio_module
 
-from google.protobuf import text_format
-from tensorflow_metadata.proto.v0 import anomalies_pb2
-from tensorflow_metadata.proto.v0 import schema_pb2
-
+from tfx import types
+from tfx.components.transform import executor_utils, labels, stats_options_util
+from tfx.components.util import examples_utils, tfxio_utils, udf_utils, value_utils
+from tfx.dsl.components.base import base_beam_executor, base_executor
+from tfx.dsl.io import fileio
+from tfx.proto import example_gen_pb2
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils
 
 # Key for temp path, for internal use only.
 TEMP_PATH_KEY = 'temp_path'
@@ -108,13 +109,11 @@ class _Status:
   @classmethod
   def OK(cls):
     """Returns an ok Status."""
-
     return _Status(False)
 
   @classmethod
   def Error(cls, error_message):
     """Returns an error Status with error message."""
-
     return _Status(True, error_message)
 
   @property
@@ -140,6 +139,7 @@ class _Dataset:
     """Initialize a Dataset.
 
     Args:
+    ----
       file_pattern: The file pattern of the dataset.
       file_format: The file format of the dataset.
       data_format: The data format of the dataset. One of the enums from
@@ -259,6 +259,7 @@ def _InvokeStatsOptionsUpdaterFn(
   """Invokes the provided stats_options_updater_fn.
 
   Args:
+  ----
     stats_options_updater_fn: The function to call.
     stats_type: The stats_type use in the function call.
     schema: The input schema to use in the function call.
@@ -266,6 +267,7 @@ def _InvokeStatsOptionsUpdaterFn(
     transform_output_path: The path to the transform output.
 
   Returns:
+  -------
     The updated tfdv.StatsOptions.
   """
   options = {}
@@ -311,11 +313,13 @@ def _GetCacheableDatasetsCount(num_analyzers: int, stats_enabled: bool) -> int:
   representation. See go/tft-incremental-cache-design.
 
   Args:
+  ----
     num_analyzers: The number of cacheable analyzers in the TFT pipeline.
     stats_enabled: Whether or not pre/post transform statistics are enabled in
       this pipeline.
 
   Returns:
+  -------
     The number of datasets that this pipeline should compute cache for.
   """
   result = 0
@@ -355,13 +359,16 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     preprocessing_fn, bind it to preprocessing_fn.
 
     Args:
+    ----
       inputs: A dictionary of labelled input values.
       unused_outputs: A dictionary of labelled output values.
 
     Returns:
+    -------
       User defined function, optionally bound with a custom config.
 
     Raises:
+    ------
       ValueError: When neither or both of MODULE_FILE and PREPROCESSING_FN
         are present in inputs.
     """
@@ -394,9 +401,11 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     stats_options_updater_fn, bind it to stats_options_updater_fn.
 
     Args:
+    ----
       inputs: A dictionary of labelled input values.
 
     Returns:
+    -------
       User defined function, optionally bound with a custom config.
     """
     has_fn = executor_utils.ValidateOnlyOneSpecified(
@@ -433,6 +442,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     dependency.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts, including:
         - examples: A list of type `standard_artifacts.Examples` which should
           contain custom splits specified in splits_config. If custom split is
@@ -475,6 +485,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
           and post-transform statistics.
 
     Returns:
+    -------
       None
     """
     self._log_startup(input_dict, output_dict, exec_properties)
@@ -705,6 +716,7 @@ class TransformProcessor:
     """Encodes and writes transformed RecordBatches in the given file format.
 
     Args:
+    ----
       pcoll: PCollection of transformed RecordBatches and unary pass-through
         features.
       schema: TFMD schema for the transformed data.
@@ -712,6 +724,7 @@ class TransformProcessor:
       output_path: Path that will serve as a prefix for the produced files.
 
     Returns:
+    -------
       beam.pvalue.PDone.
     """
     if file_format == labels.FORMAT_TFRECORD:
@@ -741,9 +754,11 @@ class TransformProcessor:
     """Gets a tf.metadata schema.
 
     Args:
+    ----
       schema_path: Path to schema file.
 
     Returns:
+    -------
       A tf.metadata schema.
     """
     schema_reader = io_utils.SchemaReader()
@@ -754,11 +769,13 @@ class TransformProcessor:
     """Returns a dataset_metadata.DatasetMetadata for the input data.
 
     Args:
+    ----
       data_format: The data format of the dataset. One of the enums from
         example_gen_pb2.PayloadFormat.
       schema_path: path to schema file.
 
     Returns:
+    -------
       A dataset_metadata.DatasetMetadata representing the provided set of
           columns.
     """
@@ -786,6 +803,7 @@ class TransformProcessor:
     """Generates statistics.
 
     Args:
+    ----
       pcoll: PCollection of examples.
       stats_output_loc: path to the statistics folder to write all results to
         or a dictionary keyed with individual paths for 'schema', 'stats', and
@@ -795,6 +813,7 @@ class TransformProcessor:
       enable_validation: Whether to enable stats validation.
 
     Returns:
+    -------
       A tuple containing the beam.pvalue.PDones for generating the stats,
       writing the schema, and writing the validation, in that order. If the
       schema is not present or validation is not enabled, the corresponding
@@ -1064,6 +1083,7 @@ class TransformProcessor:
     using or extending the executor without artifact dependency.
 
     Args:
+    ----
       inputs: A dictionary of labelled input values, including:
         - labels.DISABLE_STATISTICS_LABEL: Whether disable statistics
           compuatation.
@@ -1265,6 +1285,7 @@ class TransformProcessor:
     """Perform data preprocessing with TFT.
 
     Args:
+    ----
       analyze_data_list: List of datasets for analysis.
       transform_data_list: List of datasets for transform.
       preprocessing_fn: The tf.Transform preprocessing_fn.
@@ -1295,6 +1316,7 @@ class TransformProcessor:
       make_beam_pipeline_fn: A callable that can create a beam pipeline.
 
     Returns:
+    -------
       Status of the execution.
     """
     self._AssertSameTFXIOSchema(analyze_data_list)
@@ -1654,6 +1676,7 @@ class TransformProcessor:
     """Runs a transformation iteration in-place without looking at the data.
 
     Args:
+    ----
       preprocessing_fn: The tf.Transform preprocessing_fn.
       force_tf_compat_v1: If True, call Transform's API to use Tensorflow in
         tf.compat.v1 mode.
@@ -1662,9 +1685,9 @@ class TransformProcessor:
       transform_output_path: An absolute path to write the output to.
 
     Returns:
+    -------
       Status of the execution.
     """
-
     logging.debug('Processing an in-place transform')
 
     raw_metadata_dir = os.path.join(transform_output_path,
@@ -1721,6 +1744,7 @@ class TransformProcessor:
     """Makes a list of Dataset from the given `file_patterns`.
 
     Args:
+    ----
       file_patterns: A list of file patterns where each pattern corresponds to
         one `_Dataset`.
       file_formats: A list of file format where each format corresponds to one
@@ -1733,6 +1757,7 @@ class TransformProcessor:
       materialize_output_paths: The materialization output paths, if applicable.
 
     Returns:
+    -------
       A list of `_Dataset` sorted by their dataset_key property.
     """
     assert len(file_patterns) == len(file_formats)
@@ -1762,11 +1787,13 @@ class TransformProcessor:
     """Returns true if data format should be decoded as raw example.
 
     Args:
+    ----
       data_format: One of the enums from example_gen_pb2.PayloadFormat.
       data_view_uri: URI to the DataView to be used to parse the data.
       schema: A schema_pb2.Schema for the input data.
 
     Returns:
+    -------
       True if data format should be decoded as raw example.
     """
     return (cls._DecodesSequenceExamplesAsRawRecords(data_format, schema) or
@@ -1777,9 +1804,11 @@ class TransformProcessor:
     """Returns true if data format is sequence example.
 
     Args:
+    ----
       data_format: One of the enums from example_gen_pb2.PayloadFormat.
 
     Returns:
+    -------
       True if data format is sequence example.
     """
     return data_format == example_gen_pb2.FORMAT_TF_SEQUENCE_EXAMPLE
@@ -1789,9 +1818,11 @@ class TransformProcessor:
     """Returns true if data format is protocol buffer.
 
     Args:
+    ----
       data_format: One of the enums from example_gen_pb2.PayloadFormat.
 
     Returns:
+    -------
       True if data format is protocol buffer.
     """
     return data_format == example_gen_pb2.FORMAT_PROTO
@@ -1801,10 +1832,12 @@ class TransformProcessor:
     """Returns batch size.
 
     Args:
+    ----
       data_format: One of the enums from example_gen_pb2.PayloadFormat.
       schema: A schema for the input data.
 
     Returns:
+    -------
       Batch size or None.
     """
     if self._DecodesSequenceExamplesAsRawRecords(data_format, schema):
@@ -1820,15 +1853,16 @@ class TransformProcessor:
     implementation of SequenceExamples.
 
     Args:
+    ----
       data_format: One of the enums from example_gen_pb2.PayloadFormat.
       schema: A schema_pb2.Schema for the input data.
 
     Returns:
+    -------
       True if tensor_representation_group absent in Schema for SequenceExample
       indicating processing SequenceExample as raw records, else False,
       indicating native execution.
     """
-
     return (cls._IsDataFormatSequenceExample(data_format) and
             not bool(schema.tensor_representation_group))
 

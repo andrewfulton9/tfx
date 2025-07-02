@@ -13,10 +13,9 @@
 # limitations under the License.
 """Tests for tfx.orchestration.metadata."""
 
-from tfx.orchestration import metadata
-from tfx.orchestration import metadata_test_utils
-
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration import metadata, metadata_test_utils
 
 
 class SqliteMetadataTest(metadata_test_utils.MetadataTest):

@@ -13,13 +13,13 @@
 # limitations under the License.
 """Tests for tfx.orchestration.portable.mlmd.common_utils."""
 
-from absl.testing import parameterized
 import tensorflow as tf
-from tfx.orchestration import metadata
-from tfx.orchestration.portable.mlmd import common_utils
-
+from absl.testing import parameterized
 from google.protobuf import text_format
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration import metadata
+from tfx.orchestration.portable.mlmd import common_utils
 
 
 def _create_type(metadata_type_class):

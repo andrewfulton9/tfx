@@ -15,23 +15,23 @@
 
 import os
 
+import pytest
 from absl.testing import parameterized
+
 from tfx.dsl.component.experimental import placeholders
 from tfx.dsl.components.common import importer
-from tfx.orchestration import pipeline
-from tfx.orchestration import test_utils
-from tfx.orchestration.kubeflow.v2.components.experimental import ai_platform_training_component
+from tfx.orchestration import pipeline, test_utils
+from tfx.orchestration.kubeflow.v2.components.experimental import (
+  ai_platform_training_component,
+)
 from tfx.orchestration.kubeflow.v2.e2e_tests import base_test_case
 from tfx.types import standard_artifacts
 from tfx.types.experimental import simple_artifacts
 
-import pytest
-
-
 _PIPELINE_NAME_PREFIX = 'aip-training-component-pipeline-{}'
 
 
-@pytest.mark.integration
+@pytest.mark.integration()
 class AiPlatformTrainingComponentIntegrationTest(
     base_test_case.BaseKubeflowV2Test, parameterized.TestCase
 ):

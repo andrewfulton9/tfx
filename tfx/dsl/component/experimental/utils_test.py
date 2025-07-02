@@ -17,15 +17,18 @@
 import copy
 import inspect
 from typing import Dict, List
+
 import tensorflow as tf
-from tfx.dsl.component.experimental import annotations
-from tfx.dsl.component.experimental import annotations_test_proto_pb2
-from tfx.dsl.component.experimental import decorators
-from tfx.dsl.component.experimental import function_parser
-from tfx.dsl.component.experimental import utils
+
+from tfx.dsl.component.experimental import (
+  annotations,
+  annotations_test_proto_pb2,
+  decorators,
+  function_parser,
+  utils,
+)
 from tfx.dsl.components.base import executor_spec
-from tfx.types import standard_artifacts
-from tfx.types import system_executions
+from tfx.types import standard_artifacts, system_executions
 
 
 def top_level_func() -> None:

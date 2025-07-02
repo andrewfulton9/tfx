@@ -18,22 +18,20 @@ from typing import List
 
 import absl
 import tensorflow_model_analysis as tfma
-from tfx.components import Evaluator
-from tfx.components import ImportExampleGen
-from tfx.components import Pusher
-from tfx.components import SchemaGen
-from tfx.components import StatisticsGen
-from tfx.components import Trainer
-from tfx.components import Transform
-from tfx.components.experimental.data_view import binder_component
-from tfx.components.experimental.data_view import provider_component
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+
+from tfx.components import (
+  Evaluator,
+  ImportExampleGen,
+  Pusher,
+  SchemaGen,
+  StatisticsGen,
+  Trainer,
+  Transform,
+)
+from tfx.components.experimental.data_view import binder_component, provider_component
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
-from tfx.proto import example_gen_pb2
-from tfx.proto import pusher_pb2
-from tfx.proto import trainer_pb2
-from tfx.proto import transform_pb2
+from tfx.proto import example_gen_pb2, pusher_pb2, trainer_pb2, transform_pb2
 
 _pipeline_name = 'tf_ranking_antique'
 

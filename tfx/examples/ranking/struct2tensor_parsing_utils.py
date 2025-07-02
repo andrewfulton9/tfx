@@ -16,16 +16,11 @@
 import itertools
 from typing import Dict, List, Optional, Union
 
-from struct2tensor import calculate
-from struct2tensor import calculate_options
-from struct2tensor import path
-from struct2tensor import prensor_util
-from struct2tensor.expression_impl import proto as proto_expr
 import tensorflow as tf
-from tfx_bsl.public import tfxio
-
+from struct2tensor import calculate, calculate_options, path, prensor_util
+from struct2tensor.expression_impl import proto as proto_expr
 from tensorflow_serving.apis import input_pb2
-
+from tfx_bsl.public import tfxio
 
 _DEFAULT_VALUE_SUFFIX = '_dv'
 _SIZE_FEATURE_NAME = 'example_list_size'
@@ -48,6 +43,7 @@ class Feature:
     """Initializer.
 
     Args:
+    ----
       name: Name of the feature.
       dtype: Dtype of the feature. One of tf.string, tf.int64 or tf.float32.
         Note that if the actual ELWC does not contain the corresponding oneof
@@ -154,6 +150,7 @@ def parse_elwc_with_struct2tensor(
   """Parses a batch of ELWC records into RaggedTensors using struct2tensor.
 
   Args:
+  ----
     records: A dictionary with a single item. The value of this single item is
       the serialized ELWC input.
     context_features: List of context-level features.
@@ -163,6 +160,7 @@ def parse_elwc_with_struct2tensor(
       feature is added to the feature dict.
 
   Returns:
+  -------
     A dict that maps feature name to RaggedTensors.
 
   """
@@ -173,6 +171,7 @@ def parse_elwc_with_struct2tensor(
     A prensor step cannot contain dots ("."), but a feature name can.
 
     Args:
+    ----
       feature_name: name of the feature
     Returns:
       a valid step name.
@@ -292,7 +291,8 @@ def make_ragged_densify_layer():
   the gaps.
 
 
-  Returns:
+  Returns
+  -------
     A Keras Layer.
   """
   return tf.keras.layers.Lambda(lambda x: x.to_tensor())

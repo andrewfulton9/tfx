@@ -40,8 +40,11 @@ def is_json_compatible(
     allowed with Dict or List. A standalone `Any` is invalid.
 
   Args:
+  ----
     typehint: The typehint to check.
+
   Returns:
+  -------
     True if typehint is a JSON-compatible type.
   """
   def check(typehint: Any, not_primitive: bool = True) -> bool:
@@ -51,9 +54,7 @@ def is_json_compatible(
 
     # Starting from Python 3.9 Dict won't have default args (~KT, ~VT)
     # and List won't have default args (~T).
-      if not args:
-        return False
-      elif origin is dict and args[0] is not str:
+      if not args or origin is dict and args[0] is not str:
         return False
       elif origin is dict and args[0] is str:
         return check(typehint=args[1], not_primitive=False)
@@ -75,11 +76,13 @@ def check_strict_json_compat(
   """Check if in_type conforms with expect_type.
 
   Args:
+  ----
     in_type: Input type hint. It can be any JSON-compatible type. It can also be
     an instance.
     expect_type: Expected type hint. It can be any JSON-compatible type.
 
   Returns:
+  -------
     True if in_type is valid w.r.t. expect_type.
   """
   check_instance = False

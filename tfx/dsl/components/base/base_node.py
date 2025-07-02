@@ -17,16 +17,13 @@ import abc
 import copy
 from typing import Any, Dict, Optional, Type
 
-from tfx.dsl.components.base import base_driver
-from tfx.dsl.components.base import base_executor
+import typing_extensions
+
+from tfx.dsl.components.base import base_driver, base_executor
 from tfx.dsl.components.base import executor_spec as executor_spec_module
 from tfx.dsl.context_managers import dsl_context_registry
 from tfx.dsl.experimental.node_execution_options import utils
-from tfx.utils import deprecation_utils
-from tfx.utils import doc_controls
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-import typing_extensions
+from tfx.utils import deprecation_utils, doc_controls, json_utils, name_utils
 
 
 def _abstract_property() -> Any:
@@ -54,6 +51,7 @@ class BaseNode(json_utils.Jsonable, abc.ABC):
     """Initialize a node.
 
     Args:
+    ----
       executor_spec: Optional instance of executor_spec.ExecutorSpec which
         describes how to execute this node (optional, defaults to an empty
         executor indicates no-op.
@@ -109,7 +107,8 @@ class BaseNode(json_utils.Jsonable, abc.ABC):
     If `id` is set by the user, return it directly.
     Otherwise, return <node_class_name>.
 
-    Returns:
+    Returns
+    -------
       node id.
     """
     if self._id:
@@ -191,6 +190,7 @@ class BaseNode(json_utils.Jsonable, abc.ABC):
     It is symmetric with `add_downstream_node`.
 
     Args:
+    ----
       upstream_node: a component that must run before this node.
     """
     self._upstream_nodes.add(upstream_node)
@@ -212,6 +212,7 @@ class BaseNode(json_utils.Jsonable, abc.ABC):
 
 
     Args:
+    ----
       upstream_nodes: a list of components that must run before this node.
     """
     self._upstream_nodes.update(upstream_nodes)
@@ -246,6 +247,7 @@ class BaseNode(json_utils.Jsonable, abc.ABC):
     It is symmetric with `add_upstream_node`.
 
     Args:
+    ----
       downstream_node: a component that must run after this node.
     """
     self._downstream_nodes.add(downstream_node)
@@ -268,6 +270,7 @@ class BaseNode(json_utils.Jsonable, abc.ABC):
     It is symmetric with `add_upstream_nodes`.
 
     Args:
+    ----
       downstream_nodes: a list of components that must run after this node.
     """
     self._downstream_nodes.update(downstream_nodes)

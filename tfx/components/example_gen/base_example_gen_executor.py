@@ -19,17 +19,16 @@ import hashlib
 import pickle
 from typing import Any, Dict, List, Union
 
-from absl import logging
 import apache_beam as beam
 import tensorflow as tf
+from absl import logging
+
 from tfx import types
-from tfx.components.example_gen import utils
-from tfx.components.example_gen import write_split
+from tfx.components.example_gen import utils, write_split
 from tfx.components.util import examples_utils
 from tfx.dsl.components.base import base_beam_executor
 from tfx.proto import example_gen_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_component_specs
 from tfx.utils import proto_utils
 
 
@@ -38,7 +37,6 @@ def _GeneratePartitionKey(record: Union[tf.train.Example,
                                         Dict[str, Any]],
                           split_config: example_gen_pb2.SplitConfig) -> bytes:
   """Generates key for partition."""
-
   if not split_config.HasField('partition_feature_name'):
     if isinstance(record, bytes):
       return record
@@ -153,6 +151,7 @@ class BaseExampleGenExecutor(base_beam_executor.BaseBeamExecutor, abc.ABC):
     custom spliting logic.
 
     Args:
+    ----
       pipeline: Beam pipeline.
       exec_properties: A dict of execution properties. Depends on detailed
         example gen implementation.
@@ -165,6 +164,7 @@ class BaseExampleGenExecutor(base_beam_executor.BaseBeamExecutor, abc.ABC):
           artifact, one of example_gen_pb2.PayloadFormat enum.
 
     Returns:
+    -------
       Dict of beam PCollection with split name as key, each PCollection is a
       single output split that contains serialized records.
     """
@@ -235,6 +235,7 @@ class BaseExampleGenExecutor(base_beam_executor.BaseBeamExecutor, abc.ABC):
     `payload_format` custom property of the output Example artifact.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts. Depends on
         detailed example gen implementation.
       output_dict: Output dict from output key to a list of Artifacts.
@@ -252,6 +253,7 @@ class BaseExampleGenExecutor(base_beam_executor.BaseBeamExecutor, abc.ABC):
           one of example_gen_pb2.FileFormat enum.
 
     Returns:
+    -------
       None
     """
     self._log_startup(input_dict, output_dict, exec_properties)

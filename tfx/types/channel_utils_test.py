@@ -14,12 +14,10 @@
 """Tests for tfx.utils.channel."""
 
 from absl.testing import absltest
+
 from tfx.dsl.components.base.testing import test_node
 from tfx.dsl.placeholder import placeholder as ph
-from tfx.types import artifact
-from tfx.types import channel
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact, channel, channel_utils, standard_artifacts
 
 
 class _MyArtifact(artifact.Artifact):

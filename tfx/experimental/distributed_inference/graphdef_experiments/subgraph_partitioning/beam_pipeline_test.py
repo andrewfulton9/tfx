@@ -17,13 +17,15 @@ import os
 import tempfile
 
 import apache_beam as beam
-from apache_beam.testing import util
 import numpy as np
 import tensorflow as tf
+from apache_beam.testing import util
 
-from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import beam_pipeline
-from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import create_complex_graph
-from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import graph_partition
+from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import (
+  beam_pipeline,
+  create_complex_graph,
+  graph_partition,
+)
 
 
 class BeamPipelineTest(tf.test.TestCase):

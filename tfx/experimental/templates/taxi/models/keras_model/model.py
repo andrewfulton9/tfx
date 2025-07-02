@@ -17,18 +17,17 @@ A DNN keras model which uses features defined in features.py and network
 parameters defined in constants.py.
 """
 
-from absl import logging
 import tensorflow as tf
 import tensorflow_transform as tft
+from absl import logging
+from tfx_bsl.public import tfxio
 
 from tfx.experimental.templates.taxi.models import features
 from tfx.experimental.templates.taxi.models.keras_model import constants
-from tfx_bsl.public import tfxio
 
 
 def _get_tf_examples_serving_signature(model, tf_transform_output):
   """Returns a serving signature that accepts `tensorflow.Example`."""
-
   # We need to track the layers in the model in order to save it.
   # TODO(b/162357359): Revise once the bug is resolved.
   model.tft_layer_inference = tf_transform_output.transform_features_layer()
@@ -55,7 +54,6 @@ def _get_tf_examples_serving_signature(model, tf_transform_output):
 
 def _get_transform_features_signature(model, tf_transform_output):
   """Returns a serving signature that applies tf.Transform to features."""
-
   # We need to track the layers in the model in order to save it.
   # TODO(b/162357359): Revise once the bug is resolved.
   model.tft_layer_eval = tf_transform_output.transform_features_layer()
@@ -78,6 +76,7 @@ def _input_fn(file_pattern, data_accessor, tf_transform_output, batch_size=200):
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     tf_transform_output: A TFTransformOutput.
@@ -85,6 +84,7 @@ def _input_fn(file_pattern, data_accessor, tf_transform_output, batch_size=200):
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -100,10 +100,12 @@ def _build_keras_model(hidden_units, learning_rate):
   """Creates a DNN Keras model for classifying taxi data.
 
   Args:
+  ----
     hidden_units: [int], the layer sizes of the DNN (input layer first).
     learning_rate: [float], learning rate of the Adam optimizer.
 
   Returns:
+  -------
     A keras Model.
   """
   deep_input = {
@@ -182,9 +184,9 @@ def run_fn(fn_args):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
-
   tf_transform_output = tft.TFTransformOutput(fn_args.transform_output)
 
   train_dataset = _input_fn(fn_args.train_files, fn_args.data_accessor,

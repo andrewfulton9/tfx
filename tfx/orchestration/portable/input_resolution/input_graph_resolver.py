@@ -39,8 +39,7 @@ from tfx.orchestration import data_types_utils
 from tfx.orchestration import mlmd_connection_manager as mlmd_cm
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.proto.orchestration import pipeline_pb2
-from tfx.utils import topsort
-from tfx.utils import typing_utils
+from tfx.utils import topsort, typing_utils
 
 _Data = Union[
     Sequence[types.Artifact],
@@ -183,11 +182,13 @@ def _reduce_graph_fn(ctx: _Context, node_id: str, graph_fn: _GraphFn):
   a correct order.
 
   Args:
+  ----
     ctx: Current `_Context`.
     node_id: A `InputGraph.Node` ID.
     graph_fn: An accumulated `GraphFn`.
 
   Returns:
+  -------
     A reduced `GraphFn`.
   """
   node_def = ctx.input_graph.nodes[node_id]
@@ -224,16 +225,19 @@ def build_graph_fn(
   specified from the `InputNode` of the `InputGraph`.
 
   Example:
+  -------
     inputs = previously_resolved_inputs()
     graph_fn, input_keys = build_graph_fn(mlmd_handle, input_graph)
     # input_keys == ['x', 'y']
     z = graph_fn({'x': inputs['x'], 'y': inputs['y']})
 
   Args:
+  ----
     handle_like: A `mlmd_cm.HandleLike` instance.
     input_graph: An `pipeline_pb2.InputGraph` proto.
 
   Returns:
+  -------
     Tuple of (graph_fn, graph_fn_inputs).
     graph_fn_inputs is a list of input keys, where all input keys must exist in
     the input argument dict to the graph_fn.

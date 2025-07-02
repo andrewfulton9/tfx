@@ -14,12 +14,11 @@
 """Tests for tfx.dsl.experimental.conditionals.conditional."""
 
 import tensorflow as tf
-from tfx.dsl.context_managers import dsl_context_registry
-from tfx.dsl.context_managers import test_utils
+
+from tfx.dsl.context_managers import dsl_context_registry, test_utils
 from tfx.dsl.experimental.conditionals import conditional
 from tfx.dsl.placeholder import placeholder
 from tfx.orchestration import pipeline
-
 
 Node = test_utils.Node
 

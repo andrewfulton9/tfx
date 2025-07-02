@@ -16,25 +16,19 @@
 import os
 from typing import Any, Dict, Optional
 
-from absl import logging
 import tensorflow_data_validation as tfdv
-from tensorflow_data_validation.utils import path
-from tensorflow_data_validation.utils import schema_util
+from absl import logging
+from tensorflow_data_validation.utils import path, schema_util
+from tensorflow_metadata.proto.v0 import anomalies_pb2, schema_pb2, statistics_pb2
+
 from tfx import types
 from tfx.components.distribution_validator import utils
 from tfx.components.statistics_gen import stats_artifact_utils
 from tfx.dsl.components.base import base_executor
 from tfx.proto import distribution_validator_pb2
 from tfx.proto.orchestration import execution_result_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import json_utils
-from tfx.utils import monitoring_utils
-from tfx.utils import writer_utils
-
-from tensorflow_metadata.proto.v0 import anomalies_pb2
-from tensorflow_metadata.proto.v0 import schema_pb2
-from tensorflow_metadata.proto.v0 import statistics_pb2
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import json_utils, monitoring_utils, writer_utils
 
 # Default file name for anomalies output.
 DEFAULT_FILE_NAME = 'SchemaDiff.pb'
@@ -137,11 +131,13 @@ def _add_anomalies_for_missing_comparisons(
   that.
 
   Args:
+  ----
     raw_anomalies: The Anomalies proto to be checked for comparison.
     config: The config that identifies the features for which distribution
       validation will be done.
 
   Returns:
+  -------
     An Anomalies proto with anomalies added for features for which comparisons
     could not be done.
   """
@@ -225,11 +221,13 @@ class Executor(base_executor.BaseExecutor):
     based on the summary statitics for those datasets.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts.
       output_dict: Output dict from key to a list of artifacts.
       exec_properties: A dict of execution properties.
 
     Returns:
+    -------
       ExecutionResult proto with anomalies
     """
     self._log_startup(input_dict, output_dict, exec_properties)
@@ -290,9 +288,7 @@ class Executor(base_executor.BaseExecutor):
       for baseline_split in artifact_utils.decode_split_names(
           baseline_statistics.split_names
       ):
-        if (test_split, baseline_split) in include_splits:
-          split_pairs.append((test_split, baseline_split))
-        elif not include_splits and test_split == baseline_split:
+        if (test_split, baseline_split) in include_splits or not include_splits and test_split == baseline_split:
           split_pairs.append((test_split, baseline_split))
     if not split_pairs:
       raise ValueError(

@@ -16,16 +16,15 @@
 from typing import Optional, Union
 
 from tfx import types
-from tfx.components.example_gen import driver
-from tfx.components.example_gen import utils
-from tfx.dsl.components.base import base_beam_component
-from tfx.dsl.components.base import base_beam_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.components.example_gen import driver, utils
+from tfx.dsl.components.base import (
+  base_beam_component,
+  base_beam_executor,
+  executor_spec,
+)
 from tfx.orchestration import data_types
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.proto import example_gen_pb2, range_config_pb2
+from tfx.types import standard_artifacts, standard_component_specs
 
 
 class QueryBasedExampleGen(base_beam_component.BaseBeamComponent):
@@ -74,6 +73,7 @@ class QueryBasedExampleGen(base_beam_component.BaseBeamComponent):
     """Construct a QueryBasedExampleGen component.
 
     Args:
+    ----
       input_config: An
         [example_gen_pb2.Input](https://github.com/tensorflow/tfx/blob/master/tfx/proto/example_gen.proto)
         instance, providing input configuration. _required_
@@ -94,6 +94,7 @@ class QueryBasedExampleGen(base_beam_component.BaseBeamComponent):
         executor spec specified in the component attribute.
 
     Raises:
+    ------
       ValueError: The output_data_format, output_file_format value
         must be defined in the example_gen_pb2.PayloadFormat proto.
     """
@@ -165,6 +166,7 @@ class FileBasedExampleGen(base_beam_component.BaseBeamComponent):
     """Construct a FileBasedExampleGen component.
 
     Args:
+    ----
       input_base: an external directory containing the data files.
       input_config: An
         [`example_gen_pb2.Input`](https://github.com/tensorflow/tfx/blob/master/tfx/proto/example_gen.proto)

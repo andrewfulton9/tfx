@@ -17,12 +17,9 @@ from typing import Optional
 
 from tfx import types
 from tfx.components.infra_validator import executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_driver
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_driver, executor_spec
 from tfx.proto import infra_validator_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import standard_artifacts, standard_component_specs
 
 
 class InfraValidator(base_component.BaseComponent):
@@ -96,6 +93,7 @@ class InfraValidator(base_component.BaseComponent):
     """Construct a InfraValidator component.
 
     Args:
+    ----
       model: A [`BaseChannel`][tfx.v1.types.BaseChannel] of `ModelExportPath` type, usually produced by
         [Trainer](../../../guide/trainer) component.
           _required_

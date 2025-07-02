@@ -26,14 +26,12 @@ from tfx.components.schema_gen.component import SchemaGen
 from tfx.components.schema_gen.import_schema_gen.component import ImportSchemaGen
 from tfx.components.statistics_gen.component import StatisticsGen
 from tfx.components.trainer.component import Trainer
-from tfx.components.transform.component import Transform
-from tfx.components.tuner.component import Tuner
 
 # For UDF needs.
 # pylint: disable=g-bad-import-order
-from tfx.components.trainer.fn_args_utils import DataAccessor
-from tfx.components.trainer.fn_args_utils import FnArgs
-from tfx.components.tuner.component import TunerFnResult
+from tfx.components.trainer.fn_args_utils import DataAccessor, FnArgs
+from tfx.components.transform.component import Transform
+from tfx.components.tuner.component import Tuner, TunerFnResult
 
 # pylint: enable=g-bad-import-order
 __all__ = [

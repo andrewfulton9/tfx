@@ -17,19 +17,17 @@ import os
 from unittest import mock
 
 from absl.testing import parameterized
+from google.protobuf import text_format
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.dsl.io import fileio
 from tfx.orchestration import data_types_utils
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import outputs_utils
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.orchestration.portable import data_types, outputs_utils
+from tfx.proto.orchestration import execution_result_pb2, pipeline_pb2
 from tfx.types import artifact as tfx_artifact
 from tfx.types import standard_artifacts
 from tfx.types.value_artifact import ValueArtifact
 from tfx.utils import test_case_utils
-
-from google.protobuf import text_format
-from ml_metadata.proto import metadata_store_pb2
 
 _PIPELINE_INFO = text_format.Parse("""
   id: "test_pipeline"

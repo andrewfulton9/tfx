@@ -20,40 +20,41 @@ To update the golden IR proto, use --persist_test_protos flag.
 import os
 import threading
 import types
-from typing import Any, Dict, List
 import unittest
+from typing import Any, Dict, List
 
+import tensorflow as tf
 from absl import flags
 from absl.testing import parameterized
-import tensorflow as tf
+from google.protobuf import text_format
+
 from tfx.dsl.compiler import compiler
-from tfx.dsl.compiler.testdata import additional_properties_test_pipeline_async
-from tfx.dsl.compiler.testdata import channel_union_pipeline
-from tfx.dsl.compiler.testdata import composable_pipeline
-from tfx.dsl.compiler.testdata import composable_pipeline_async
-from tfx.dsl.compiler.testdata import conditional_pipeline
-from tfx.dsl.compiler.testdata import consumer_pipeline
-from tfx.dsl.compiler.testdata import consumer_pipeline_different_project
-from tfx.dsl.compiler.testdata import consumer_pipeline_with_tags
-from tfx.dsl.compiler.testdata import dynamic_exec_properties_pipeline
-from tfx.dsl.compiler.testdata import external_artifacts_pipeline
-from tfx.dsl.compiler.testdata import foreach_pipeline
-from tfx.dsl.compiler.testdata import iris_pipeline_async
-from tfx.dsl.compiler.testdata import iris_pipeline_sync
-from tfx.dsl.compiler.testdata import non_existent_component_pipeline
-from tfx.dsl.compiler.testdata import optional_and_allow_empty_pipeline
-from tfx.dsl.compiler.testdata import pipeline_root_placeholder
-from tfx.dsl.compiler.testdata import pipeline_with_annotations
-from tfx.dsl.compiler.testdata import resolver_function_pipeline
+from tfx.dsl.compiler.testdata import (
+  additional_properties_test_pipeline_async,
+  channel_union_pipeline,
+  composable_pipeline,
+  composable_pipeline_async,
+  conditional_pipeline,
+  consumer_pipeline,
+  consumer_pipeline_different_project,
+  consumer_pipeline_with_tags,
+  dynamic_exec_properties_pipeline,
+  external_artifacts_pipeline,
+  foreach_pipeline,
+  iris_pipeline_async,
+  iris_pipeline_sync,
+  non_existent_component_pipeline,
+  optional_and_allow_empty_pipeline,
+  pipeline_root_placeholder,
+  pipeline_with_annotations,
+  resolver_function_pipeline,
+)
 from tfx.dsl.components.common import resolver
 from tfx.dsl.input_resolution.strategies import latest_blessed_model_strategy
 from tfx.orchestration import pipeline
 from tfx.proto.orchestration import pipeline_pb2
-from tfx.types import artifact
-from tfx.types import channel
+from tfx.types import artifact, channel
 from tfx.utils import golden_utils
-
-from google.protobuf import text_format
 
 FLAGS = flags.FLAGS
 persist_test_protos = flags.DEFINE_bool(

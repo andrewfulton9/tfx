@@ -16,14 +16,17 @@
 from typing import Dict, List, Optional, Type
 
 from tfx.orchestration.config import base_component_config
-from tfx.orchestration.launcher import base_component_launcher
-from tfx.orchestration.launcher import in_process_component_launcher
+from tfx.orchestration.launcher import (
+  base_component_launcher,
+  in_process_component_launcher,
+)
 
 
 class PipelineConfig:
   """Config class which controls how to run a pipeline.
 
-  Attributes:
+  Attributes
+  ----------
     supported_launcher_classes: A list of component launcher classes that are
       supported by the current pipeline. List sequence determines the order in
       which launchers are chosen for each component being run.

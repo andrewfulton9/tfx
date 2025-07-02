@@ -19,8 +19,7 @@ from typing import Any, Dict
 
 import click
 
-from tfx.tools.cli import labels
-from tfx.tools.cli import pip_utils
+from tfx.tools.cli import labels, pip_utils
 from tfx.tools.cli.handler import base_handler
 
 
@@ -35,9 +34,11 @@ def detect_handler(flags_dict: Dict[str, Any]) -> base_handler.BaseHandler:
     that.
 
   Args:
+  ----
     flags_dict: A dictionary containing the flags of a command.
 
   Returns:
+  -------
     Corrosponding Handler object.
   """
   packages_list = pip_utils.get_package_names()
@@ -49,21 +50,27 @@ def detect_handler(flags_dict: Dict[str, Any]) -> base_handler.BaseHandler:
     click.echo(
         'Use --engine flag if you intend to use a different orchestrator.')
     flags_dict[labels.ENGINE_FLAG] = 'airflow'
-    from tfx.tools.cli.handler import airflow_handler  # pylint: disable=g-import-not-at-top
+    from tfx.tools.cli.handler import (
+      airflow_handler,  # pylint: disable=g-import-not-at-top
+    )
     return airflow_handler.AirflowHandler(flags_dict)
   elif labels.KUBEFLOW_PACKAGE_NAME in packages_list:
     click.echo('Detected Kubeflow.')
     click.echo(
         'Use --engine flag if you intend to use a different orchestrator.')
     flags_dict[labels.ENGINE_FLAG] = 'kubeflow'
-    from tfx.tools.cli.handler import kubeflow_handler  # pylint: disable=g-import-not-at-top
+    from tfx.tools.cli.handler import (
+      kubeflow_handler,  # pylint: disable=g-import-not-at-top
+    )
     return kubeflow_handler.KubeflowHandler(flags_dict)
   else:
     click.echo('Detected Local.')
     click.echo(
         'Use --engine flag if you intend to use a different orchestrator.')
     flags_dict[labels.ENGINE_FLAG] = 'local'
-    from tfx.tools.cli.handler import local_handler  # pylint: disable=g-import-not-at-top
+    from tfx.tools.cli.handler import (
+      local_handler,  # pylint: disable=g-import-not-at-top
+    )
     return local_handler.LocalHandler(flags_dict)
 
 
@@ -71,12 +78,15 @@ def create_handler(flags_dict: Dict[str, Any]) -> base_handler.BaseHandler:
   """Retrieve handler from the environment using the --engine flag.
 
   Args:
+  ----
     flags_dict: A dictionary containing the flags of a command.
 
   Raises:
+  ------
     RuntimeError: When engine is not supported by TFX.
 
   Returns:
+  -------
     Corresponding Handler object.
   """
   engine = flags_dict[labels.ENGINE_FLAG]
@@ -84,23 +94,33 @@ def create_handler(flags_dict: Dict[str, Any]) -> base_handler.BaseHandler:
   if engine == 'airflow':
     if labels.AIRFLOW_PACKAGE_NAME not in packages_list:
       sys.exit('Airflow not found.')
-    from tfx.tools.cli.handler import airflow_handler  # pylint: disable=g-import-not-at-top
+    from tfx.tools.cli.handler import (
+      airflow_handler,  # pylint: disable=g-import-not-at-top
+    )
     return airflow_handler.AirflowHandler(flags_dict)
   elif engine == 'kubeflow':
     if labels.KUBEFLOW_PACKAGE_NAME not in packages_list:
       sys.exit('Kubeflow not found.')
-    from tfx.tools.cli.handler import kubeflow_handler  # pylint: disable=g-import-not-at-top
+    from tfx.tools.cli.handler import (
+      kubeflow_handler,  # pylint: disable=g-import-not-at-top
+    )
     return kubeflow_handler.KubeflowHandler(flags_dict)
   elif engine == 'beam':
-    from tfx.tools.cli.handler import beam_handler  # pylint: disable=g-import-not-at-top
+    from tfx.tools.cli.handler import (
+      beam_handler,  # pylint: disable=g-import-not-at-top
+    )
     return beam_handler.BeamHandler(flags_dict)
   elif engine == 'local':
-    from tfx.tools.cli.handler import local_handler  # pylint: disable=g-import-not-at-top
+    from tfx.tools.cli.handler import (
+      local_handler,  # pylint: disable=g-import-not-at-top
+    )
     return local_handler.LocalHandler(flags_dict)
   elif engine == 'vertex':
     if labels.KUBEFLOW_PACKAGE_NAME not in packages_list:
       sys.exit('`kfp` python pacakge is required for Vertex.')
-    from tfx.tools.cli.handler import vertex_handler  # pylint: disable=g-import-not-at-top
+    from tfx.tools.cli.handler import (
+      vertex_handler,  # pylint: disable=g-import-not-at-top
+    )
     return vertex_handler.VertexHandler(flags_dict)
   elif engine == 'auto':
     return detect_handler(flags_dict)

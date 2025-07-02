@@ -18,6 +18,7 @@ import pathlib
 import tempfile
 
 from absl.testing import absltest
+
 from tfx.dsl.io import fileio
 from tfx.scripts import run_component
 from tfx.types import artifact_utils

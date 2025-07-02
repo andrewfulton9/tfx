@@ -13,22 +13,16 @@
 # limitations under the License.
 """Sample pipeline with ForEach context."""
 
-from tfx.components import CsvExampleGen
-from tfx.components import Pusher
-from tfx.components import SchemaGen
-from tfx.components import StatisticsGen
-from tfx.components import Trainer
+from tfx.components import CsvExampleGen, Pusher, SchemaGen, StatisticsGen, Trainer
 from tfx.dsl.components.common import resolver
 from tfx.dsl.control_flow import for_each
 from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
 from tfx.orchestration import pipeline
-from tfx.proto import pusher_pb2
-from tfx.proto import trainer_pb2
+from tfx.proto import pusher_pb2, trainer_pb2
 
 
 def create_test_pipeline():
   """Creates a sample pipeline with ForEach context."""
-
   example_gen = CsvExampleGen(input_base='/data/mydummy_dataset')
 
   with for_each.ForEach(example_gen.outputs['examples']) as each_example:

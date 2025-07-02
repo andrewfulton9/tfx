@@ -25,9 +25,7 @@ from tfx.dsl.components.base import base_driver
 from tfx.dsl.io import fileio
 from tfx.tools.cli import labels
 from tfx.tools.cli.handler import airflow_handler
-from tfx.utils import io_utils
-from tfx.utils import test_case_utils
-
+from tfx.utils import io_utils, test_case_utils
 
 _testdata_dir = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'testdata')

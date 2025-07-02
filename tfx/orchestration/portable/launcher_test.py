@@ -19,30 +19,33 @@ import os
 from typing import Any
 from unittest import mock
 
+from google.protobuf import text_format
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx import version as tfx_version
 from tfx.dsl.compiler import constants
 from tfx.dsl.io import fileio
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
-from tfx.orchestration.portable import base_driver
-from tfx.orchestration.portable import base_executor_operator
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import inputs_utils
-from tfx.orchestration.portable import launcher
-from tfx.orchestration.portable import runtime_parameter_utils
-from tfx.orchestration.portable import system_node_handler
+from tfx.orchestration import data_types_utils, metadata
+from tfx.orchestration.portable import (
+  base_driver,
+  base_executor_operator,
+  data_types,
+  execution_publish_utils,
+  inputs_utils,
+  launcher,
+  runtime_parameter_utils,
+  system_node_handler,
+)
 from tfx.orchestration.portable.mlmd import context_lib
-from tfx.proto.orchestration import driver_output_pb2
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.proto.orchestration import (
+  driver_output_pb2,
+  executable_spec_pb2,
+  execution_result_pb2,
+  pipeline_pb2,
+)
 from tfx.types import standard_artifacts
 from tfx.utils import test_case_utils
-
-from google.protobuf import text_format
-from ml_metadata.proto import metadata_store_pb2
 
 _PYTHON_CLASS_EXECUTABLE_SPEC = executable_spec_pb2.PythonClassExecutableSpec
 

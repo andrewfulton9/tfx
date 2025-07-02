@@ -17,10 +17,10 @@ import filecmp
 import os
 from typing import Dict, List, Optional
 
-from absl import logging
-
-
 import tensorflow_model_analysis as tfma
+from absl import logging
+from ml_metadata.proto import metadata_store_pb2
+from tensorflow_metadata.proto.v0 import anomalies_pb2
 
 from tfx import types
 from tfx.dsl.io import fileio
@@ -28,10 +28,6 @@ from tfx.experimental.pipeline_testing import pipeline_recorder_utils
 from tfx.orchestration import metadata
 from tfx.types import artifact_utils
 from tfx.utils import io_utils
-
-from ml_metadata.proto import metadata_store_pb2
-from tensorflow_metadata.proto.v0 import anomalies_pb2
-
 
 try:
   # Try to access EvalResult from tfma directly
@@ -45,10 +41,12 @@ def compare_dirs(dir1: str, dir2: str):
   """Recursively compares contents of the two directories.
 
   Args:
+  ----
     dir1: path to a directory.
     dir2: path to another directory.
 
   Returns:
+  -------
     a boolean whether the specified directories have the same file contents.
   """
   dir_cmp = filecmp.dircmp(dir1, dir2)
@@ -74,11 +72,13 @@ def _compare_relative_difference(value: float, expected_value: float,
   """Compares relative difference between value and expected_value against threshold.
 
   Args:
+  ----
     value: a float value to be compared to expected value.
     expected_value: a float value that is expected.
     threshold: a float larger than 0.
 
   Returns:
+  -------
     a boolean indicating whether the relative difference is within the
     threshold.
   """
@@ -98,10 +98,12 @@ def get_pipeline_outputs(
   """Returns a dictionary of pipeline output artifacts for every component.
 
   Args:
+  ----
     metadata_connection_config: connection configuration to MLMD.
     pipeline_name: Name of the pipeline.
 
   Returns:
+  -------
     a dictionary of holding list of artifacts for a component id.
   """
   output_map = {}
@@ -142,11 +144,13 @@ def verify_file_dir(output_uri: str,
   """Verify pipeline output artifact uri by comparing directory structure.
 
   Args:
+  ----
     output_uri: pipeline output artifact uri.
     expected_uri: recorded pipeline output artifact uri.
     check_file: boolean indicating whether to check file path.
 
   Returns:
+  -------
     a boolean whether file paths are matching.
   """
   for dir_name, sub_dirs, leaf_files in fileio.walk(expected_uri):
@@ -171,9 +175,11 @@ def _group_metric_by_slice(
   """Returns a dictionary holding metric values for every slice.
 
   Args:
+  ----
     eval_result: evaluation result.
 
   Returns:
+  -------
     a slice map that holds a dictionary of metric and value for slices.
   """
   slice_map = {}
@@ -188,12 +194,14 @@ def compare_eval_results(output_uri: str, expected_uri: str, threshold: float,
   """Compares accuracy on overall dataset using two EvalResult.
 
   Args:
+  ----
     output_uri: pipeline output artifact uri.
     expected_uri: recorded pipeline output artifact uri.
     threshold: a float larger than 0.
     metrics: metric names to compare.
 
   Returns:
+  -------
     boolean whether the eval result values differ within a threshold.
   """
   eval_result = tfma.load_eval_result(output_uri)
@@ -215,11 +223,13 @@ def compare_file_sizes(output_uri: str, expected_uri: str,
   """Compares pipeline output files sizes in output and recorded uri.
 
   Args:
+  ----
     output_uri: pipeline output artifact uri.
     expected_uri: recorded pipeline output artifact uri.
     threshold: a float between 0 and 1.
 
   Returns:
+  -------
      boolean whether file sizes differ within a threshold.
   """
   for dir_name, sub_dirs, leaf_files in fileio.walk(expected_uri):
@@ -244,11 +254,13 @@ def compare_model_file_sizes(output_uri: str, expected_uri: str,
   """Compares pipeline output files sizes in output and recorded uri.
 
   Args:
+  ----
     output_uri: pipeline output artifact uri.
     expected_uri: recorded pipeline output artifact uri.
     threshold: a float between 0 and 1.
 
   Returns:
+  -------
      boolean whether file sizes differ within a threshold.
   """
   for dir_name, sub_dirs, leaf_files in fileio.walk(expected_uri):
@@ -279,10 +291,12 @@ def compare_anomalies(output_uri: str, expected_uri: str) -> bool:
   Looks at only binary proto files.
 
   Args:
+  ----
     output_uri: pipeline output artifact uri.
     expected_uri: recorded pipeline output artifact uri.
 
   Returns:
+  -------
      boolean whether anomalies are same.
   """
   for dir_name, _, leaf_files in fileio.walk(expected_uri):

@@ -73,7 +73,8 @@ BATCH_RETRIABLE_ERROR_CODES = frozenset(
 class Status:
   """Class to record status of operations.
 
-  Attributes:
+  Attributes
+  ----------
     code: A status code integer. Should be an enum value of `google.rpc.Code`.
     message: An optional message associated with the status.
   """

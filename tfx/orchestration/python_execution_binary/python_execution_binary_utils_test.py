@@ -18,17 +18,17 @@
 from typing import Dict, List, Union
 
 import tensorflow as tf
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.python_execution_binary import python_execution_binary_utils
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.types import artifact
-from tfx.types import channel
-
 from google.protobuf import text_format
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.orchestration.portable import data_types
+from tfx.orchestration.python_execution_binary import python_execution_binary_utils
+from tfx.proto.orchestration import (
+  executable_spec_pb2,
+  execution_result_pb2,
+  pipeline_pb2,
+)
+from tfx.types import artifact, channel
 
 _TArtifact = Union[artifact.Artifact, metadata_store_pb2.Artifact]
 _TArtifactList = Union[

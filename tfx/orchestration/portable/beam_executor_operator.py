@@ -15,19 +15,22 @@
 
 from typing import Any, Callable, Optional, cast
 
-from tfx.dsl.compiler import placeholder_utils
-from tfx.dsl.components.base import base_beam_executor
-from tfx.orchestration.portable import base_executor_operator
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import python_executor_operator
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.utils import import_utils
-
 from google.protobuf import message
 
+from tfx.dsl.compiler import placeholder_utils
+from tfx.dsl.components.base import base_beam_executor
+from tfx.orchestration.portable import (
+  base_executor_operator,
+  data_types,
+  python_executor_operator,
+)
+from tfx.proto.orchestration import executable_spec_pb2, execution_result_pb2
+from tfx.utils import import_utils
+
 try:
-  from apache_beam import Pipeline as _BeamPipeline  # pytype: disable=import-error  # pylint: disable=g-import-not-at-top
+  from apache_beam import (
+    Pipeline as _BeamPipeline,  # pytype: disable=import-error  # pylint: disable=g-import-not-at-top
+  )
 except ModuleNotFoundError:
   _BeamPipeline = Any
 
@@ -35,7 +38,8 @@ except ModuleNotFoundError:
 class BeamExecutorOperator(base_executor_operator.BaseExecutorOperator):
   """BeamExecutorOperator handles Beam based executor's init and execution.
 
-  Attributes:
+  Attributes
+  ----------
     extra_flags: Extra flags that will pass to Beam executors. It come from
       two sources in the order:
       1. The `extra_flags` set in the executor spec.
@@ -55,6 +59,7 @@ class BeamExecutorOperator(base_executor_operator.BaseExecutorOperator):
     """Initializes a BeamExecutorOperator.
 
     Args:
+    ----
       executor_spec: The specification of how to initialize the executor.
       platform_config: The specification of how to allocate resource for the
         executor.
@@ -80,10 +85,12 @@ class BeamExecutorOperator(base_executor_operator.BaseExecutorOperator):
     """Invokes executors given input from the Launcher.
 
     Args:
+    ----
       execution_info: A wrapper of the details of this execution.
       make_beam_pipeline_fn: A custom method to create a Beam Pipeline object.
 
     Returns:
+    -------
       The output from executor.
     """
     context = placeholder_utils.ResolutionContext(

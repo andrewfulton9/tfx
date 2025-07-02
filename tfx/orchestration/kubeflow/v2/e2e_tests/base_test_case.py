@@ -18,19 +18,16 @@ import os
 import subprocess
 from typing import Any, Dict, List, Optional
 
-from absl import logging
 import pytest
-
+from absl import logging
 from google.cloud import aiplatform
 from google.cloud.aiplatform import pipeline_jobs
 
 from tfx.dsl.components.base import base_node
 from tfx.orchestration import pipeline as tfx_pipeline
 from tfx.orchestration import test_utils
-from tfx.orchestration.kubeflow.v2 import kubeflow_v2_dag_runner
-from tfx.orchestration.kubeflow.v2 import vertex_client_utils
-from tfx.utils import io_utils
-from tfx.utils import test_case_utils
+from tfx.orchestration.kubeflow.v2 import kubeflow_v2_dag_runner, vertex_client_utils
+from tfx.utils import io_utils, test_case_utils
 
 _POLLING_INTERVAL_IN_SECONDS = 60
 _MAX_JOB_EXECUTION_TIME = datetime.timedelta(minutes=90)

@@ -13,17 +13,15 @@
 # limitations under the License.
 """Dependency injection providers for node execution."""
 
-from collections.abc import Container, MutableSequence, Sequence
 import inspect
-from typing import Any, Callable, TypeVar, get_args, get_origin, Optional
+from collections.abc import Container, MutableSequence, Sequence
+from typing import Any, Callable, Optional, TypeVar, get_args, get_origin
 
 from tfx.dsl.component.experimental import json_compat
 from tfx.orchestration.portable import data_types
-from tfx.types import artifact
-from tfx.types import standard_artifacts
+from tfx.types import artifact, standard_artifacts
 from tfx.utils import pure_typing_utils
-from tfx.utils.di import errors
-from tfx.utils.di import providers
+from tfx.utils.di import errors, providers
 
 _TfxArtifact = artifact.Artifact
 _AT = TypeVar('_AT', bound=_TfxArtifact)
@@ -75,10 +73,12 @@ def _deserialize_artifact(
   class is already imported.
 
   Args:
+  ----
     target_type: TFX artifact type of the result.
     artifacts: Already deserialized artifacts given from ExecutionInfo.
 
   Returns:
+  -------
     Correctly deserialized artifact list.
   """
   result = []

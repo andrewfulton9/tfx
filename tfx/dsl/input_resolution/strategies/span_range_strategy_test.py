@@ -13,14 +13,14 @@
 # limitations under the License.
 """Test for SpanRangeStrategy."""
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.components.example_gen import utils
 from tfx.dsl.input_resolution.strategies import span_range_strategy
 from tfx.orchestration import metadata
 from tfx.proto import range_config_pb2
 from tfx.types import standard_artifacts
 from tfx.utils import test_case_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class SpanRangeStrategyTest(test_case_utils.TfxTest):

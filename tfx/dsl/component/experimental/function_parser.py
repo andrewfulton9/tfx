@@ -25,12 +25,10 @@ import types
 import typing
 from typing import Any, Dict, NamedTuple, Optional, Type, Union, get_args, get_origin
 
-from tfx.dsl.component.experimental import annotations
-from tfx.dsl.component.experimental import json_compat
-from tfx.dsl.component.experimental import utils
-from tfx.types import artifact
-from tfx.types import standard_artifacts
 import typing_extensions
+
+from tfx.dsl.component.experimental import annotations, json_compat, utils
+from tfx.types import artifact, standard_artifacts
 
 try:
   import apache_beam as beam  # pytype: disable=import-error  # pylint: disable=g-import-not-at-top
@@ -123,7 +121,8 @@ def _validate_signature(
 class ParsedSignature(NamedTuple):
   """A parsed signature of a Tflex functional component executable.
 
-  Attributes:
+  Attributes
+  ----------
     inputs: A dictionary mapping each input name to its artifact type (as a
       subclass of `tfx.types.Artifact`).
     outputs: A dictionary mapping each output name to its artifact type (as a
@@ -164,6 +163,7 @@ def _parse_signature(
   """Parses signature of a typehint-annotated component executor function.
 
   Args:
+  ----
     func: A component executor function to be parsed.
     argspec: A `inspect.FullArgSpec` instance describing the component executor
       function. Usually obtained from `inspect.getfullargspec(func)`.
@@ -171,6 +171,7 @@ def _parse_signature(
       Usually obtained from `func.__annotations__`.
 
   Returns:
+  -------
     A ParsedSignature.
   """
   # Extract optional arguments as dict from name to its declared optional value.
@@ -306,9 +307,11 @@ def parse_typehint_component_function(
   should be passed when calling `func(*args)`.
 
   Args:
+  ----
     func: A component executor function to be parsed.
 
   Returns:
+  -------
     A ParsedSignature.
   """
   utils.assert_is_functype(func)

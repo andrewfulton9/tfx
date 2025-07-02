@@ -14,7 +14,6 @@
 """TFX orchestration module."""
 
 from tfx.orchestration.local.local_dag_runner import LocalDagRunner
-from tfx.v1.orchestration import experimental
-from tfx.v1.orchestration import metadata
+from tfx.v1.orchestration import experimental, metadata
 
 __all__ = ["LocalDagRunner", "experimental", "metadata"]

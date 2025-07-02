@@ -18,15 +18,15 @@ from typing import Any, Dict, List, Optional
 from absl import logging
 
 from tfx import types
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
+from tfx.orchestration import data_types, metadata
 from tfx.orchestration.portable import outputs_utils
 
 
 class Publisher:
   """Publish execution to metadata.
 
-  Attributes:
+  Attributes
+  ----------
     _metadata_handle: An instance of Metadata.
   """
 
@@ -47,6 +47,7 @@ class Publisher:
        artifact to the execution, with type INPUT or OUTPUT respectively
 
     Args:
+    ----
       component_info: the information of the component
       output_artifacts: optional key -> Artifacts to be published as outputs
         of the execution
@@ -54,6 +55,7 @@ class Publisher:
         execution
 
     Returns:
+    -------
       A dict containing output artifacts.
     """
     outputs_utils.tag_output_artifacts_with_version(output_artifacts)

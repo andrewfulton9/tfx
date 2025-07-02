@@ -14,10 +14,9 @@
 """Tests for tfx.components.schema_gen.import_schema_gen."""
 
 import tensorflow as tf
-from tfx.components.schema_gen.import_schema_gen import component
 
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.components.schema_gen.import_schema_gen import component
+from tfx.types import standard_artifacts, standard_component_specs
 
 
 class SchemaGenTest(tf.test.TestCase):

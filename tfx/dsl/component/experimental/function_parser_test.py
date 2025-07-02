@@ -17,12 +17,17 @@ from typing import Dict, List, Optional, TypedDict, Union
 
 import apache_beam as beam
 import tensorflow as tf
-from tfx.dsl.component.experimental.annotations import BeamComponentParameter
-from tfx.dsl.component.experimental.annotations import InputArtifact
-from tfx.dsl.component.experimental.annotations import OutputArtifact
-from tfx.dsl.component.experimental.annotations import OutputDict
-from tfx.dsl.component.experimental.annotations import Parameter
-from tfx.dsl.component.experimental.function_parser import parse_typehint_component_function
+
+from tfx.dsl.component.experimental.annotations import (
+  BeamComponentParameter,
+  InputArtifact,
+  OutputArtifact,
+  OutputDict,
+  Parameter,
+)
+from tfx.dsl.component.experimental.function_parser import (
+  parse_typehint_component_function,
+)
 from tfx.dsl.component.experimental.utils import ArgFormats
 from tfx.types import standard_artifacts
 

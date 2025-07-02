@@ -17,6 +17,7 @@ import os
 from typing import List
 
 import absl
+
 from tfx import v1 as tfx
 
 _pipeline_name = 'penguin_sklearn_local'

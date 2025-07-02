@@ -16,20 +16,16 @@
 import os
 import subprocess
 
-from absl.testing import parameterized
+import pytest
 import tensorflow as tf
+from absl.testing import parameterized
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx.dsl.io import fileio
 from tfx.examples.penguin import penguin_pipeline_local_infraval
 from tfx.orchestration import metadata
 from tfx.orchestration.local.local_dag_runner import LocalDagRunner
 from tfx.utils import path_utils
-
-from ml_metadata.proto import metadata_store_pb2
-
-import pytest
-
-
 
 _OUTPUT_EVENT_TYPES = [
     metadata_store_pb2.Event.OUTPUT,
@@ -39,7 +35,7 @@ _OUTPUT_EVENT_TYPES = [
 
 @pytest.mark.xfail(run=False, reason="PR 6889 This class contains tests that fail and needs to be fixed. "
 "If all tests pass, please remove this mark.")
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class PenguinPipelineLocalInfravalEndToEndTest(
     tf.test.TestCase, parameterized.TestCase):
 

@@ -18,7 +18,7 @@ In TensorFlow Serving, the model should be stored with the directory structure
 model server. We call this a *TFS-flavored model path*.
 
 Example:
-
+-------
 ```
 /foo/bar/        # A `model_base_path`
   my_model/      # A `model_name`
@@ -42,11 +42,13 @@ def make_model_path(model_base_path: str, model_name: str,
   """Make a TFS-flavored model path.
 
   Args:
+  ----
     model_base_path: A base path containing the directory of model_name.
     model_name: A name of the model.
     version: An integer version of the model.
 
   Returns:
+  -------
     `{model_base_path}/{model_name}/{version}`.
   """
   return os.path.join(model_base_path, model_name, str(version))
@@ -58,14 +60,17 @@ def parse_model_path(
   """Parse model_path into parts of TFS flavor.
 
   Args:
+  ----
     model_path: A TFS-flavored model path.
     expected_model_name: Expected model_name as defined from the module
         docstring. If model_name does not match, parsing will be failed.
 
   Raises:
+  ------
     ValueError: If model path is invalid (not TFS-flavored).
 
   Returns:
+  -------
     Tuple of (model_base_path, model_name, version)
   """
   rest, version = os.path.split(model_path)
@@ -87,12 +92,15 @@ def parse_model_base_path(model_path: str) -> str:
   """Parse model_base_path from the TFS-flavored model path.
 
   Args:
+  ----
     model_path: A TFS-flavored model path.
 
   Raises:
+  ------
     ValueError: If model path is invalid (not TFS-flavored).
 
   Returns:
+  -------
     model_base_path as defined from the module docstring.
   """
   return parse_model_path(model_path)[0]

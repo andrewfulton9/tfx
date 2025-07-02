@@ -13,21 +13,19 @@
 # limitations under the License.
 """Utility functions for DSL Compiler."""
 
-from typing import cast, List, Optional, Sequence, Tuple, Type, Union, Dict, Any, Set
+from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, Type, Union, cast
+
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx import types
 from tfx.dsl.compiler import constants
 from tfx.dsl.components.base import base_node
-from tfx.dsl.components.common import importer
-from tfx.dsl.components.common import resolver
+from tfx.dsl.components.common import importer, resolver
 from tfx.dsl.context_managers import dsl_context_registry
 from tfx.dsl.placeholder import placeholder as ph
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import pipeline
+from tfx.orchestration import data_types_utils, pipeline
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.types import channel as channel_types
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def set_runtime_parameter_pb(
@@ -39,12 +37,14 @@ def set_runtime_parameter_pb(
   """Helper function to fill a RuntimeParameter proto.
 
   Args:
+  ----
     pb: A RuntimeParameter proto to be filled in.
     name: Name to be set at pb.name.
     ptype: The Python type to be set at pb.type.
     default_value: Optional. If provided, it will be pb.default_value.
 
   Returns:
+  -------
     A RuntimeParameter proto filled with provided values.
   """
   pb.name = name
@@ -74,6 +74,7 @@ def set_structural_runtime_parameter_pb(
   """Helper function to fill a StructuralRuntimeParameter proto.
 
   Args:
+  ----
     pb: A StructuralRuntimeParameter proto to be filled in.
     str_or_params: A list of either a constant string, or args (name, type,
       default value) to construct a normal runtime parameter. The args will be
@@ -81,6 +82,7 @@ def set_structural_runtime_parameter_pb(
       runtime parameter will have the same order as the elements in this list.
 
   Returns:
+  -------
     A StructuralRuntimeParameter proto filled with provided values.
   """
   for str_or_param in str_or_params:
@@ -96,12 +98,15 @@ def resolve_execution_mode(tfx_pipeline: pipeline.Pipeline):
   """Resolves execution mode for a tfx pipeline.
 
   Args:
+  ----
     tfx_pipeline: a TFX pipeline python object assembled by SDK.
 
   Returns:
+  -------
     a proto enum reflecting the execution mode of the pipeline.
 
   Raises:
+  ------
     RuntimeError: when execution mode is ASYNC while `enable_cache` is true.
     ValueError: when seeing unrecognized execution mode.
   """
@@ -394,9 +399,11 @@ def create_pipeline_end_node(p: pipeline.Pipeline) -> _PipelineEnd:
   BaseNode whose inputs are set as pipeline.outputs.
 
   Args:
+  ----
     p: A Pipeline instance whose pipeline end node will be created.
 
   Returns:
+  -------
     a pipeline end node.
   """
   with dsl_context_registry.use_registry(p.dsl_context_registry):

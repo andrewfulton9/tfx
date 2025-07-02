@@ -17,25 +17,22 @@ import importlib
 import os
 from typing import List
 
+import ml_metadata as mlmd
+import pytest
+import tensorflow as tf
 from absl import logging
 from absl.testing import parameterized
-import tensorflow as tf
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.examples.penguin import penguin_pipeline_local
 from tfx.v1 import proto
 from tfx.v1.dsl.io import fileio
-from tfx.v1.orchestration import LocalDagRunner
-from tfx.v1.orchestration import metadata
-
-import ml_metadata as mlmd
-from ml_metadata.proto import metadata_store_pb2
-
-import pytest
-
+from tfx.v1.orchestration import LocalDagRunner, metadata
 
 _SPAN_PROPERTY_NAME = 'span'
 
 
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class PenguinPipelineLocalEndToEndTest(tf.test.TestCase,
                                        parameterized.TestCase):
 

@@ -16,10 +16,9 @@
 from unittest import mock
 
 import docker
-
 import tensorflow as tf
-from tfx.tools.cli.container_builder import builder
-from tfx.tools.cli.container_builder import dockerfile
+
+from tfx.tools.cli.container_builder import builder, dockerfile
 
 
 class BuilderTest(tf.test.TestCase):

@@ -17,14 +17,13 @@ import os
 import subprocess
 import sys
 
+import pytest
 from absl import logging
 
 from tfx.experimental.templates import test_utils
 
-import pytest
 
-
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class PenguinTemplateLocalEndToEndTest(test_utils.BaseLocalEndToEndTest):
   """This test runs all components in the template."""
 

@@ -13,13 +13,13 @@
 # limitations under the License.
 """Experimental Resolver for getting the artifacts based on Span."""
 
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional
+
+import ml_metadata as mlmd
 
 from tfx import types
 from tfx.dsl.components.common import resolver
 from tfx.utils import doc_controls
-
-import ml_metadata as mlmd
 
 try:
   from tfx.components.example_gen import utils  # pylint: disable=g-import-not-at-top
@@ -117,14 +117,17 @@ class SpanRangeStrategy(resolver.ResolverStrategy):
     """Resolves artifacts from channels by querying MLMD.
 
     Args:
+    ----
       store: An MLMD MetadataStore object.
       input_dict: The input_dict to resolve from.
 
     Returns:
+    -------
       If `min_count` for every input is met, returns a
       Dict[Text, List[Artifact]]. Otherwise, return None.
 
     Raises:
+    ------
       RuntimeError: if input_dict contains artifact without span property.
     """
     resolved_dict = self._resolve(input_dict)

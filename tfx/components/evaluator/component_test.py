@@ -19,8 +19,7 @@ import tensorflow_model_analysis as tfma
 from tfx.components.evaluator import component
 from tfx.orchestration import data_types
 from tfx.proto import evaluator_pb2
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import channel_utils, standard_artifacts
 from tfx.utils import json_utils
 
 

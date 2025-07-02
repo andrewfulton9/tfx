@@ -15,8 +15,8 @@
 
 
 import tensorflow as tf
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+
+from tfx.dsl.components.base import base_executor, executor_spec
 
 
 class _TestSpecWithoutEncode(executor_spec.ExecutorSpec):

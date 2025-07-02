@@ -17,10 +17,9 @@ from typing import Any, List, Tuple, Union
 
 import numpy as np
 import tensorflow as tf
+from tensorflow_serving.apis import classification_pb2, prediction_log_pb2
 
 from tfx.proto import bulk_inferrer_pb2
-from tensorflow_serving.apis import classification_pb2
-from tensorflow_serving.apis import prediction_log_pb2
 
 _FeatureListType = List[Tuple[str, List[Union[str, bytes, float]]]]
 
@@ -35,13 +34,17 @@ def convert(prediction_log: prediction_log_pb2.PredictionLog,
   """Converts given `prediction_log` to a `tf.train.Example`.
 
   Args:
+  ----
     prediction_log: The input prediction log.
     output_example_spec: The spec for how to map prediction results to columns
       in example.
 
   Returns:
+  -------
     A `tf.train.Example` converted from the given prediction_log.
+
   Raises:
+  ------
     ValueError: If the inference type or signature name in spec does not match
     that in prediction_log.
   """

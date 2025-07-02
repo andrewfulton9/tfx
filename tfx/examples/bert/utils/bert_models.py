@@ -14,7 +14,8 @@
 """Configurable fine-tuning BERT models for various tasks."""
 
 from __future__ import annotations
-from typing import Optional, List, Union
+
+from typing import List, Optional, Union
 
 import tensorflow as tf
 import tensorflow.keras as keras
@@ -31,6 +32,7 @@ def build_bert_classifier(bert_layer: tf.keras.layers.Layer,
   pooled_output.
 
   Args:
+  ----
     bert_layer: A tensorflow_hub.KerasLayer intence of BERT layer.
     max_len: The maximum length of preprocessed tokens.
     num_classes: Number of unique classes in the labels. Determines the output
@@ -40,6 +42,7 @@ def build_bert_classifier(bert_layer: tf.keras.layers.Layer,
       activation is applied (ie. "linear" activation: a(x) = x).
 
   Returns:
+  -------
     A Keras model.
   """
   input_layer_names = ["input_word_ids", "input_mask", "segment_ids"]
@@ -66,6 +69,7 @@ def compile_bert_classifier(
   """Compile the BERT classifier using suggested parameters.
 
   Args:
+  ----
     model: A keras model. Most likely the output of build_bert_classifier.
     loss: Default None will use tf.keras.losses. The suggested loss function expects
       integer labels (e.g. 0, 1, 2). If the labels are one-hot encoded, consider using
@@ -77,6 +81,7 @@ def compile_bert_classifier(
       strings or tf.keras.metrics.
 
   Returns:
+  -------
     None.
   """
   if loss is None:
@@ -102,6 +107,7 @@ def build_and_compile_bert_classifier(
   and compile BERT classifier functions.
 
   Args:
+  ----
     bert_layer: A tensorflow_hub.KerasLayer intence of BERT layer.
     max_len: The maximum length of preprocessed tokens.
     num_classes: Number of unique classes in the labels. Determines the output
@@ -113,6 +119,7 @@ def build_and_compile_bert_classifier(
       strings or tf.keras.metrics.
 
   Returns:
+  -------
       A compiled keras BERT Classification model.
   """
   if metrics is None:

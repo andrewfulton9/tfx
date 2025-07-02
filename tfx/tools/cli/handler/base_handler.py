@@ -14,12 +14,12 @@
 """Base handler class."""
 
 import abc
-from importlib import machinery
-from importlib import util as import_util
 import json
 import os
 import subprocess
 import sys
+from importlib import machinery
+from importlib import util as import_util
 from typing import Any, Collection, Dict, List, Optional
 
 import click
@@ -34,7 +34,8 @@ from tfx.utils import io_utils
 class BaseHandler(abc.ABC):
   """Base Handler for CLI.
 
-  Attributes:
+  Attributes
+  ----------
     flags_dict: A dictionary with flags provided in a command.
   """
 
@@ -133,7 +134,8 @@ class BaseHandler(abc.ABC):
   def _get_handler_home(self) -> str:
     """Sets handler home.
 
-    Returns:
+    Returns
+    -------
       Path to handler home directory.
     """
     engine_flag = self.flags_dict[labels.ENGINE_FLAG]
@@ -145,7 +147,8 @@ class BaseHandler(abc.ABC):
   def _get_deprecated_handler_home(self) -> str:
     """Sets old handler home for compatibility.
 
-    Returns:
+    Returns
+    -------
       Path to handler home directory.
     """
     engine_flag = self.flags_dict[labels.ENGINE_FLAG]
@@ -201,6 +204,7 @@ class BaseHandler(abc.ABC):
     """Check if pipeline folder exists and if not, exit system.
 
     Args:
+    ----
       pipeline_name: Name of the pipeline.
       required: Set it as True if pipeline needs to exist else set it to False.
     """
@@ -255,7 +259,7 @@ class BaseHandler(abc.ABC):
     pipeline_args_path = self._get_pipeline_args_path(pipeline_name)
 
     # Get pipeline_root.
-    with open(pipeline_args_path, 'r') as f:
+    with open(pipeline_args_path) as f:
       pipeline_args = json.load(f)
 
     self._read_schema_from_pipeline_root(pipeline_name,
@@ -294,5 +298,5 @@ class BaseHandler(abc.ABC):
     # Print schema and path to schema
     click.echo('Path to schema: {}'.format(curr_dir_path))
     click.echo('*********SCHEMA FOR {}**********'.format(pipeline_name.upper()))
-    with open(curr_dir_path, 'r') as f:
+    with open(curr_dir_path) as f:
       click.echo(f.read())

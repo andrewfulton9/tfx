@@ -17,23 +17,22 @@ import datetime
 import os
 from typing import List
 
-from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
 import tensorflow_model_analysis as tfma
+from google.protobuf import message, struct_pb2
+from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+
 from tfx import v1 as tfx
 from tfx.components.example_gen import utils
-from tfx.dsl.component.experimental import executor_specs
-from tfx.dsl.component.experimental import placeholders
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import base_node
-from tfx.dsl.components.base import executor_spec
-from tfx.types import channel_utils
-from tfx.types import component_spec
+from tfx.dsl.component.experimental import executor_specs, placeholders
+from tfx.dsl.components.base import (
+  base_component,
+  base_executor,
+  base_node,
+  executor_spec,
+)
+from tfx.types import channel_utils, component_spec
 from tfx.types.experimental import simple_artifacts
 from tfx.utils import proto_utils
-
-from google.protobuf import struct_pb2
-from google.protobuf import message
 
 _ph = tfx.dsl.placeholders
 
@@ -94,6 +93,7 @@ def range_config_generator(input_date: tfx.dsl.components.Parameter[str],
   """Implements a function-based TFX component to convert date into a span number for downstream use by ExampleGen.
 
   Args:
+  ----
     input_date: input date to generate range_config.
     range_config: range_config to ExampleGen.
   """
@@ -109,7 +109,6 @@ def range_config_generator(input_date: tfx.dsl.components.Parameter[str],
 
 def two_step_pipeline_with_dynamic_exec_properties():
   """Returns a simple 2-step pipeline under test with the second component's execution property depending dynamically on the first one's output."""
-
   input_config_generator = range_config_generator(  # pylint: disable=no-value-for-parameter
       input_date='22-09-26')
   example_gen = tfx.extensions.google_cloud_big_query.BigQueryExampleGen(
@@ -132,7 +131,6 @@ def two_step_pipeline_with_dynamic_exec_properties():
 
 def two_step_pipeline_with_illegal_dynamic_exec_property():
   """Returns a simple 2-step pipeline under test with the second component's execution property declaring an illegally complex placeholder."""
-
   input_config_generator = range_config_generator(  # pylint: disable=no-value-for-parameter
       input_date='22-09-26'
   )
@@ -159,9 +157,11 @@ def simple_pipeline_components(
   """Creates very basic components for test a pipeline execution.
 
   Args:
+  ----
     csv_input_location: The location of the input data directory.
 
   Returns:
+  -------
     A list of TFX components that constitutes a simple test pipeline.
   """
   example_gen = tfx.components.CsvExampleGen(input_base=csv_input_location)
@@ -181,6 +181,7 @@ def create_pipeline_components(
   """Creates components for a simple Chicago Taxi TFX pipeline for testing.
 
   Args:
+  ----
     pipeline_root: The root of the pipeline output.
     transform_module: The location of the transform module file.
     trainer_module: The location of the trainer module file.
@@ -189,9 +190,9 @@ def create_pipeline_components(
     csv_input_location: The location of the input data directory.
 
   Returns:
+  -------
     A list of TFX components that constitutes an end-to-end test pipeline.
   """
-
   if bool(bigquery_query) == bool(csv_input_location):
     raise ValueError(
         'Exactly one example gen is expected. ',
@@ -483,7 +484,6 @@ dummy_consumer_component = tfx.dsl.experimental.create_container_component(
 
 def pipeline_with_one_container_spec_component() -> tfx.dsl.Pipeline:
   """Pipeline with container."""
-
   importer_task = tfx.dsl.Importer(
       source_uri='some-uri',
       artifact_type=tfx.types.standard_artifacts.Model,
@@ -504,7 +504,6 @@ def pipeline_with_one_container_spec_component() -> tfx.dsl.Pipeline:
 
 def pipeline_with_two_container_spec_components() -> tfx.dsl.Pipeline:
   """Pipeline with container."""
-
   container1_task = DummyProducerComponent(
       output1=channel_utils.as_channel([tfx.types.standard_artifacts.Model()]),
       param1='value1',
@@ -525,7 +524,6 @@ def pipeline_with_two_container_spec_components() -> tfx.dsl.Pipeline:
 
 def pipeline_with_two_container_spec_components_2() -> tfx.dsl.Pipeline:
   """Pipeline with container."""
-
   container1_task = dummy_producer_component(
       output1=channel_utils.as_channel([tfx.types.standard_artifacts.Model()]),
       param1='value1',
@@ -650,7 +648,6 @@ def two_step_kubeflow_artifacts_pipeline() -> tfx.dsl.Pipeline:
 
 def two_step_pipeline_with_task_only_dependency() -> tfx.dsl.Pipeline:
   """Returns a simple 2-step pipeline with task only dependency between them."""
-
   step_1 = tfx.dsl.experimental.create_container_component(
       name='Step 1',
       inputs={},
@@ -718,7 +715,6 @@ primitive_consumer_component = tfx.dsl.experimental.create_container_component(
 
 def consume_primitive_artifacts_by_value_pipeline() -> tfx.dsl.Pipeline:
   """Pipeline which features consuming artifacts by value."""
-
   producer_task = primitive_producer_component()
 
   consumer_task = primitive_consumer_component(
@@ -739,7 +735,6 @@ def consume_primitive_artifacts_by_value_pipeline() -> tfx.dsl.Pipeline:
 
 def pipeline_with_runtime_parameter() -> tfx.dsl.Pipeline:
   """Pipeline which contains a runtime parameter."""
-
   producer_task = primitive_producer_component()
 
   consumer_task = primitive_consumer_component(

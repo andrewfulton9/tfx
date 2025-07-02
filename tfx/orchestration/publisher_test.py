@@ -14,10 +14,9 @@
 """Tests for tfx.orchestration.publisher."""
 
 import tensorflow as tf
-from tfx import types
-from tfx import version
-from tfx.orchestration import data_types
-from tfx.orchestration import publisher
+
+from tfx import types, version
+from tfx.orchestration import data_types, publisher
 
 
 class _InputType(types.Artifact):

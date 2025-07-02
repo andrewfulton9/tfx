@@ -20,18 +20,18 @@ import shutil
 import tempfile
 from typing import Optional
 
-from absl import logging
 import apache_beam as beam
 import tensorflow_transform as tft
+from absl import logging
+from tfx_bsl.coders import csv_decoder
+
 from tfx import components
 from tfx.benchmarks import benchmark_dataset
 from tfx.components.example_gen.csv_example_gen import executor as csv_exgen
 from tfx.examples.chicago_taxi_pipeline import taxi_utils
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
 from tfx.proto import trainer_pb2
-from tfx_bsl.coders import csv_decoder
 
 
 class ChicagoTaxiDataset(benchmark_dataset.BenchmarkDataset):
@@ -75,12 +75,13 @@ class ChicagoTaxiDataset(benchmark_dataset.BenchmarkDataset):
     dataset and use that for the benchmark instead.
 
     Args:
+    ----
       csv_path: Path to CSV file containing examples.
       tfrecords_output_path: Path to output TFRecords file containing parsed
         examples.
     """
     # Copied from CSV example gen.
-    fp = open(csv_path, "r")
+    fp = open(csv_path)
     column_names = next(fp).strip().split(",")
     fp.close()
 
@@ -230,9 +231,11 @@ class WideChicagoTaxiDataset(ChicagoTaxiDataset):
       """TFT preprocessing function.
 
       Args:
+      ----
         inputs: Map from feature keys to raw not-yet-transformed features.
 
       Returns:
+      -------
         Map from string feature key to transformed feature operations.
       """
       outputs = {}

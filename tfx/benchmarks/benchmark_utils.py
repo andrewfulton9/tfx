@@ -14,6 +14,7 @@
 """Utility functions shared across the different benchmarks."""
 
 import importlib
+
 from google.protobuf import text_format
 from tensorflow_metadata.proto.v0 import schema_pb2
 
@@ -36,10 +37,12 @@ def batched_iterator(records, batch_size):
   """Groups elements in the given list into batches of the given size.
 
   Args:
+  ----
     records: List of elements to batch.
     batch_size: Size of each batch.
 
   Yields:
+  ------
     Lists with batch_size elements from records. Every list yielded except the
     last will contain exactly batch_size elements.
   """

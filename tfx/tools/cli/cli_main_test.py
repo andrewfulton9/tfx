@@ -17,8 +17,9 @@ import codecs
 import locale
 import os
 
-from click import testing as click_testing
 import tensorflow as tf
+from click import testing as click_testing
+
 from tfx.tools.cli.cli_main import cli_group
 
 

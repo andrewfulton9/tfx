@@ -22,7 +22,6 @@ from tfx.orchestration import tfx_runner
 from tfx.orchestration.kubeflow.v2 import kubeflow_v2_dag_runner
 from tfx.tools.cli.handler import dag_runner_patcher
 
-
 OUTPUT_FILENAME = 'pipeline.json'
 
 
@@ -38,6 +37,7 @@ class KubeflowV2DagRunnerPatcher(dag_runner_patcher.DagRunnerPatcher):
     """Initialize KubeflowV2DagRunnerPatcher.
 
     Args:
+    ----
       call_real_run: Specify KubeflowV2DagRunner.run() should be called.
       build_image_fn: If specified, the function will be called before run()
         with the configured tfx_image in the pipeline. The result of the

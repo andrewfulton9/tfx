@@ -18,8 +18,7 @@ import copy
 from typing import Iterable, Optional, Tuple
 
 from tfx.components.example_gen import utils
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
+from tfx.proto import example_gen_pb2, range_config_pb2
 
 
 class InputProcessor(abc.ABC):
@@ -31,6 +30,7 @@ class InputProcessor(abc.ABC):
     """Initialize InputProcessor.
 
     Args:
+    ----
       splits: An iterable collection of example_gen_pb2.Input.Split objects.
       range_config: An instance of range_config_pb2.RangeConfig, defines the
         rules for span resolving.
@@ -67,7 +67,8 @@ class InputProcessor(abc.ABC):
     to find aligned values that results in all splits having the target span and
     most recent version for that span.
 
-    Returns:
+    Returns
+    -------
       A Tuple of [target_span, target_version], where:
       1. target_span is either the value matched with the {SPAN} placeholder,
          the value mapped from matching the calendar date with the date
@@ -124,6 +125,7 @@ class FileBasedInputProcessor(InputProcessor):
     """Initialize FileBasedInputProcessor.
 
     Args:
+    ----
       input_base_uri: The base path from which files will be searched.
       splits: An iterable collection of example_gen_pb2.Input.Split objects.
       range_config: An instance of range_config_pb2.RangeConfig, defines the

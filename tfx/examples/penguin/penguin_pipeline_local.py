@@ -21,11 +21,11 @@ import sys
 from typing import List, Optional
 
 import absl
-from absl import flags
 import tensorflow_model_analysis as tfma
+from absl import flags
+
 from tfx import v1 as tfx
 from tfx.utils import proto_utils
-
 
 flags.DEFINE_enum(
     'runner', 'DirectRunner', ['DirectRunner', 'FlinkRunner', 'SparkRunner'],
@@ -123,6 +123,7 @@ def RangeConfigGenerator(input_date: tfx.dsl.components.Parameter[str],
   """Implements the custom component to convert date into span number.
 
   Args:
+  ----
     input_date: input date to generate range_config.
     range_config: range_config to ExampleGen.
   """
@@ -159,6 +160,7 @@ def create_pipeline(  # pylint: disable=invalid-name
   """Implements the penguin pipeline with TFX.
 
   Args:
+  ----
     pipeline_name: name of the TFX pipeline being created.
     pipeline_root: root directory of the pipeline.
     data_root: directory containing the penguin data.
@@ -184,6 +186,7 @@ def create_pipeline(  # pylint: disable=invalid-name
       in Transform if available.
 
   Returns:
+  -------
     A TFX pipeline object.
   """
   range_config = None

@@ -14,21 +14,18 @@
 """Tests for tfx.components.statistics_gen.executor."""
 
 import os
-import pytest
 import tempfile
 
-from absl.testing import parameterized
+import pytest
 import tensorflow_data_validation as tfdv
+from absl.testing import parameterized
+from tensorflow_metadata.proto.v0 import schema_pb2
+
 from tfx.components.statistics_gen import executor
 from tfx.components.util import examples_utils
 from tfx.dsl.io import fileio
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
-
-from tensorflow_metadata.proto.v0 import schema_pb2
-
 
 _EXECUTOR_TEST_PARAMS = [
     {

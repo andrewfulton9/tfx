@@ -14,11 +14,11 @@
 """Tests for tfx.orchestration.portable.mlmd.event_lib."""
 import itertools
 
-from absl.testing import parameterized
 import tensorflow as tf
-from tfx.orchestration.portable.mlmd import event_lib
-
+from absl.testing import parameterized
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration.portable.mlmd import event_lib
 
 Artifact = metadata_store_pb2.Artifact
 Event = metadata_store_pb2.Event

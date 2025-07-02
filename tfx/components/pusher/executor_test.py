@@ -15,14 +15,13 @@
 
 import json
 import os
+
 import tensorflow as tf
 
 from tfx.components.pusher import executor
 from tfx.dsl.io import fileio
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import path_utils
+from tfx.types import standard_artifacts, standard_component_specs
+from tfx.utils import io_utils, path_utils
 
 
 class ExecutorTest(tf.test.TestCase):

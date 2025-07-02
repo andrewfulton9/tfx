@@ -17,12 +17,9 @@ import os
 from typing import Any, Dict, List, Optional
 
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.orchestration import pipeline
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
+from tfx.types import component_spec, standard_artifacts
 
 _pipeline_name = 'optional_and_allow_empty_pipeline'
 _pipeline_root = os.path.join('pipeline', _pipeline_name)

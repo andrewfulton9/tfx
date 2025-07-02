@@ -16,15 +16,14 @@
 from typing import Any, Dict, Optional, Union
 
 from absl import logging
+
 from tfx import types
 from tfx.components.trainer import executor
 from tfx.components.util import udf_utils
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, executor_spec
 from tfx.orchestration import data_types
 from tfx.proto import trainer_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
 
 
@@ -91,6 +90,7 @@ class Trainer(base_component.BaseComponent):
     """Construct a Trainer component.
 
     Args:
+    ----
       examples: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Examples`][tfx.v1.types.standard_artifacts.Examples],
         serving as the source of examples used in training (required). May be raw or
         transformed.
@@ -140,6 +140,7 @@ class Trainer(base_component.BaseComponent):
         compatibility guarantee), please customize component directly.
 
     Raises:
+    ------
       ValueError:
         - When both or neither of `module_file` and `run_fn` is supplied.
         - When both or neither of `examples` and `transformed_examples`

@@ -16,10 +16,9 @@
 from typing import Any, Callable, Optional
 
 import tensorflow as tf
-from tfx.dsl.component.experimental import component_utils
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
 
+from tfx.dsl.component.experimental import component_utils
+from tfx.types import component_spec, standard_artifacts
 
 _ExecutionParameter = component_spec.ExecutionParameter
 _ChannelParameter = component_spec.ChannelParameter
