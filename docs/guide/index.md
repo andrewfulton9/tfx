@@ -248,7 +248,7 @@ frameworks, including [Apache Airflow](airflow.md),
 portable to different computing platforms, including on-premise, and
 cloud platforms such as the
 [Google Cloud Platform (GCP)](https://cloud.google.com/). In particular,
-TFX interoperates with serveral managed GCP services, such as
+TFX interoperates with several managed GCP services, such as
 [Cloud AI Platform](https://cloud.google.com/ai-platform/) for
 [Training and Prediction](https://cloud.google.com/ml-engine/), and
 [Cloud Dataflow](https://cloud.google.com/dataflow/) for distributed data
@@ -437,23 +437,6 @@ performed
 using the exact same code during both training and inference.  Using the
 modeling code, including the SavedModel from the Transform component, you can
 consume your training and evaluation data and train your model.
-
-When working with Estimator based models, the last section of your modeling
-code should save your model as both a SavedModel and an EvalSavedModel.  Saving
-as an EvalSavedModel ensures the metrics used at training time are also
-available during evaluation (note that this is not required for keras based
-models).  Saving an EvalSavedModel requires that you import the
-[TensorFlow Model Analysis (TFMA)](tfma.md) library in your Trainer component.
-
-```python
-import tensorflow_model_analysis as tfma
-...
-
-tfma.export.export_eval_savedmodel(
-        estimator=estimator,
-        export_dir_base=eval_model_dir,
-        eval_input_receiver_fn=receiver_fn)
-```
 
 An optional [Tuner](tuner.md) component can be added before Trainer to tune the
 hyperparameters (e.g., number of layers) for the model. With the given model and
