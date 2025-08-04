@@ -67,8 +67,8 @@ class DockerfileTest(test_case_utils.TfxTest):
         base_image='my_customized_image:latest')
     self.assertTrue(
         filecmp.cmp(
-            os.path.join(self._testdata_dir, 'test_dockerfile_with_base', shallow=False),
-            generated_dockerfile_path))
+            os.path.join(self._testdata_dir, 'test_dockerfile_with_base'),
+            generated_dockerfile_path, shallow=False))
 
   def testDevVersionRequirement(self):
     with self._patchVersion('0.23.0.dev'):
