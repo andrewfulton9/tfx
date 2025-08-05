@@ -17,17 +17,14 @@ import abc
 import inspect
 from typing import Any, Dict, Optional, Type, Union
 
+import typing_extensions
+from google.protobuf import message
+
 from tfx import types
-from tfx.dsl.components.base import base_driver
-from tfx.dsl.components.base import base_node
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_driver, base_node, executor_spec
 from tfx.types import channel
 from tfx.types.system_executions import SystemExecution
-from tfx.utils import abc_utils
-from tfx.utils import doc_controls
-import typing_extensions
-
-from google.protobuf import message
+from tfx.utils import abc_utils, doc_controls
 
 
 class BaseComponent(base_node.BaseNode, abc.ABC):
@@ -39,7 +36,8 @@ class BaseComponent(base_node.BaseNode, abc.ABC):
   All subclasses of BaseComponent must override the SPEC_CLASS field with the
   ComponentSpec subclass that defines the interface of this component.
 
-  Attributes:
+  Attributes
+  ----------
     SPEC_CLASS: a subclass of types.ComponentSpec used by this component
       (required). This is a class level value.
     EXECUTOR_SPEC: an instance of executor_spec.ExecutorSpec which describes how
@@ -82,6 +80,7 @@ class BaseComponent(base_node.BaseNode, abc.ABC):
     """Initialize a component.
 
     Args:
+    ----
       spec: types.ComponentSpec object for this component instance.
       custom_executor_spec: Optional custom executor spec overriding the default
         executor specified in the component attribute.
@@ -161,9 +160,11 @@ class BaseComponent(base_node.BaseNode, abc.ABC):
     The config will be a per-node platform-specific config.
 
     Args:
+    ----
       config: platform config to attach to the component.
 
     Returns:
+    -------
       the same component itself.
     """
     self.platform_config = config

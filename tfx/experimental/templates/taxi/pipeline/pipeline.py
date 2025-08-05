@@ -19,9 +19,9 @@ This file defines TFX pipeline and various components in the pipeline.
 from typing import Any, Dict, List, Optional
 
 import tensorflow_model_analysis as tfma
-from tfx import v1 as tfx
-
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx import v1 as tfx
 
 
 def create_pipeline(
@@ -44,7 +44,6 @@ def create_pipeline(
     ai_platform_serving_args: Optional[Dict[str, Any]] = None,
 ) -> tfx.dsl.Pipeline:
   """Implements the chicago taxi pipeline with TFX."""
-
   components = []
 
   # Brings data into the pipeline or otherwise joins/converts training data.
@@ -74,7 +73,7 @@ def create_pipeline(
     # components.append(schema_gen)
 
     # Performs anomaly detection based on statistics and data schema.
-    example_validator = tfx.components.ExampleValidator(  # pylint: disable=unused-variable
+    example_validator = tfx.components.ExampleValidator(  # noqa: F841
         statistics=statistics_gen.outputs['statistics'],
         schema=schema_gen.outputs['schema'])
     # TODO(step 5): (Optional) Uncomment here to add ExampleValidator to the
@@ -164,12 +163,12 @@ def create_pipeline(
         .PUSHER_SERVING_ARGS_KEY:
             ai_platform_serving_args
     }
-    pusher = tfx.extensions.google_cloud_ai_platform.Pusher(**pusher_args)  # pylint: disable=unused-variable
+    pusher = tfx.extensions.google_cloud_ai_platform.Pusher(**pusher_args)  # noqa: F841
   else:
     pusher_args['push_destination'] = tfx.proto.PushDestination(
         filesystem=tfx.proto.PushDestination.Filesystem(
             base_directory=serving_model_dir))
-    pusher = tfx.components.Pusher(**pusher_args)  # pylint: disable=unused-variable
+    pusher = tfx.components.Pusher(**pusher_args)  # noqa: F841
   # TODO(step 6): Uncomment here to add Pusher to the pipeline.
   # components.append(pusher)
 

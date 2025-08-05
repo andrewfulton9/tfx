@@ -13,13 +13,23 @@
 # limitations under the License.
 """Utility for frequently used types and its typecheck."""
 
-from typing import Any, Dict, List, Mapping, MutableMapping, MutableSequence, Sequence, TypeVar
+from typing import (
+  Any,
+  Dict,
+  List,
+  Mapping,
+  MutableMapping,
+  MutableSequence,
+  Sequence,
+  TypeVar,
+)
+
+from typing_extensions import (  # pylint: disable=g-multiple-import
+  TypeGuard,  # New in python 3.10
+)
 
 import tfx.types
 from tfx.utils import pure_typing_utils
-from typing_extensions import (  # pylint: disable=g-multiple-import
-    TypeGuard,  # New in python 3.10
-)
 
 _KT = TypeVar('_KT')
 _VT = TypeVar('_VT')

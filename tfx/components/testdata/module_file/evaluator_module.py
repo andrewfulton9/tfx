@@ -18,7 +18,6 @@ from typing import Any, Dict, List
 import tensorflow_model_analysis as tfma
 from tfx_bsl.tfxio import tensor_adapter
 
-
 try:
   # Try to access EvalSharedModel from tfma directly
   _EvalSharedModel = tfma.EvalSharedModel
@@ -31,7 +30,9 @@ try:
   _MaybeMultipleEvalSharedModels = tfma.MaybeMultipleEvalSharedModels
 except AttributeError:
   # If tfma doesn't have MaybeMultipleEvalSharedModels, use the one from api.types
-  from tensorflow_model_analysis.api.types import MaybeMultipleEvalSharedModels as _MaybeMultipleEvalSharedModels
+  from tensorflow_model_analysis.api.types import (
+    MaybeMultipleEvalSharedModels as _MaybeMultipleEvalSharedModels,
+  )
 
 
 def custom_eval_shared_model(eval_saved_model_path: str, model_name: str,

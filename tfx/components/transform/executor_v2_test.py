@@ -17,7 +17,6 @@ With the native TF2 code path being exercised.
 """
 import os
 
-
 from tfx.components.transform import executor_test
 
 

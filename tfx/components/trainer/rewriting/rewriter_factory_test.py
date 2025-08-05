@@ -17,6 +17,7 @@ import importlib
 import unittest
 
 from absl.testing import parameterized
+
 from tfx.components.trainer.rewriting import rewriter_factory
 
 

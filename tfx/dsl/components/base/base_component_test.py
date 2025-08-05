@@ -18,9 +18,7 @@
 import tensorflow as tf
 
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.proto import example_gen_pb2
 from tfx.types import component_spec
 from tfx.types.system_executions import SystemExecution
@@ -60,7 +58,7 @@ class _BasicComponent(base_component.BaseComponent):
   def __init__(self,
                spec: types.ComponentSpec = None,
                folds: int = None,
-               input: types.Channel = None):  # pylint: disable=redefined-builtin
+               input: types.Channel = None):  # noqa: A002
     if not spec:
       output = types.Channel(type=_OutputArtifact)
       spec = _BasicComponentSpec(folds=folds, input=input, output=output)

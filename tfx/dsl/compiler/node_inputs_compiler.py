@@ -13,34 +13,28 @@
 # limitations under the License.
 """Compiler submodule specialized for NodeInputs."""
 
-from collections.abc import Iterable, Sequence
 import functools
+from collections.abc import Iterable, Sequence
 from typing import Optional, Type, cast
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
-from tfx.dsl.compiler import compiler_context
-from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.compiler import constants
-from tfx.dsl.compiler import node_contexts_compiler
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_node
+from tfx.dsl.compiler import (
+  compiler_context,
+  compiler_utils,
+  constants,
+  node_contexts_compiler,
+)
+from tfx.dsl.components.base import base_component, base_node
 from tfx.dsl.experimental.conditionals import conditional
 from tfx.dsl.input_resolution import resolver_op
-from tfx.dsl.placeholder import artifact_placeholder
-from tfx.dsl.placeholder import placeholder
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import pipeline
-from tfx.proto.orchestration import metadata_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.dsl.placeholder import artifact_placeholder, placeholder
+from tfx.orchestration import data_types_utils, pipeline
+from tfx.proto.orchestration import metadata_pb2, pipeline_pb2
 from tfx.types import channel as channel_types
-from tfx.types import channel_utils
-from tfx.types import resolved_channel
-from tfx.types import value_artifact
-from tfx.utils import deprecation_utils
-from tfx.utils import name_utils
-from tfx.utils import typing_utils
-
-from ml_metadata.proto import metadata_store_pb2
+from tfx.types import channel_utils, resolved_channel, value_artifact
+from tfx.utils import deprecation_utils, name_utils, typing_utils
 
 _PropertyPredicate = pipeline_pb2.PropertyPredicate
 
@@ -235,6 +229,7 @@ def _compile_input_spec(
   """Compiles `BaseChannel` into `InputSpec` at `result.inputs[input_key]`.
 
   Args:
+  ----
     pipeline_ctx: A `PipelineContext`.
     tfx_node: A `BaseNode` instance from pipeline DSL.
     input_key: An input key that the compiled `InputSpec` would be stored with.
@@ -413,6 +408,7 @@ def _compile_conditionals(
   an implicit hidden input.
 
   Args:
+  ----
     context: A `PipelineContext`.
     tfx_node: A `BaseNode` instance from pipeline DSL.
     result: A `NodeInputs` proto to which the compiled result would be written.
@@ -468,6 +464,7 @@ def _compile_inputs_for_dynamic_properties(
   `_compile_channel(hidden=False)`).
 
   Args:
+  ----
     context: A `PipelineContext`.
     tfx_node: A `BaseNode` instance from pipeline DSL.
     result: A `NodeInputs` proto to which the compiled result would be written.
@@ -517,15 +514,18 @@ def _validate_min_count(
   failure at run time.
 
   Args:
+  ----
     input_key: Artifact input key to be displayed in error messages.
     min_count: Minimum artifact count to be set in InputSpec.
     channel: OutputChannel used as an input to be compiled.
     consumer_node: Node using the artifact as an input.
 
   Raises:
+  ------
     ValueError: if min_count is invalid.
 
   Returns:
+  -------
     None if the validation passes.
   """
   producer_options = channel.producer_component.node_execution_options

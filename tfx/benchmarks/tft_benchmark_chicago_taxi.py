@@ -14,10 +14,12 @@
 """TFT benchmark for Chicago Taxi dataset."""
 
 from absl import flags
+from tensorflow.python.platform import (
+  test,  # pylint: disable=g-direct-tensorflow-import
+)
+
 from tfx.benchmarks import tft_benchmark_base
 from tfx.benchmarks.datasets.chicago_taxi import dataset
-
-from tensorflow.python.platform import test  # pylint: disable=g-direct-tensorflow-import
 
 FLAGS = flags.FLAGS
 flags.DEFINE_integer("num_analyzers_wide", 10,

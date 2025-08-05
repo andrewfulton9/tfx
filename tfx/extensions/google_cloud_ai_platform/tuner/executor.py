@@ -15,22 +15,21 @@
 
 import datetime
 import json
+import multiprocessing
 import os
 from typing import Any, Dict, List
 
 from absl import logging
+
 from tfx import types
 from tfx.components.tuner import executor as tuner_executor
 from tfx.dsl.components.base import base_executor
-from tfx.extensions.google_cloud_ai_platform import constants
-from tfx.extensions.google_cloud_ai_platform import runner
-from tfx.extensions.google_cloud_ai_platform.trainer import executor as ai_platform_trainer_executor
+from tfx.extensions.google_cloud_ai_platform import constants, runner
+from tfx.extensions.google_cloud_ai_platform.trainer import (
+  executor as ai_platform_trainer_executor,
+)
 from tfx.types import standard_component_specs
-from tfx.utils import doc_controls
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-
-import multiprocessing
+from tfx.utils import doc_controls, json_utils, name_utils
 
 TUNING_ARGS_KEY = doc_controls.documented(
     obj='ai_platform_tuning_args',
@@ -254,7 +253,6 @@ class _WorkerExecutor(base_executor.BaseExecutor):
       exec_properties: Dict[str, List[types.Artifact]],
   ):
     """Conducts a single search loop, setting up chief oracle if necessary."""
-
     # If not distributed, simply conduct search and return.
     if self._tuner_id is None:
       return tuner_executor.search(input_dict, exec_properties,

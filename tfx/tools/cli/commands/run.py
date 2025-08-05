@@ -13,13 +13,12 @@
 # limitations under the License.
 """Commands for run group."""
 
-from typing import Iterable, Dict
+from typing import Dict, Iterable
 
 import click
 
 from tfx.tools.cli import labels
-from tfx.tools.cli.cli_context import Context
-from tfx.tools.cli.cli_context import pass_context
+from tfx.tools.cli.cli_context import Context, pass_context
 from tfx.tools.cli.handler import handler_factory
 
 

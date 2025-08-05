@@ -17,12 +17,10 @@ from typing import Optional, Union
 
 from tfx import types
 from tfx.components.bulk_inferrer import executor
-from tfx.dsl.components.base import base_beam_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_beam_component, executor_spec
 from tfx.orchestration import data_types
 from tfx.proto import bulk_inferrer_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import standard_artifacts, standard_component_specs
 
 
 class BulkInferrer(base_beam_component.BaseBeamComponent):
@@ -70,6 +68,7 @@ class BulkInferrer(base_beam_component.BaseBeamComponent):
     """Construct an BulkInferrer component.
 
     Args:
+    ----
       examples: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Examples`][tfx.v1.types.standard_artifacts.Examples], usually
         produced by an ExampleGen component. _required_
       model: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Model`][tfx.v1.types.standard_artifacts.Model], usually produced

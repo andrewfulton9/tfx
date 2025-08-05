@@ -15,20 +15,16 @@
 import os
 from typing import Any, Dict, List
 
-from absl import logging
 import tensorflow_data_validation as tfdv
+from absl import logging
 from tensorflow_data_validation.statistics import stats_options as options
+
 from tfx import types
 from tfx.components.statistics_gen import stats_artifact_utils
-from tfx.components.util import examples_utils
-from tfx.components.util import tfxio_utils
+from tfx.components.util import examples_utils, tfxio_utils
 from tfx.dsl.components.base import base_beam_executor
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import json_utils
-from tfx.utils import stats_utils
-
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, json_utils, stats_utils
 
 # Default file name for stats generated.
 DEFAULT_FILE_NAME = 'FeatureStats.pb'
@@ -58,6 +54,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     """Computes stats for each split of input using tensorflow_data_validation.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts.
         - examples: A list of type `standard_artifacts.Examples`. This should
           contain both 'train' and 'eval' split.
@@ -79,11 +76,13 @@ class Executor(base_beam_executor.BaseBeamExecutor):
           single sample rate on stats_options_json.
 
     Raises:
+    ------
       ValueError when a schema is provided both as an input and as part of the
       StatsOptions exec_property, or if execution properties specify
       write_sharded_output when unsupported.
 
     Returns:
+    -------
       None
     """
     self._log_startup(input_dict, output_dict, exec_properties)

@@ -19,34 +19,31 @@ import os
 import time
 from typing import List
 
-from absl import logging
 import kfp
-from kfp_server_api import rest
 import tensorflow_model_analysis as tfma
-from tfx.components import CsvExampleGen
-from tfx.components import Evaluator
-from tfx.components import ExampleValidator
-from tfx.components import InfraValidator
-from tfx.components import Pusher
-from tfx.components import SchemaGen
-from tfx.components import StatisticsGen
-from tfx.components import Trainer
-from tfx.components import Transform
+from absl import logging
+from kfp_server_api import rest
+
+from tfx.components import (
+  CsvExampleGen,
+  Evaluator,
+  ExampleValidator,
+  InfraValidator,
+  Pusher,
+  SchemaGen,
+  StatisticsGen,
+  Trainer,
+  Transform,
+)
 from tfx.dsl.component.experimental import executor_specs
 from tfx.dsl.components.base.base_component import BaseComponent
 from tfx.dsl.components.common import resolver
 from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
 from tfx.dsl.placeholder import placeholder as ph
-from tfx.proto import infra_validator_pb2
-from tfx.proto import pusher_pb2
-from tfx.proto import trainer_pb2
-from tfx.types import Channel
-from tfx.types import channel_utils
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
+from tfx.proto import infra_validator_pb2, pusher_pb2, trainer_pb2
+from tfx.types import Channel, channel_utils, component_spec, standard_artifacts
 from tfx.types.standard_artifacts import Model
 from tfx.utils import kube_utils
-
 
 # TODO(jiyongjung): Merge with kube_utils.PodStatus
 # Various execution status of a KFP pipeline.
@@ -66,6 +63,7 @@ def poll_kfp_with_retry(host: str, run_id: str, retry_limit: int,
   """Gets the pipeline execution status by polling KFP at the specified host.
 
   Args:
+  ----
     host: address of the KFP deployment.
     run_id: id of the execution of the pipeline.
     retry_limit: number of retries that will be performed before raise an error.
@@ -73,13 +71,14 @@ def poll_kfp_with_retry(host: str, run_id: str, retry_limit: int,
     polling_interval: interval between two consecutive polls, in seconds.
 
   Returns:
+  -------
     The final status of the execution. Possible value can be found at
     https://github.com/kubeflow/pipelines/blob/master/backend/api/run.proto#L254
 
   Raises:
+  ------
     RuntimeError: if polling failed for retry_limit times consecutively.
   """
-
   start_time = datetime.datetime.now()
   retry_count = 0
   while True:
@@ -112,7 +111,7 @@ def poll_kfp_with_retry(host: str, run_id: str, retry_limit: int,
         continue
 
       raise RuntimeError('Still hit remote error after %s retries: %s' %
-                         (retry_limit, api_err))
+                         (retry_limit, api_err)) from api_err
     else:
       # If get_run succeeded, reset retry_count.
       retry_count = 0
@@ -140,6 +139,7 @@ def print_failure_log_for_run(host: str, run_id: str, namespace: str):
   Don't print anything if the run was successful.
 
   Args:
+  ----
     host: address of the KFP deployment.
     run_id: id of the execution of the pipeline.
     namespace: namespace of K8s cluster.
@@ -225,9 +225,11 @@ def create_primitive_type_components(pipeline_name: str) -> List[BaseComponent]:
   """Creates components for testing primitive type artifact passing.
 
   Args:
+  ----
     pipeline_name: Name of this pipeline.
 
   Returns:
+  -------
     A list of TFX custom container components.
   """
   hello_world = HelloWorldComponent(word=pipeline_name)
@@ -244,11 +246,13 @@ def create_e2e_components(
   """Creates components for a simple Chicago Taxi TFX pipeline for testing.
 
   Args:
+  ----
     pipeline_root: The root of the pipeline output.
     csv_input_location: The location of the input data directory.
     trainer_module: The location of the trainer module file.
 
   Returns:
+  -------
     A list of TFX components that constitutes an end-to-end test pipeline.
   """
   example_gen = CsvExampleGen(input_base=csv_input_location)

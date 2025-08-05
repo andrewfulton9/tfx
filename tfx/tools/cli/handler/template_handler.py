@@ -19,8 +19,8 @@ Handles operations for templates in tfx/experimental/templates/ directory.
 import collections
 import os
 import re
-from typing import Dict, Any, List, Pattern, Set
 import urllib.request
+from typing import Any, Dict, List, Pattern, Set
 
 import click
 
@@ -61,7 +61,9 @@ def _tfx_src_dir() -> str:
 
     We should find tfx
     from tfx/tools/cli/handler/template_handler.py.
-  Returns:
+
+  Returns
+  -------
     Path to the directory containing tfx sources.
   """
   return os.path.dirname(  # tfx/
@@ -75,7 +77,9 @@ def _templates_src_dir() -> str:
 
     We should find tfx/experimental/templates
     from tfx/tools/cli/handler/template_handler.py.
-  Returns:
+
+  Returns
+  -------
     Path to the directory containing template sources.
   """
   return os.path.join(_tfx_src_dir(), 'experimental', 'templates')
@@ -84,7 +88,8 @@ def _templates_src_dir() -> str:
 def list_template() -> List[str]:
   """List available templates by inspecting template source directory.
 
-  Returns:
+  Returns
+  -------
     List of template names which is same as directory name.
   """
   templates_dir = _templates_src_dir()
@@ -151,6 +156,7 @@ def copy_template(flags_dict: Dict[str, Any]) -> None:
   the content of the files.
 
   Args:
+  ----
     flags_dict: Should have pipeline_name, model and dest_dir.
   """
   model = flags_dict[labels.MODEL]

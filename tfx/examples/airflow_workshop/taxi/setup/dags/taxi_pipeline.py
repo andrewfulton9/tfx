@@ -21,27 +21,32 @@ import os
 from typing import List
 
 import tensorflow_model_analysis as tfma  # Step 5
-from tfx.components import CsvExampleGen
-from tfx.components import Evaluator  # Step 6
-from tfx.components import ExampleValidator  # Step 3
-from tfx.components import Pusher  # Step 7
-from tfx.components import SchemaGen  # Step 3
-from tfx.components import StatisticsGen  # Step 3
-from tfx.components import Trainer  # Step 5
-from tfx.components import Transform  # Step 4
+
+from tfx.components import (
+  CsvExampleGen,
+  Evaluator,  # Step 6
+  ExampleValidator,  # Step 3
+  Pusher,  # Step 7
+  SchemaGen,  # Step 3
+  StatisticsGen,  # Step 3
+  Trainer,  # Step 5
+  Transform,  # Step 4
+)
 from tfx.components.trainer.executor import GenericExecutor
 from tfx.dsl.components.base import executor_spec
 from tfx.dsl.components.common import resolver  # Step 6
 from tfx.dsl.experimental import latest_blessed_model_resolver  # Step 6
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
-from tfx.orchestration.airflow.airflow_dag_runner import AirflowDagRunner
-from tfx.orchestration.airflow.airflow_dag_runner import AirflowPipelineConfig
-from tfx.proto import pusher_pb2  # Step 7
-from tfx.proto import trainer_pb2  # Step 5
+from tfx.orchestration import metadata, pipeline
+from tfx.orchestration.airflow.airflow_dag_runner import (
+  AirflowDagRunner,
+  AirflowPipelineConfig,
+)
+from tfx.proto import (
+  pusher_pb2,  # Step 7
+  trainer_pb2,  # Step 5
+)
 from tfx.types import Channel
-from tfx.types.standard_artifacts import Model
-from tfx.types.standard_artifacts import ModelBlessing
+from tfx.types.standard_artifacts import Model, ModelBlessing
 
 _pipeline_name = 'taxi'
 

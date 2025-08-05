@@ -14,17 +14,16 @@
 """Tests for AI Platform Training component executor."""
 
 import copy
-
 from unittest import mock
 
 from googleapiclient import discovery
-from tfx.dsl.component.experimental import placeholders
-from tfx.orchestration.kubeflow.v2.components.experimental import ai_platform_training_executor
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.utils import json_utils
-from tfx.utils import test_case_utils
 
+from tfx.dsl.component.experimental import placeholders
+from tfx.orchestration.kubeflow.v2.components.experimental import (
+  ai_platform_training_executor,
+)
+from tfx.types import artifact_utils, standard_artifacts
+from tfx.utils import json_utils, test_case_utils
 
 _EXAMPLE_LOCATION = 'root/ExampleGen/1/examples/'
 _MODEL_LOCATION = 'root/Training/2/model/'

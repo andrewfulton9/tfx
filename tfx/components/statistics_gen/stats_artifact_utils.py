@@ -16,9 +16,8 @@
 import os
 
 import tensorflow_data_validation as tfdv
-from tfx.types import artifact
-from tfx.types import artifact_utils
 
+from tfx.types import artifact, artifact_utils
 
 BINARY_PB_BASENAME = 'FeatureStats.pb'
 TFRECORD_BASENAME = 'stats_tfrecord'

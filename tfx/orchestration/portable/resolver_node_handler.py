@@ -16,18 +16,19 @@ import sys
 import traceback
 from typing import Any, Dict, Optional
 
-from absl import logging
 import grpc
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import inputs_utils
-from tfx.orchestration.portable import system_node_handler
+from absl import logging
+
+from tfx.orchestration import data_types_utils, metadata
+from tfx.orchestration.portable import (
+  data_types,
+  execution_publish_utils,
+  inputs_utils,
+  system_node_handler,
+)
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.orchestration.portable.mlmd import context_lib
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.proto.orchestration import execution_result_pb2, pipeline_pb2
 
 _ERROR_CODE_UNIMPLEMENTED: int = grpc.StatusCode.UNIMPLEMENTED.value[0]
 
@@ -51,6 +52,7 @@ class ResolverNodeHandler(system_node_handler.SystemNodeHandler):
     """Runs Resolver specific logic.
 
     Args:
+    ----
       mlmd_connection: ML metadata connection.
       pipeline_node: The specification of the node that this launcher lauches.
       pipeline_info: The information of the pipeline that this node runs in.
@@ -58,6 +60,7 @@ class ResolverNodeHandler(system_node_handler.SystemNodeHandler):
         node runs in.
 
     Returns:
+    -------
       The execution of the run.
     """
     logging.info('Running as an resolver node.')

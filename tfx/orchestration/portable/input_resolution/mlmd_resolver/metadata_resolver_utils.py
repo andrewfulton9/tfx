@@ -18,9 +18,7 @@ import enum
 from typing import Callable, Dict, List, Optional, Set
 
 import attr
-
 from ml_metadata.proto import metadata_store_pb2
-
 
 INPUT_EVENT_TYPES = {
     metadata_store_pb2.Event.DECLARED_INPUT,
@@ -79,13 +77,14 @@ def _get_resolver_event_type(event: metadata_store_pb2.Event) -> EventType:
   """Gets an indicator of whether `event` is an input / output event.
 
   Args:
+  ----
     event: an event object, with an event type associated.
 
   Returns:
+  -------
     An `EventType` enum indicating whether `event` is an input / output
     event.
   """
-
   if event.type in INPUT_EVENT_TYPES:
     return EventType.INPUT
   elif event.type in OUTPUT_EVENT_TYPES:
@@ -104,6 +103,7 @@ def _explore_from_artifact(
   """Given a starting artifact, runs a single dfs on the graph from it.
 
   Args:
+  ----
     starting_artifact_id: starting artifact id.
     direction: direction of dfs. It can be single-directional or bidirectional.
     resolver_graph: resolver graph representing the lineage graph to run dfs on.
@@ -161,6 +161,7 @@ def _explore_from_execution(
   """Given a starting execution, runs a single dfs on the graph from it.
 
   Args:
+  ----
     starting_execution_id: starting execution id.
     direction: direction of dfs. It can be single-directional or bidirectional.
     resolver_graph: resolver graph representing the lineage graph to run dfs on.
@@ -219,6 +220,7 @@ def get_subgraphs_by_artifact_ids(
   """Given a list of starting artifacts, retrieve the subgraphs connected.
 
   Args:
+  ----
     starting_artifact_ids: starting artifact ids.
     direction: direction of dfs. It can be single-directional or bidirectional.
     graph: the lineage graph to run dfs on.
@@ -227,6 +229,7 @@ def get_subgraphs_by_artifact_ids(
       True will be considered as valid and kept in the path.
 
   Returns:
+  -------
     Mappings of starting artifact ids and subgraphs traced from dfs. The
     subgraphs contain only nodes.
   """
@@ -257,6 +260,7 @@ def get_visited_ids_by_artifact_ids(
   and the visited nodes of each dfs derived from it.
 
   Args:
+  ----
     starting_artifact_ids: starting artifact ids.
     direction: direction of dfs. It can be single-directional or bidirectional.
     graph: the lineage graph to run dfs on.
@@ -265,6 +269,7 @@ def get_visited_ids_by_artifact_ids(
       True will be considered as valid and kept in the path.
 
   Returns:
+  -------
     Mappings of starting artifact ids and visited ids explored in dfs.
   """
   resolver_graph = _build_resolver_graph(graph, optional_event_filter)
@@ -336,12 +341,14 @@ def _build_resolver_graph(
   )
 
   Args:
+  ----
     lineage_graph: lineage graph to build the resolver graph from.
     optional_event_filter: an optional callable object for filtering events in
       the paths. Only an event with `optional_event_filter(event)` evaluated to
       True will be considered as valid and kept in the path.
 
   Returns:
+  -------
     A resolver graph dedicated for in-memory graph traversal.
   """
   resolver_graph = ResolverGraph()

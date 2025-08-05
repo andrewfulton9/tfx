@@ -15,14 +15,13 @@
 
 from typing import Sequence
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.input_resolution import resolver_op
 from tfx.dsl.input_resolution.ops import ops_utils
 from tfx.orchestration.portable.mlmd import event_lib
 from tfx.types import artifact_utils
-
-from ml_metadata.proto import metadata_store_pb2
-
 
 # Valid artifact states for Siblings.
 _VALID_ARTIFACT_STATES = [metadata_store_pb2.Artifact.State.LIVE]

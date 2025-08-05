@@ -19,17 +19,17 @@ import shutil
 import subprocess
 import sys
 
-import setuptools
-from setuptools import find_namespace_packages
-from setuptools import setup
-from setuptools.command import develop
 # pylint: disable=g-bad-import-order
 # It is recommended to import setuptools prior to importing distutils to avoid
 # using legacy behavior from distutils.
 # https://setuptools.readthedocs.io/en/latest/history.html#v48-0-0
 from distutils.command import build
-# pylint: enable=g-bad-import-order
 
+import setuptools
+from setuptools import find_namespace_packages, setup
+from setuptools.command import develop
+
+# pylint: enable=g-bad-import-order
 from wheel import bdist_wheel
 
 # Prefer to import `package_config` from the setup.py script's directory. The
@@ -39,11 +39,10 @@ from wheel import bdist_wheel
 sys.path.insert(0, os.path.dirname(__file__))
 # pylint: disable=g-bad-import-order,g-import-not-at-top
 
-from tfx import dependencies
-from tfx import version
 # pylint: enable=g-bad-import-order,g-import-not-at-top
-
 import tomli
+
+from tfx import dependencies, version
 
 pyproject_toml = tomli.load(open('pyproject.toml', 'rb'))
 package_name = pyproject_toml['project']['name']

@@ -16,8 +16,10 @@
 
 
 import os
-from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+
 import tensorflow as tf
+from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+
 from tfx.components.evaluator import constants
 from tfx.orchestration.kubeflow.v2.container import kubeflow_v2_entrypoint_utils
 from tfx.types import standard_artifacts

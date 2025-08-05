@@ -15,11 +15,12 @@
 
 from typing import Union
 
-from tfx.orchestration.portable import beam_executor_operator
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import python_executor_operator
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_result_pb2
+from tfx.orchestration.portable import (
+  beam_executor_operator,
+  data_types,
+  python_executor_operator,
+)
+from tfx.proto.orchestration import executable_spec_pb2, execution_result_pb2
 
 
 def run_executor(

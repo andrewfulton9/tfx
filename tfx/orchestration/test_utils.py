@@ -20,8 +20,8 @@ import string
 import subprocess
 import time
 
-from absl import logging
 import docker
+from absl import logging
 
 
 class Timer:
@@ -31,6 +31,7 @@ class Timer:
     """Creates a context object to measure time taken.
 
     Args:
+    ----
       operation: A description of the operation being measured.
     """
     self._operation = operation
@@ -49,7 +50,8 @@ class Timer:
 def random_id() -> str:
   """Generates a random string that is also a valid Kubernetes DNS name.
 
-  Returns:
+  Returns
+  -------
     A random string valid for Kubernetes DNS name.
   """
   now = time.time()
@@ -66,10 +68,10 @@ def build_docker_image(container_image: str, repo_base: str):
   """Build docker image using `tfx/tools/docker/Dockerfile`.
 
   Args:
+  ----
     container_image: Docker container image name.
     repo_base: The src path to use to build docker image.
   """
-
   [docker_image_repo, docker_image_tag] = container_image.split(':')
   envs = {
       'DOCKER_IMAGE_REPO': docker_image_repo,
@@ -118,6 +120,7 @@ def build_and_push_docker_image(container_image: str, repo_base: str):
   Note: The local copy of the image will be deleted after push.
 
   Args:
+  ----
     container_image: Docker container image name.
     repo_base: The src path to use to build docker image.
   """

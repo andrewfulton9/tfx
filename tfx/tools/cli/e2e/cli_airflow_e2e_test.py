@@ -21,23 +21,20 @@ import sys
 import time
 
 import absl
+import pytest
 from click import testing as click_testing
+
 from tfx.dsl.io import fileio
 from tfx.orchestration.airflow import test_utils as airflow_test_utils
-from tfx.tools.cli import labels
-from tfx.tools.cli import pip_utils
+from tfx.tools.cli import labels, pip_utils
 from tfx.tools.cli.cli_main import cli_group
 from tfx.tools.cli.e2e import test_utils
-from tfx.utils import io_utils
-from tfx.utils import retry
-from tfx.utils import test_case_utils
-
-import pytest
+from tfx.utils import io_utils, retry, test_case_utils
 
 
 @pytest.mark.xfail(run=False, reason="PR 6889 This class contains tests that fail and needs to be fixed. "
 "If all tests pass, please remove this mark.")
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class CliAirflowEndToEndTest(test_case_utils.TfxTest):
 
   def setUp(self):

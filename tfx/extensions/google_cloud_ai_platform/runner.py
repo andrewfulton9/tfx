@@ -21,8 +21,7 @@ from absl import logging
 from googleapiclient import discovery
 
 from tfx import types
-from tfx.extensions.google_cloud_ai_platform import prediction_clients
-from tfx.extensions.google_cloud_ai_platform import training_clients
+from tfx.extensions.google_cloud_ai_platform import prediction_clients, training_clients
 from tfx.utils import version_utils
 
 _POLLING_INTERVAL_IN_SECONDS = 30
@@ -52,6 +51,7 @@ def _launch_cloud_training(project: str,
   """Launches and monitors a Cloud custom training job.
 
   Args:
+  ----
     project: The GCP project under which the training job will be executed.
     training_job: Training job argument for AI Platform training job. See
       https://cloud.google.com/vertex-ai/docs/reference/rest/v1/projects.locations.customJobs#CustomJob
@@ -62,6 +62,7 @@ def _launch_cloud_training(project: str,
     vertex_region: Region for endpoint in Vertex training.
 
   Raises:
+  ------
     RuntimeError: if the Google Cloud AI Platform training job failed/cancelled.
     ConnectionError: if the status polling of the training job failed due to
       connection issue.
@@ -128,14 +129,17 @@ def _wait_for_operation(api: discovery.Resource, operation: Dict[str, Any],
   """Wait for a long running operation.
 
   Args:
+  ----
     api: Google API client resource.
     operation: The operation to wait for.
     method_name: Operation method name for logging.
 
   Returns:
+  -------
     Operation completion status.
 
   Raises:
+  ------
     RuntimeError: If the operation completed with an error.
   """
   status_resc = api.projects().operations().get(name=operation['name'])
@@ -167,6 +171,7 @@ def start_cloud_training(
   tfx.scripts.run_executor module on a AI Platform training job interpreter.
 
   Args:
+  ----
     input_dict: Passthrough input dict for tfx.components.Trainer.executor.
     output_dict: Passthrough input dict for tfx.components.Trainer.executor.
     exec_properties: Passthrough input dict for tfx.components.Trainer.executor.
@@ -188,6 +193,7 @@ def start_cloud_training(
     vertex_region: Region for endpoint in Vertex training.
 
   Returns:
+  -------
     None
   """
   # Project was stowaway in job_args and has finally reached its destination.
@@ -213,10 +219,12 @@ def get_service_name_and_api_version(
   """Gets service name and api version from ai_platform_serving_args.
 
   Args:
+  ----
     ai_platform_serving_args: Dictionary containing arguments for pushing to AI
       Platform.
 
   Returns:
+  -------
     Service name and API version.
   """
   del ai_platform_serving_args
@@ -231,6 +239,7 @@ def create_model_for_aip_prediction_if_not_exist(
   """Creates a new CAIP model or Vertex endpoint for serving with AI Platform if not exists.
 
   Args:
+  ----
     labels: The dict of labels that will be attached to this CAIP job or Vertex
       endpoint.
     ai_platform_serving_args: Dictionary containing arguments for pushing to AI
@@ -239,12 +248,13 @@ def create_model_for_aip_prediction_if_not_exist(
     enable_vertex: Whether to enable Vertex or not.
 
   Returns:
+  -------
     Whether a new CAIP model or Vertex endpoint is created.
 
   Raises:
+  ------
     RuntimeError if creation failed.
   """
-
   client = prediction_clients.get_prediction_client(
       api=api, enable_vertex=enable_vertex)
   return client.create_model_for_aip_prediction_if_not_exist(
@@ -265,6 +275,7 @@ def deploy_model_for_aip_prediction(
   """Deploys a model for serving with AI Platform.
 
   Args:
+  ----
     serving_path: The path to the model. Must be a GCS URI.
     model_version_name: Model version for CAIP model being deployed, or model
       name for the Vertex model being deployed. Must be different from what is
@@ -308,9 +319,11 @@ def deploy_model_for_aip_prediction(
     enable_vertex: Whether to enable Vertex or not.
 
   Returns:
+  -------
     For Vertex, the resource name of the deployed model.
 
   Raises:
+  ------
     RuntimeError: if an error is encountered when trying to push.
   """
   client = prediction_clients.get_prediction_client(
@@ -345,6 +358,7 @@ def delete_model_from_aip_if_exists(
   """Deletes a model version from Google Cloud AI Platform if version exists.
 
   Args:
+  ----
     ai_platform_serving_args: Dictionary containing arguments for pushing to AI
       Platform. For the full set of parameters supported, refer to
       https://cloud.google.com/ml-engine/reference/rest/v1/projects.models
@@ -357,6 +371,7 @@ def delete_model_from_aip_if_exists(
     enable_vertex: Whether to enable Vertex or not.
 
   Raises:
+  ------
     RuntimeError: if an error is encountered when trying to delete.
   """
   client = prediction_clients.get_prediction_client(

@@ -16,17 +16,20 @@
 from unittest import mock
 
 import apache_beam as beam
+import tensorflow as tf
 from apache_beam.testing import util
 from google.cloud import bigquery
-import tensorflow as tf
-from tfx.extensions.google_cloud_big_query import utils
-from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.component import executor
-from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.proto import elwc_config_pb2
-from tfx.proto import example_gen_pb2
-
-from google.protobuf import json_format
-from google.protobuf import text_format
+from google.protobuf import json_format, text_format
 from tensorflow_serving.apis import input_pb2
+
+from tfx.extensions.google_cloud_big_query import utils
+from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.component import (
+  executor,
+)
+from tfx.extensions.google_cloud_big_query.experimental.elwc_example_gen.proto import (
+  elwc_config_pb2,
+)
+from tfx.proto import example_gen_pb2
 
 _ELWC_1 = text_format.Parse(
     """

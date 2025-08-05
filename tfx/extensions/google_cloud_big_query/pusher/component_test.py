@@ -14,10 +14,9 @@
 """Tests for tfx.extensions.google_cloud_big_query.pusher.component."""
 
 import tensorflow as tf
+
 from tfx.extensions.google_cloud_big_query.pusher import component
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import channel_utils, standard_artifacts, standard_component_specs
 
 
 class PusherTest(tf.test.TestCase):

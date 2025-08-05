@@ -13,11 +13,12 @@
 # limitations under the License.
 """Tests for tfx.dsl.input_resolution.resolver_op."""
 import copy
-from typing import Optional, Mapping, Set
+from typing import Mapping, Optional, Set
 
 import tensorflow as tf
-from tfx.dsl.input_resolution import resolver_op
+
 import tfx.types
+from tfx.dsl.input_resolution import resolver_op
 from tfx.types import standard_artifacts
 
 
@@ -104,7 +105,7 @@ class ResolverOpTest(tf.test.TestCase):
 
   def testDefineOp_PropertyDefaultViolatesType(self):
     with self.assertRaises(TypeError):
-      class BadProperty(resolver_op.ResolverOp):  # pylint: disable=unused-variable
+      class BadProperty(resolver_op.ResolverOp):  # noqa: F841
         str_prop = resolver_op.Property(type=str, default=42)
 
   def testOpCall_ReturnsOpNode(self):

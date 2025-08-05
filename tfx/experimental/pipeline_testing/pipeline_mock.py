@@ -17,8 +17,7 @@ from typing import List
 
 from tfx.dsl.components.base import executor_spec
 from tfx.experimental.pipeline_testing import base_stub_executor
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.proto.orchestration import executable_spec_pb2, pipeline_pb2
 
 
 def replace_executor_with_stub(pipeline: pipeline_pb2.Pipeline,
@@ -38,6 +37,7 @@ def replace_executor_with_stub(pipeline: pipeline_pb2.Pipeline,
   the stubbed pipeline.
 
   Args:
+  ----
     pipeline: The pipeline to alter.
     test_data_dir: The directory where pipeline outputs are recorded
       (pipeline_recorder.py).
@@ -46,6 +46,7 @@ def replace_executor_with_stub(pipeline: pipeline_pb2.Pipeline,
       list will be replaced with a BaseStubExecutor.
 
   Returns:
+  -------
     None
   """
   deployment_config = pipeline_pb2.IntermediateDeploymentConfig()

@@ -14,11 +14,11 @@
 """Define LocalDagRunner to run the pipeline locally."""
 
 import os
+
 from absl import logging
 
 from tfx import v1 as tfx
-from tfx.experimental.templates.penguin.pipeline import configs
-from tfx.experimental.templates.penguin.pipeline import pipeline
+from tfx.experimental.templates.penguin.pipeline import configs, pipeline
 
 # TFX pipeline produces many output files and metadata. All output data will be
 # stored under this OUTPUT_DIR.
@@ -52,7 +52,6 @@ DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 def run():
   """Define a pipeline."""
-
   tfx.orchestration.LocalDagRunner().run(
       pipeline.create_pipeline(
           pipeline_name=configs.PIPELINE_NAME,

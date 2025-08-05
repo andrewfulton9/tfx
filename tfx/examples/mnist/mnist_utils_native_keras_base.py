@@ -21,8 +21,9 @@ from typing import List
 import absl
 import tensorflow as tf
 import tensorflow_transform as tft
-from tfx.components.trainer.fn_args_utils import DataAccessor
 from tfx_bsl.tfxio import dataset_options
+
+from tfx.components.trainer.fn_args_utils import DataAccessor
 
 # MNIST dataset consists of an image of the handwritten digits,
 # and it's label which is the class indicating digits 0 through 9.
@@ -41,6 +42,7 @@ def input_fn(file_pattern: List[str],
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     tf_transform_output: A TFTransformOutput.
@@ -48,6 +50,7 @@ def input_fn(file_pattern: List[str],
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -61,7 +64,8 @@ def input_fn(file_pattern: List[str],
 def build_keras_model() -> tf.keras.Model:
   """Creates a DNN Keras model for classifying MNIST data.
 
-  Returns:
+  Returns
+  -------
     A Keras Model.
   """
   # The model below is built with Sequential API, please refer to
@@ -88,9 +92,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature operations.
   """
   outputs = {}

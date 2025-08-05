@@ -17,13 +17,12 @@ import os
 
 import grpc
 import portpicker
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.orchestration import metadata
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import execution_watcher
+from tfx.orchestration.portable import execution_publish_utils, execution_watcher
 from tfx.proto.orchestration import execution_watcher_pb2
 from tfx.utils import test_case_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class ExecutionWatcherTest(test_case_utils.TfxTest):

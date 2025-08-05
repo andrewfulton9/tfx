@@ -18,20 +18,21 @@ from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, Union
 
 import pyarrow as pa
 import tensorflow as tf
+from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx_bsl.tfxio import (
+  dataset_options,
+  parquet_tfxio,
+  raw_tf_record,
+  record_to_tensor_tfxio,
+  tf_example_record,
+  tf_sequence_example_record,
+  tfxio,
+)
+
 from tfx.components.experimental.data_view import constants
 from tfx.components.util import examples_utils
 from tfx.proto import example_gen_pb2
-from tfx.types import artifact
-from tfx.types import standard_artifacts
-from tfx_bsl.tfxio import dataset_options
-from tfx_bsl.tfxio import parquet_tfxio
-from tfx_bsl.tfxio import raw_tf_record
-from tfx_bsl.tfxio import record_to_tensor_tfxio
-from tfx_bsl.tfxio import tf_example_record
-from tfx_bsl.tfxio import tf_sequence_example_record
-from tfx_bsl.tfxio import tfxio
-
-from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx.types import artifact, standard_artifacts
 
 _SUPPORTED_FILE_FORMATS = (example_gen_pb2.FileFormat.FILE_FORMAT_PARQUET,
                            example_gen_pb2.FileFormat.FORMAT_TFRECORDS_GZIP)
@@ -51,13 +52,18 @@ def resolve_payload_format_and_data_view_uri(
   will have the same schema).
 
   Args:
+  ----
     examples: A list of Examples artifact.
+
   Returns:
+  -------
     A pair. The first term is the payload format (a value in
       example_gen_pb2.PayloadFormat enum); the second term is the URI to the
       resolved DataView (could be None, if the examples are not FORMAT_PROTO,
       or they are all FORMAT_PROTO, but all do not have a DataView attached).
+
   Raises:
+  ------
     ValueError: if not all artifacts are of the same payload format, or
       if they are all of FORMAT_PROTO but some (but not all) of them do not
       have a DataView attached.
@@ -123,6 +129,7 @@ def get_split_tfxio(
   """Returns a TFXIO for a single split.
 
   Args:
+  ----
     examples: The Examples artifacts that the TFXIO is intended to access.
     split: The split to read. Must be a split contained in examples.
     telemetry_descriptors: A set of descriptors that identify the component that
@@ -141,10 +148,12 @@ def get_split_tfxio(
       read_as_raw_records == True.
 
   Returns:
+  -------
     A function that takes a file pattern as input and returns a TFXIO
     instance.
 
   Raises:
+  ------
     NotImplementedError: when given an unsupported example payload type.
   """
   payload_format, data_view_uri = resolve_payload_format_and_data_view_uri(
@@ -174,6 +183,7 @@ def get_tfxio_factory_from_artifact(
   """Returns a factory function that creates a proper TFXIO.
 
   Args:
+  ----
     examples: The Examples artifacts that the TFXIO is intended to access.
     telemetry_descriptors: A set of descriptors that identify the component
       that is instantiating the TFXIO. These will be used to construct the
@@ -191,13 +201,14 @@ def get_tfxio_factory_from_artifact(
       read_as_raw_records == True.
 
   Returns:
+  -------
     A function that takes a file pattern as input and returns a TFXIO
     instance.
 
   Raises:
+  ------
     NotImplementedError: when given an unsupported example payload type.
   """
-
   payload_format, data_view_uri = resolve_payload_format_and_data_view_uri(
       examples)
   return lambda file_pattern: make_tfxio(  # pylint:disable=g-long-lambda
@@ -221,6 +232,7 @@ def get_tf_dataset_factory_from_artifact(
   """Returns a factory function that creates a tf.data.Dataset.
 
   Args:
+  ----
     examples: The Examples artifacts that the TFXIO from which the Dataset is
       created from is intended to access.
     telemetry_descriptors: A set of descriptors that identify the component
@@ -257,6 +269,7 @@ def get_record_batch_factory_from_artifact(
   """Returns a factory function that creates Iterator[pa.RecordBatch].
 
   Args:
+  ----
     examples: The Examples artifacts that the TFXIO from which the Dataset is
       created from is intended to access.
     telemetry_descriptors: A set of descriptors that identify the component that
@@ -288,13 +301,16 @@ def get_data_view_decode_fn_from_artifact(
   """Returns the decode function wrapped in the examples' Data View.
 
   Args:
+  ----
     examples: The Examples artifacts from which the data view is resolved.
     telemetry_descriptors: A set of descriptors that identify the component that
       is instantiating the TFXIO. These will be used to construct the namespace
       to contain metrics for profiling and are therefore expected to be
       identifiers of the component itself and not individual instances of source
       use.
+
   Returns:
+  -------
     If a Data View can be resolved from `examples`, then it returns
     a TF Function that takes a 1-D string tensor (example records) and returns
     decoded (composite) tensors. Otherwise returns None.
@@ -333,6 +349,7 @@ def make_tfxio(
   """Creates a TFXIO instance that reads `file_pattern`.
 
   Args:
+  ----
     file_pattern: the file pattern for the TFXIO to access.
     telemetry_descriptors: A set of descriptors that identify the component that
       is instantiating the TFXIO. These will be used to construct the namespace
@@ -357,6 +374,7 @@ def make_tfxio(
       'parquet' are supported for now.
 
   Returns:
+  -------
     a TFXIO instance.
   """
   if not isinstance(payload_format, int):

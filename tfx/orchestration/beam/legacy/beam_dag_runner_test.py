@@ -15,18 +15,16 @@
 
 import sys
 import unittest
-
 from unittest import mock
+
 import tensorflow as tf
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.orchestration import pipeline
 from tfx.orchestration.beam.legacy import beam_dag_runner
 from tfx.types.component_spec import ChannelParameter
-
-from ml_metadata.proto import metadata_store_pb2
 
 _executed_components = []
 

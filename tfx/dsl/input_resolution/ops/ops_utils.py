@@ -16,13 +16,12 @@
 import functools
 from typing import Dict, List, Optional, Sequence, Set
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.orchestration.portable.mlmd import filter_query_builder as q
 from tfx.utils import typing_utils
-
-from ml_metadata.proto import metadata_store_pb2
-
 
 # Maps from "span" and "version" to PropertyType.INT. Many ResolverOps require
 # one or both of these properties, so we define constants here for convenience.
@@ -123,7 +122,7 @@ def validate_input_dict(
       )
 
     for artifact in input_dict[key]:
-      if artifact.TYPE_NAME != ARTIFACT_TYPE_NAME_BY_KEY[key]:
+      if ARTIFACT_TYPE_NAME_BY_KEY[key] != artifact.TYPE_NAME:
         raise exceptions.InvalidArgument(
             f'Artifacts of input_dict["{key}"] are expected to have artifacts'
             f' with TYPE_NAME {ARTIFACT_TYPE_NAME_BY_KEY[key]}, but'
@@ -137,7 +136,6 @@ def get_valid_artifacts(
     property_types: Dict[str, types.artifact.PropertyType],
 ) -> List[types.Artifact]:
   """Returns artifacts that have the required property names and types."""
-
   valid_artifacts = []
   for artifact in artifacts:
     if artifact.PROPERTIES is None:
@@ -169,6 +167,7 @@ def filter_artifacts_by_span(
   This should only be used a shared utility for LatestSpan and ConsecutiveSpans.
 
   Args:
+  ----
     artifacts: The list of Artifacts to filter.
     span_descending: If true, then the artifacts will be sorted by span in
       descending order.  Else, they will be sorted in ascending order by span.
@@ -186,6 +185,7 @@ def filter_artifacts_by_span(
       The default key is version number, create time and id in the same order.
 
   Returns:
+  -------
     The filtered artifacts.
   """
   if not artifacts:

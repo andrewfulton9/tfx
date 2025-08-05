@@ -19,11 +19,11 @@ Experimental. No backwards compatibility guarantees.
 import inspect
 from typing import Any, Dict, Generic, List, Type, TypeVar, Union, get_args, get_origin
 
+from google.protobuf import message
+
 from tfx.dsl.component.experimental import json_compat
 from tfx.types import artifact
 from tfx.utils import deprecation_utils
-
-from google.protobuf import message
 
 try:
   import apache_beam as beam  # pytype: disable=import-error  # pylint: disable=g-import-not-at-top

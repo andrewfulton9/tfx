@@ -19,28 +19,29 @@ from typing import Dict, List, Mapping, Optional, Set, Tuple, Union
 from unittest import mock
 
 from absl import logging
-from absl.testing import absltest
-from absl.testing import parameterized
-from tfx.dsl.compiler import compiler
-from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.compiler import constants
-from tfx.dsl.component.experimental.annotations import InputArtifact
-from tfx.dsl.component.experimental.annotations import OutputArtifact
-from tfx.dsl.component.experimental.annotations import Parameter
+from absl.testing import absltest, parameterized
+from ml_metadata.proto import metadata_store_pb2
+
+from tfx.dsl.compiler import compiler, compiler_utils, constants
+from tfx.dsl.component.experimental.annotations import (
+  InputArtifact,
+  OutputArtifact,
+  Parameter,
+)
 from tfx.dsl.component.experimental.decorators import component
 from tfx.orchestration import metadata
 from tfx.orchestration import pipeline as pipeline_lib
 from tfx.orchestration.beam import beam_dag_runner
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import inputs_utils
-from tfx.orchestration.portable import partial_run_utils
-from tfx.orchestration.portable import runtime_parameter_utils
+from tfx.orchestration.portable import (
+  execution_publish_utils,
+  inputs_utils,
+  partial_run_utils,
+  runtime_parameter_utils,
+)
 from tfx.orchestration.portable.mlmd import execution_lib
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.types import standard_artifacts
 from tfx.utils import test_case_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 _PIPELINE_RUN_CONTEXT_KEY = constants.PIPELINE_RUN_CONTEXT_TYPE_NAME
 
@@ -686,7 +687,6 @@ def Result(result: InputArtifact[standard_artifacts.Integer]):
 def _node_inputs_by_id(pipeline: pipeline_pb2.Pipeline,
                        node_id: str) -> pipeline_pb2.PipelineNode:
   """Doesn't make a copy."""
-
   node_ids_seen = []
   for node in pipeline.nodes:
     if node.pipeline_node.node_info.id == node_id:
@@ -720,12 +720,14 @@ class PartialRunTest(absltest.TestCase):
     """Make compiled pipeline from components.
 
     Args:
+    ----
       components: List of components.
       run_id: Optional. If provided, will be used to substitute the
         pipeline_run_id RuntimeParameter.
       pipeline_name: Optional. If provided, will use it as pipeline name.
 
     Returns:
+    -------
       The compiled Pipeline IR.
     """
     pipeline = pipeline_lib.Pipeline(

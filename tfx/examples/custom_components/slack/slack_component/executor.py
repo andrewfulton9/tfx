@@ -24,6 +24,7 @@ from typing import Any, Dict, List
 import absl
 import attr
 import slack
+
 from tfx import types
 from tfx.components.util import model_utils
 from tfx.dsl.components.base import base_executor
@@ -88,6 +89,7 @@ class Executor(base_executor.BaseExecutor):
     pipelines.)
 
     Args:
+    ----
       slack_token: The user-defined function to obtain token to send and receive
         messages.
       slack_channel_id: The id of the Slack channel to send and receive
@@ -95,9 +97,11 @@ class Executor(base_executor.BaseExecutor):
       model_uri: The URI of the model waiting for human review.
 
     Returns:
+    -------
       A _SlackResponse instance.
 
     Raises:
+    ------
       ConnectionError:
         When connection to slack server cannot be established.
     """
@@ -166,6 +170,7 @@ class Executor(base_executor.BaseExecutor):
     """Get human review result on a model through Slack channel.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts, including:
         - model_export: exported model from trainer.
         - model_blessing: model blessing path from evaluator.
@@ -178,9 +183,11 @@ class Executor(base_executor.BaseExecutor):
         - timeout_sec: How long do we wait for response, in seconds.
 
     Returns:
+    -------
       None
 
     Raises:
+    ------
       TimeoutError:
         When there is no decision made within timeout_sec.
       ConnectionError:

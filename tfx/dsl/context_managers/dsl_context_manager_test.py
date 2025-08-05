@@ -13,12 +13,14 @@
 # limitations under the License.
 """Tests for tfx.dsl.context_manager."""
 
-from typing import Dict, Any
+from typing import Any, Dict
 
 from tfx.dsl.components.base import base_node
-from tfx.dsl.context_managers import dsl_context
-from tfx.dsl.context_managers import dsl_context_manager
-from tfx.dsl.context_managers import dsl_context_registry
+from tfx.dsl.context_managers import (
+  dsl_context,
+  dsl_context_manager,
+  dsl_context_registry,
+)
 from tfx.utils import test_case_utils
 
 

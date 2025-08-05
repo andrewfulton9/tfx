@@ -22,8 +22,7 @@ import click
 
 from tfx.dsl.io import fileio
 from tfx.tools.cli import labels
-from tfx.tools.cli.handler import airflow_dag_runner_patcher
-from tfx.tools.cli.handler import base_handler
+from tfx.tools.cli.handler import airflow_dag_runner_patcher, base_handler
 from tfx.utils import io_utils
 
 
@@ -48,6 +47,7 @@ class AirflowHandler(base_handler.BaseHandler):
     """Creates pipeline in Airflow.
 
     Args:
+    ----
       overwrite: Set as True to update pipeline.
     """
     patcher = airflow_dag_runner_patcher.AirflowDagRunnerPatcher()
@@ -169,6 +169,7 @@ class AirflowHandler(base_handler.BaseHandler):
     """Creates/updates pipeline folder in the handler directory.
 
     Args:
+    ----
       pipeline_args: Pipeline details obtained from DSL.
     """
     pipeline_name = pipeline_args[labels.PIPELINE_NAME]

@@ -15,29 +15,23 @@
 
 from typing import List, Type
 
-from absl.testing import parameterized
 import tensorflow as tf
+from absl.testing import parameterized
+from google.protobuf import text_format
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
-from tfx.dsl.compiler import compiler_context
-from tfx.dsl.compiler import node_inputs_compiler
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_node
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.compiler import compiler_context, node_inputs_compiler
+from tfx.dsl.components.base import base_component, base_node, executor_spec
 from tfx.dsl.control_flow import for_each
 from tfx.dsl.experimental.conditionals import conditional
 from tfx.dsl.experimental.node_execution_options import utils as execution_options_utils
-from tfx.dsl.input_resolution import resolver_function
-from tfx.dsl.input_resolution import resolver_op
+from tfx.dsl.input_resolution import resolver_function, resolver_op
 from tfx.dsl.placeholder import placeholder as ph
 from tfx.orchestration import pipeline
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.types import channel as channel_types
-from tfx.types import channel_utils
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
-
-from google.protobuf import text_format
-from ml_metadata.proto import metadata_store_pb2
+from tfx.types import channel_utils, component_spec, standard_artifacts
 
 
 class DummyArtifact(types.Artifact):
@@ -47,7 +41,7 @@ class DummyArtifact(types.Artifact):
 
 class DummyNode(base_node.BaseNode):
 
-  def __init__(self, id: str, inputs=None, exec_properties=None):  # pylint: disable=redefined-builtin
+  def __init__(self, id: str, inputs=None, exec_properties=None):  # noqa: A002
     super().__init__()
     self.with_id(id)
     self._inputs = inputs or {}

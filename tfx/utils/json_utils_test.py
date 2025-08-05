@@ -15,9 +15,9 @@
 
 
 import tensorflow as tf
+
 from tfx.proto import trainer_pb2
-from tfx.utils import deprecation_utils
-from tfx.utils import json_utils
+from tfx.utils import deprecation_utils, json_utils
 
 
 class _DefaultJsonableObject(json_utils.Jsonable):

@@ -14,8 +14,9 @@
 """Tests for tfx.utils.telemetry_utils."""
 
 import sys
-from googleapiclient import http
+
 import tensorflow as tf
+from googleapiclient import http
 
 from tfx import version
 from tfx.utils import telemetry_utils

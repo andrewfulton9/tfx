@@ -15,23 +15,30 @@
 
 import copy
 import enum
-from typing import Any, Collection, Dict, Iterable, Iterator, List, Optional, Tuple, Union, cast
 import warnings
+from typing import (
+  Any,
+  Collection,
+  Dict,
+  Iterable,
+  Iterator,
+  List,
+  Optional,
+  Tuple,
+  Union,
+  cast,
+)
+
+from google.protobuf import message
 
 from tfx.dsl.compiler import constants
-from tfx.dsl.components.base import base_node
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_node, executor_spec
 from tfx.dsl.context_managers import dsl_context_registry as dsl_context_registry_lib
 from tfx.dsl.experimental.conditionals import conditional
 from tfx.dsl.placeholder import placeholder as ph
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.types import channel
-from tfx.types import channel_utils
-from tfx.utils import doc_controls
-from tfx.utils import topsort
-
-from google.protobuf import message
+from tfx.orchestration import data_types, metadata
+from tfx.types import channel, channel_utils
+from tfx.utils import doc_controls, topsort
 
 # Argo's workflow name cannot exceed 63 chars:
 # see https://github.com/argoproj/argo/issues/1324.
@@ -209,6 +216,7 @@ class RunOptions:
     """Constructor.
 
     Args:
+    ----
       from_nodes: node_ids to be used as "from_nodes". Defaults to None,
         which indicates all nodes.
       to_nodes: node_ids to be used as "to_nodes". Defaults to None, which
@@ -218,6 +226,7 @@ class RunOptions:
         previous pipeline run id. Defaults to None.
 
     Raises:
+    ------
       ValueError if both from_nodes or to_nodes are empty.
     """
     if not(from_nodes or to_nodes):
@@ -235,7 +244,8 @@ class Pipeline(base_node.BaseNode):
   please refer to the
   [guide](../../../guide/build_tfx_pipeline).
 
-  Attributes:
+  Attributes
+  ----------
     components: A deterministic list of logical components of this pipeline,
       which are deduped and topologically sorted.
     enable_cache: Whether or not cache is enabled for this run.
@@ -268,6 +278,7 @@ class Pipeline(base_node.BaseNode):
     """Initialize pipeline.
 
     Args:
+    ----
       pipeline_name: Name of the pipeline;
       pipeline_root: Path to root directory of the pipeline. This will most
         often be just a string. Some orchestrators may have limited support for
@@ -414,7 +425,8 @@ class Pipeline(base_node.BaseNode):
           'This is probably due to reusing component from another pipeline '
           'or interleaved pipeline definitions. Make sure each component '
           'belong to exactly one pipeline, and pipeline definitions are '
-          'separated.')
+          'separated.',
+          stacklevel=2)
 
   @property
   def inputs(self) -> Dict[str, Any]:
@@ -445,11 +457,13 @@ def enumerate_implicit_dependencies(
   """Enumerate component dependencies arising from data deps between them.
 
   Args:
+  ----
     components: Components to consider.
     registry: DslContextRegistry to use for looking up conditional predicates.
     pipeline: Pipeline object if calling from the context of one.
 
   Yields:
+  ------
     Pairs of the form (upstream_component, component). If a component has no
     upstream components within `components` then it will not be present as the
     first element of any tuple in the output. A warning is generated if an
@@ -457,6 +471,7 @@ def enumerate_implicit_dependencies(
     supplied pipeline's components.
 
   Raises:
+  ------
     RuntimeError: When duplicate components are detected.
   """
   node_by_id = {}
@@ -490,7 +505,7 @@ def enumerate_implicit_dependencies(
         channels.extend(channel_utils.get_dependent_channels(predicate))
 
     pipeline_component_ids = set(
-        (component.id for component in pipeline.components)
+        component.id for component in pipeline.components
     ) if pipeline else set()
     for input_channel in channels:
       for upstream_node_id in input_channel.get_data_dependent_node_ids():
@@ -507,5 +522,6 @@ def enumerate_implicit_dependencies(
           warnings.warn(
               f'Node {component.id} depends on the output of node'
               f' {upstream_node_id}, but {upstream_node_id} is not included in'
-              ' the components of pipeline. Did you forget to add it?'
+              ' the components of pipeline. Did you forget to add it?',
+              stacklevel=2
           )

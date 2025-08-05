@@ -20,24 +20,20 @@ import re
 import tempfile
 from unittest import mock
 
-from absl.testing import parameterized
 import apache_beam as beam
 import tensorflow as tf
 import tensorflow_data_validation as tfdv
 import tensorflow_transform as tft
+from absl.testing import parameterized
 from tensorflow_transform.beam import tft_unit
+
 from tfx import types
 from tfx.components.testdata.module_file import trainer_module
 from tfx.components.transform import executor
 from tfx.dsl.io import fileio
-from tfx.proto import example_gen_pb2
-from tfx.proto import transform_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import name_utils
-from tfx.utils import proto_utils
+from tfx.proto import example_gen_pb2, transform_pb2
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
+from tfx.utils import io_utils, name_utils, proto_utils
 
 
 class _TempPath(types.Artifact):

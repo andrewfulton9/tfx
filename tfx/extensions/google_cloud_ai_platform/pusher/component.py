@@ -34,6 +34,7 @@ class Pusher(pusher_component.Pusher):
     """Construct a Pusher component.
 
     Args:
+    ----
       model: An optional Channel of type [`standard_artifacts.Model`][tfx.v1.types.standard_artifacts.Model], usually
         produced by a [Trainer][tfx.v1.components.Trainer] component, representing the model used for
         training.

@@ -16,8 +16,8 @@
 import re
 
 from absl import logging
-from tfx import version
 
+from tfx import version
 
 # Version string match patterns. It captures 3 patterns of versions:
 # 1. Regular release. For example: 0.24.0;
@@ -32,9 +32,11 @@ def get_image_version(version_str: str = version.__version__) -> str:
   """Gets the version for image tag based on SDK version.
 
   Args:
+  ----
     version_str: The SDK version.
 
   Returns:
+  -------
     Version string representing the image version should be used. For offcially
     released version of TFX SDK, we'll align the SDK and the image versions; For
     'dev' or customized versions we'll use the latest image version.

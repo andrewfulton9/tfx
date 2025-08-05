@@ -30,7 +30,8 @@ PARAMETER_NAME_LITERAL = r'(\\*"RuntimeParameter\\*")'
 class ExecutionDecision:
   """ExecutionDecision records how executor should perform next execution.
 
-  Attributes:
+  Attributes
+  ----------
     input_dict: Updated key -> types.Artifact for inputs that will be used by
       actual execution.
     output_dict: Updated key -> types.Artifact for outputs that will be used by
@@ -57,7 +58,8 @@ class ExecutionDecision:
 class DriverArgs:
   """Args to driver from orchestration system.
 
-  Attributes:
+  Attributes
+  ----------
     enable_cache: whether cache is enabled in current execution.
     interactive_resolution: whether to skip MLMD channel artifact resolution, if
       artifacts are already resolved for a channel when running in interactive
@@ -74,7 +76,8 @@ class DriverArgs:
 class PipelineInfo:
   """Pipeline info from orchestration system.
 
-  Attributes:
+  Attributes
+  ----------
     pipeline_name: name of the pipeline. We expect this to be unique for
       different pipelines.
     pipeline_root: root directory of the pipeline. We expect this to be unique
@@ -111,7 +114,8 @@ class PipelineInfo:
 class ComponentInfo:
   """Component info.
 
-  Attributes:
+  Attributes
+  ----------
     component_type: type of the component. Usually determined by the executor
       python path or image uri.
     component_id: a unique identifier of the component instance within pipeline.
@@ -150,7 +154,8 @@ class RuntimeParameter(json_utils.Jsonable):
   For protos, use text type RuntimeParameter, which holds the proto json
   string, e.g., `'{"num_steps": 5}'` for TrainArgs proto.
 
-  Attributes:
+  Attributes
+  ----------
     name: The name of the runtime parameter.
     default: Default value for runtime params when it's not explicitly
       specified.
@@ -180,7 +185,8 @@ class RuntimeParameter(json_utils.Jsonable):
     RuntimeParameter. Note: if ptype == Text or None, the serialization will be
     wrapped in double quotes.
 
-    Returns:
+    Returns
+    -------
       The json serialized version of RuntimeParameter.
     """
     return json_utils.dumps(self)

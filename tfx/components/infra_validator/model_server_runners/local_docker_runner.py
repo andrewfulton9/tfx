@@ -17,11 +17,11 @@ import os
 import time
 from typing import Any, Dict, Optional
 
-from absl import logging
 import docker
+from absl import logging
 from docker import errors as docker_errors
-from tfx.components.infra_validator import error_types
-from tfx.components.infra_validator import serving_bins
+
+from tfx.components.infra_validator import error_types, serving_bins
 from tfx.components.infra_validator.model_server_runners import base_runner
 from tfx.proto import infra_validator_pb2
 
@@ -56,13 +56,16 @@ def _find_host_port(ports: Dict[str, Any], container_port: int) -> str:
   }
 
   Args:
+  ----
     ports: Dictionary of docker container port mapping.
     container_port: Corresponding container port you're looking for.
 
   Returns:
+  -------
     A found host port.
 
   Raises:
+  ------
     ValueError: No corresponding host port was found.
   """
   mappings = ports.get('{}/tcp'.format(container_port), [])
@@ -89,6 +92,7 @@ class LocalDockerRunner(base_runner.BaseModelServerRunner):
     """Make a local docker runner.
 
     Args:
+    ----
       model_path: An IV-flavored model path. (See model_path_utils.py)
       serving_binary: A ServingBinary to run.
       serving_spec: A ServingSpec instance.

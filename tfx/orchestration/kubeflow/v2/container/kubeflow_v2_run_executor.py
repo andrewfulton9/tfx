@@ -17,23 +17,23 @@ import argparse
 import os
 from typing import List, Tuple
 
-from absl import app
-from absl import logging
+from absl import app, logging
 from absl.flags import argparse_flags
+from google.protobuf import json_format
 from kfp.pipeline_spec import pipeline_spec_pb2
+
 from tfx.components.evaluator import executor as evaluator_executor
-from tfx.dsl.components.base import base_beam_executor
-from tfx.dsl.components.base import base_executor
+from tfx.dsl.components.base import base_beam_executor, base_executor
 from tfx.dsl.io import fileio
 from tfx.orchestration.kubeflow.v2.container import kubeflow_v2_entrypoint_utils
 from tfx.orchestration.portable import outputs_utils
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.types import value_artifact
+from tfx.types import (
+  artifact_utils,
+  standard_artifacts,
+  standard_component_specs,
+  value_artifact,
+)
 from tfx.utils import import_utils
-
-from google.protobuf import json_format
 
 
 # TODO(b/166202742): Consolidate container entrypoint with Kubeflow runner.
@@ -43,6 +43,7 @@ def _run_executor(args: argparse.Namespace, beam_args: List[str]) -> None:
   """Selects a particular executor and run it based on name.
 
   Args:
+  ----
     args: --executor_class_path: The import path of the executor class.
       --json_serialized_invocation_args: Full JSON-serialized parameters for
       this execution. --json_serialized_inputs_spec_args: Full JSON-serialized
@@ -182,6 +183,7 @@ def _parse_flags(argv: List[str]) -> Tuple[argparse.Namespace, List[str]]:
   """Parses command line arguments.
 
   Args:
+  ----
     argv: Unparsed arguments for run_executor.py. Known argument names include
       --executor_class_path: Python class of executor in format of
         <module>.<class>.
@@ -200,9 +202,9 @@ def _parse_flags(argv: List[str]) -> Tuple[argparse.Namespace, List[str]]:
       https://cloud.google.com/dataflow/docs/guides/specifying-exec-params
 
   Returns:
+  -------
     Tuple of an argparse result and remaining beam args.
   """
-
   parser = argparse_flags.ArgumentParser()
   parser.add_argument(
       '--executor_class_path',

@@ -17,8 +17,7 @@ from tfx.components import StatisticsGen
 from tfx.dsl.components.common import resolver
 from tfx.dsl.experimental import latest_artifacts_resolver
 from tfx.orchestration import pipeline
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import channel_utils, standard_artifacts
 
 
 def create_test_pipeline():

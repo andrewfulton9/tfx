@@ -16,13 +16,12 @@
 from typing import List, Optional, Union
 
 from absl import logging
+
 from tfx import types
 from tfx.components.schema_gen import executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, executor_spec
 from tfx.orchestration import data_types
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
 
 
@@ -66,6 +65,7 @@ class SchemaGen(base_component.BaseComponent):
     """Constructs a SchemaGen component.
 
     Args:
+    ----
       statistics: A [BaseChannel][tfx.v1.types.BaseChannel]
         of `ExampleStatistics` type (required if spec is not passed).
         This should contain at least a `train` split. Other splits

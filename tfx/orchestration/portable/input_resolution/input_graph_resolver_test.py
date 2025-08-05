@@ -15,17 +15,16 @@
 
 from unittest import mock
 
-from absl.testing import parameterized
 import tensorflow as tf
+from absl.testing import parameterized
+from google.protobuf import text_format
+
 from tfx.dsl.components.common import resolver
 from tfx.dsl.input_resolution import resolver_op
 from tfx.dsl.input_resolution.ops import ops
-from tfx.orchestration.portable.input_resolution import exceptions
-from tfx.orchestration.portable.input_resolution import input_graph_resolver
+from tfx.orchestration.portable.input_resolution import exceptions, input_graph_resolver
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.types import standard_artifacts
-
-from google.protobuf import text_format
 
 
 class Integer(standard_artifacts.Integer):

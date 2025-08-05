@@ -18,26 +18,22 @@ import base64
 import itertools
 import re
 
-from absl.testing import parameterized
 import tensorflow as tf
-from tfx.dsl.compiler import placeholder_utils
-from tfx.orchestration.portable import data_types
-from tfx.proto import infra_validator_pb2
-from tfx.proto import trainer_pb2
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_invocation_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.proto.orchestration import placeholder_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.utils import proto_utils
-
-from google.protobuf import descriptor_pb2
-from google.protobuf import descriptor_pool
-from google.protobuf import json_format
-from google.protobuf import text_format
+from absl.testing import parameterized
+from google.protobuf import descriptor_pb2, descriptor_pool, json_format, text_format
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.dsl.compiler import placeholder_utils
+from tfx.orchestration.portable import data_types
+from tfx.proto import infra_validator_pb2, trainer_pb2
+from tfx.proto.orchestration import (
+  executable_spec_pb2,
+  execution_invocation_pb2,
+  pipeline_pb2,
+  placeholder_pb2,
+)
+from tfx.types import artifact_utils, standard_artifacts
+from tfx.utils import proto_utils
 
 TrainArgs = trainer_pb2.TrainArgs()
 
@@ -1960,7 +1956,8 @@ class PredicateResolutionTest(parameterized.TestCase, tf.test.TestCase):
     expression using the code to be tested, and assert that the resolved value
     is equal to `False`.
 
-    Returns:
+    Returns
+    -------
       A tuple with three items:
       - A Placeholder expression that always evaluates to True using the given
         ResolutionContext,
@@ -1968,7 +1965,6 @@ class PredicateResolutionTest(parameterized.TestCase, tf.test.TestCase):
         ResolutionContext, and
       - The ResolutionContext for evaluating the expression.
     """
-
     resolution_context = self._createResolutionContext({"channel_1": [1]})
     # Evaluating true_pb using the above resolution context is equivalent to
     # evaluating `1 == 1`.

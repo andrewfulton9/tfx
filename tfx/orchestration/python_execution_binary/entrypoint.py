@@ -18,13 +18,14 @@ the python executors in a pipeline. The resulting binary is called by the TFX
 launcher and should not be called directly.
 """
 
-from absl import flags
-from absl import logging
-from tfx.orchestration.python_execution_binary import python_execution_binary_utils
-from tfx.orchestration.python_execution_binary import python_execution_lib
-from tfx.orchestration.python_execution_binary import system_flags
-
+from absl import flags, logging
 from google.protobuf import text_format
+
+from tfx.orchestration.python_execution_binary import (
+  python_execution_binary_utils,
+  python_execution_lib,
+  system_flags,
+)
 
 FLAGS = flags.FLAGS
 

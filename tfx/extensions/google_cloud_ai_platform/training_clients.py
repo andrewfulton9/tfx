@@ -28,8 +28,7 @@ from googleapiclient import discovery
 
 from tfx import types
 from tfx.types import artifact_utils
-from tfx.utils import telemetry_utils
-from tfx.utils import version_utils
+from tfx.utils import telemetry_utils, version_utils
 
 # Default container image being used for CAIP training jobs.
 _TFX_IMAGE = 'gcr.io/tfx-oss-public/tfx:{}'.format(
@@ -79,6 +78,7 @@ class AbstractJobClient(abc.ABC):
     tfx.scripts.run_executor module.
 
     Args:
+    ----
       input_dict: Passthrough input dict for tfx.components.Trainer.executor.
       output_dict: Passthrough input dict for tfx.components.Trainer.executor.
       exec_properties: Passthrough input dict for
@@ -91,6 +91,7 @@ class AbstractJobClient(abc.ABC):
 
 
     Returns:
+    -------
       A dict containing the training arguments
     """
     pass
@@ -100,6 +101,7 @@ class AbstractJobClient(abc.ABC):
     """Launches a long-running job.
 
     Args:
+    ----
       project: The project name in the form of 'projects/{project_id}'
       training_job: A Cloud training job. For CAIP, See
         https://cloud.google.com/ml-engine/reference/rest/v1/projects.jobs for
@@ -120,9 +122,11 @@ class AbstractJobClient(abc.ABC):
     """Gets the state of the long-running job.
 
     Args:
+    ----
       response: The response from get_job
 
     Returns:
+    -------
       The job state.
     """
     pass
@@ -196,6 +200,7 @@ class CAIPJobClient(AbstractJobClient):
     tfx.scripts.run_executor module.
 
     Args:
+    ----
       input_dict: Passthrough input dict for tfx.components.Trainer.executor.
       output_dict: Passthrough input dict for tfx.components.Trainer.executor.
       exec_properties: Passthrough input dict for
@@ -211,6 +216,7 @@ class CAIPJobClient(AbstractJobClient):
       job_labels: Labels for AI Platform training job.
 
     Returns:
+    -------
       A dict containing the training arguments
     """
     training_inputs = job_args.copy()
@@ -251,12 +257,12 @@ class CAIPJobClient(AbstractJobClient):
     """Launches a long-running job.
 
     Args:
+    ----
       project: The GCP project under which the training job will be executed.
       training_job: A Cloud AI Platform training job. See
         https://cloud.google.com/ml-engine/reference/rest/v1/projects.jobs for
           the detailed schema.
     """
-
     parent = 'projects/{}'.format(project)
 
     # Submit job to AIP Training
@@ -277,9 +283,11 @@ class CAIPJobClient(AbstractJobClient):
     """Gets the state of the long-running job.
 
     Args:
+    ----
       response: The response from get_job
 
     Returns:
+    -------
       The job state.
     """
     return response['state']
@@ -325,6 +333,7 @@ class VertexJobClient(AbstractJobClient):
     tfx.scripts.run_executor module.
 
     Args:
+    ----
       input_dict: Passthrough input dict for tfx.components.Trainer.executor.
       output_dict: Passthrough input dict for tfx.components.Trainer.executor.
       exec_properties: Passthrough input dict for
@@ -343,6 +352,7 @@ class VertexJobClient(AbstractJobClient):
         https://cloud.google.com/vertex-ai/docs/reference/rest/v1/projects.locations.customJobs#CustomJob.
 
     Returns:
+    -------
       A dict containing the Vertex AI CustomJob
     """
     if job_labels:
@@ -405,12 +415,12 @@ class VertexJobClient(AbstractJobClient):
     """Launches a long-running job.
 
     Args:
+    ----
       project: The GCP project under which the training job will be executed.
       training_job: A CustomJob for AI Platform (Unified). See
         https://cloud.google.com/vertex-ai/docs/reference/rest/v1/projects.locations.customJobs#CustomJob
           the detailed schema.
     """
-
     parent = 'projects/{project}/locations/{location}'.format(
         project=project, location=self._region)
 
@@ -433,9 +443,11 @@ class VertexJobClient(AbstractJobClient):
     """Gets the state of the long-running job.
 
     Args:
+    ----
       response: The response from get_job
 
     Returns:
+    -------
       The job state.
     """
     return response.state
@@ -448,11 +460,13 @@ def get_job_client(
   """Gets the job client.
 
   Args:
+  ----
     enable_vertex: Whether to enable Vertex
     vertex_region: Region for training endpoint in Vertex. Defaults to
       'us-central1'.
 
   Returns:
+  -------
     The corresponding job client.
   """
   if enable_vertex:

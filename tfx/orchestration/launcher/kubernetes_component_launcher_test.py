@@ -16,21 +16,16 @@
 import os
 from unittest import mock
 
-from kubernetes import client
-from kubernetes import config
 import tensorflow as tf
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.orchestration import publisher
+from kubernetes import client, config
+from ml_metadata.proto import metadata_store_pb2
+
+from tfx.dsl.components.base import base_executor, executor_spec
+from tfx.orchestration import data_types, metadata, publisher
 from tfx.orchestration.config import kubernetes_component_config
-from tfx.orchestration.launcher import kubernetes_component_launcher
-from tfx.orchestration.launcher import test_utils
+from tfx.orchestration.launcher import kubernetes_component_launcher, test_utils
 from tfx.types import channel_utils
 from tfx.utils import kube_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 _KFP_NAMESPACE = 'ns-1'
 _KFP_PODNAME = 'pod-1'

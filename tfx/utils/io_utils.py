@@ -16,16 +16,18 @@
 import os
 import re
 import tempfile
-from typing import List, TypeVar, Iterable
+from typing import Iterable, List, TypeVar
 
-from tfx.dsl.io import fileio
-from google.protobuf import json_format
-from google.protobuf import text_format
+from google.protobuf import json_format, text_format
 from google.protobuf.message import Message
 
+from tfx.dsl.io import fileio
+
 try:
-  from tensorflow_metadata.proto.v0.schema_pb2 import Schema as schema_pb2_Schema  # pylint: disable=g-import-not-at-top,g-importing-member
-except ModuleNotFoundError as e:
+  from tensorflow_metadata.proto.v0.schema_pb2 import (
+    Schema as schema_pb2_Schema,  # pylint: disable=g-import-not-at-top,g-importing-member
+  )
+except ModuleNotFoundError:
   schema_pb2_Schema = None  # pylint: disable=invalid-name
 
 # Nano seconds per second.
@@ -48,7 +50,6 @@ def ensure_local(file_path: str) -> str:
 
 def copy_file(src: str, dst: str, overwrite: bool = False):
   """Copies a single file from source to destination."""
-
   if overwrite and fileio.exists(dst):
     fileio.remove(dst)
   dst_dir = os.path.dirname(dst)
@@ -65,6 +66,7 @@ def copy_dir(
   """Copies the whole directory recursively from source to destination.
 
   Args:
+  ----
     src: Source directory to copy from. <src>/a/b.txt will be copied to
         <dst>/a/b.txt.
     dst: Destination directoy to copy to. <src>/a/b.txt will be copied to
@@ -119,7 +121,6 @@ def copy_dir(
 
 def get_only_uri_in_dir(dir_path: str) -> str:
   """Gets the only uri from given directory."""
-
   files = fileio.listdir(dir_path)
   if len(files) != 1:
     raise RuntimeError(
@@ -130,14 +131,12 @@ def get_only_uri_in_dir(dir_path: str) -> str:
 
 def delete_dir(path: str) -> None:
   """Deletes a directory if exists."""
-
   if fileio.isdir(path):
     fileio.rmtree(path)
 
 
 def write_string_file(file_name: str, string_value: str) -> None:
   """Writes a string to file."""
-
   fileio.makedirs(os.path.dirname(file_name))
   with fileio.open(file_name, 'w') as f:
     f.write(string_value)
@@ -145,7 +144,6 @@ def write_string_file(file_name: str, string_value: str) -> None:
 
 def write_bytes_file(file_name: str, content: bytes) -> None:
   """Writes bytes to file."""
-
   fileio.makedirs(os.path.dirname(file_name))
   with fileio.open(file_name, 'wb') as f:
     f.write(content)
@@ -153,7 +151,6 @@ def write_bytes_file(file_name: str, content: bytes) -> None:
 
 def write_pbtxt_file(file_name: str, proto: Message) -> None:
   """Writes a text protobuf to file."""
-
   write_string_file(file_name, text_format.MessageToString(proto))
 
 
@@ -243,13 +240,17 @@ class SchemaReader:
     """Gets a tf.metadata schema.
 
     Args:
+    ----
       schema_path: Path to schema file.
 
     Returns:
+    -------
       A tf.metadata schema.
     """
     try:
-      from tensorflow_metadata.proto.v0 import schema_pb2  # pylint: disable=g-import-not-at-top
+      from tensorflow_metadata.proto.v0 import (
+        schema_pb2,  # pylint: disable=g-import-not-at-top
+      )
     except ModuleNotFoundError as e:
       raise Exception('The full "tfx" package must be installed to use this '
                       'functionality.') from e

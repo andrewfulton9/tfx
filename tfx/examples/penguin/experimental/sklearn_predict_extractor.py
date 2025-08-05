@@ -43,9 +43,11 @@ def _make_sklearn_predict_extractor(
   inputs are searched for under tfma.FEATURES_KEY.
 
   Args:
+  ----
     eval_shared_model: Shared model (single-model evaluation).
 
   Returns:
+  -------
     Extractor for extracting predictions.
   """
   eval_shared_models = tfma.utils.verify_and_update_eval_shared_models(
@@ -86,9 +88,11 @@ class _TFMAPredictionDoFn(tfma.utils.DoFnWithModels):
     """Uses loaded models to make predictions on batches of data.
 
     Args:
+    ----
       elem: An extract containing batched features.
 
     Yields:
+    ------
       Copy of the original extracts with predictions added for each model. If
       there are multiple models, a list of dicts keyed on model names will be
       added, with each value corresponding to a prediction for a single sample.
@@ -128,10 +132,12 @@ def _ExtractPredictions(  # pylint: disable=invalid-name
   """A PTransform that adds predictions and possibly other tensors to extracts.
 
   Args:
+  ----
     extracts: PCollection of extracts with inputs keyed by tfma.INPUTS_KEY.
     eval_shared_models: Shared model parameters keyed by model name.
 
   Returns:
+  -------
     PCollection of Extracts updated with the predictions.
   """
   return extracts | 'Predict' >> beam.ParDo(

@@ -18,11 +18,12 @@ from typing import Union
 
 from tfx.orchestration import metadata
 from tfx.orchestration.portable import data_types
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_invocation_pb2
-from tfx.proto.orchestration import metadata_pb2
+from tfx.proto.orchestration import (
+  executable_spec_pb2,
+  execution_invocation_pb2,
+  metadata_pb2,
+)
 from tfx.utils import import_utils
-
 
 _PythonClassExecutableSpec = executable_spec_pb2.PythonClassExecutableSpec
 _BeamExecutableSpec = executable_spec_pb2.BeamExecutableSpec

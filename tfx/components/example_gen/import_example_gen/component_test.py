@@ -14,6 +14,7 @@
 """Tests for tfx.components.example_gen.import_example_gen.component."""
 
 import tensorflow as tf
+
 from tfx.components.example_gen.import_example_gen import component
 from tfx.types import standard_artifacts
 

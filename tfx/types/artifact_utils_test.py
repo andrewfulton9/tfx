@@ -17,15 +17,17 @@
 import copy
 from unittest import mock
 
-from absl import logging
 import tensorflow as tf
-from tfx.types import artifact
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import system_artifacts
-from tfx.types import value_artifact
-
+from absl import logging
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.types import (
+  artifact,
+  artifact_utils,
+  standard_artifacts,
+  system_artifacts,
+  value_artifact,
+)
 
 
 class _MyArtifact(artifact.Artifact):

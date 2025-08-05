@@ -13,9 +13,11 @@
 # limitations under the License.
 """Base class for benchmarks."""
 
-from absl import flags
 import apache_beam as beam
-from tensorflow.python.platform import test  # pylint: disable=g-direct-tensorflow-import
+from absl import flags
+from tensorflow.python.platform import (
+  test,  # pylint: disable=g-direct-tensorflow-import
+)
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string(

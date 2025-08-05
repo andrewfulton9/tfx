@@ -16,9 +16,7 @@
 import enum
 from typing import Union
 
-from tensorflow_serving.apis import classification_pb2
-from tensorflow_serving.apis import predict_pb2
-from tensorflow_serving.apis import regression_pb2
+from tensorflow_serving.apis import classification_pb2, predict_pb2, regression_pb2
 
 TensorFlowServingRequest = Union[
     classification_pb2.ClassificationRequest,

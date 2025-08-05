@@ -16,7 +16,6 @@
 import abc
 from typing import Type
 
-
 from tfx import types
 from tfx.utils import abc_utils
 

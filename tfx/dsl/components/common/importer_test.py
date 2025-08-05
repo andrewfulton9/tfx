@@ -13,18 +13,15 @@
 # limitations under the License.
 """Tests for tfx.dsl.components.common.importer."""
 
-from absl.testing import parameterized
 import tensorflow as tf
+from absl.testing import parameterized
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.components.common import importer
-from tfx.orchestration import data_types
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.orchestration import data_types, data_types_utils, metadata
+from tfx.types import artifact_utils, standard_artifacts
 from tfx.utils import json_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class ImporterTest(tf.test.TestCase):

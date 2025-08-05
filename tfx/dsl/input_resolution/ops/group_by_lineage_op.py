@@ -14,13 +14,13 @@
 """Module for GroupByDisjointLineage operator."""
 
 import collections
-from typing import List, Iterable, Tuple
+from typing import Iterable, List, Tuple
+
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx.dsl.input_resolution import resolver_op
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.utils import typing_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def _get_neighbor_artifact_pairs(
@@ -33,9 +33,11 @@ def _get_neighbor_artifact_pairs(
   (e1.execution_id = e2.execution_id)
 
   Args:
+  ----
     events: A list of MLMD Events.
 
   Yields:
+  ------
     Edge as a tuple (artifact_id_1, artifact_id_2).
   """
   execs_by_art = collections.defaultdict(set)

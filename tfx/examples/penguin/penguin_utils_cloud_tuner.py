@@ -28,18 +28,17 @@ import datetime
 import os
 from typing import List
 
-from absl import logging
 import keras_tuner
 import tensorflow as tf
-from tensorflow import keras
 import tensorflow_transform as tft
-import tfx.v1 as tfx
-from tfx_bsl.public import tfxio
-
+from absl import logging
+from tensorflow import keras
 from tensorflow_cloud.core import machine_config
 from tensorflow_cloud.tuner import tuner as cloud_tuner
 from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx_bsl.public import tfxio
 
+import tfx.v1 as tfx
 
 _FEATURE_KEYS = [
     'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g'
@@ -64,7 +63,6 @@ def _transformed_name(key):
 
 def _get_tf_examples_serving_signature(model, tf_transform_output):
   """Returns a serving signature that accepts `tensorflow.Example`."""
-
   # We need to track the layers in the model in order to save it.
   # TODO(b/162357359): Revise once the bug is resolved.
   model.tft_layer_inference = tf_transform_output.transform_features_layer()
@@ -91,7 +89,6 @@ def _get_tf_examples_serving_signature(model, tf_transform_output):
 
 def _get_transform_features_signature(model, tf_transform_output):
   """Returns a serving signature that applies tf.Transform to features."""
-
   # We need to track the layers in the model in order to save it.
   # TODO(b/162357359): Revise once the bug is resolved.
   model.tft_layer_eval = tf_transform_output.transform_features_layer()
@@ -117,6 +114,7 @@ def _input_fn(file_pattern: List[str],
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     schema: Schema from TFTransform component.
@@ -124,6 +122,7 @@ def _input_fn(file_pattern: List[str],
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -139,9 +138,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature operations.
   """
   outputs = {}
@@ -171,9 +172,11 @@ def _build_keras_model(hparams: keras_tuner.HyperParameters) -> tf.keras.Model:
   """Creates a DNN Keras model for classifying penguin data.
 
   Args:
+  ----
     hparams: Holds HyperParameters for tuning.
 
   Returns:
+  -------
     A Keras Model.
   """
   # The model below is built with Functional API, please refer to
@@ -202,6 +205,7 @@ def tuner_fn(fn_args: tfx.components.FnArgs) -> tfx.components.TunerFnResult:
   """Build the tuner using the CloudTuner API.
 
   Args:
+  ----
     fn_args: Holds args as name/value pairs. See
       https://www.tensorflow.org/tfx/api_docs/python/tfx/components/trainer/fn_args_utils/FnArgs.
       - transform_graph_path: optional transform graph produced by TFT.
@@ -214,6 +218,7 @@ def tuner_fn(fn_args: tfx.components.FnArgs) -> tfx.components.TunerFnResult:
       - eval_steps: number of eval steps.
 
   Returns:
+  -------
     A namedtuple contains the following:
       - tuner: A BaseTuner that will be used for tuning.
       - fit_kwargs: Args to pass to tuner's run_trial function for fitting the
@@ -222,14 +227,13 @@ def tuner_fn(fn_args: tfx.components.FnArgs) -> tfx.components.TunerFnResult:
                     DistributingCloudTuner, we generate datasets at the remote
                     jobs rather than serialize and then deserialize them.
   """
-
   # study_id should be the same across multiple tuner workers which starts
   # approximately at the same time.
   study_id = 'DistributingCloudTuner_study_{}'.format(
             datetime.datetime.now().strftime('%Y%m%d%H'))
 
   if _CLOUD_FIT_IMAGE == 'gcr.io/my-project-id/cloud_fit':
-    raise ValueError('Build your own cloud_fit image, ' +
+    raise ValueError('Build your own cloud_fit image, '
                      'default dummy one is used!')
 
   tuner = cloud_tuner.DistributingCloudTuner(
@@ -275,6 +279,7 @@ def run_fn(fn_args: tfx.components.FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args as name/value pairs. See
       https://www.tensorflow.org/tfx/api_docs/python/tfx/components/trainer/fn_args_utils/FnArgs.
       - train_files: List of file paths containing training tf.Example data.

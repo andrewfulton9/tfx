@@ -13,15 +13,15 @@
 # limitations under the License.
 """PTransform for write split."""
 import os
-from typing import Optional, Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 
 import apache_beam as beam
 import tensorflow as tf
+from tfx_bsl.telemetry import util
+
 from tfx.proto import example_gen_pb2
 from tfx.types import standard_component_specs
 from tfx.utils import deprecation_utils
-from tfx_bsl.telemetry import util
-
 
 DEFAULT_PARQUET_FILE_NAME = 'data_parquet'
 deprecation_utils.warn_deprecated('DEFAULT_FILE_NAME will be deprecated soon')

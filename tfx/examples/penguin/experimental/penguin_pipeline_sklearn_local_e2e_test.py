@@ -15,15 +15,15 @@
 
 import os
 
+import pytest
 import tensorflow as tf
+
 from tfx import v1 as tfx
 from tfx.examples.penguin.experimental import penguin_pipeline_sklearn_local
 from tfx.orchestration import metadata
 
-import pytest
 
-
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class PenguinPipelineSklearnLocalEndToEndTest(tf.test.TestCase):
 
   def setUp(self):

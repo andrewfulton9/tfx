@@ -16,16 +16,17 @@
 from typing import Any, Dict, List
 
 import absl
+
 from tfx import types
 from tfx.components.trainer import executor as tfx_trainer_executor
 from tfx.dsl.components.base import base_executor
 from tfx.extensions.google_cloud_ai_platform import runner
-from tfx.extensions.google_cloud_ai_platform.constants import ENABLE_VERTEX_KEY
-from tfx.extensions.google_cloud_ai_platform.constants import VERTEX_REGION_KEY
+from tfx.extensions.google_cloud_ai_platform.constants import (
+  ENABLE_VERTEX_KEY,
+  VERTEX_REGION_KEY,
+)
 from tfx.types import standard_component_specs
-from tfx.utils import doc_controls
-from tfx.utils import json_utils
-from tfx.utils import name_utils
+from tfx.utils import doc_controls, json_utils, name_utils
 
 TRAINING_ARGS_KEY = doc_controls.documented(
     obj='ai_platform_training_args',
@@ -73,6 +74,7 @@ class GenericExecutor(base_executor.BaseExecutor):
     """Starts a trainer job on Google Cloud AI Platform.
 
     Args:
+    ----
       input_dict: Passthrough input dict for tfx.components.Trainer.executor.
       output_dict: Passthrough input dict for tfx.components.Trainer.executor.
       exec_properties: Mostly a passthrough input dict for
@@ -86,6 +88,7 @@ class GenericExecutor(base_executor.BaseExecutor):
         https://cloud.google.com/ml-engine/docs/tensorflow/training-jobs#configuring_the_job
 
     Returns:
+    -------
       None
     Raises:
       ValueError: if ai_platform_training_args is not in

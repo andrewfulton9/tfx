@@ -16,14 +16,12 @@
 import os
 import sys
 
-from absl import flags
-from absl import logging
+from absl import flags, logging
 
 from tfx.components.example_gen.csv_example_gen.component import CsvExampleGen
 from tfx.components.schema_gen.component import SchemaGen
 from tfx.components.statistics_gen.component import StatisticsGen
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.local import local_dag_runner
 
 _pipeline_name = 'chicago_taxi_local'
@@ -39,7 +37,6 @@ _metadata_path = os.path.join(_tfx_root, 'metadata', _pipeline_name,
 def _create_pipeline(pipeline_name: str, pipeline_root: str, data_root: str,
                      metadata_path: str) -> pipeline.Pipeline:
   """Implements the chicago taxi pipeline with TFX."""
-
   # Brings data into the pipeline or otherwise joins/converts training data.
   example_gen = CsvExampleGen(input_base=data_root)
 

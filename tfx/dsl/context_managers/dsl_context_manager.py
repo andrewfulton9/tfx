@@ -28,10 +28,9 @@ with-as block.
 
 import abc
 import types
-from typing import TypeVar, Generic, Optional, Type
+from typing import Generic, Optional, Type, TypeVar
 
-from tfx.dsl.context_managers import dsl_context
-from tfx.dsl.context_managers import dsl_context_registry
+from tfx.dsl.context_managers import dsl_context, dsl_context_registry
 
 _Handle = TypeVar('_Handle')
 
@@ -52,7 +51,8 @@ class DslContextManager(Generic[_Handle], abc.ABC):
     Since DslContextManager can __enter__ multiple times and each represents
     a different context, the return value should be newly created (not reused).
 
-    Returns:
+    Returns
+    -------
       Newly created DslContext object.
     """
     raise NotImplementedError()
@@ -65,6 +65,7 @@ class DslContextManager(Generic[_Handle], abc.ABC):
     to augment DSL syntax.
 
     Args:
+    ----
       context: Newly created DslContext that DslContextManager has created for
           the __enter__().
     """

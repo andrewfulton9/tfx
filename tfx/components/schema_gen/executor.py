@@ -16,16 +16,14 @@
 import os
 from typing import Any, Dict, List
 
-from absl import logging
 import tensorflow_data_validation as tfdv
+from absl import logging
+
 from tfx import types
 from tfx.components.statistics_gen import stats_artifact_utils
 from tfx.dsl.components.base import base_executor
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import json_utils
-
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, json_utils
 
 # Default file name for generated schema file.
 DEFAULT_FILE_NAME = 'schema.pbtxt'
@@ -43,6 +41,7 @@ class Executor(base_executor.BaseExecutor):
     stats.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts, including:
         - 'statistics': A list of 'ExampleStatistics' type.
       output_dict: Output dict from key to a list of artifacts, including:
@@ -53,6 +52,7 @@ class Executor(base_executor.BaseExecutor):
           consideration when auto-generating a schema.
 
     Returns:
+    -------
       None
     """
     infer_feature_shape = bool(

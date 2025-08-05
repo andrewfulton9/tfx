@@ -17,11 +17,9 @@ from typing import Dict
 
 import apache_beam as beam
 import tensorflow as tf
-from tfx.dsl.component.experimental import annotations
-from tfx.dsl.component.experimental import annotations_test_proto_pb2
-from tfx.types import artifact
-from tfx.types import standard_artifacts
-from tfx.types import value_artifact
+
+from tfx.dsl.component.experimental import annotations, annotations_test_proto_pb2
+from tfx.types import artifact, standard_artifacts, value_artifact
 
 
 class AnnotationsTest(tf.test.TestCase):

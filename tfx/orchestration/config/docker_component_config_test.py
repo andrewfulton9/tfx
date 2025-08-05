@@ -14,6 +14,7 @@
 """Tests for tfx.orchestration.config.docker_component_config."""
 
 import tensorflow as tf
+
 from tfx.orchestration.config import docker_component_config
 
 

@@ -16,12 +16,9 @@ from typing import Optional
 
 from tfx import types
 from tfx.components.experimental.data_view import provider_executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, executor_spec
 from tfx.types import standard_artifacts
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ComponentSpec
-from tfx.types.component_spec import ExecutionParameter
+from tfx.types.component_spec import ChannelParameter, ComponentSpec, ExecutionParameter
 
 
 class _TfGraphDataViewProviderSpec(ComponentSpec):
@@ -45,6 +42,7 @@ class TfGraphDataViewProvider(base_component.BaseComponent):
   (in the form of a TF SavedModel) as its output artifact.
 
   Example:
+  -------
   ```
     # Import a decoder that can be created by a function 'create_decoder()' in
     # module_file:
@@ -65,6 +63,7 @@ class TfGraphDataViewProvider(base_component.BaseComponent):
     """Construct a StatisticsGen component.
 
     Args:
+    ----
       create_decoder_func: If `module_file` is not None, this should be the name
         of the function in `module_file` that this component need to use to
         create the TfGraphRecordDecoder. Otherwise it should be the path

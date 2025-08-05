@@ -13,32 +13,29 @@
 # limitations under the License.
 """Public API for standard_artifacts."""
 
+# Artifacts of small scalar-values.
 from tfx.types.standard_artifacts import (
-    Examples,
+    Boolean,
+    Bytes,
     ExampleAnomalies,
+    Examples,
     ExampleStatistics,
+    Float,
+    HyperParameters,
     InferenceResult,
     InfraBlessing,
+    Integer,
+    JsonValue,
     Model,
-    ModelRun,
     ModelBlessing,
     ModelEvaluation,
+    ModelRun,
     PushedModel,
     Schema,
+    String,
     TransformCache,
     TransformGraph,
     TunerResults,
-    HyperParameters,
-)
-
-# Artifacts of small scalar-values.
-from tfx.types.standard_artifacts import (
-    Bytes,
-    Float,
-    Integer,
-    String,
-    Boolean,
-    JsonValue,
 )
 
 __all__ = [

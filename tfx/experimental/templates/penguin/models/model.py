@@ -18,23 +18,21 @@ parameters defined in constants.py.
 """
 
 from typing import List
-from absl import logging
-import tensorflow as tf
-from tensorflow import keras
-import tensorflow_transform as tft
-from tensorflow_transform.tf_metadata import schema_utils
 
-from tfx import v1 as tfx
-from tfx.experimental.templates.penguin.models import constants
-from tfx.experimental.templates.penguin.models import features
+import tensorflow as tf
+import tensorflow_transform as tft
+from absl import logging
+from tensorflow import keras
+from tensorflow_metadata.proto.v0 import schema_pb2
+from tensorflow_transform.tf_metadata import schema_utils
 from tfx_bsl.public import tfxio
 
-from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx import v1 as tfx
+from tfx.experimental.templates.penguin.models import constants, features
 
 
 def _get_tf_examples_serving_signature(model, schema, tf_transform_output):
   """Returns a serving signature that accepts `tensorflow.Example`."""
-
   if tf_transform_output is None:  # Transform component is not used.
 
     @tf.function(input_signature=[
@@ -83,7 +81,6 @@ def _get_tf_examples_serving_signature(model, schema, tf_transform_output):
 
 def _get_transform_features_signature(model, schema, tf_transform_output):
   """Returns a serving signature that applies tf.Transform to features."""
-
   if tf_transform_output is None:  # Transform component is not used.
     @tf.function(input_signature=[
         tf.TensorSpec(shape=[None], dtype=tf.string, name='examples')
@@ -124,6 +121,7 @@ def _input_fn(file_pattern: List[str],
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     schema: A schema proto of input data.
@@ -132,6 +130,7 @@ def _input_fn(file_pattern: List[str],
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -145,9 +144,11 @@ def _build_keras_model(feature_list: List[str]) -> tf.keras.Model:
   """Creates a DNN Keras model for classifying penguin data.
 
   Args:
+  ----
     feature_list: List of feature names.
 
   Returns:
+  -------
     A Keras Model.
   """
   # The model below is built with Functional API, please refer to
@@ -174,6 +175,7 @@ def run_fn(fn_args: tfx.components.FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   if fn_args.transform_output is None:  # Transform is not used.

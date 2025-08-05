@@ -15,14 +15,12 @@
 
 from typing import List
 
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx import types
 from tfx.dsl.input_resolution import resolver_op
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import test_utils
+from tfx.dsl.input_resolution.ops import ops, test_utils
 from tfx.orchestration.portable.input_resolution import exceptions
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class TrainingRangeOpTest(

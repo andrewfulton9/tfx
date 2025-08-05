@@ -14,6 +14,7 @@
 """Tests for tfx.utils.version_utils."""
 
 import tensorflow as tf
+
 from tfx.utils import version_utils
 
 

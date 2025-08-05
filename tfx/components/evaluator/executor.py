@@ -16,24 +16,20 @@
 import os
 from typing import Any, Dict, List
 
-from absl import logging
 import apache_beam as beam
 import tensorflow_model_analysis as tfma
+from absl import logging
+from tfx_bsl.tfxio import tensor_adapter
+
 # Need to import the following module so that the fairness indicator post-export
 # metric is registered.
 from tfx import types
 from tfx.components.evaluator import constants
-from tfx.components.util import udf_utils
-from tfx.components.util import tfxio_utils
+from tfx.components.util import tfxio_utils, udf_utils
 from tfx.dsl.components.base import base_beam_executor
 from tfx.proto import evaluator_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import json_utils
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
-from tfx_bsl.tfxio import tensor_adapter
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, json_utils, path_utils, proto_utils
 
 _TELEMETRY_DESCRIPTORS = ['Evaluator']
 
@@ -47,9 +43,11 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     """Given a feature slicing spec, returns a List of SingleSliceSpecs.
 
     Args:
+    ----
       spec: slice specification.
 
     Returns:
+    -------
       List of corresponding SingleSliceSpecs. Always includes the overall slice,
       even if it was not specified in the given spec.
     """
@@ -68,6 +66,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     """Runs a batch job to evaluate the eval_model against the given input.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts.
         - model: exported model.
         - examples: examples for eval the model.
@@ -83,6 +82,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
           None) is using the 'eval' split.
 
     Returns:
+    -------
       None
     """
     if standard_component_specs.EXAMPLES_KEY not in input_dict:

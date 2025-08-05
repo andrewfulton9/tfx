@@ -20,8 +20,7 @@ import click
 import docker
 from docker import utils as docker_utils
 
-from tfx.tools.cli.container_builder import dockerfile
-from tfx.tools.cli.container_builder import labels
+from tfx.tools.cli.container_builder import dockerfile, labels
 
 _BUILD_TIMEOUT_SECS = 5 * 60  # Changes default 1min to 5min.
 
@@ -54,6 +53,7 @@ def build(target_image: str,
   Generates a dockerfile if needed and build a container image using docker SDK.
 
   Args:
+  ----
     target_image: the target image path to be built.
     base_image: the image path to use as the base image.
     dockerfile_name: the dockerfile name, which is stored in the workspace
@@ -64,6 +64,7 @@ def build(target_image: str,
       is copied and PYTHONPATH is configured.
 
   Returns:
+  -------
     Built image name with sha256 id.
   """
   dockerfile_name = dockerfile_name or os.path.join(labels.BUILD_CONTEXT,

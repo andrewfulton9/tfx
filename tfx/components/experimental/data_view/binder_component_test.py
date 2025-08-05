@@ -13,9 +13,9 @@
 # limitations under the License.
 """Tests for tfx.components.data_view.binder_component."""
 import tensorflow as tf  # pylint: disable=g-explicit-tensorflow-version-import
+
 from tfx.components.experimental.data_view import binder_component
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import channel_utils, standard_artifacts
 
 
 class BinderComponentTest(tf.test.TestCase):

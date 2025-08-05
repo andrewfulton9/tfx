@@ -15,12 +15,12 @@
 
 import abc
 
+from google.protobuf import message
+
 from tfx.orchestration import metadata
 from tfx.orchestration.portable import data_types
 from tfx.proto.orchestration import driver_output_pb2
 from tfx.utils import abc_utils
-
-from google.protobuf import message
 
 
 class BaseDriverOperator(abc.ABC):
@@ -33,10 +33,12 @@ class BaseDriverOperator(abc.ABC):
     """Constructor.
 
     Args:
+    ----
       driver_spec: The specification of how to initialize the driver.
       mlmd_connection: ML metadata connection.
 
     Raises:
+    ------
       RuntimeError: if the driver_spec is not supported.
     """
     if not isinstance(driver_spec,
@@ -52,10 +54,12 @@ class BaseDriverOperator(abc.ABC):
     """Invokes the driver with inputs provided by the Launcher.
 
     Args:
+    ----
       execution_info: data_types.ExecutionInfo containing information needed for
         driver execution.
 
     Returns:
+    -------
       An DriverOutput instance.
     """
     pass

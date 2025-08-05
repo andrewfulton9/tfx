@@ -18,17 +18,18 @@ from typing import Any, Dict, List
 
 from google.api_core import client_options
 from googleapiclient import discovery
+
 from tfx import types
 from tfx.components.pusher import executor as tfx_pusher_executor
-from tfx.extensions.google_cloud_ai_platform import constants
-from tfx.extensions.google_cloud_ai_platform import runner
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import deprecation_utils
-from tfx.utils import io_utils
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-from tfx.utils import telemetry_utils
+from tfx.extensions.google_cloud_ai_platform import constants, runner
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import (
+  deprecation_utils,
+  io_utils,
+  json_utils,
+  name_utils,
+  telemetry_utils,
+)
 
 # Keys for custom_config.
 _CUSTOM_CONFIG_KEY = 'custom_config'
@@ -43,6 +44,7 @@ class Executor(tfx_pusher_executor.Executor):
     """Overrides the tfx_pusher_executor.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of artifacts, including:
         - model_export: exported model from trainer.
         - model_blessing: model blessing path from evaluator.
@@ -70,6 +72,7 @@ class Executor(tfx_pusher_executor.Executor):
             https://cloud.google.com/vertex-ai/docs/general/locations
 
     Raises:
+    ------
       ValueError:
         If ai_platform_serving_args is not in exec_properties.custom_config.
         If Serving model path does not start with gs://.

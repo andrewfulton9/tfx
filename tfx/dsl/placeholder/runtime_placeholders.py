@@ -18,19 +18,21 @@ from __future__ import annotations
 import typing
 from typing import Any, Literal, Union
 
+from google.protobuf import message
+
 from tfx.dsl.placeholder import placeholder_base
 from tfx.proto.orchestration import placeholder_pb2
-
-from google.protobuf import message
 
 
 def exec_property(key: str) -> ExecPropertyPlaceholder:
   """Returns a Placeholder that represents an execution property.
 
   Args:
+  ----
     key: The key of the output artifact.
 
   Returns:
+  -------
     A Placeholder that supports
 
       1. Rendering the value of an execution property at a given key.
@@ -65,14 +67,17 @@ def runtime_info(key: RuntimeInfoKeys) -> RuntimeInfoPlaceholder:
 
 
   Args:
+  ----
     key: The key of the runtime information.
 
   Returns:
+  -------
     A Placeholder that will render to the information associated with the key.
       If the placeholder is proto-valued. Accessing a proto field can be
       represented as if accessing a proto field in Python.
 
   Raises:
+  ------
     ValueError: If received unsupported key.
   """
   return RuntimeInfoPlaceholder(key)
@@ -81,7 +86,8 @@ def runtime_info(key: RuntimeInfoKeys) -> RuntimeInfoPlaceholder:
 def execution_invocation() -> ExecInvocationPlaceholder:
   """Returns a Placeholder representing ExecutionInvocation proto.
 
-  Returns:
+  Returns
+  -------
     A Placeholder that will render to the ExecutionInvocation proto.
       Accessing a proto field is the same as if accessing a proto field in Python.
 
@@ -96,9 +102,11 @@ def environment_variable(key: str) -> EnvironmentVariablePlaceholder:
   """Returns a Placeholder representing EnvironmentVariable proto.
 
   Args:
+  ----
     key: The key of the environment variable.
 
   Returns:
+  -------
     A Placeholder that supports
 
       1. Rendering the value of an environment variable for a given key.

@@ -15,10 +15,10 @@
 from typing import Any, Dict, List, Optional
 
 import attr
+
 from tfx import types
 from tfx.orchestration import data_types_utils
-from tfx.proto.orchestration import execution_invocation_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.proto.orchestration import execution_invocation_pb2, pipeline_pb2
 
 
 # TODO(b/150979622): We should introduce an id that is not changed across

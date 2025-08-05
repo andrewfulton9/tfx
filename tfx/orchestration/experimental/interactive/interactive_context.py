@@ -29,20 +29,20 @@ from typing import List, Optional
 import absl
 import jinja2
 import nbformat
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_node
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.orchestration.experimental.interactive import execution_result
-from tfx.orchestration.experimental.interactive import notebook_formatters
-from tfx.orchestration.experimental.interactive import notebook_utils
-from tfx.orchestration.experimental.interactive import standard_visualizations
-from tfx.orchestration.experimental.interactive import visualizations
+from tfx.dsl.components.base import base_component, base_node
+from tfx.orchestration import data_types, metadata
+from tfx.orchestration.experimental.interactive import (
+  execution_result,
+  notebook_formatters,
+  notebook_utils,
+  standard_visualizations,
+  visualizations,
+)
 from tfx.orchestration.launcher import in_process_component_launcher
 from tfx.utils import telemetry_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 _SKIP_FOR_EXPORT_MAGIC = '%%skip_for_export'
 _MAGIC_PREFIX = '%'
@@ -68,6 +68,7 @@ class InteractiveContext:
     """Initialize an InteractiveContext.
 
     Args:
+    ----
       pipeline_name: Optional name of the pipeline for ML Metadata tracking
         purposes. If not specified, a name will be generated for you.
       pipeline_root: Optional path to the root of the pipeline's outputs. If not
@@ -79,7 +80,6 @@ class InteractiveContext:
       beam_pipeline_args: Optional Beam pipeline args for beam jobs within
         executor. Executor will use beam DirectRunner as Default.
     """
-
     if not pipeline_name:
       pipeline_name = ('interactive-%s' %
                        datetime.datetime.now().isoformat().replace(':', '_'))
@@ -119,6 +119,7 @@ class InteractiveContext:
     """Run a given TFX component in the interactive context.
 
     Args:
+    ----
       component: Component instance to be run.
       enable_cache: whether caching logic should be enabled in the driver.
       beam_pipeline_args: Optional Beam pipeline args for beam jobs within
@@ -126,6 +127,7 @@ class InteractiveContext:
         will override beam_pipeline_args specified in constructor.
 
     Returns:
+    -------
       execution_result.ExecutionResult object.
     """
     run_id = datetime.datetime.now().isoformat()
@@ -172,6 +174,7 @@ class InteractiveContext:
     """Exports a notebook to a .py file as a runnable pipeline.
 
     Args:
+    ----
       notebook_filepath: String path of the notebook file, e.g.
         '/path/to/notebook.ipynb'.
       export_filepath: String path for the exported pipeline python file, e.g.
@@ -201,10 +204,10 @@ class InteractiveContext:
         # invocations (e.g. !pip install ...).
         # Note: This will not work for magics invoked without the prefix when
         # %automagic is set.
-        sources.append(('\n'.join(
+        sources.append('\n'.join(
             line for line in cell_source.split('\n')
             if not (line.lstrip().startswith(_MAGIC_PREFIX) or
-                    line.lstrip().startswith(_CMD_LINE_PREFIX)))))
+                    line.lstrip().startswith(_CMD_LINE_PREFIX))))
 
       jinja_env = jinja2.Environment(
           loader=jinja2.PackageLoader(
@@ -222,8 +225,10 @@ class InteractiveContext:
   @notebook_utils.requires_ipython
   def show(self, item: object) -> None:
     """Show the given object in an IPython notebook display."""
-    from IPython.core.display import display  # pylint: disable=g-import-not-at-top
-    from IPython.core.display import HTML  # pylint: disable=g-import-not-at-top
+    from IPython.core.display import (
+      HTML,  # pylint: disable=g-import-not-at-top
+      display,  # pylint: disable=g-import-not-at-top
+    )
     if isinstance(item, types.Channel):
       channel = item
       artifacts = channel.get()

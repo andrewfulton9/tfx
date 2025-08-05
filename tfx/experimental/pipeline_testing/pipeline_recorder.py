@@ -13,8 +13,7 @@
 # limitations under the License.
 """Recording pipeline from MLMD metadata."""
 
-from absl import app
-from absl import flags
+from absl import app, flags
 
 from tfx.experimental.pipeline_testing import pipeline_recorder_utils
 

@@ -19,15 +19,13 @@ import tensorflow as tf
 import tensorflow_data_validation as tfdv
 import tensorflow_hub as hub
 import tensorflow_transform as tft
+from google.protobuf import text_format
+from tfx_bsl.public import tfxio
 
 from tfx import v1 as tfx
 from tfx.components.transform import stats_options_util
 from tfx.examples.bert.utils.bert_models import build_and_compile_bert_classifier
 from tfx.examples.bert.utils.bert_tokenizer_utils import BertPreprocessor
-
-from tfx_bsl.public import tfxio
-
-from google.protobuf import text_format
 
 _BERT_LINK = 'https://tfhub.dev/tensorflow/bert_en_cased_L-12_H-768_A-12/2'
 _BERT_VOCAB = 'bert_vocab'
@@ -62,9 +60,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature Tensors.
   """
   input_word_ids, input_mask, segment_ids = _tokenize(inputs[_FEATURE_KEY_A],
@@ -90,12 +90,14 @@ def stats_options_updater_fn(
   are to be (optionally) modified before being passed onto TDFV.
 
   Args:
+  ----
     stats_type: The type of statistics that are to be computed (pre-transform or
       post-transform).
     stats_options: The configuration to pass to TFDV for computing the desired
       statistics.
 
   Returns:
+  -------
     An updated StatsOptions object.
   """
   if stats_type == stats_options_util.StatsType.POST_TRANSFORM:
@@ -161,6 +163,7 @@ def _input_fn(file_pattern: List[str],
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     tf_transform_output: A TFTransformOutput.
@@ -168,6 +171,7 @@ def _input_fn(file_pattern: List[str],
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -183,7 +187,6 @@ def _input_fn(file_pattern: List[str],
 
 def _get_serve_tf_examples_fn(model, tf_transform_output):
   """Returns a function that parses a serialized tf.Example."""
-
   model.tft_layer = tf_transform_output.transform_features_layer()
 
   @tf.function
@@ -207,6 +210,7 @@ def run_fn(fn_args: tfx.components.FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   tf_transform_output = tft.TFTransformOutput(fn_args.transform_output)

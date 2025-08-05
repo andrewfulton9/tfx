@@ -16,13 +16,12 @@
 import os
 
 import tensorflow as tf
+from google.protobuf import text_format
+
 from tfx.components.schema_gen import executor as schema_gen_executor
 from tfx.components.schema_gen.import_schema_gen import executor as _executor
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import test_case_utils
-from google.protobuf import text_format
+from tfx.types import standard_artifacts, standard_component_specs
+from tfx.utils import io_utils, test_case_utils
 
 
 class ExecutorTest(test_case_utils.TfxTest):

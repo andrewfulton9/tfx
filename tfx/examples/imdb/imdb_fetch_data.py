@@ -14,6 +14,7 @@
 """A script to fetch IMDB data set."""
 
 import os
+
 import pandas as pd
 import tensorflow_datasets as tfds
 
@@ -52,7 +53,6 @@ import tensorflow_datasets as tfds
 
 def fetch_data():
   """This downloads the full dataset to $(pwd)/data/imdb.csv."""
-
   ds = tfds.load('imdb_reviews', split='train+test')
   numpy_ds = tfds.as_numpy(ds)
   df = pd.DataFrame(numpy_ds)

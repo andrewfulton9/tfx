@@ -16,21 +16,22 @@
 
 import os
 from typing import Optional
-
 from unittest import mock
+
+from google.protobuf import message, text_format
+
 from tfx.dsl.compiler import constants
 from tfx.orchestration import metadata
 from tfx.orchestration.beam import beam_dag_runner
 from tfx.orchestration.beam.legacy import beam_dag_runner as legacy_beam_dag_runner
 from tfx.orchestration.config import pipeline_config
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import local_deployment_config_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.proto.orchestration import platform_config_pb2
+from tfx.proto.orchestration import (
+  executable_spec_pb2,
+  local_deployment_config_pb2,
+  pipeline_pb2,
+  platform_config_pb2,
+)
 from tfx.utils import test_case_utils
-
-from google.protobuf import message
-from google.protobuf import text_format
 
 _PythonClassExecutableSpec = executable_spec_pb2.PythonClassExecutableSpec
 _ContainerExecutableSpec = executable_spec_pb2.ContainerExecutableSpec

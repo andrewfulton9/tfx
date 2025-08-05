@@ -26,14 +26,12 @@ import numpy as np
 from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-
-from tfx.components.trainer.fn_args_utils import DataAccessor
-from tfx.components.trainer.fn_args_utils import FnArgs
-from tfx.dsl.io import fileio
-from tfx.utils import io_utils
+from tensorflow_metadata.proto.v0 import schema_pb2
 from tfx_bsl.tfxio import dataset_options
 
-from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx.components.trainer.fn_args_utils import DataAccessor, FnArgs
+from tfx.dsl.io import fileio
+from tfx.utils import io_utils
 
 _FEATURE_KEYS = [
     'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g'
@@ -55,6 +53,7 @@ def _input_fn(
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: input tfrecord file pattern.
     data_accessor: DataAccessor for converting input to RecordBatch.
     schema: schema of the input data.
@@ -62,6 +61,7 @@ def _input_fn(
       batch.
 
   Returns:
+  -------
     A (features, indices) tuple where features is a matrix of features, and
       indices is a single vector of label indices.
   """
@@ -89,6 +89,7 @@ def run_fn(fn_args: FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   schema = io_utils.parse_pbtxt_file(fn_args.schema_file, schema_pb2.Schema())

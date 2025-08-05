@@ -21,7 +21,6 @@ import click
 from tfx import version
 from tfx.tools.cli.container_builder import labels
 
-
 _DEFAULT_DOCKERFILE_CONTENT_WITH_SETUP_PY = '''FROM %s
 WORKDIR /pipeline
 COPY ./ ./
@@ -38,7 +37,8 @@ class Dockerfile:
 
   Dockerfile generates a default dockerfile if it does not exist.
 
-  Attributes:
+  Attributes
+  ----------
     filename: dockerfile filename.
     setup_py_filename: setup.py filename that defines the pipeline PIP package.
   """

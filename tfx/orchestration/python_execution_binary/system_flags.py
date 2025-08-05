@@ -16,8 +16,11 @@
 from typing import TypeVar
 
 from absl import flags
+
 from tfx.orchestration.portable import data_types
-from tfx.orchestration.python_execution_binary import python_execution_binary_utils as flag_utils
+from tfx.orchestration.python_execution_binary import (
+  python_execution_binary_utils as flag_utils,
+)
 
 _LEGACY_EXECUTION_INVOCATION = flags.DEFINE_string(
     'tfx_execution_info_b64',

@@ -13,6 +13,7 @@
 # limitations under the License.
 """Runtime context dataclass for Python executables."""
 from typing import Optional
+
 import attr
 
 from tfx.orchestration.portable import data_types

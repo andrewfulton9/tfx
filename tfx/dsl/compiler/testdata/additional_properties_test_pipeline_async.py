@@ -14,22 +14,16 @@
 """Test pipeline using custom components for tfx.dsl.compiler.compiler."""
 
 import os
-
 from typing import Any, Dict, List, Optional
 
+from google.protobuf import duration_pb2, timestamp_pb2
+
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.orchestration import pipeline
 from tfx.proto.orchestration import pipeline_pb2
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
-from tfx.types.artifact import Artifact
-from tfx.types.artifact import Property
-from tfx.types.artifact import PropertyType
-from google.protobuf import duration_pb2
-from google.protobuf import timestamp_pb2
+from tfx.types import component_spec, standard_artifacts
+from tfx.types.artifact import Artifact, Property, PropertyType
 
 
 class StatsMetadata(Artifact):

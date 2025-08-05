@@ -13,8 +13,8 @@
 # limitations under the License.
 """Tests for tfx.components.data_view.binder_executor."""
 import tensorflow as tf  # pylint: disable=g-explicit-tensorflow-version-import
-from tfx.components.experimental.data_view import binder_executor
-from tfx.components.experimental.data_view import constants
+
+from tfx.components.experimental.data_view import binder_executor, constants
 from tfx.types import standard_artifacts
 
 

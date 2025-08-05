@@ -15,13 +15,12 @@
 
 from typing import Any, Dict, List, Optional
 
-from tfx.dsl.component.experimental import component_utils
-from tfx.dsl.component.experimental import placeholders
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
-from tfx.orchestration.kubeflow.v2.components.experimental import ai_platform_training_executor
-from tfx.types import channel_utils
-from tfx.types import component_spec
+from tfx.dsl.component.experimental import component_utils, placeholders
+from tfx.dsl.components.base import base_component, executor_spec
+from tfx.orchestration.kubeflow.v2.components.experimental import (
+  ai_platform_training_executor,
+)
+from tfx.types import channel_utils, component_spec
 from tfx.utils import json_utils
 
 
@@ -151,6 +150,7 @@ def create_ai_platform_training(
   ```
 
   Args:
+  ----
     name: name of the component. This is needed to construct the component spec
       and component class dynamically as well.
     project_id: the GCP project under which the AIP training job will be
@@ -176,9 +176,11 @@ def create_ai_platform_training(
     parameters: the dict of component parameters, aka, execution properties.
 
   Returns:
+  -------
     A component instance that represents the AIP job in the DSL.
 
   Raises:
+  ------
     ValueError: when image_uri is missing and masterConfig is not specified in
       training_input, or when region is missing and training_input
       does not provide region either.

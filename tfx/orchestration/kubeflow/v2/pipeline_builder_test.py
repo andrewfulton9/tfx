@@ -13,12 +13,12 @@
 # limitations under the License.
 """Tests for tfx.orchestration.managed.pipeline_builder."""
 
+import tensorflow as tf
 from absl.testing import parameterized
 from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
-import tensorflow as tf
+
 from tfx.orchestration.kubeflow import decorators
-from tfx.orchestration.kubeflow.v2 import pipeline_builder
-from tfx.orchestration.kubeflow.v2 import test_utils
+from tfx.orchestration.kubeflow.v2 import pipeline_builder, test_utils
 
 _VALID_NAME = 'this-name-is-good'
 _BAD_NAME = 'This  is  not  a GOOD name.'

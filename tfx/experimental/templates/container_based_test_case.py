@@ -16,17 +16,14 @@
 import datetime
 import os
 
+import pytest
 from absl import logging
 from google.cloud import aiplatform
+
 from tfx.experimental.templates import test_utils
 from tfx.orchestration import test_utils as orchestration_test_utils
 from tfx.orchestration.kubeflow.v2 import vertex_client_utils
-from tfx.utils import docker_utils
-from tfx.utils import io_utils
-from tfx.utils import retry
-from tfx.utils import test_case_utils
-
-import pytest
+from tfx.utils import docker_utils, io_utils, retry, test_case_utils
 
 
 class BaseContainerBasedEndToEndTest(test_utils.BaseEndToEndTest):
@@ -102,7 +99,7 @@ class BaseContainerBasedEndToEndTest(test_utils.BaseEndToEndTest):
     io_utils.copy_file(
         'data/data.csv',
         f'gs://{self._BUCKET_NAME}/{self._DATA_DIRECTORY_NAME}/'
-        + f'{self._pipeline_name}/data.csv')
+        f'{self._pipeline_name}/data.csv')
 
   @retry.retry(ignore_eventual_failure=True)
   def _delete_pipeline_data(self):

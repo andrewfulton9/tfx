@@ -15,10 +15,8 @@
 
 from tfx import types
 from tfx.components.schema_gen.import_schema_gen import executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.dsl.components.base import base_component, executor_spec
+from tfx.types import standard_artifacts, standard_component_specs
 
 
 class ImportSchemaGen(base_component.BaseComponent):
@@ -58,6 +56,7 @@ class ImportSchemaGen(base_component.BaseComponent):
     """Init function for the ImportSchemaGen.
 
     Args:
+    ----
       schema_file: File path to the input schema file. This file will be copied
         to the output artifact which is generated inside the pipeline root
         directory.

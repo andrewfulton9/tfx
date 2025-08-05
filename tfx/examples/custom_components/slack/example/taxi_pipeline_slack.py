@@ -23,22 +23,23 @@ example and will not be supported by TFX team.
 import datetime
 import os
 
-from tfx.components import CsvExampleGen
-from tfx.components import Evaluator
-from tfx.components import ExampleValidator
-from tfx.components import ModelValidator
-from tfx.components import Pusher
-from tfx.components import SchemaGen
-from tfx.components import StatisticsGen
-from tfx.components import Trainer
-from tfx.components import Transform
-from tfx.examples.custom_components.slack.slack_component.component import SlackComponent
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+from tfx.components import (
+  CsvExampleGen,
+  Evaluator,
+  ExampleValidator,
+  ModelValidator,
+  Pusher,
+  SchemaGen,
+  StatisticsGen,
+  Trainer,
+  Transform,
+)
+from tfx.examples.custom_components.slack.slack_component.component import (
+  SlackComponent,
+)
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.beam.beam_runner import BeamRunner
-from tfx.proto import evaluator_pb2
-from tfx.proto import pusher_pb2
-from tfx.proto import trainer_pb2
+from tfx.proto import evaluator_pb2, pusher_pb2, trainer_pb2
 
 # This example assumes that the taxi data is stored in ~/taxi/data and the
 # taxi utility function is in ~/taxi.  Feel free to customize this as needed.

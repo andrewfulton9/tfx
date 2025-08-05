@@ -20,8 +20,7 @@ from tfx.components.example_gen.csv_example_gen import executor
 from tfx.dsl.components.base import executor_spec
 from tfx.dsl.placeholder import placeholder
 from tfx.orchestration import data_types
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
+from tfx.proto import example_gen_pb2, range_config_pb2
 
 
 class CsvExampleGen(component.FileBasedExampleGen):  # pylint: disable=protected-access
@@ -81,6 +80,7 @@ class CsvExampleGen(component.FileBasedExampleGen):  # pylint: disable=protected
     """Construct a CsvExampleGen component.
 
     Args:
+    ----
       input_base: an external directory containing the CSV files.
       input_config: An example_gen_pb2.Input instance, providing input
         configuration. If unset, the files under input_base will be treated as a

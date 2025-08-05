@@ -33,22 +33,30 @@ import dataclasses
 import inspect
 import json
 import textwrap
-from typing import Any, Dict, Generic, Iterable, List, Optional, Sequence, Set, Type, TypeVar, Union, cast
+from typing import (
+  Any,
+  Dict,
+  Generic,
+  Iterable,
+  List,
+  Optional,
+  Sequence,
+  Set,
+  Type,
+  TypeVar,
+  Union,
+  cast,
+)
 
-from absl import logging
-from tfx.dsl.placeholder import artifact_placeholder
-from tfx.dsl.placeholder import placeholder_base
-from tfx.types import artifact_utils
-from tfx.types.artifact import Artifact
-from tfx.utils import deprecation_utils
-from tfx.utils import doc_controls
-from tfx.utils import json_utils
 import typing_extensions
-
-from google.protobuf import json_format
-from google.protobuf import message
+from absl import logging
+from google.protobuf import json_format, message
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.dsl.placeholder import artifact_placeholder, placeholder_base
+from tfx.types import artifact_utils
+from tfx.types.artifact import Artifact
+from tfx.utils import deprecation_utils, doc_controls, json_utils
 
 # Property type for artifacts, executions and contexts.
 Property = Union[int, float, str, message.Message]
@@ -116,14 +124,15 @@ class BaseChannel(abc.ABC, Generic[_AT]):
   component in the same pipeline run (in synchronous execution mode; more
   information on OutputChannel docstring), and is typically a single artifact.
 
-  Attributes:
+  Attributes
+  ----------
     type: The artifact type class that the Channel takes.
     is_optional: If this channel is optional (e.g. may trigger components at run
       time if there are no artifacts in the channel). None if not explicetely
       set.
   """
 
-  def __init__(self, type: Type[_AT], is_optional: Optional[bool] = None):  # pylint: disable=redefined-builtin
+  def __init__(self, type: Type[_AT], is_optional: Optional[bool] = None):  # noqa: A002
     if not _is_artifact_type(type):
       raise ValueError(
           'Argument "type" of BaseChannel constructor must be a subclass of '
@@ -147,7 +156,8 @@ class BaseChannel(abc.ABC, Generic[_AT]):
     will be skipped. Making channel optional disables this requirement and
     allows componenst to be executed with no artifacts from this channel.
 
-    Returns:
+    Returns
+    -------
       A copy of self which is optional.
     """
     new_channel = copy.copy(self)
@@ -155,11 +165,11 @@ class BaseChannel(abc.ABC, Generic[_AT]):
     return new_channel
 
   @property
-  def type(self) -> Type[_AT]:  # pylint: disable=redefined-builtin
+  def type(self) -> Type[_AT]:  # noqa: A002
     return self._artifact_type
 
   @type.setter
-  def type(self, value: Type[_AT]):  # pylint: disable=redefined-builtin
+  def type(self, value: Type[_AT]):  # noqa: A002
     self._set_type(value)
 
   @doc_controls.do_not_generate_docs
@@ -175,7 +185,8 @@ class BaseChannel(abc.ABC, Generic[_AT]):
     on the OutputChannel. Use this abstract method to define transitive data
     dependency.
 
-    Returns:
+    Returns
+    -------
       A set of data-dependent node IDs.
     """
 
@@ -235,7 +246,7 @@ class Channel(json_utils.Jsonable, BaseChannel):
   # TODO(b/125348988): Add support for real Channel in addition to static ones.
   def __init__(
       self,
-      type: Type[Artifact],  # pylint: disable=redefined-builtin
+      type: Type[Artifact],  # noqa: A002
       additional_properties: Optional[Dict[str, Property]] = None,
       additional_custom_properties: Optional[Dict[str, Property]] = None,
       # TODO(b/161490287): deprecate static artifact.
@@ -245,6 +256,7 @@ class Channel(json_utils.Jsonable, BaseChannel):
     """Initialization of Channel.
 
     Args:
+    ----
       type: Subclass of Artifact that represents the type of this Channel.
       additional_properties: (Optional) A mapping of properties which will be
         added to artifacts when this channel is used as an output of components.
@@ -355,7 +367,7 @@ class Channel(json_utils.Jsonable, BaseChannel):
 
   # TODO(b/161490287): deprecate static artifact.
   @doc_controls.do_not_doc_inheritable
-  def set_artifacts(self, artifacts: Iterable[Artifact]) -> 'Channel':
+  def set_artifacts(self, artifacts: Iterable[Artifact]) -> Channel:
     """Sets artifacts for a static Channel. Will be deprecated."""
     if self._matching_channel_name:
       raise ValueError(
@@ -368,7 +380,8 @@ class Channel(json_utils.Jsonable, BaseChannel):
   def get(self) -> Iterable[Artifact]:
     """Returns all artifacts that can be get from this Channel.
 
-    Returns:
+    Returns
+    -------
       An artifact collection.
     """
     # TODO(b/125037186): We should support dynamic query against a Channel
@@ -423,8 +436,8 @@ class Channel(json_utils.Jsonable, BaseChannel):
     artifacts = list(Artifact.from_json_dict(a) for a in dict_data['artifacts'])
     additional_properties = dict_data['additional_properties']
     additional_custom_properties = dict_data['additional_custom_properties']
-    producer_component_id = dict_data.get('producer_component_id', None)
-    output_key = dict_data.get('output_key', None)
+    producer_component_id = dict_data.get('producer_component_id')
+    output_key = dict_data.get('output_key')
     return Channel(
         type=type_cls,
         additional_properties=additional_properties,
@@ -434,17 +447,19 @@ class Channel(json_utils.Jsonable, BaseChannel):
 
   @doc_controls.do_not_generate_docs
   def as_output_channel(
-      self, producer_component: Any, output_key: str) -> 'OutputChannel':
+      self, producer_component: Any, output_key: str) -> OutputChannel:
     """Internal method to derive OutputChannel from the Channel instance.
 
     Return value (OutputChannel instance) is based on the shallow copy of self,
     so that any attribute change in one is reflected on the others.
 
     Args:
+    ----
       producer_component: A BaseNode instance that is producing this channel.
       output_key: Corresponding node.outputs key for this channel.
 
     Returns:
+    -------
       An OutputChannel instance that shares attributes with self.
     """
     # Disable pylint false alarm for safe access of protected attributes.
@@ -542,7 +557,7 @@ class OutputChannel(Channel):
 
   @doc_controls.do_not_generate_docs
   def as_output_channel(
-      self, producer_component: Any, output_key: str) -> 'OutputChannel':
+      self, producer_component: Any, output_key: str) -> OutputChannel:
     if self._producer_component != producer_component:
       raise ValueError(
           f'producer_component mismatch: {self._producer_component} != '
@@ -734,6 +749,7 @@ class ExternalPipelineChannel(BaseChannel):
     """Initialization of ExternalPipelineChannel.
 
     Args:
+    ----
       artifact_type: Subclass of [Artifact][tfx.v1.dsl.Artifact] for this channel.
       owner: Owner of the pipeline.
       pipeline_name: Name of the pipeline the artifacts belong to.
@@ -812,9 +828,9 @@ class ChannelWrappedPlaceholder(artifact_placeholder.ArtifactPlaceholder):
     how to do this correctly and should be the preferred way to call `#!python set_key()`.
 
     Args:
+    ----
       key: The new key for the channel.
     """
-
     if self._key is not None and key:
       raise ValueError(
           'Do not call set_key() one a ChannelWrappedPlaceholder that already'

@@ -19,13 +19,12 @@ This module file will be used in Transform and generic Trainer.
 
 from typing import List
 
-from absl import logging
 import tensorflow as tf
 import tensorflow_transform as tft
-
-from tfx.components.trainer.fn_args_utils import DataAccessor
-from tfx.components.trainer.fn_args_utils import FnArgs
+from absl import logging
 from tfx_bsl.tfxio import dataset_options
+
+from tfx.components.trainer.fn_args_utils import DataAccessor, FnArgs
 
 # Categorical features are assumed to each have a maximum value in the dataset.
 _MAX_CATEGORICAL_FEATURE_VALUES = [24, 31, 13]
@@ -76,10 +75,12 @@ def _fill_in_missing(x):
   Fills in missing values of `x` with '' or 0, and converts to a dense tensor.
 
   Args:
+  ----
     x: A `SparseTensor` of rank 2.  Its dense shape should have size at most 1
       in the second dimension.
 
   Returns:
+  -------
     A rank 1 tensor where missing values of `x` have been filled in.
   """
   if not isinstance(x, tf.sparse.SparseTensor):
@@ -95,7 +96,6 @@ def _fill_in_missing(x):
 
 def _get_tf_examples_serving_signature(model, tf_transform_output):
   """Returns a serving signature that accepts `tensorflow.Example`."""
-
   # We need to track the layers in the model in order to save it.
   # TODO(b/162357359): Revise once the bug is resolved.
   model.tft_layer_inference = tf_transform_output.transform_features_layer()
@@ -122,7 +122,6 @@ def _get_tf_examples_serving_signature(model, tf_transform_output):
 
 def _get_transform_features_signature(model, tf_transform_output):
   """Returns a serving signature that applies tf.Transform to features."""
-
   # We need to track the layers in the model in order to save it.
   # TODO(b/162357359): Revise once the bug is resolved.
   model.tft_layer_eval = tf_transform_output.transform_features_layer()
@@ -148,6 +147,7 @@ def _input_fn(file_pattern: List[str],
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     tf_transform_output: A TFTransformOutput.
@@ -155,6 +155,7 @@ def _input_fn(file_pattern: List[str],
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -169,9 +170,11 @@ def _build_keras_model(hidden_units: List[int] = None) -> tf.keras.Model:
   """Creates a DNN Keras model for classifying taxi data.
 
   Args:
+  ----
     hidden_units: [int], the layer sizes of the DNN (input layer first).
 
   Returns:
+  -------
     A Wide and Deep keras Model.
   """
   # Following values are hard coded for simplicity in this example,
@@ -251,9 +254,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature operations.
   """
   outputs = {}
@@ -295,6 +300,7 @@ def run_fn(fn_args: FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   # Number of nodes in the first layer of the DNN

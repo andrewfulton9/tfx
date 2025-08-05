@@ -14,13 +14,18 @@
 """Tests for tfx.orchestration.config.config_utils."""
 
 import tensorflow as tf
+
 from tfx.dsl.components.base import executor_spec
-from tfx.orchestration.config import config_utils
-from tfx.orchestration.config import docker_component_config
-from tfx.orchestration.config import pipeline_config
-from tfx.orchestration.launcher import docker_component_launcher
-from tfx.orchestration.launcher import in_process_component_launcher
-from tfx.orchestration.launcher import test_utils
+from tfx.orchestration.config import (
+  config_utils,
+  docker_component_config,
+  pipeline_config,
+)
+from tfx.orchestration.launcher import (
+  docker_component_launcher,
+  in_process_component_launcher,
+  test_utils,
+)
 from tfx.types import channel_utils
 
 

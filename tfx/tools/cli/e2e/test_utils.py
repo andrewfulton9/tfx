@@ -20,6 +20,7 @@ import subprocess
 from typing import Any, List
 
 from absl import logging
+
 from tfx import components
 from tfx.dsl.components.base.base_component import BaseComponent
 from tfx.utils import io_utils
@@ -32,12 +33,13 @@ def create_e2e_components(csv_input_location: str,) -> List[BaseComponent]:
      toy pipeline.
 
   Args:
+  ----
     csv_input_location: The location of the input data directory.
 
   Returns:
+  -------
     A list of TFX components that constitutes an end-to-end test pipeline.
   """
-
   example_gen = components.CsvExampleGen(input_base=csv_input_location)
   statistics_gen = components.StatisticsGen(
       examples=example_gen.outputs['examples'])

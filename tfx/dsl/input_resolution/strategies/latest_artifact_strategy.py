@@ -15,11 +15,11 @@
 
 from typing import Dict, List, Optional
 
+import ml_metadata as mlmd
+
 from tfx import types
 from tfx.dsl.components.common import resolver
 from tfx.utils import doc_controls
-
-import ml_metadata as mlmd
 
 
 class LatestArtifactStrategy(resolver.ResolverStrategy):
@@ -58,10 +58,12 @@ class LatestArtifactStrategy(resolver.ResolverStrategy):
     """Resolves artifacts from channels by querying MLMD.
 
     Args:
+    ----
       store: An MLMD MetadataStore object.
       input_dict: The input_dict to resolve from.
 
     Returns:
+    -------
       If `min_count` for every input is met, returns a
         Dict[str, List[Artifact]]. Otherwise, return None.
     """

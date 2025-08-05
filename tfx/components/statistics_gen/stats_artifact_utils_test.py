@@ -16,9 +16,9 @@
 import os
 
 import tensorflow as tf
+
 from tfx.components.statistics_gen import stats_artifact_utils
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact_utils, standard_artifacts
 
 
 class StatsArtifactUtilsTest(tf.test.TestCase):

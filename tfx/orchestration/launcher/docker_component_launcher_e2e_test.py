@@ -14,16 +14,14 @@
 """E2E Tests for tfx.orchestration.launcher.docker_component_launcher."""
 
 import os
-import tensorflow as tf
-
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
-from tfx.orchestration.beam import beam_dag_runner
-from tfx.types import component_spec
 
 import pytest
+import tensorflow as tf
+
+from tfx.dsl.components.base import base_component, executor_spec
+from tfx.orchestration import metadata, pipeline
+from tfx.orchestration.beam import beam_dag_runner
+from tfx.types import component_spec
 
 
 class _HelloWorldSpec(component_spec.ComponentSpec):
@@ -70,7 +68,7 @@ def _create_pipeline(
 
 @pytest.mark.xfail(run=False, reason="PR 6889 This class contains tests that fail and needs to be fixed. "
 "If all tests pass, please remove this mark.")
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class DockerComponentLauncherE2eTest(tf.test.TestCase):
 
   def setUp(self):

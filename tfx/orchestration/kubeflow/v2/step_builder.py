@@ -17,35 +17,29 @@ import itertools
 from typing import Any, Dict, List, Optional, Tuple, cast
 
 from absl import logging
+from google.protobuf import json_format
 from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import components
 from tfx.components.evaluator import constants
 from tfx.dsl.compiler import compiler_utils as tfx_compiler_utils
-from tfx.dsl.component.experimental import executor_specs
-from tfx.dsl.component.experimental import placeholders
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_node
-from tfx.dsl.components.base import executor_spec
-from tfx.dsl.components.common import importer
-from tfx.dsl.components.common import resolver
+from tfx.dsl.component.experimental import executor_specs, placeholders
+from tfx.dsl.components.base import base_component, base_node, executor_spec
+from tfx.dsl.components.common import importer, resolver
 from tfx.dsl.context_managers import dsl_context_registry
 from tfx.dsl.experimental.conditionals import conditional
-from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
-from tfx.dsl.input_resolution.strategies import latest_blessed_model_strategy
+from tfx.dsl.input_resolution.strategies import (
+  latest_artifact_strategy,
+  latest_blessed_model_strategy,
+)
 from tfx.dsl.placeholder import placeholder
 from tfx.orchestration import data_types
-from tfx.orchestration.kubeflow import decorators
-from tfx.orchestration.kubeflow import utils
-from tfx.orchestration.kubeflow.v2 import compiler_utils
-from tfx.orchestration.kubeflow.v2 import parameter_utils
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.orchestration.kubeflow import decorators, utils
+from tfx.orchestration.kubeflow.v2 import compiler_utils, parameter_utils
+from tfx.types import channel_utils, standard_artifacts
 from tfx.types.channel import Channel
-from tfx.utils import deprecation_utils
-from tfx.utils import name_utils
-
-from google.protobuf import json_format
-from ml_metadata.proto import metadata_store_pb2
+from tfx.utils import deprecation_utils, name_utils
 
 _EXECUTOR_LABEL_PATTERN = '{}_executor'
 
@@ -76,13 +70,16 @@ def _resolve_command_line(
   """Resolves placeholders in the command line of a container.
 
   Args:
+  ----
     container_spec: Container structure to resolve
     exec_properties: The map of component's execution properties
 
   Returns:
+  -------
     Resolved command line.
 
   Raises:
+  ------
     TypeError: On unsupported type of command-line arguments, or when the
       resolved argument is not a string.
   """
@@ -156,6 +153,7 @@ class StepBuilder:
     Then, step_builder.build() outputs the StepSpec pb object.
 
     Args:
+    ----
       node: A TFX node. The logical unit of a step. Note, currently for resolver
         node we only support two types of resolver policies, including: 1)
         latest blessed model, and 2) latest model artifact.
@@ -192,6 +190,7 @@ class StepBuilder:
         Vertex ML pipeline teamplate gallary.
 
     Raises:
+    ------
       ValueError: On the following two cases:
         1. The node being built is an instance of BaseComponent but image was
            not provided.
@@ -259,14 +258,16 @@ class StepBuilder:
 
     During the build, all three parts mentioned above will be updated.
 
-    Returns:
+    Returns
+    -------
       A Dict mapping from node id to PipelineTaskSpec messages corresponding to
       the node. For most of the cases, the dict contains a single element.
       The only exception is when compiling latest blessed model resolver.
       One DSL node will be split to two resolver specs to reflect the
       two-phased query execution.
 
-    Raises:
+    Raises
+    ------
       NotImplementedError: When the node being built is an InfraValidator.
     """
     # 1. Resolver tasks won't have input artifacts in the API proto. First we
@@ -454,15 +455,16 @@ class StepBuilder:
   def _build_container_spec(self) -> ContainerSpec:
     """Builds the container spec for a component.
 
-    Returns:
+    Returns
+    -------
       The PipelineContainerSpec represents the container execution of the
       component.
 
-    Raises:
+    Raises
+    ------
       NotImplementedError: When the executor class is neither ExecutorClassSpec
       nor TemplatedExecutorContainerSpec.
     """
-
     assert isinstance(self._node, base_component.BaseComponent)
 
     if self._node.platform_config:
@@ -535,12 +537,14 @@ class StepBuilder:
   def _build_file_based_example_gen_spec(self) -> ContainerSpec:
     """Builds FileBasedExampleGen into a PipelineContainerSpec.
 
-    Returns:
+    Returns
+    -------
       The PipelineContainerSpec represents the container execution of the
       component, which should includes both the driver execution, and the
       executor execution.
 
-    Raises:
+    Raises
+    ------
       ValueError: When the node is a FileBasedExampleGen but tfx image was not
         specified.
     """
@@ -637,11 +641,14 @@ class StepBuilder:
       self) -> Dict[str, pipeline_pb2.PipelineTaskSpec]:
     """Builds a resolver spec for a latest artifact resolver.
 
-    Returns:
+    Returns
+    -------
       A list of two PipelineTaskSpecs. One represents the query for latest valid
       ModelBlessing artifact. Another one represents the query for latest
       blessed Model artifact.
-    Raises:
+
+    Raises
+    ------
       ValueError: when desired_num_of_artifacts != 1. 1 is the only supported
         value currently.
     """
@@ -847,10 +854,13 @@ class StepBuilder:
   def _build_resolver_spec(self) -> Dict[str, pipeline_pb2.PipelineTaskSpec]:
     """Validates and builds ResolverSpec for this node.
 
-    Returns:
+    Returns
+    -------
       A list of PipelineTaskSpec represents the (potentially multiple) resolver
       task(s).
-    Raises:
+
+    Raises
+    ------
       TypeError: When get unsupported resolver policy. Currently only support
         LatestBlessedModelStrategy and LatestArtifactsStrategy.
     """

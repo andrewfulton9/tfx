@@ -17,9 +17,9 @@ import contextlib
 import types
 from typing import Optional, Type, Union, cast
 
-from tfx.orchestration import metadata
-
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration import metadata
 
 
 class MLMDConnectionManager:
@@ -79,6 +79,7 @@ class MLMDConnectionManager:
     """Constructor of MLMDConnectionManager.
 
     Args:
+    ----
       primary_connection_config: Config of the primary mlmd handle.
     """
     self._primary_connection_config = primary_connection_config

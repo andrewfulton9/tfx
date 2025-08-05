@@ -17,10 +17,10 @@ import os
 import sys
 from unittest import mock
 
-
+import tensorflow as tf
 from absl import logging
 from absl.testing import parameterized
-import tensorflow as tf
+
 from tfx.dsl.io import fileio
 from tfx.utils import dependency_utils
 

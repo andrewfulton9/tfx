@@ -15,22 +15,30 @@
 
 import os
 from typing import Dict, List
-from tfx.components import Evaluator
-from tfx.components import ExampleValidator
-from tfx.components import ModelValidator
-from tfx.components import Pusher
-from tfx.components import SchemaGen
-from tfx.components import StatisticsGen
-from tfx.components import Trainer
-from tfx.components import Transform
+
+from tfx.components import (
+  Evaluator,
+  ExampleValidator,
+  ModelValidator,
+  Pusher,
+  SchemaGen,
+  StatisticsGen,
+  Trainer,
+  Transform,
+)
 from tfx.dsl.components.base import executor_spec
-from tfx.extensions.google_cloud_ai_platform.trainer import executor as ai_platform_trainer_executor
-from tfx.extensions.google_cloud_big_query.example_gen import component as big_query_example_gen_component
-from tfx.extensions.google_cloud_big_query.pusher import executor as bigquery_pusher_executor
+from tfx.extensions.google_cloud_ai_platform.trainer import (
+  executor as ai_platform_trainer_executor,
+)
+from tfx.extensions.google_cloud_big_query.example_gen import (
+  component as big_query_example_gen_component,
+)
+from tfx.extensions.google_cloud_big_query.pusher import (
+  executor as bigquery_pusher_executor,
+)
 from tfx.orchestration import pipeline
 from tfx.orchestration.kubeflow import kubeflow_dag_runner
-from tfx.proto import evaluator_pb2
-from tfx.proto import trainer_pb2
+from tfx.proto import evaluator_pb2, trainer_pb2
 
 _pipeline_name = 'chicago_taxi_pipeline_kubeflow_gcp'
 
@@ -157,7 +165,6 @@ def _create_pipeline(
     beam_pipeline_args: List[str], ai_platform_training_args: Dict[str, str],
     bigquery_serving_args: Dict[str, str]) -> pipeline.Pipeline:
   """Implements the chicago taxi pipeline with TFX and Kubeflow Pipelines."""
-
   # Brings data into the pipeline or otherwise joins/converts training data.
   example_gen = big_query_example_gen_component.BigQueryExampleGen(query=query)
 

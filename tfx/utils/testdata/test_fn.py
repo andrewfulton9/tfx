@@ -15,7 +15,7 @@
 
 
 def test_fn(inputs):
-  """test function to sum all inputs."""
+  """Test function to sum all inputs."""
   return sum(inputs)
 
 

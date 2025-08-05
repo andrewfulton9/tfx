@@ -20,7 +20,6 @@ from absl import logging
 from google.cloud.aiplatform import pipeline_jobs
 from google.cloud.aiplatform_v1.types import pipeline_state
 
-
 _PIPELINE_COMPLETE_STATES = frozenset([
     pipeline_state.PipelineState.PIPELINE_STATE_SUCCEEDED,
     pipeline_state.PipelineState.PIPELINE_STATE_FAILED,
@@ -36,11 +35,13 @@ def poll_job_status(job_id: str, timeout: datetime.timedelta,
   NOTE: aiplatform.init() should be already called.
 
   Args:
+  ----
     job_id: The relative ID of the pipeline job.
     timeout: Timeout duration for the job execution.
     polling_interval_secs: Interval to check the job status.
 
   Raises:
+  ------
     RuntimeError: On (1) unexpected response from service; or (2) on
       unexpected job status; or (2) timed out waiting for finishing.
   """

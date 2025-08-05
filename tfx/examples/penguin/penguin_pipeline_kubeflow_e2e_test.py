@@ -15,16 +15,16 @@
 
 import os
 
+import pytest
 from absl.testing import parameterized
+
 from tfx.dsl.io import fileio
 from tfx.examples.penguin import penguin_pipeline_kubeflow
 from tfx.orchestration.kubeflow.v2.e2e_tests import base_test_case
 from tfx.utils import io_utils
 
-import pytest
 
-
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class PenguinPipelineKubeflowV2Test(
     base_test_case.BaseKubeflowV2Test, parameterized.TestCase
 ):

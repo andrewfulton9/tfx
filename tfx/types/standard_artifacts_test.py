@@ -20,6 +20,7 @@ from unittest import mock
 
 import absl
 import tensorflow as tf
+
 from tfx.types import standard_artifacts
 from tfx.utils import json_utils
 
@@ -28,7 +29,7 @@ _TEST_BYTE_RAW = b'hello world'
 _TEST_BYTE_DECODED = b'hello world'
 
 _TEST_STRING_RAW = b'hello world'
-_TEST_STRING_DECODED = u'hello world'
+_TEST_STRING_DECODED = 'hello world'
 
 _TEST_BOOL_RAW = b'1'
 _TEST_BOOL_DECODED = True

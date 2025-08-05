@@ -15,15 +15,14 @@
 from typing import Optional, Union
 
 from absl import logging
+
 from tfx.dsl.io import fileio
 from tfx.orchestration import metadata
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import python_driver_operator
-from tfx.proto.orchestration import driver_output_pb2
-from tfx.proto.orchestration import executable_spec_pb2
-
-from tfx.orchestration.python_execution_binary import python_executor_operator_dispatcher
-
+from tfx.orchestration.portable import data_types, python_driver_operator
+from tfx.orchestration.python_execution_binary import (
+  python_executor_operator_dispatcher,
+)
+from tfx.proto.orchestration import driver_output_pb2, executable_spec_pb2
 
 _PythonClassExecutableSpec = executable_spec_pb2.PythonClassExecutableSpec
 _BeamExecutableSpec = executable_spec_pb2.BeamExecutableSpec

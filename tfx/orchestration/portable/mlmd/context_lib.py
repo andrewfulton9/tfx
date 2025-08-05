@@ -15,19 +15,16 @@
 
 from typing import List, Optional
 
-from absl import logging
-from tfx.dsl.compiler import constants
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
-from tfx.orchestration.portable.mlmd import common_utils
-from tfx.utils import metrics_utils
-from tfx.proto.orchestration import pipeline_pb2
-
-from tfx.utils import telemetry_utils
 import ml_metadata as mlmd
+from absl import logging
 from ml_metadata import errors as mlmd_errors
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.dsl.compiler import constants
+from tfx.orchestration import data_types_utils, metadata
+from tfx.orchestration.portable.mlmd import common_utils
+from tfx.proto.orchestration import pipeline_pb2
+from tfx.utils import metrics_utils, telemetry_utils
 
 CONTEXT_TYPE_EXECUTION_CACHE = 'execution_cache'
 
@@ -38,14 +35,17 @@ def _generate_context_proto(
   """Generates metadata_pb2.Context based on the ContextSpec message.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     context_spec: A pipeline_pb2.ContextSpec message that instructs registering
       of a context.
 
   Returns:
+  -------
     A metadata_store_pb2.Context message.
 
   Raises:
+  ------
     RuntimeError: When actual property type does not match provided metadata
       type schema.
   """
@@ -78,6 +78,7 @@ def _register_context_if_not_exist(
   """Registers a context if not exist, otherwise returns the existing one.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     context_spec: A pipeline_pb2.ContextSpec message that instructs registering
       of a context.
@@ -85,6 +86,7 @@ def _register_context_if_not_exist(
       child of the parent contexts.
 
   Returns:
+  -------
     An MLMD context.
   """
   context_type_name = context_spec.type.name
@@ -137,6 +139,7 @@ def register_context_if_not_exists(
   type and context name.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     context_type_name: The name of the context type.
     context_name: The name of the context.
@@ -144,6 +147,7 @@ def register_context_if_not_exists(
       child of the parent contexts.
 
   Returns:
+  -------
     An MLMD context.
   """
   context_spec = pipeline_pb2.ContextSpec(
@@ -169,11 +173,13 @@ def prepare_contexts(
   Context types will be registered if not already exist.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     node_contexts: A pipeline_pb2.NodeContext message that instructs registering
       of the contexts.
 
   Returns:
+  -------
     A list of metadata_store_pb2.Context messages.
   """
   result = []
@@ -215,6 +221,7 @@ def put_parent_context_if_not_exists(
   """Puts a ParentContext edge in MLMD if it doesn't already exist.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     parent_id: The id of the parent metadata_store_pb2.Context.
     child_id: The id of the child metadata_store_pb2.Context.

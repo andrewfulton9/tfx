@@ -19,23 +19,22 @@ import os
 from typing import Any, Dict
 from unittest import mock
 
+import httplib2
+import tensorflow as tf
 from google.auth import credentials as auth_credentials
 from google.cloud import aiplatform
 from google.cloud.aiplatform import initializer
 from google.cloud.aiplatform.compat.types import endpoint
 from google.cloud.aiplatform_v1.services.endpoint_service import (
-    client as endpoint_service_client)
+  client as endpoint_service_client,
+)
 from google.cloud.aiplatform_v1.types.custom_job import CustomJob
 from google.cloud.aiplatform_v1.types.job_state import JobState
 from googleapiclient import errors
-import httplib2
-import tensorflow as tf
-from tfx.extensions.google_cloud_ai_platform import prediction_clients
-from tfx.extensions.google_cloud_ai_platform import runner
+
+from tfx.extensions.google_cloud_ai_platform import prediction_clients, runner
 from tfx.extensions.google_cloud_ai_platform.trainer import executor
-from tfx.utils import json_utils
-from tfx.utils import telemetry_utils
-from tfx.utils import version_utils
+from tfx.utils import json_utils, telemetry_utils, version_utils
 
 
 class RunnerTest(tf.test.TestCase):

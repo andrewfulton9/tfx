@@ -14,11 +14,9 @@
 """Tests for tfx.types.standard_artifact_utils."""
 
 import tensorflow as tf
-from tfx.types import artifact
-from tfx.types import standard_artifact_utils
-from tfx.types import standard_artifacts
-
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.types import artifact, standard_artifact_utils, standard_artifacts
 
 
 class _MyArtifact(artifact.Artifact):

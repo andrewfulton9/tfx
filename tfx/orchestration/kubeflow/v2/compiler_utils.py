@@ -20,24 +20,19 @@ import os
 import re
 from typing import Any, Dict, List, Mapping, Optional, Type, Union
 
+import yaml
+from google.protobuf import json_format, message, struct_pb2
 from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.io import fileio
 from tfx.orchestration import data_types
 from tfx.orchestration.kubeflow.v2 import parameter_utils
 from tfx.proto.orchestration import placeholder_pb2
-from tfx.types import artifact
-from tfx.types import channel
-from tfx.types import standard_artifacts
+from tfx.types import artifact, channel, standard_artifacts
 from tfx.types.experimental import simple_artifacts
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-import yaml
-
-from google.protobuf import struct_pb2
-from google.protobuf import json_format
-from google.protobuf import message
-from ml_metadata.proto import metadata_store_pb2
+from tfx.utils import json_utils, name_utils
 
 # Key of TFX type path and name in artifact custom properties.
 TFX_TYPE_KEY = 'tfx_type'
@@ -118,10 +113,12 @@ def _validate_properties_schema(
   """Validates the declared property types are consistent with the schema.
 
   Args:
+  ----
     instance_schema: YAML string of the artifact property schema.
     properties: The actual property schema of an Artifact Python class.
 
   Raises:
+  ------
     KeyError: When actual property have additional properties than what's
       specified in the YAML schema.
     TypeError: When the same property is declared with different types in YAML
@@ -365,12 +362,15 @@ def get_artifact_schema(artifact_type: Type[artifact.Artifact]) -> str:
   """Gets the YAML schema string associated with the artifact type.
 
   Args:
+  ----
     artifact_type: the artifact type that the schema is generated for.
 
   Returns:
+  -------
     the encoded yaml schema definition for the artifact.
 
   Raises:
+  ------
     ValueError if custom artifact type name does not adhere to KFP schema title.
   """
   if artifact_type in _SUPPORTED_STANDARD_ARTIFACT_TYPES:
@@ -412,9 +412,11 @@ def placeholder_to_cel(
   https://github.com/google/cel-spec/blob/master/doc/langdef.md
 
   Args:
+  ----
     expression: A PlaceholderExpression proto descrbing a Predicate.
 
   Returns:
+  -------
     A CEL expression in string format.
   """
   if expression.HasField('value'):

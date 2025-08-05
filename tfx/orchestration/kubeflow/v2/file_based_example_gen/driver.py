@@ -17,22 +17,17 @@ import argparse
 import os
 from typing import List, Optional
 
-from absl import app
-from absl import logging
+from absl import app, logging
 from absl.flags import argparse_flags
+from google.protobuf import json_format
 from kfp.pipeline_spec import pipeline_spec_pb2
-from tfx.components.example_gen import driver
-from tfx.components.example_gen import input_processor
-from tfx.components.example_gen import utils
+
+from tfx.components.example_gen import driver, input_processor, utils
 from tfx.dsl.io import fileio
 from tfx.orchestration.kubeflow.v2.container import kubeflow_v2_entrypoint_utils
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
+from tfx.proto import example_gen_pb2, range_config_pb2
+from tfx.types import artifact_utils, standard_component_specs
 from tfx.utils import proto_utils
-
-from google.protobuf import json_format
 
 
 def _run_driver(
@@ -52,12 +47,12 @@ def _run_driver(
   properties.
 
   Args:
+  ----
     executor_input: pipeline_spec_pb2.ExecutorInput that contains TFX artifacts
       and exec_properties information.
     component_inputs_spec: pipeline_spec_pb2.ComponentInputsSpec that contains
       TFX artifacts and exec_properties metadata.
   """
-
   exec_properties = kubeflow_v2_entrypoint_utils.parse_execution_properties(
       executor_input.inputs.parameter_values,
       executor_input.inputs.parameters,

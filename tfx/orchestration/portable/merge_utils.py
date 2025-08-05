@@ -17,11 +17,11 @@ import os
 from typing import Mapping, Optional, Sequence
 
 from absl import logging
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.orchestration.portable import outputs_utils
 from tfx.utils import typing_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 _RESOLVED_AT_RUNTIME = outputs_utils.RESOLVED_AT_RUNTIME
 
@@ -33,12 +33,14 @@ def _merge_output_artifact(
   """Merges an original output artifact with its post-execution updated version.
 
   Args:
+  ----
     original_artifact: The original Artifact object that was created by the
       Orchestrator and passed to the component in the ExecutionInvocation.
     updated_artifact_proto: The updated Artifact proto returned by the component
       in the ExecutorOutput.
 
   Returns:
+  -------
     A merged Artifact object combining the original and updated artifacts.
   """
   updated_artifact = types.Artifact(original_artifact.artifact_type)
@@ -115,16 +117,19 @@ def merge_updated_output_artifacts(
   of the output artifacts with the final set provided back by the pipeline node.
 
   Args:
+  ----
     original_output_artifacts: The output artifacts pre-registered before the
       start of the execution, which were generated based on the pipeline IR.
     updated_output_artifacts: The output artifacts returned by the pipeline
       component (in the MLMD artifact format) as the result of an execution.
 
   Returns:
+  -------
     A merged output artfiact map, representing the output artifacts that should
     be published for the execution.
 
   Raises:
+  ------
     RuntimeError: If the output artifacts from the executor output add keys that
     don't exist in the pre-registered output artifacts.
   """

@@ -15,21 +15,17 @@
 
 
 import importlib
+
 import pytest
 from absl.testing import parameterized
+from google.protobuf import struct_pb2, text_format
+from ml_metadata.proto import metadata_store_pb2, metadata_store_service_pb2
+
 from tfx import types
 from tfx.orchestration import data_types_utils
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.proto.orchestration import execution_result_pb2, pipeline_pb2
 from tfx.types import artifact_utils
-from tfx.utils import proto_utils
-from tfx.utils import test_case_utils
-
-from google.protobuf import struct_pb2
-from google.protobuf import text_format
-
-from ml_metadata.proto import metadata_store_pb2
-from ml_metadata.proto import metadata_store_service_pb2
+from tfx.utils import proto_utils, test_case_utils
 
 _DEFAULT_ARTIFACT_TYPE_NAME = 'Examples'
 

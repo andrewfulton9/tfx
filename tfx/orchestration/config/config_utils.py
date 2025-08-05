@@ -16,8 +16,7 @@
 from typing import Optional, Tuple, Type
 
 from tfx.dsl.components.base import base_component
-from tfx.orchestration.config import base_component_config
-from tfx.orchestration.config import pipeline_config
+from tfx.orchestration.config import base_component_config, pipeline_config
 from tfx.orchestration.launcher import base_component_launcher
 
 
@@ -36,14 +35,17 @@ def find_component_launch_info(
   Subclass may customize the logic by overriding the method.
 
   Args:
+  ----
     p_config: the pipeline config.
     component: the component to launch.
 
   Returns:
+  -------
     The found tuple of component launcher class and the compatible component
     config.
 
   Raises:
+  ------
     RuntimeError: if no supported launcher is found.
   """
   if component.id in p_config.component_config_overrides:

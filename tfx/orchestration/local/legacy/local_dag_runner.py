@@ -19,14 +19,12 @@ from typing import Optional
 from absl import logging
 
 from tfx.dsl.components.base import base_component
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
-from tfx.orchestration import tfx_runner
-from tfx.orchestration.config import config_utils
-from tfx.orchestration.config import pipeline_config
-from tfx.orchestration.launcher import docker_component_launcher
-from tfx.orchestration.launcher import in_process_component_launcher
+from tfx.orchestration import data_types, metadata, pipeline, tfx_runner
+from tfx.orchestration.config import config_utils, pipeline_config
+from tfx.orchestration.launcher import (
+  docker_component_launcher,
+  in_process_component_launcher,
+)
 from tfx.utils import telemetry_utils
 
 
@@ -39,6 +37,7 @@ class LocalDagRunner(tfx_runner.TfxRunner):
     """Initializes local TFX orchestrator.
 
     Args:
+    ----
       config: Optional pipeline config for customizing the launching of each
         component. Defaults to pipeline config that supports
         InProcessComponentLauncher and DockerComponentLauncher.
@@ -56,6 +55,7 @@ class LocalDagRunner(tfx_runner.TfxRunner):
     """Runs given logical pipeline locally.
 
     Args:
+    ----
       tfx_pipeline: Logical pipeline containing pipeline args and components.
     """
     tfx_pipeline.pipeline_info.run_id = datetime.datetime.now().isoformat()

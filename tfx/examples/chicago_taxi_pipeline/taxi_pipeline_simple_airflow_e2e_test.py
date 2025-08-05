@@ -17,20 +17,17 @@ import os
 import platform
 import subprocess
 import time
-from typing import Sequence, Set
 import unittest
+from typing import Sequence, Set
 
 import absl
+import pytest
 import tensorflow as tf
 
 from tfx.dsl.io import fileio
 from tfx.orchestration.airflow import test_utils as airflow_test_utils
 from tfx.tools.cli.e2e import test_utils
-from tfx.utils import io_utils
-from tfx.utils import test_case_utils
-
-import pytest
-
+from tfx.utils import io_utils, test_case_utils
 
 # Number of seconds between polling pending task states.
 _TASK_POLLING_INTERVAL_SEC = 10
@@ -44,7 +41,7 @@ _PENDING_TASK_STATES = set(['queued', 'scheduled', 'running', 'none'])
 
 @pytest.mark.xfail(run=False, reason="PR 6889 This class contains tests that fail and needs to be fixed. "
 "If all tests pass, please remove this mark.")
-@pytest.mark.e2e
+@pytest.mark.e2e()
 @unittest.skipIf(
     platform.system() == 'Darwin',
     'Airflow is not compatible with TF in some environments on macos and '

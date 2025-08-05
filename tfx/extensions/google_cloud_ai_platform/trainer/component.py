@@ -45,6 +45,7 @@ class Trainer(trainer_component.Trainer):
     """Construct a Trainer component.
 
     Args:
+    ----
       examples: A Channel of type [`standard_artifacts.Examples`][tfx.v1.types.standard_artifacts.Examples], serving as the
         source of examples used in training (required). May be raw or
         transformed.

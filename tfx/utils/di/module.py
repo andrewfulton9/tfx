@@ -17,8 +17,7 @@ import inspect
 from typing import Any, Callable, Optional, TypeVar
 
 from tfx.utils import pure_typing_utils
-from tfx.utils.di import errors
-from tfx.utils.di import providers
+from tfx.utils.di import errors, providers
 
 _T = TypeVar('_T')
 

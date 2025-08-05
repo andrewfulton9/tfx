@@ -22,9 +22,7 @@ from typing import List
 
 import absl
 
-
-from tfx import dependencies
-from tfx import version
+from tfx import dependencies, version
 from tfx.dsl.io import fileio
 from tfx.utils import io_utils
 
@@ -38,9 +36,11 @@ def make_beam_dependency_flags(beam_pipeline_args: List[str]) -> List[str]:
   does not provide that through Beam pipeline args.
 
   Args:
+  ----
     beam_pipeline_args: original Beam pipeline args.
 
   Returns:
+  -------
     updated Beam pipeline args with TFX dependencies added.
   """
   # TODO(b/176857256): Change guidance message once "ml-pipelines-sdk" extra
@@ -88,9 +88,12 @@ if __name__ == '__main__':
 def build_ephemeral_package() -> str:
   """Repackage current installation of TFX into a tfx_ephemeral sdist.
 
-  Returns:
+  Returns
+  -------
     Path to ephemeral sdist package.
-  Raises:
+
+  Raises
+  ------
     RuntimeError: if dist directory has zero or multiple files.
   """
   tmp_dir = os.path.join(tempfile.mkdtemp(), 'build', 'tfx')

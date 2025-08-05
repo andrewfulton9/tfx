@@ -19,12 +19,11 @@ import collections
 import itertools
 from typing import Callable, Mapping, Optional, Sequence, Union
 
-from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.compiler import constants
+import ml_metadata as mlmd
+
+from tfx.dsl.compiler import compiler_utils, constants
 from tfx.orchestration.portable.mlmd import event_lib
 from tfx.orchestration.portable.mlmd import filter_query_builder as q
-
-import ml_metadata as mlmd
 
 _TIME_SKEW_DATE = 1704153600000  # Jan 02, 2024 12:00:00 AM
 
@@ -51,6 +50,7 @@ def _get_node_live_artifacts(
   """Gets all LIVE node artifacts.
 
   Args:
+  ----
     store: A MetadataStore object.
     pipeline_id: The pipeline ID.
     node_id: The node ID.
@@ -58,6 +58,7 @@ def _get_node_live_artifacts(
       artifacts from the specified pipeline run are returned if specified.
 
   Returns:
+  -------
     A list of LIVE artifacts of the given pipeline node.
   """
   artifact_state_filter_query = (
@@ -101,6 +102,7 @@ def get_node_executions(
   """Gets all node executions.
 
   Args:
+  ----
     store: A MetadataStore object.
     pipeline_id: The pipeline ID.
     node_id: The node ID.
@@ -116,6 +118,7 @@ def get_node_executions(
       consider all MLMD executions.
 
   Returns:
+  -------
     A list of executions of the given pipeline node.
   """
   node_context_name = compiler_utils.node_context_name(pipeline_id, node_id)
@@ -175,6 +178,7 @@ def get_live_output_artifacts_of_node_by_output_key(
   returned.
 
   Args:
+  ----
     store: A MetadataStore object.
     pipeline_id: A pipeline ID.
     node_id: A node ID.
@@ -184,6 +188,7 @@ def get_live_output_artifacts_of_node_by_output_key(
       If not specified or is empty, will consider all MLMD execution states.
 
   Returns:
+  -------
     A mapping from output key to all output artifacts from the given node.
   """
   # Step 1: Get LIVE artifacts attributed to node with `node_id`.
@@ -287,11 +292,13 @@ def get_live_output_artifacts_of_node(
   output artifacts of executions from step 2.
 
   Args:
+  ----
     store: A MetadataStore object.
     pipeline_id: A pipeline ID.
     node_id: A node ID.
 
   Returns:
+  -------
     A list of output artifacts from the given node.
   """
   live_output_artifacts_of_node_by_output_key = (

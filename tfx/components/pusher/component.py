@@ -16,14 +16,13 @@
 from typing import Any, Dict, Optional, Union
 
 from absl import logging
+
 from tfx import types
 from tfx.components.pusher import executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, executor_spec
 from tfx.orchestration import data_types
 from tfx.proto import pusher_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
 
 
@@ -85,6 +84,7 @@ class Pusher(base_component.BaseComponent):
     """Construct a Pusher component.
 
     Args:
+    ----
       model: An optional [BaseChannel][tfx.v1.types.BaseChannel] of type `standard_artifacts.Model`, usually
         produced by a [Trainer][tfx.v1.components.Trainer] component.
       model_blessing: An optional [BaseChannel][tfx.v1.types.BaseChannel] of type

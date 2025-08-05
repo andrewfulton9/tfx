@@ -14,6 +14,7 @@
 """Base class for classes representing a dataset for the benchmark."""
 
 import os
+
 import tensorflow as tf
 
 
@@ -24,6 +25,7 @@ class BenchmarkDataset:
     """Construct a dataset instance.
 
     Args:
+    ----
       base_dir: The directory in which datasets artifacts are located. This will
         be used for reading during benchmark execution, as well as writing
         during benchmark regeneration. By default, the directory in which this
@@ -38,9 +40,11 @@ class BenchmarkDataset:
     """Returns the path to the datasets directory.
 
     Args:
+    ----
       subdir: Subdirectory to join at the end of the datasets directory.
 
     Returns:
+    -------
       The path to the datasets directory, with the subdir joined at the end.
     """
     return os.path.join(self._base_dir, subdir)
@@ -69,9 +73,11 @@ class BenchmarkDataset:
     """Returns the number of examples in the dataset.
 
     Args:
+    ----
       limit: If set, returns min(limit, number of examples in dataset).
 
     Returns:
+    -------
       The number of examples in the dataset.
     """
     raise NotImplementedError()
@@ -80,12 +86,14 @@ class BenchmarkDataset:
     """Read the raw dataset of tf.train.Examples.
 
     Args:
+    ----
       deserialize: If False, return the raw serialized bytes. If True, return
         the tf.train.Example parsed from the serialized bytes.
       limit: If set, yields no more than the given number of examples (might be
         less if the dataset has less examples than the limit).
 
     Yields:
+    ------
       Serialized/unserialized (depending on deserialize) tf.train.Examples.
     """
     for count, example_bytes in enumerate(
@@ -104,6 +112,7 @@ class BenchmarkDataset:
     """Generate the raw dataset.
 
     Args:
+    ----
       args: String of extra arguments to use when generating the raw dataset.
     """
     raise NotImplementedError()
@@ -115,6 +124,7 @@ class BenchmarkDataset:
     the inference and tf.ModelAnalysis format SavedModels.
 
     Args:
+    ----
       args: String of extra arguments to use when generating the models.
     """
     raise NotImplementedError()

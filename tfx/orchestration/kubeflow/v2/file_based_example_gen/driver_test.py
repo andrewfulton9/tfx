@@ -18,16 +18,15 @@ import json
 import os
 
 from absl.testing import parameterized
+from google.protobuf import json_format
 from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+
 from tfx.dsl.io import fileio
 from tfx.orchestration.kubeflow.v2 import compiler_utils
 from tfx.orchestration.kubeflow.v2.file_based_example_gen import driver
 from tfx.proto import example_gen_pb2
 from tfx.types import standard_artifacts
-from tfx.utils import io_utils
-from tfx.utils import test_case_utils
-
-from google.protobuf import json_format
+from tfx.utils import io_utils, test_case_utils
 
 _TEST_OUTPUT_METADATA_JSON = 'output/outputmetadata.json'
 _TEST_INPUT_DIR = 'input_base'

@@ -15,27 +15,27 @@
 
 from typing import Any, Dict
 
+import tensorflow as tf
 from absl.testing import parameterized
 from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
-import tensorflow as tf
+
 from tfx import components
 from tfx import v1 as tfx
-from tfx.dsl.components.common import importer
-from tfx.dsl.components.common import resolver
+from tfx.dsl.components.common import importer, resolver
 from tfx.dsl.context_managers import dsl_context_registry
 from tfx.dsl.experimental.conditionals import conditional
-from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
-from tfx.dsl.input_resolution.strategies import latest_blessed_model_strategy
-from tfx.extensions.google_cloud_big_query.example_gen import component as big_query_example_gen_component
+from tfx.dsl.input_resolution.strategies import (
+  latest_artifact_strategy,
+  latest_blessed_model_strategy,
+)
+from tfx.extensions.google_cloud_big_query.example_gen import (
+  component as big_query_example_gen_component,
+)
 from tfx.orchestration import data_types
 from tfx.orchestration.kubeflow import decorators
-from tfx.orchestration.kubeflow.v2 import parameter_utils
-from tfx.orchestration.kubeflow.v2 import step_builder
-from tfx.orchestration.kubeflow.v2 import test_utils
+from tfx.orchestration.kubeflow.v2 import parameter_utils, step_builder, test_utils
 from tfx.proto import example_gen_pb2
-from tfx.types import channel
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import channel, channel_utils, standard_artifacts
 
 _TEST_CMDS = ('python', '-m', 'my_entrypoint.app_module')
 

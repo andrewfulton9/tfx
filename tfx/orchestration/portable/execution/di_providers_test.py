@@ -17,12 +17,12 @@ from collections.abc import Sequence
 from typing import Any, Optional
 
 import tensorflow as tf
+
 from tfx.orchestration.portable import data_types
 from tfx.orchestration.portable.execution import di_providers
 from tfx.types import artifact as artifact_lib
 from tfx.types import standard_artifacts
-from tfx.utils.di import errors
-from tfx.utils.di import module
+from tfx.utils.di import errors, module
 
 
 class Foo(artifact_lib.Artifact):

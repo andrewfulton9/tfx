@@ -18,11 +18,8 @@ from typing import Optional, Sequence
 
 from tfx import types
 from tfx.orchestration import metadata
-from tfx.utils import metrics_utils
 from tfx.types import artifact_utils
-from tfx.utils import typing_utils
-
-from tfx.utils import telemetry_utils
+from tfx.utils import metrics_utils, telemetry_utils, typing_utils
 
 
 @telemetry_utils.noop_telemetry(metrics_utils.no_op_metrics)
@@ -32,13 +29,16 @@ def get_artifacts_by_ids(
   """Gets TFX artifacts from MLMD by ID.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD.
     artifact_ids: The IDs of existing artifacts to query.
 
   Returns:
+  -------
     A list of the deserialized TFX artifacts.
 
   Raises:
+  ------
     ValueError if one or more of the artifact IDs does not exist in MLMD.
   """
   mlmd_artifacts, artifact_types = (

@@ -15,20 +15,21 @@
 import os
 
 import tensorflow_model_analysis as tfma
-from tfx.components import CsvExampleGen
-from tfx.components import Evaluator
-from tfx.components import ExampleValidator
-from tfx.components import Pusher
-from tfx.components import SchemaGen
-from tfx.components import StatisticsGen
-from tfx.components import Trainer
+
+from tfx.components import (
+  CsvExampleGen,
+  Evaluator,
+  ExampleValidator,
+  Pusher,
+  SchemaGen,
+  StatisticsGen,
+  Trainer,
+)
 from tfx.components.trainer.executor import GenericExecutor
 from tfx.dsl.components.base import executor_spec
 from tfx.dsl.components.common import importer
-from tfx.orchestration import data_types
-from tfx.orchestration import pipeline
-from tfx.proto import pusher_pb2
-from tfx.proto import trainer_pb2
+from tfx.orchestration import data_types, pipeline
+from tfx.proto import pusher_pb2, trainer_pb2
 from tfx.types import standard_artifacts
 
 

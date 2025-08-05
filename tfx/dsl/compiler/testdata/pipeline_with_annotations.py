@@ -14,26 +14,22 @@
 """Components for testing Pipeline Annotations."""
 
 import os
-from typing import Any, Dict, Optional
-from typing import List, Union
+from typing import Any, Dict, List, Optional, Union
 
 from tfx import types
-from tfx.dsl.component.experimental.annotations import OutputArtifact
-from tfx.dsl.component.experimental.annotations import Parameter
+from tfx.dsl.component.experimental.annotations import OutputArtifact, Parameter
 from tfx.dsl.component.experimental.decorators import component
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import base_node
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import (
+  base_component,
+  base_executor,
+  base_node,
+  executor_spec,
+)
 from tfx.dsl.placeholder import placeholder as ph
 from tfx.orchestration import pipeline
-from tfx.types import channel
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
-from tfx.types.system_artifacts import Dataset
-from tfx.types.system_artifacts import Metrics
-from tfx.types.system_executions import Process
-from tfx.types.system_executions import Train
+from tfx.types import channel, component_spec, standard_artifacts
+from tfx.types.system_artifacts import Dataset, Metrics
+from tfx.types.system_executions import Process, Train
 
 _pipeline_name = 'pipeline_with_annotations'
 _pipeline_root = os.path.join('pipeline', _pipeline_name)

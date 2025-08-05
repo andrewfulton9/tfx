@@ -21,12 +21,11 @@ from typing import List
 
 import absl
 import tensorflow as tf
-from tensorflow import keras
 import tensorflow_transform as tft
-
-from tfx.components.trainer.fn_args_utils import DataAccessor
-from tfx.components.trainer.fn_args_utils import FnArgs
+from tensorflow import keras
 from tfx_bsl.tfxio import dataset_options
+
+from tfx.components.trainer.fn_args_utils import DataAccessor, FnArgs
 
 _FEATURE_KEY = 'text'
 _LABEL_KEY = 'label'
@@ -58,9 +57,11 @@ def _tokenize_review(review):
   vocabulary.
 
   Args:
+  ----
     review: tensors containing the reviews. (batch_size/None, 1)
 
   Returns:
+  -------
     Tokenized and padded review tensors. (batch_size/None, _MAX_LEN)
   """
   review_sparse = tf.strings.split(tf.reshape(review, [-1])).to_sparse()
@@ -83,9 +84,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature operations.
   """
   return {
@@ -103,6 +106,7 @@ def _input_fn(file_pattern: List[str],
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     tf_transform_output: A TFTransformOutput.
@@ -110,6 +114,7 @@ def _input_fn(file_pattern: List[str],
       dataset to combine in a single batch.
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -127,7 +132,8 @@ def _build_keras_model() -> keras.Model:
 
   Reference: https://www.tensorflow.org/tutorials/text/text_classification_rnn
 
-  Returns:
+  Returns
+  -------
     A Keras Model.
   """
   # Input layer explicitly defined to handle dictionary input
@@ -187,6 +193,7 @@ def run_fn(fn_args: FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   tf_transform_output = tft.TFTransformOutput(fn_args.transform_output)

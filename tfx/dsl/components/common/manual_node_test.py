@@ -13,6 +13,7 @@
 # limitations under the License.
 """Tests for tfx.dsl.components.common.manual_node."""
 import tensorflow as tf
+
 from tfx.dsl.components.common import manual_node
 
 

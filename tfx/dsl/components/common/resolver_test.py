@@ -14,16 +14,14 @@
 """Tests for tfx.dsl.components.common.resolver."""
 
 import tensorflow as tf
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.components.common import resolver
 from tfx.dsl.input_resolution import canned_resolver_functions
 from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.types import channel
-from tfx.types import standard_artifacts
-
-from ml_metadata.proto import metadata_store_pb2
+from tfx.orchestration import data_types, metadata
+from tfx.types import channel, standard_artifacts
 
 
 class ResolverTest(tf.test.TestCase):

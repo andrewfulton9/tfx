@@ -21,22 +21,20 @@ import sys
 from typing import Optional
 
 import absl
-from google.cloud import storage
 import kfp
 import kfp_server_api
-from tfx.dsl.io import fileio
-from tfx.tools.cli import labels
-from tfx.tools.cli import pip_utils
-from tfx.tools.cli.e2e import test_utils
-from tfx.utils import retry
-from tfx.utils import test_case_utils
-
 import pytest
+from google.cloud import storage
+
+from tfx.dsl.io import fileio
+from tfx.tools.cli import labels, pip_utils
+from tfx.tools.cli.e2e import test_utils
+from tfx.utils import retry, test_case_utils
 
 
 @pytest.mark.xfail(run=False, reason="PR 6889 This class contains tests that fail and needs to be fixed. "
 "If all tests pass, please remove this mark.")
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class CliKubeflowEndToEndTest(test_case_utils.TfxTest):
 
   def _get_endpoint(self, config: str) -> str:
@@ -144,6 +142,7 @@ class CliKubeflowEndToEndTest(test_case_utils.TfxTest):
     """Deletes output produced by the named pipeline.
 
     Args:
+    ----
       pipeline_name: The name of the pipeline.
     """
     if ('KFP_E2E_GCP_PROJECT_ID' not in os.environ) or ('KFP_E2E_BUCKET_NAME'

@@ -14,6 +14,7 @@
 """Tests for tfx.extensions.google_cloud_ai_platform.prediction_clients."""
 
 import tensorflow as tf
+
 from tfx.extensions.google_cloud_ai_platform import prediction_clients
 
 

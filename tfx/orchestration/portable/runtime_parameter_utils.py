@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Utilities for TFX Runtime Parameters."""
-from typing import Mapping, Optional, cast, Dict
+from typing import Dict, Mapping, Optional, cast
+
+from google.protobuf import descriptor, message
 
 from tfx import types
 from tfx.orchestration import data_types_utils
 from tfx.proto.orchestration import pipeline_pb2
-
-from google.protobuf import descriptor
-from google.protobuf import message
 
 
 def _is_type_match(v_type, v):
@@ -42,15 +41,18 @@ def _get_runtime_parameter_value(
   If external parameter bindings not found, try to use the default value.
 
   Args:
+  ----
     runtime_parameter: RuntimeParameter as the template.
     parameter_bindings: Parameter bindings to substitute runtime parameter
       placeholders in the RuntimeParameter.
 
   Returns:
+  -------
     Resolved value for the RuntimeParameter if available. Returns None if the
     RuntimeParameter cannot be resolved.
 
   Raises:
+  ------
     RuntimeError: When the provided binding value type does not match the
       RuntimeParameter type requirement.
   """
@@ -88,6 +90,7 @@ def _get_structural_runtime_parameter_value(
   are resolved to values.
 
   Args:
+  ----
     structural_runtime_parameter: The StructuralRuntimeParameter message as the
       template.
     parameter_bindings: Parameter bindings to substitute runtime parameter
@@ -96,6 +99,7 @@ def _get_structural_runtime_parameter_value(
       values.
 
   Returns:
+  -------
     A string if all parts are resolved. Returns None otherwise.
   """
   parts = []
@@ -122,12 +126,14 @@ def substitute_runtime_parameter(
   """Utility function to substitute runtime parameter placeholders with values.
 
   Args:
+  ----
     msg: The original message to change. Only messages defined under
       pipeline_pb2 will be supported. Other types will result in no-op.
     parameter_bindings: A dict of parameter keys to parameter values that will
       be used to substitute the runtime parameter placeholder.
 
   Returns:
+  -------
     A dict of all runtime parameters to their populated values
   """
   if not isinstance(msg, message.Message):

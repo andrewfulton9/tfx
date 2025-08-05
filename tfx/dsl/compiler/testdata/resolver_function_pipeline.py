@@ -15,13 +15,11 @@
 
 from typing import Sequence
 
-from tfx.components import CsvExampleGen
-from tfx.components import Trainer
-from tfx.dsl.input_resolution import resolver_function
-from tfx.dsl.input_resolution import resolver_op
+import tfx.types
+from tfx.components import CsvExampleGen, Trainer
+from tfx.dsl.input_resolution import resolver_function, resolver_op
 from tfx.orchestration import pipeline
 from tfx.proto import trainer_pb2
-import tfx.types
 from tfx.utils import typing_utils
 
 
@@ -49,7 +47,6 @@ def resolve_trainer_inputs(inputs, *, n: int):
 
 def create_test_pipeline():
   """Create a test pipeline with resolver function."""
-
   example_gen = CsvExampleGen(input_base='/data/mydummy_dataset')
 
   trainer_inputs = resolve_trainer_inputs({

@@ -19,8 +19,7 @@ from typing import Any, Dict, List, Optional, Union
 import jinja2
 
 from tfx import types
-from tfx.dsl.component.experimental import executor_specs
-from tfx.dsl.component.experimental import placeholders
+from tfx.dsl.component.experimental import executor_specs, placeholders
 from tfx.dsl.components.base import executor_spec
 
 
@@ -33,12 +32,14 @@ def resolve_container_template(
   """Resolves Jinja2 template languages from an executor container spec.
 
   Args:
+  ----
     container_spec_tmpl: the container spec template to be resolved.
     input_dict: Dictionary of input artifacts consumed by this component.
     output_dict: Dictionary of output artifacts produced by this component.
     exec_properties: Dictionary of execution properties.
 
   Returns:
+  -------
     A resolved container spec.
   """
   context = {
@@ -83,12 +84,14 @@ def _resolve_container_command_line(
   """Resolves placeholders in the command line of a container.
 
   Args:
+  ----
     cmd_args: command line args to resolve.
     input_dict: Dictionary of input artifacts consumed by this component.
     output_dict: Dictionary of output artifacts produced by this component.
     exec_properties: Dictionary of execution properties.
 
   Returns:
+  -------
     Resolved command line.
   """
 
@@ -141,10 +144,12 @@ def to_swagger_dict(config: Any) -> Any:
   from swagger generated code
 
   Args:
+  ----
     config: The config object. It can be one of List, Dict or a Swagger code
       generated object, which has a `attribute_map` attribute.
 
   Returns:
+  -------
     The original object with all Swagger generated object replaced with
     dictionary object.
   """

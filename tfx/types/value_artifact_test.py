@@ -17,14 +17,11 @@ import json
 from unittest import mock
 
 import tensorflow as tf
-from tfx.dsl.io import fileio
-from tfx.types import standard_artifacts
-from tfx.types import system_artifacts
-from tfx.types import value_artifact
-
 from google.protobuf import json_format
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.dsl.io import fileio
+from tfx.types import standard_artifacts, system_artifacts, value_artifact
 
 _IS_NULL_KEY = '__is_null__'
 
@@ -56,7 +53,7 @@ _MyValueArtifact1 = value_artifact._ValueArtifactType(
 
 
 # Mock values for string artifact.
-_STRING_VALUE = u'This is a string'
+_STRING_VALUE = 'This is a string'
 _BYTE_VALUE = b'This is a string'
 
 # Mock paths for string artifact.
@@ -109,7 +106,7 @@ class ValueArtifactTest(tf.test.TestCase):
 
     with self.assertRaisesRegex(
         ValueError, 'The artifact value has not yet been read from storage.'):
-      instance.value  # pylint: disable=pointless-statement
+      instance.value  # noqa: B018
 
     instance.read()
     instance.value = _STRING_VALUE

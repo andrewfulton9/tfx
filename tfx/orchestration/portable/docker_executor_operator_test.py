@@ -18,16 +18,17 @@ from unittest import mock
 
 import docker
 import tensorflow as tf
-from tfx.orchestration import publisher
-from tfx.orchestration.launcher import test_utils
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import docker_executor_operator
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.proto.orchestration import platform_config_pb2
-
 from google.protobuf import text_format
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration import publisher
+from tfx.orchestration.launcher import test_utils
+from tfx.orchestration.portable import data_types, docker_executor_operator
+from tfx.proto.orchestration import (
+  executable_spec_pb2,
+  pipeline_pb2,
+  platform_config_pb2,
+)
 
 _EXECUTOR_SEPC = text_format.Parse(
     """

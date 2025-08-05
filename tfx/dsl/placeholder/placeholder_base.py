@@ -23,10 +23,10 @@ import typing
 from typing import Any, Iterator, Mapping, Optional, Sequence, Union
 
 import attr
+from google.protobuf import message
+
 from tfx.proto.orchestration import placeholder_pb2
 from tfx.utils import proto_utils
-
-from google.protobuf import message
 
 # We cannot depend on anything under tfx.types because:
 # 1. its channel.py (via its __init__.py) needs access to (Artifact)Placeholder.
@@ -45,7 +45,8 @@ from google.protobuf import message
 # where ComponentSpecIntf is an interface that gives access to the few things
 # that Placeholder::encode() needs from the spec. TODO(pke) Implement.
 # TODO(b/191610358): Reduce the number of circular type-dependencies.
-types = Any  # To resolve circular dependency caused by type annotations.
+# To resolve circular dependency caused by type annotations.
+types = Any  # noqa: F811
 
 # TODO(b/190409099): Support RuntimeParameter.
 ValueType = Union[int, float, str, bool]
@@ -81,6 +82,7 @@ class Placeholder(abc.ABC):
     """Creates a new Placeholder. Consider this private.
 
     Args:
+    ----
       expected_type: The Python type (Union types are allowed) that this
         Placeholder will evaluate to. None means that we don't know the type.
     """
@@ -115,25 +117,25 @@ class Placeholder(abc.ABC):
   def __radd__(self, left: str) -> _ConcatOperator:
     return _ConcatOperator([left, self])
 
-  def __eq__(self, other: ValueLikeType) -> 'Predicate':
+  def __eq__(self, other: ValueLikeType) -> Predicate:
     # https://github.com/PyCQA/pylint/issues/5857 pylint: disable=too-many-function-args
     return _ComparisonPredicate(_CompareOp.EQUAL, self, other)
 
-  def __ne__(self, other: ValueLikeType) -> 'Predicate':
+  def __ne__(self, other: ValueLikeType) -> Predicate:
     return logical_not(self == other)
 
-  def __lt__(self, other: ValueLikeType) -> 'Predicate':
+  def __lt__(self, other: ValueLikeType) -> Predicate:
     # https://github.com/PyCQA/pylint/issues/5857 pylint: disable=too-many-function-args
     return _ComparisonPredicate(_CompareOp.LESS_THAN, self, other)
 
-  def __le__(self, other: ValueLikeType) -> 'Predicate':
+  def __le__(self, other: ValueLikeType) -> Predicate:
     return logical_not(self > other)
 
-  def __gt__(self, other: ValueLikeType) -> 'Predicate':
+  def __gt__(self, other: ValueLikeType) -> Predicate:
     # https://github.com/PyCQA/pylint/issues/5857 pylint: disable=too-many-function-args
     return _ComparisonPredicate(_CompareOp.GREATER_THAN, self, other)
 
-  def __ge__(self, other: ValueLikeType) -> 'Predicate':
+  def __ge__(self, other: ValueLikeType) -> Predicate:
     return logical_not(self < other)
 
   # Additional functions that Tflex DSL users can apply to their Placeholders,
@@ -164,9 +166,11 @@ class Placeholder(abc.ABC):
     """Serializes the proto-valued placeholder using the provided format.
 
     Args:
+    ----
       serialization_format: The format of how the proto is serialized.
 
     Returns:
+    -------
       A placeholder representing the serialized proto value.
     """
     assert self._is_maybe_proto_valued()
@@ -185,9 +189,11 @@ class Placeholder(abc.ABC):
     moment; throws runtime error otherwise.
 
     Args:
+    ----
        serialization_format: The format of how the list is serialized.
 
     Returns:
+    -------
       A placeholder representing the serialized list.
     """
     return _ListSerializationOperator(self, serialization_format)
@@ -199,18 +205,20 @@ class Placeholder(abc.ABC):
 
   @abc.abstractmethod
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     """Do not call this as a Tflex user.
 
     Encodes the Placeholder for later eval.
 
     Args:
+    ----
       component_spec: A Tflex component spec whose PARAMETERS field will be used
         to determine the proto types of its inputs/outputs/parameters. This
         allows the encoded placeholder to include the proto descriptors.
 
     Returns:
+    -------
       An encoded PlaceholderExpression, which when evaluated later at pipeline
       runtime will result in the value represented by this Placeholder.
     """
@@ -254,9 +262,11 @@ def logical_not(pred: Predicate) -> Predicate:
   """Applies a NOT boolean operation on a Predicate.
 
   Args:
+  ----
     pred: The Predicate to apply the NOT operation to.
 
   Returns:
+  -------
     The negated Predicate.
   """
   # https://github.com/PyCQA/pylint/issues/5857 pylint: disable=too-many-function-args
@@ -267,10 +277,12 @@ def logical_and(left: Predicate, right: Predicate) -> Predicate:
   """Applies the AND boolean operation on two Predicates.
 
   Args:
+  ----
     left: The first argument of the AND operation.
     right: The second argument of the AND operation.
 
   Returns:
+  -------
     The Predicate resulting from the AND operation.
   """
   # https://github.com/PyCQA/pylint/issues/5857 pylint: disable=too-many-function-args
@@ -283,10 +295,12 @@ def logical_or(left: Predicate, right: Predicate) -> Predicate:
   """Applies the OR boolean operation on two Predicates.
 
   Args:
+  ----
     left: The first argument of the OR operation.
     right: The second argument of the OR operation.
 
   Returns:
+  -------
     The Predicate resulting from the OR operation.
   """
   # https://github.com/PyCQA/pylint/issues/5857 pylint: disable=too-many-function-args
@@ -311,10 +325,12 @@ def join(
   Returns an empty string if placeholders is empty.
 
   Args:
+  ----
     placeholders: List of placeholders and/or strings.
     separator: The separator to use when joining the passed in values.
 
   Returns:
+  -------
     A Placeholder representing the concatenation of all elements passed in, or
     a string in the case that no element was a Placeholder instance.
   """
@@ -335,10 +351,12 @@ def join_path(
   """Runs os.path.join() on placeholder arguments.
 
   Args:
+  ----
     *args: (Placeholders that resolve to) strings which will be passed to
       os.path.join().
 
   Returns:
+  -------
     A placeholder that will resolve to the joined path.
   """
   return _JoinPathOperator(*args)
@@ -370,9 +388,11 @@ class ListPlaceholder(Placeholder):
     the moment; throws runtime error otherwise.
 
     Args:
+    ----
        serialization_format: The format of how the proto is serialized.
 
     Returns:
+    -------
       A placeholder.
     """
     return _ListSerializationOperator(self, serialization_format)
@@ -395,7 +415,7 @@ class ListPlaceholder(Placeholder):
         yield from p.traverse()
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     result.operator.list_concat_op.SetInParent()
@@ -414,6 +434,7 @@ def make_dict(
   """Returns a DictPlaceholder representing a dict of input placeholders.
 
   Args:
+  ----
     entries: A mapping that will become the final dict after running placeholder
       resolution on each of the values. Values that resolve to None are dropped.
       If you also want placeholders in the keys, you need to pass the dict as a
@@ -421,6 +442,7 @@ def make_dict(
       string.
 
   Returns:
+  -------
     A placeholder that will resolve to a dict with the given entries.
   """
   if isinstance(entries, Mapping):
@@ -471,7 +493,7 @@ class DictPlaceholder(Placeholder):
         yield from value.traverse()
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     result.operator.make_dict_op.SetInParent()
@@ -528,10 +550,12 @@ def _is_maybe_subclass(
   """Like issubclass(), but supports Union types on the sub-class side.
 
   Args:
+  ----
     test_type: A sub-type to test. Can be a Union or a plain class.
     parent_type: A parent type (class, type or tuple of classes/types).
 
   Returns:
+  -------
     True if the test_type is a sub-type of the parent_type. If the test_type is
     a Union, any of them is allowed. If it's None, returns True.
   """
@@ -571,7 +595,7 @@ class _IndexOperator(UnaryPlaceholderOperator):
     )
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     result.operator.index_op.expression.CopyFrom(
@@ -612,7 +636,7 @@ class _ConcatOperator(Placeholder):
     )
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     result.operator.concat_op.expressions.extend(
@@ -657,7 +681,7 @@ class _JoinPathOperator(Placeholder):
         yield from arg.traverse()
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     op = result.operator.join_path_op
@@ -719,7 +743,7 @@ class _ProtoOperator(UnaryPlaceholderOperator):
     )
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     op = result.operator.proto_op
@@ -763,14 +787,17 @@ def dirname(
   """Runs os.path.dirname() on the path resolved from the input placeholder.
 
   Args:
+  ----
     placeholder: Another placeholder to be wrapped in a _DirNameOperator.
 
   Example:
+  -------
   ```
   ph.dirname(ph.execution_invocation().output_metadata_uri)
   ```
 
   Returns:
+  -------
     A _DirNameOperator operator.
   """
   return _DirNameOperator(placeholder)
@@ -790,7 +817,7 @@ class _ListSerializationOperator(UnaryPlaceholderOperator):
     self._serialization_format = serialization_format
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     op = result.operator.list_serialization_op
@@ -811,7 +838,7 @@ class _Base64EncodeOperator(UnaryPlaceholderOperator):
     self._url_safe = url_safe
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     result.operator.base64_encode_op.expression.CopyFrom(
@@ -842,7 +869,7 @@ class _DirNameOperator(UnaryPlaceholderOperator):
     )
 
   def encode(
-      self, component_spec: Optional[type['types.ComponentSpec']] = None
+      self, component_spec: Optional[type[types.ComponentSpec]] = None
   ) -> placeholder_pb2.PlaceholderExpression:
     result = placeholder_pb2.PlaceholderExpression()
     op = result.operator.dir_name_op
@@ -866,7 +893,6 @@ def encode_value_like(
     x: ValueLikeType, component_spec: Any = None
 ) -> placeholder_pb2.PlaceholderExpression:
   """Encodes x to a placeholder expression proto."""
-
   if isinstance(x, Placeholder):
     return x.encode(component_spec)
   result = placeholder_pb2.PlaceholderExpression()

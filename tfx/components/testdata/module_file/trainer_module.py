@@ -19,11 +19,12 @@ This module file will be used in Transform and generic Trainer.
 
 from typing import Optional
 
-from absl import logging
 import tensorflow as tf
 import tensorflow_transform as tft
-from tfx.components.trainer import fn_args_utils
+from absl import logging
 from tfx_bsl.tfxio import dataset_options
+
+from tfx.components.trainer import fn_args_utils
 
 # Categorical features are assumed to each have a maximum value in the dataset.
 _MAX_CATEGORICAL_FEATURE_VALUES = [24, 31, 13]
@@ -80,10 +81,12 @@ def _fill_in_missing(x):
   Fills in missing values of `x` with '' or 0, and converts to a dense tensor.
 
   Args:
+  ----
       x: A `SparseTensor` of rank 2.  Its dense shape should have size at most 1
       in the second dimension.
 
   Returns:
+  -------
       A rank 1 tensor where missing values of `x` have been filled in.
   """
   if not isinstance(x, tf.sparse.SparseTensor):
@@ -147,6 +150,7 @@ def _input_fn(
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: fn_args_utils.DataAccessor for converting input to
       RecordBatch.
@@ -155,6 +159,7 @@ def _input_fn(
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -173,9 +178,11 @@ def _build_keras_model(
   """Creates a DNN Keras model for classifying taxi data.
 
   Args:
+  ----
     hidden_units: [int], the layer sizes of the DNN (input layer first).
 
   Returns:
+  -------
     A Wide and Deep keras Model.
   """
   # Following values are hard coded for simplicity in this example,
@@ -254,10 +261,12 @@ def stats_options_updater_fn(unused_stats_type, stats_options):
   """Callback function for setting pre and post-transform stats options.
 
   Args:
+  ----
     unused_stats_type: a stats_options_util.StatsType object.
     stats_options: a tfdv.StatsOptions object.
 
   Returns:
+  -------
     An updated tfdv.StatsOptions object.
   """
   return stats_options
@@ -268,9 +277,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature operations.
   """
   outputs = {}
@@ -316,6 +327,7 @@ def run_fn(fn_args: fn_args_utils.FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   # Number of nodes in the first layer of the DNN

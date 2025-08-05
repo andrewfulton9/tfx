@@ -17,8 +17,8 @@ import subprocess
 import time
 from typing import Tuple
 
-from absl import logging
 import docker
+from absl import logging
 
 _MYSQL_POLLING_INTERVAL_SEC = 2
 _MYSQL_POLLING_MAX_ATTEMPTS = 60
@@ -31,16 +31,18 @@ def create_mysql_container(container_name: str) -> Tuple[str, int]:
   A created mysql will have 'airflow' database and 'tfx' user without password.
 
   Args:
+  ----
       container_name: A name of the new container.
 
   Returns:
+  -------
       The ip address and new port number.
 
   Raises:
+  ------
       RuntimeError: When mysql couldn't respond in pre-defined time limit or
                     failed to run initialization sqls.
   """
-
   client = docker.from_env()
   container = client.containers.run(
       'mysql:5.7',
@@ -79,7 +81,7 @@ def create_mysql_container(container_name: str) -> Tuple[str, int]:
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        universal_newlines=True,
+        text=True,
     )
     if check_available.returncode == 0:
       break
@@ -112,6 +114,7 @@ def delete_mysql_container(container_name: str):
   """Delete a mysql docker container with name.
 
   Args:
+  ----
       container_name: A name of the new container.
   """
   client = docker.from_env()

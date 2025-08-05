@@ -16,14 +16,15 @@
 import os
 from unittest import mock
 
-from tfx import types
-from tfx import version
+from tfx import types, version
 from tfx.dsl.compiler import constants
 from tfx.orchestration import metadata
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import inputs_utils
-from tfx.orchestration.portable import resolver_node_handler
-from tfx.orchestration.portable import runtime_parameter_utils
+from tfx.orchestration.portable import (
+  execution_publish_utils,
+  inputs_utils,
+  resolver_node_handler,
+  runtime_parameter_utils,
+)
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.orchestration.portable.mlmd import context_lib
 from tfx.proto.orchestration import pipeline_pb2

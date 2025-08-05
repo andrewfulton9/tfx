@@ -15,8 +15,9 @@
 
 from unittest import mock
 
-from absl.testing import parameterized
 import tensorflow as tf
+from absl.testing import parameterized
+
 from tfx.dsl.compiler import compiler
 from tfx.orchestration import pipeline as tfx_pipeline
 from tfx.orchestration import tfx_runner

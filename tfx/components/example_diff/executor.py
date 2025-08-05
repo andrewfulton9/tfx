@@ -15,19 +15,18 @@
 import os
 from typing import Any, Dict, List
 
-from absl import logging
 import apache_beam as beam
 import tensorflow as tf
+from absl import logging
 from tensorflow_data_validation.skew import feature_skew_detector
+from tfx_bsl.tfxio import record_based_tfxio
+
 from tfx import types
 from tfx.components.util import tfxio_utils
 from tfx.dsl.components.base import base_beam_executor
 from tfx.proto import example_diff_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import json_utils
-from tfx_bsl.tfxio import record_based_tfxio
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, json_utils
 
 STATS_FILE_NAME = 'skew_stats'
 MATCH_STATS_FILE_NAME = 'match_stats'
@@ -37,7 +36,7 @@ _SAMPLE_FILE_NAME = 'sample_pairs'
 _TELEMETRY_DESCRIPTORS = ['ExampleDiff']
 
 
-class _IncludedSplitPairs(object):
+class _IncludedSplitPairs:
   """Checks includedness of split pairs."""
 
   def __init__(self, include_split_pairs: List[List[str]]):
@@ -100,14 +99,17 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     """Computes example diffs for each split pair.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts.
       output_dict: Output dict from output key to a list of Artifacts.
       exec_properties: A dict of execution properties.
 
     Raises:
+    ------
       ValueError: If examples are in a non- record-based format.
 
     Returns:
+    -------
       None
     """
     self._log_startup(input_dict, output_dict, exec_properties)
@@ -175,7 +177,11 @@ class Executor(base_beam_executor.BaseBeamExecutor):
         logging.info('Processing split pair %s', split_pair)
         # pylint: disable=cell-var-from-loop
         @beam.ptransform_fn
-        def _iteration(p):
+        def _iteration(p,
+                       test_tfxio=test_tfxio,
+                       base_tfxio=base_tfxio,
+                       split_pair=split_pair
+        ):
           base_examples = (
               p | 'TFXIORead[base]' >> test_tfxio.RawRecordBeamSource()
               | 'Parse[base]' >> beam.Map(_parse_example))

@@ -13,16 +13,15 @@
 # limitations under the License.
 """Tests for tfx.dsl.input_resolution.strategies.conditional_strategy."""
 
+from google.protobuf import text_format
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.dsl.input_resolution.strategies import conditional_strategy
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
+from tfx.orchestration import data_types, metadata
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.proto.orchestration import placeholder_pb2
 from tfx.types import standard_artifacts
 from tfx.utils import test_case_utils
-
-from google.protobuf import text_format
-from ml_metadata.proto import metadata_store_pb2
 
 _TEST_PREDICATE_1 = """
   operator {

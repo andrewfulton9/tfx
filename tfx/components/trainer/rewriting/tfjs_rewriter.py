@@ -46,6 +46,7 @@ class TFJSRewriter(rewriter.BaseRewriter):
     """Create an instance of the TFJSRewriter.
 
     Args:
+    ----
       name: The name to use when identifying the rewriter.
     """
     self._name = name
@@ -59,10 +60,12 @@ class TFJSRewriter(rewriter.BaseRewriter):
     """Performs pre-rewrite checks to see if the model can be rewritten.
 
     Args:
+    ----
       original_model: A `ModelDescription` object describing the model to be
         rewritten.
 
     Raises:
+    ------
       ValueError: If the original model does not have the expected structure.
     """
     if original_model.model_type != rewriter.ModelType.SAVED_MODEL:
@@ -73,12 +76,14 @@ class TFJSRewriter(rewriter.BaseRewriter):
     """Rewrites the provided model.
 
     Args:
+    ----
       original_model: A `ModelDescription` specifying the original model to be
         rewritten.
       rewritten_model: A `ModelDescription` specifying the format and location
         of the rewritten model.
 
     Raises:
+    ------
       ValueError: If the model could not be sucessfully rewritten.
     """
     if rewritten_model.model_type not in [
@@ -94,10 +99,12 @@ class TFJSRewriter(rewriter.BaseRewriter):
     """Performs post-rewrite checks to see if the rewritten model is valid.
 
     Args:
+    ----
       rewritten_model: A `ModelDescription` specifying the format and location
         of the rewritten model.
 
     Raises:
+    ------
       ValueError: If the rewritten model is not valid.
     """
     # TODO(dzats): Implement post-rewrite validation.

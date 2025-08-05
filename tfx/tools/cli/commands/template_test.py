@@ -18,9 +18,10 @@ import locale
 import os
 from unittest import mock
 
+import tensorflow as tf
 from absl import logging
 from click import testing as click_testing
-import tensorflow as tf
+
 from tfx.tools.cli.commands.template import template_group
 from tfx.tools.cli.handler import template_handler
 

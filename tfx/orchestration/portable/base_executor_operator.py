@@ -16,11 +16,11 @@
 import abc
 from typing import Optional
 
+from google.protobuf import message
+
 from tfx.orchestration.portable import data_types
 from tfx.proto.orchestration import execution_result_pb2
 from tfx.utils import abc_utils
-
-from google.protobuf import message
 
 
 class BaseExecutorOperator(abc.ABC):
@@ -36,12 +36,14 @@ class BaseExecutorOperator(abc.ABC):
     """Constructor.
 
     Args:
+    ----
       executor_spec: The specification of how to initialize the executor.
       platform_config: The specification of how to allocate resource for the
         executor.
       pipeline_platform_config: Pipeline-level context information.
 
     Raises:
+    ------
       RuntimeError: if the executor_spec or platform_config is not supported.
     """
     if not isinstance(executor_spec,
@@ -63,9 +65,11 @@ class BaseExecutorOperator(abc.ABC):
     """Invokes the executor with inputs provided by the Launcher.
 
     Args:
+    ----
       execution_info: A wrapper of the info needed by this execution.
 
     Returns:
+    -------
       The output from executor.
     """
     pass
@@ -75,10 +79,12 @@ class BaseExecutorOperator(abc.ABC):
     """Attach an execution watcher to the executor operator.
 
     Args:
+    ----
       execution_watcher_address: The address to an executor watcher gRPC service
         which can be used to update execution properties.
 
     Returns:
+    -------
       The executor operator itself.
     """
     self._execution_watcher_address = execution_watcher_address

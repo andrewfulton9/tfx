@@ -14,6 +14,7 @@
 """Utilities for topological sort."""
 
 from typing import Callable, List, Sequence, TypeVar
+
 from absl import logging
 
 NodeT = TypeVar('NodeT')
@@ -30,6 +31,7 @@ def topsorted_layers(
   """Sorts the DAG of nodes in topological order.
 
   Args:
+  ----
     nodes: A sequence of nodes.
     get_node_id_fn: Callable that returns a unique text identifier for a node.
     get_parent_nodes: Callable that returns a list of parent nodes for a node.
@@ -40,10 +42,12 @@ def topsorted_layers(
       node will be omitted.
 
   Returns:
+  -------
     A list of topologically ordered node layers. Each layer of nodes is sorted
     by its node id given by `get_node_id_fn`.
 
   Raises:
+  ------
     InvalidDAGError: If the input nodes don't form a DAG.
     ValueError: If the nodes are not unique.
   """

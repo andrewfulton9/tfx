@@ -15,17 +15,15 @@
 
 from typing import Sequence
 
-from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.compiler import constants
+import ml_metadata as mlmd
+from ml_metadata.proto import metadata_store_pb2
+
+from tfx.dsl.compiler import compiler_utils, constants
 from tfx.dsl.input_resolution import resolver_op
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.orchestration.portable.mlmd import event_lib
 from tfx.types import artifact_utils
 from tfx.utils import typing_utils
-
-import ml_metadata as mlmd
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class LatestPipelineRunOutputs(
@@ -35,7 +33,7 @@ class LatestPipelineRunOutputs(
     return_data_type=resolver_op.DataType.ARTIFACT_MULTIMAP):
   """LatestPipelineRunOutputs operator.
 
-    This operator returns artifacts from the latest COMPLETED pipeline run.
+  This operator returns artifacts from the latest COMPLETED pipeline run.
   """
 
   pipeline_name = resolver_op.Property(type=str)
@@ -44,7 +42,8 @@ class LatestPipelineRunOutputs(
   def apply(self) -> typing_utils.ArtifactMultiMap:
     """Returns artifacts from the latest pipeline run.
 
-    Returns:
+    Returns
+    -------
       A dictionary, each value in the dict is a list of artifacts from the
       latest pipeline run.
     """

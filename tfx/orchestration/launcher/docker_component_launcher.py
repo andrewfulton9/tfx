@@ -16,16 +16,13 @@
 from typing import Any, Dict, List, cast
 
 import absl
-
 import docker
 
 from tfx import types
 from tfx.dsl.component.experimental import executor_specs
 from tfx.dsl.components.base import executor_spec
-from tfx.orchestration.config import base_component_config
-from tfx.orchestration.config import docker_component_config
-from tfx.orchestration.launcher import base_component_launcher
-from tfx.orchestration.launcher import container_common
+from tfx.orchestration.config import base_component_config, docker_component_config
+from tfx.orchestration.launcher import base_component_launcher, container_common
 
 
 class DockerComponentLauncher(base_component_launcher.BaseComponentLauncher):
@@ -49,7 +46,6 @@ class DockerComponentLauncher(base_component_launcher.BaseComponentLauncher):
                     output_dict: Dict[str, List[types.Artifact]],
                     exec_properties: Dict[str, Any]) -> None:
     """Execute underlying component implementation."""
-
     executor_container_spec = cast(executor_spec.ExecutorContainerSpec,
                                    self._component_executor_spec)
     if self._component_config:

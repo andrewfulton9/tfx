@@ -15,14 +15,12 @@
 
 import os
 import tempfile
-
 from unittest import mock
-import numpy as np
 
+import numpy as np
 import tensorflow as tf
 
-from tfx.components.trainer.rewriting import rewriter
-from tfx.components.trainer.rewriting import tflite_rewriter
+from tfx.components.trainer.rewriting import rewriter, tflite_rewriter
 from tfx.dsl.io import fileio
 
 EXTRA_ASSETS_DIRECTORY = 'assets.extra'

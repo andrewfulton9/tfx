@@ -13,13 +13,13 @@
 # limitations under the License.
 """Tests for prediction_to_example_utils."""
 
-from absl.testing import parameterized
 import tensorflow as tf
+from absl.testing import parameterized
+from google.protobuf import text_format
+from tensorflow_serving.apis import prediction_log_pb2
 
 from tfx.components.bulk_inferrer import prediction_to_example_utils as utils
 from tfx.proto import bulk_inferrer_pb2
-from google.protobuf import text_format
-from tensorflow_serving.apis import prediction_log_pb2
 
 
 class PredictionToExampleUtilsTest(tf.test.TestCase, parameterized.TestCase):

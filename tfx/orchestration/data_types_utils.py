@@ -14,16 +14,13 @@
 """Data types util shared for orchestration."""
 from typing import Dict, Iterable, List, Mapping, Optional
 
-from tfx import types
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
-from tfx.types import artifact_utils
-from tfx.utils import json_utils
-from tfx.utils import proto_utils
-
 from google.protobuf import message
-from ml_metadata.proto import metadata_store_pb2
-from ml_metadata.proto import metadata_store_service_pb2
+from ml_metadata.proto import metadata_store_pb2, metadata_store_service_pb2
+
+from tfx import types
+from tfx.proto.orchestration import execution_result_pb2, pipeline_pb2
+from tfx.types import artifact_utils
+from tfx.utils import json_utils, proto_utils
 
 
 def build_artifact_dict(
@@ -167,13 +164,16 @@ def get_metadata_value_type(
   """Gets the metadata property type of a property value from a value.
 
   Args:
+  ----
     value: The property value represented by pipeline_pb2.Value or a primitive
       property value type.
 
   Returns:
+  -------
     A metadata_store_pb2.PropertyType.
 
   Raises:
+  ------
     RuntimeError: If property value is still in RuntimeParameter form
     ValueError: The value type is not supported.
   """
@@ -207,12 +207,15 @@ def get_value(tfx_value: pipeline_pb2.Value) -> types.Property:
   """Gets the primitive type value of a pipeline_pb2.Value instance.
 
   Args:
+  ----
     tfx_value: A pipeline_pb2.Value message.
 
   Returns:
+  -------
     The primitive type value of the tfx value.
 
   Raises:
+  ------
     RuntimeError: when the value is still in RuntimeParameter form.
   """
   which = tfx_value.WhichOneof('value')
@@ -228,9 +231,11 @@ def get_metadata_value(
   """Gets the primitive type value of a metadata_store_pb2.Value instance.
 
   Args:
+  ----
     value: A metadata_store_pb2.Value message.
 
   Returns:
+  -------
     The primitive type value of metadata_store_pb2.Value instance if set, `None`
     otherwise.
   """
@@ -244,13 +249,16 @@ def set_metadata_value(
   """Sets metadata property based on tfx value.
 
   Args:
+  ----
     metadata_value: A metadata_store_pb2.Value message to be set.
     value: The value of the property in pipeline_pb2.Value form.
 
   Returns:
+  -------
     A Value proto filled with the provided value.
 
   Raises:
+  ------
     ValueError: If value type is not supported or is still RuntimeParameter.
   """
   parameter_value = pipeline_pb2.Value()
@@ -266,16 +274,19 @@ def set_parameter_value(
   """Sets field value and schema based on tfx value.
 
   Args:
+  ----
     parameter_value: A pipeline_pb2.Value message to be set.
     value: The value of the property.
     set_schema: Boolean value indicating whether to set schema in
       pipeline_pb2.Value.
 
   Returns:
+  -------
     A pipeline_pb2.Value proto with field_value and optionally schema filled
     based on input property.
 
   Raises:
+  ------
     ValueError: If value type is not supported.
   """
 

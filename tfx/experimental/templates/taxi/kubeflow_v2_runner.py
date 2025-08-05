@@ -14,10 +14,10 @@
 """Define KubeflowV2DagRunner to run the pipeline."""
 
 import os
+
 from absl import logging
 
-from tfx.experimental.templates.taxi.pipeline import configs
-from tfx.experimental.templates.taxi.pipeline import pipeline
+from tfx.experimental.templates.taxi.pipeline import configs, pipeline
 from tfx.orchestration.kubeflow.v2 import kubeflow_v2_dag_runner
 from tfx.proto import trainer_pb2
 
@@ -53,7 +53,6 @@ _DATA_PATH = 'gs://{}/tfx-template/data/taxi/'.format(configs.GCS_BUCKET_NAME)
 
 def run():
   """Define a pipeline to be executed using Kubeflow V2 runner."""
-
   runner_config = kubeflow_v2_dag_runner.KubeflowV2DagRunnerConfig(
       default_image=configs.PIPELINE_IMAGE)
 

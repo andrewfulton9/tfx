@@ -17,12 +17,9 @@ import contextlib
 import filecmp
 import os
 
-
 from tfx import version
-from tfx.tools.cli.container_builder import dockerfile
-from tfx.tools.cli.container_builder import labels
+from tfx.tools.cli.container_builder import dockerfile, labels
 from tfx.utils import test_case_utils
-
 
 _FAKE_VERSION = '0.23.0'
 
@@ -68,6 +65,9 @@ class DockerfileTest(test_case_utils.TfxTest):
     dockerfile.Dockerfile(
         filename=generated_dockerfile_path,
         base_image='my_customized_image:latest')
+    with open(generated_dockerfile_path) as f:
+      content = f.read()
+      print(content)
     self.assertTrue(
         filecmp.cmp(
             os.path.join(self._testdata_dir, 'test_dockerfile_with_base'),

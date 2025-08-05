@@ -16,24 +16,26 @@
 import inspect
 import tempfile
 from typing import Any, Callable, Dict, Iterator, List
-from absl.testing import parameterized
+
 import pyarrow as pa
 import tensorflow as tf
-
-from tfx.components.experimental.data_view import constants
-from tfx.components.util import examples_utils
-from tfx.components.util import tfxio_utils
-from tfx.proto import example_gen_pb2
-from tfx.types import standard_artifacts
-from tfx_bsl.coders import tf_graph_record_decoder
-from tfx_bsl.tfxio import parquet_tfxio
-from tfx_bsl.tfxio import raw_tf_record
-from tfx_bsl.tfxio import record_based_tfxio
-from tfx_bsl.tfxio import record_to_tensor_tfxio
-from tfx_bsl.tfxio import tf_example_record
-from tfx_bsl.tfxio import tf_sequence_example_record
+from absl.testing import parameterized
 from google.protobuf import text_format
 from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx_bsl.coders import tf_graph_record_decoder
+from tfx_bsl.tfxio import (
+  parquet_tfxio,
+  raw_tf_record,
+  record_based_tfxio,
+  record_to_tensor_tfxio,
+  tf_example_record,
+  tf_sequence_example_record,
+)
+
+from tfx.components.experimental.data_view import constants
+from tfx.components.util import examples_utils, tfxio_utils
+from tfx.proto import example_gen_pb2
+from tfx.types import standard_artifacts
 
 _RAW_RECORD_COLUMN_NAME = 'raw_record'
 _MAKE_TFXIO_TEST_CASES = [

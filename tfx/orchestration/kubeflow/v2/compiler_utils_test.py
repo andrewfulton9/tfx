@@ -15,21 +15,18 @@
 
 import os
 
-from absl.testing import parameterized
-from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
 import tensorflow as tf
+import yaml
+from absl.testing import parameterized
+from google.protobuf import text_format
+from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+
 from tfx.dsl.components.base.testing import test_node
 from tfx.dsl.io import fileio
 from tfx.orchestration import data_types
 from tfx.orchestration.kubeflow.v2 import compiler_utils
-from tfx.types import artifact
-from tfx.types import channel
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact, channel, channel_utils, standard_artifacts
 from tfx.types.experimental import simple_artifacts
-import yaml
-
-from google.protobuf import text_format
 
 _EXPECTED_MY_ARTIFACT_SCHEMA = """
 title: test.Type

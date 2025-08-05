@@ -14,7 +14,6 @@
 """Handler for Kubeflow."""
 
 import functools
-
 import os
 import sys
 import time
@@ -26,8 +25,7 @@ import kfp
 from tfx.orchestration.kubeflow import kubeflow_dag_runner
 from tfx.tools.cli import labels
 from tfx.tools.cli.container_builder import builder
-from tfx.tools.cli.handler import base_handler
-from tfx.tools.cli.handler import kubeflow_dag_runner_patcher
+from tfx.tools.cli.handler import base_handler, kubeflow_dag_runner_patcher
 
 
 def create_container_image(image: str, base_image: Optional[str]) -> str:
@@ -51,6 +49,7 @@ class KubeflowHandler(base_handler.BaseHandler):
     """Initialize Kubeflow handler.
 
     Args:
+    ----
       flags_dict: A dictionary with flags provided in a command.
     """
     super().__init__(flags_dict)
@@ -67,9 +66,9 @@ class KubeflowHandler(base_handler.BaseHandler):
     """Creates or updates a pipeline in Kubeflow.
 
     Args:
+    ----
       update: set as true to update pipeline.
     """
-
     if self.flags_dict.get(labels.BUILD_IMAGE):
       build_image_fn = functools.partial(
           create_container_image,
@@ -116,7 +115,6 @@ class KubeflowHandler(base_handler.BaseHandler):
 
   def delete_pipeline(self) -> None:
     """Delete pipeline in Kubeflow."""
-
     pipeline_name = self.flags_dict[labels.PIPELINE_NAME]
     # Check if pipeline exists on server.
     pipeline_id = self._get_pipeline_id(pipeline_name, check=True)
@@ -134,7 +132,8 @@ class KubeflowHandler(base_handler.BaseHandler):
   def compile_pipeline(self) -> None:
     """Compiles pipeline in Kubeflow.
 
-    Returns:
+    Returns
+    -------
       pipeline_args: python dictionary with pipeline details extracted from DSL.
     """
     patcher = kubeflow_dag_runner_patcher.KubeflowDagRunnerPatcher(
@@ -228,7 +227,6 @@ class KubeflowHandler(base_handler.BaseHandler):
                      pipeline_package_path: str,
                      update: bool = False) -> None:
     """Creates/updates pipeline in the Kubeflow Pipelines cluster."""
-
     pipeline_id = self._get_pipeline_id(pipeline_name, check=update)
     if pipeline_id is not None and not update:
       sys.exit(

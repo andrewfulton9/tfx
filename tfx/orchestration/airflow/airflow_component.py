@@ -16,16 +16,15 @@
 import functools
 from typing import Any, Dict, List, Type
 
+from ml_metadata.proto import metadata_store_pb2
+
 from airflow import models
 from airflow.operators import python_operator
 from tfx.dsl.components.base import base_node
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
+from tfx.orchestration import data_types, metadata
 from tfx.orchestration.config import base_component_config
 from tfx.orchestration.launcher import base_component_launcher
 from tfx.utils import telemetry_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def _airflow_component_launcher(
@@ -42,6 +41,7 @@ def _airflow_component_launcher(
   run_id that we need to pass into TFX ComponentLauncher.
 
   Args:
+  ----
     component: TFX BaseComponent instance. This instance holds all inputs and
       outputs placeholders as well as component properties.
     component_launcher_class: The class of the launcher to launch the component.
@@ -94,6 +94,7 @@ class AirflowComponent(python_operator.PythonOperator):
     """Constructs an Airflow implementation of TFX component.
 
     Args:
+    ----
       parent_dag: An AirflowPipeline instance as the pipeline DAG.
       component: An instance of base_node.BaseNode that holds all
         properties of a logical component.

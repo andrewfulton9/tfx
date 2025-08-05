@@ -15,16 +15,17 @@
 
 import os
 
-from absl.testing import parameterized
+import pytest
 import tensorflow as tf
+from absl.testing import parameterized
+
 from tfx.dsl.io import fileio
 from tfx.examples.chicago_taxi_pipeline import taxi_pipeline_native_keras
 from tfx.orchestration import metadata
 from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
 
-import pytest
 
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class TaxiPipelineNativeKerasEndToEndTest(
     tf.test.TestCase, parameterized.TestCase):
 

@@ -18,14 +18,13 @@ import os
 import apache_beam as beam
 import tensorflow as tf
 import tensorflow_transform as tft
+from tensorflow_metadata.proto.v0 import schema_pb2
 from tensorflow_transform import beam as tft_beam
-from tensorflow_transform.tf_metadata import dataset_metadata
-from tensorflow_transform.tf_metadata import schema_utils
-from tfx.examples.chicago_taxi_pipeline import taxi_utils
-from tfx.utils import io_utils
+from tensorflow_transform.tf_metadata import dataset_metadata, schema_utils
 from tfx_bsl.tfxio import tf_example_record
 
-from tensorflow_metadata.proto.v0 import schema_pb2
+from tfx.examples.chicago_taxi_pipeline import taxi_utils
+from tfx.utils import io_utils
 
 
 class TaxiUtilsTest(tf.test.TestCase):

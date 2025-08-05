@@ -16,8 +16,7 @@
 import click
 
 from tfx.tools.cli import labels
-from tfx.tools.cli.cli_context import Context
-from tfx.tools.cli.cli_context import pass_context
+from tfx.tools.cli.cli_context import Context, pass_context
 from tfx.tools.cli.handler import template_handler
 
 

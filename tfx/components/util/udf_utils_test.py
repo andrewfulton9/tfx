@@ -18,14 +18,12 @@ import os
 import subprocess
 import sys
 import tempfile
-
 from unittest import mock
+
 import tensorflow as tf
 
 from tfx.components.util import udf_utils
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.types import component_spec
 from tfx.utils import import_utils
 
@@ -148,7 +146,7 @@ class UdfUtilsTest(tf.test.TestCase):
     self.assertEqual(
         dependency,
         os.path.join(
-            temp_pipeline_root, '_wheels', 'tfx_user_code_MyComponent-0.0+'
+            temp_pipeline_root, '_wheels', 'tfx_user_code_mycomponent-0.0+'
             '1c9b861db85cc54c56a56cbf64f77c1b9d1ded487d60a97d082ead6b250ee62c'
             '-py3-none-any.whl'))
 

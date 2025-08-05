@@ -15,27 +15,23 @@
 
 from tensorflow_data_validation.anomalies.proto import custom_validation_config_pb2
 from tensorflow_model_analysis import sdk as tfma
-from tfx.proto import bulk_inferrer_pb2
-from tfx.proto import distribution_validator_pb2
-from tfx.proto import evaluator_pb2
-from tfx.proto import example_diff_pb2
-from tfx.proto import example_gen_pb2
-from tfx.proto import infra_validator_pb2
-from tfx.proto import pusher_pb2
-from tfx.proto import range_config_pb2
-from tfx.proto import trainer_pb2
-from tfx.proto import transform_pb2
-from tfx.proto import tuner_pb2
-from tfx.types import standard_artifacts
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ComponentSpec
-from tfx.types.component_spec import ExecutionParameter
-from tfx.types.system_executions import Deploy
-from tfx.types.system_executions import Evaluate
-from tfx.types.system_executions import Process
-from tfx.types.system_executions import Train
-from tfx.types.system_executions import Transform
 
+from tfx.proto import (
+  bulk_inferrer_pb2,
+  distribution_validator_pb2,
+  evaluator_pb2,
+  example_diff_pb2,
+  example_gen_pb2,
+  infra_validator_pb2,
+  pusher_pb2,
+  range_config_pb2,
+  trainer_pb2,
+  transform_pb2,
+  tuner_pb2,
+)
+from tfx.types import standard_artifacts
+from tfx.types.component_spec import ChannelParameter, ComponentSpec, ExecutionParameter
+from tfx.types.system_executions import Deploy, Evaluate, Process, Train, Transform
 
 # Parameters keys for modules
 # Shared Keys across components

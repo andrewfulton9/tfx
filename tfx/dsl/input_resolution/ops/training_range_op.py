@@ -15,6 +15,8 @@
 
 from typing import Any, List, Sequence
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.input_resolution import resolver_op
 from tfx.dsl.input_resolution.ops import ops_utils
@@ -22,8 +24,6 @@ from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.orchestration.portable.input_resolution.mlmd_resolver import metadata_resolver
 from tfx.orchestration.portable.mlmd import event_lib
 from tfx.types import artifact_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def _validate_input_list(
@@ -51,6 +51,7 @@ def training_range(
   Note that only the standard TFleX Model and Examples artifacts are supported.
 
   Args:
+  ----
    store: The MetadataStore.
    model: The Model artifact whose trained Examples to return.
    use_transformed_examples: Whether to return the materialized Examples
@@ -59,6 +60,7 @@ def training_range(
      Defaults to False.
 
   Returns:
+  -------
     List of Examples artifacts if found, else empty list. We intentionally don't
     raise SkipSignal, such that the caller can decide to raise it or not.
   """
@@ -115,9 +117,7 @@ def training_range(
     # garbage collected artifacts (which are marked as DELETED).
     if artifact.state != metadata_store_pb2.Artifact.State.LIVE:
       continue
-    elif use_transformed_examples and artifact.id in transformed_examples_ids:
-      mlmd_artifacts.append(artifact)
-    elif not use_transformed_examples and artifact.id in examples_ids:
+    elif use_transformed_examples and artifact.id in transformed_examples_ids or not use_transformed_examples and artifact.id in examples_ids:
       mlmd_artifacts.append(artifact)
   if not mlmd_artifacts:
     return []

@@ -17,35 +17,39 @@ from typing import Dict, Type, Union
 
 from tfx.dsl.components.common import resolver
 from tfx.dsl.input_resolution import resolver_op
-from tfx.dsl.input_resolution.ops import all_spans_op
-from tfx.dsl.input_resolution.ops import consecutive_spans_op
-from tfx.dsl.input_resolution.ops import equal_property_values_op
-from tfx.dsl.input_resolution.ops import exclude_spans_op
-from tfx.dsl.input_resolution.ops import graph_traversal_op
-from tfx.dsl.input_resolution.ops import group_by_lineage_op
-from tfx.dsl.input_resolution.ops import latest_create_time_op
-from tfx.dsl.input_resolution.ops import latest_pipeline_run_outputs_op as latest_pipeline_run_op
-from tfx.dsl.input_resolution.ops import latest_policy_model_op
-from tfx.dsl.input_resolution.ops import latest_span_op
-from tfx.dsl.input_resolution.ops import latest_version_op
-from tfx.dsl.input_resolution.ops import paired_spans_op
-from tfx.dsl.input_resolution.ops import shuffle_op
-from tfx.dsl.input_resolution.ops import siblings_op
-from tfx.dsl.input_resolution.ops import skip_if_empty_op
-from tfx.dsl.input_resolution.ops import skip_if_less_than_n_spans_op
-from tfx.dsl.input_resolution.ops import slice_op
-from tfx.dsl.input_resolution.ops import sliding_window_op
+from tfx.dsl.input_resolution.ops import (
+  all_spans_op,
+  consecutive_spans_op,
+  equal_property_values_op,
+  exclude_spans_op,
+  graph_traversal_op,
+  group_by_lineage_op,
+  latest_create_time_op,
+  latest_policy_model_op,
+  latest_span_op,
+  latest_version_op,
+  paired_spans_op,
+  shuffle_op,
+  siblings_op,
+  skip_if_empty_op,
+  skip_if_less_than_n_spans_op,
+  slice_op,
+  sliding_window_op,
+  static_span_range_op,
+  training_range_op,
+  unnest_op,
+)
+from tfx.dsl.input_resolution.ops import (
+  latest_pipeline_run_outputs_op as latest_pipeline_run_op,
+)
 from tfx.dsl.input_resolution.ops import span_driven_evaluator_inputs_op as evaluator_op
-from tfx.dsl.input_resolution.ops import static_span_range_op
-from tfx.dsl.input_resolution.ops import training_range_op
-from tfx.dsl.input_resolution.ops import unnest_op
-from tfx.dsl.input_resolution.strategies import conditional_strategy
-from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
-from tfx.dsl.input_resolution.strategies import latest_blessed_model_strategy
-from tfx.dsl.input_resolution.strategies import span_range_strategy
-from tfx.utils import name_utils
-from tfx.utils import typing_utils
-
+from tfx.dsl.input_resolution.strategies import (
+  conditional_strategy,
+  latest_artifact_strategy,
+  latest_blessed_model_strategy,
+  span_range_strategy,
+)
+from tfx.utils import name_utils, typing_utils
 
 _ResolverOpType = Type[resolver_op.ResolverOp]
 _ResolverStrategyType = Type[resolver.ResolverStrategy]

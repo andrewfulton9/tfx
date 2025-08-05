@@ -61,9 +61,11 @@ class ConsecutiveSpans(
     artifact with span 5, so the the consecutive spans stop at 4.
 
     Args:
+    ----
       input_list: The list of Artifacts to filter.
 
     Returns:
+    -------
       Artifacts with spans in the range [first_span, max_span - skip_last_n].
       The artifacts are sorted in ascending order, first by span and then by
       version (if keep_all_versions = True).

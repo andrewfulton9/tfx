@@ -16,15 +16,13 @@
 from typing import Dict, List
 
 import tensorflow as tf
+from google.protobuf.json_format import ParseError
+
 from tfx.orchestration import data_types
 from tfx.proto import example_gen_pb2
 from tfx.types.artifact import Artifact
 from tfx.types.channel import Channel
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ComponentSpec
-from tfx.types.component_spec import ExecutionParameter
-
-from google.protobuf.json_format import ParseError
+from tfx.types.component_spec import ChannelParameter, ComponentSpec, ExecutionParameter
 
 
 class _InputArtifact(Artifact):
@@ -118,6 +116,6 @@ class DataTypesTest(tf.test.TestCase):
           'y': ExecutionParameter(type=List[int]),
       }
 
-    _ = ComponentSpecWithContainer(x={u'key': parameter_str}, y=[parameter_int])
+    _ = ComponentSpecWithContainer(x={'key': parameter_str}, y=[parameter_int])
     with self.assertRaisesRegex(TypeError, 'Expected type'):
-      _ = ComponentSpecWithContainer(x={u'key': parameter_int}, y=[])
+      _ = ComponentSpecWithContainer(x={'key': parameter_int}, y=[])

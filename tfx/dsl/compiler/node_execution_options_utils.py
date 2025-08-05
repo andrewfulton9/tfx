@@ -14,7 +14,9 @@
 """Util for compiling NodeExecutionOptions dataclasss into NodeExecutionOptionsProto."""
 
 
-from tfx.dsl.experimental.node_execution_options import utils as node_execution_options_utils
+from tfx.dsl.experimental.node_execution_options import (
+  utils as node_execution_options_utils,
+)
 from tfx.proto.orchestration import pipeline_pb2
 
 

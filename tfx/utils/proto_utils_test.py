@@ -13,12 +13,10 @@
 # limitations under the License.
 """Tests for tfx.utils.proto_utils."""
 
-from tfx.utils import proto_utils
-from tfx.utils import test_case_utils
-from tfx.utils.testdata import foo_pb2
+from google.protobuf import any_pb2, descriptor_pb2
 
-from google.protobuf import any_pb2
-from google.protobuf import descriptor_pb2
+from tfx.utils import proto_utils, test_case_utils
+from tfx.utils.testdata import foo_pb2
 
 
 class ProtoUtilsTest(test_case_utils.TfxTest):

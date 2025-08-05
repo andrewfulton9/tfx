@@ -19,25 +19,26 @@ from typing import Any, Dict, List, Optional
 
 import apache_beam as beam
 import tensorflow as tf
+
 from tfx import types
-from tfx.dsl.component.experimental.annotations import BeamComponentParameter
-from tfx.dsl.component.experimental.annotations import InputArtifact
-from tfx.dsl.component.experimental.annotations import OutputArtifact
-from tfx.dsl.component.experimental.annotations import OutputDict
-from tfx.dsl.component.experimental.annotations import Parameter
-from tfx.dsl.component.experimental.decorators import _SimpleBeamComponent
-from tfx.dsl.component.experimental.decorators import _SimpleComponent
-from tfx.dsl.component.experimental.decorators import BaseFunctionalComponent
-from tfx.dsl.component.experimental.decorators import component
-from tfx.dsl.components.base import base_beam_executor
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.component.experimental.annotations import (
+  BeamComponentParameter,
+  InputArtifact,
+  OutputArtifact,
+  OutputDict,
+  Parameter,
+)
+from tfx.dsl.component.experimental.decorators import (
+  BaseFunctionalComponent,
+  _SimpleBeamComponent,
+  _SimpleComponent,
+  component,
+)
+from tfx.dsl.components.base import base_beam_executor, base_executor, executor_spec
 from tfx.dsl.io import fileio
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.beam import beam_dag_runner
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
+from tfx.types import component_spec, standard_artifacts
 from tfx.types.channel_utils import union
 from tfx.types.system_executions import SystemExecution
 
@@ -418,7 +419,7 @@ class ComponentDecoratorTest(tf.test.TestCase):
         'the module level',
     ):
       @component
-      def my_component():  # pylint: disable=unused-variable
+      def my_component():  # noqa: F841
         return None
 
   def testNonKwargFails(self):
@@ -707,7 +708,7 @@ class ComponentDecoratorTest(tf.test.TestCase):
                 {'f': instance_1.outputs['a']},
                 ):
       with self.assertRaisesRegex(
-          TypeError, 'Argument.* should be a Channel of type .* \(got .*\)\.$'):  # pylint: disable=anomalous-backslash-in-string
+          TypeError, r'Argument.* should be a Channel of type .* \(got .*\)\.$'):  # pylint: disable=anomalous-backslash-in-string
         instance_2 = json_compat_check_component(**arg)
 
     invalid_instance = injector_4_invalid()

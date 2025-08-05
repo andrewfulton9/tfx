@@ -15,8 +15,7 @@
 
 from typing import Any, Callable, Iterable, List, Optional, Tuple
 
-from tfx.dsl.io import filesystem
-from tfx.dsl.io import filesystem_registry
+from tfx.dsl.io import filesystem, filesystem_registry
 from tfx.dsl.io.filesystem import PathType
 
 try:

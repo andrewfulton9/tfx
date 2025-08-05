@@ -106,7 +106,8 @@ class _KubernetesClientFactory:
 
     If config is already loaded, it is a no-op.
 
-    Raises:
+    Raises
+    ------
       kubernetes.config.ConfigException: If fails to locate configuration in
           current environment.
     """
@@ -187,6 +188,7 @@ def make_job_object(
   https://kubernetes.io/docs/concepts/workloads/controllers/job/#writing-a-job-spec
 
   Args:
+  ----
     name: Name of job.
     container_image: Name of container image.
     command: Command to run.
@@ -198,6 +200,7 @@ def make_job_object(
       after completion. If not specified, job is not deleted after completion.
 
   Returns:
+  -------
     `kubernetes.client.V1Job` object.
   """
   pod_labels = pod_labels or {}
@@ -245,37 +248,45 @@ def is_inside_kfp() -> bool:
 def get_kfp_namespace() -> str:
   """Get kubernetes namespace for the KFP.
 
-  Raises:
+  Raises
+  ------
     RuntimeError: If KFP pod cannot be determined from the environment, i.e.
         this program is not running inside the KFP.
-  Returns:
+
+  Returns
+  -------
     The namespace of the KFP app, to which the pod this program is running on
     belongs.
   """
   try:
     return os.environ[KFP_NAMESPACE]
-  except KeyError:
+  except KeyError as e:
     raise RuntimeError(
-        'Cannot determine KFP namespace from the environment.')
+        'Cannot determine KFP namespace from the environment.') from e
 
 
 def get_current_kfp_pod(client: k8s_client.CoreV1Api) -> k8s_client.V1Pod:
   """Get manifest of the KFP pod in which this program is running.
 
   Args:
+  ----
     client: A kubernetes CoreV1Api client.
+
   Raises:
+  ------
     RuntimeError: If KFP pod cannot be determined from the environment, i.e.
         this program is not running inside the KFP.
+
   Returns:
+  -------
     The manifest of the pod this program is running on.
   """
   try:
     namespace = os.environ[KFP_NAMESPACE]
     pod_name = os.environ[KFP_POD_NAME]
     return client.read_namespaced_pod(name=pod_name, namespace=namespace)
-  except KeyError:
-    raise RuntimeError('Cannot determine KFP pod from the environment.')
+  except KeyError as e:
+    raise RuntimeError('Cannot determine KFP pod from the environment.') from e
 
 
 def get_pod(core_api: k8s_client.CoreV1Api, pod_name: str,
@@ -283,13 +294,17 @@ def get_pod(core_api: k8s_client.CoreV1Api, pod_name: str,
   """Get a pod from Kubernetes metadata API.
 
   Args:
+  ----
     core_api: Client of Core V1 API of Kubernetes API.
     pod_name: The name of the Pod.
     namespace: The namespace of the Pod.
 
   Returns:
+  -------
     The found Pod object. None if it's not found.
+
   Raises:
+  ------
     RuntimeError: When it sees unexpected errors from Kubernetes API.
   """
   try:
@@ -297,7 +312,7 @@ def get_pod(core_api: k8s_client.CoreV1Api, pod_name: str,
   except k8s_client.rest.ApiException as e:
     if e.status != 404:
       raise RuntimeError('Unknown error! \nReason: %s\nBody: %s' %
-                         (e.reason, e.body))
+                         (e.reason, e.body)) from e
     return None
 
 
@@ -311,6 +326,7 @@ def wait_pod(core_api: k8s_client.CoreV1Api,
   """Wait for a Pod to meet an exit condition.
 
   Args:
+  ----
     core_api: Client of Core V1 API of Kubernetes API.
     pod_name: The name of the Pod.
     namespace: The namespace of the Pod.
@@ -324,8 +340,11 @@ def wait_pod(core_api: k8s_client.CoreV1Api,
       Defaults to False.
 
   Returns:
+  -------
     The Pod object which meets the exit condition.
+
   Raises:
+  ------
     RuntimeError: when the function times out.
   """
   start_time = datetime.datetime.utcnow()

@@ -15,8 +15,7 @@
 
 from unittest import mock
 
-from tfx.utils import deprecation_utils
-from tfx.utils import test_case_utils
+from tfx.utils import deprecation_utils, test_case_utils
 
 
 class DependencyUtilsTest(test_case_utils.TfxTest):
@@ -36,8 +35,8 @@ class DependencyUtilsTest(test_case_utils.TfxTest):
     """Return a mock function."""
     function = mock.MagicMock()
     # Either `__qualname__` or `__name__` is expected to be set for a function.
-    setattr(function, '__qualname__', name)
-    setattr(function, '__name__', name)
+    function.__qualname__ = name
+    function.__name__ = name
     return function
 
   def testDeprecated(self):

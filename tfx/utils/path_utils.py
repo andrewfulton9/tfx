@@ -14,14 +14,12 @@
 """Utilities for retrieving paths for various types of artifacts."""
 
 import os
+
 import absl
 
 from tfx.dsl.io import fileio
-from tfx.types import artifact
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.utils import io_utils
-from tfx.utils import path_constants
+from tfx.types import artifact, artifact_utils, standard_artifacts
+from tfx.utils import io_utils, path_constants
 
 _OLD_EVAL_MODEL_DIR = 'eval_model_dir'
 _OLD_SERVING_MODEL_DIR = 'serving_model_dir'
@@ -143,9 +141,11 @@ def warmup_file_path(saved_model_path: str) -> str:
   This is a lexical operation, and does not guarantee the path is valid.
 
   Args:
+  ----
     saved_model_path: A POSIX path to the TensorFlow SavedModel.
 
   Returns:
+  -------
     A POSIX path to the SavedModel Warmup file.
   """
   return os.path.join(

@@ -14,16 +14,14 @@
 """Invoke transform processor for data transformation."""
 
 import argparse
-
 from typing import List, Tuple
 
 import absl
+import apache_beam as beam
 from absl import app
 from absl.flags import argparse_flags
-import apache_beam as beam
 
-from tfx.components.transform import executor
-from tfx.components.transform import labels
+from tfx.components.transform import executor, labels
 from tfx.components.util import udf_utils
 from tfx.proto import example_gen_pb2
 from tfx.types import standard_component_specs

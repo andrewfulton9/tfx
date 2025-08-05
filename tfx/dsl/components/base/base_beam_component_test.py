@@ -14,11 +14,14 @@
 """Tests for tfx.dsl.components.base.base_beam_component."""
 
 import tensorflow as tf
+
 from tfx import types
-from tfx.dsl.components.base import base_beam_component
-from tfx.dsl.components.base import base_beam_executor
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import (
+  base_beam_component,
+  base_beam_executor,
+  base_executor,
+  executor_spec,
+)
 
 _TestBeamPipelineArgs = ["--my_testing_beam_pipeline_args=foo"]
 

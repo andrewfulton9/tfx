@@ -16,14 +16,15 @@
 import os
 from typing import Any, Dict, Iterable, List
 
-from absl import logging
 import apache_beam as beam
 import tensorflow as tf
+from absl import logging
+from tfx_bsl.coders import csv_decoder
+
 from tfx.components.example_gen.base_example_gen_executor import BaseExampleGenExecutor
 from tfx.dsl.io import fileio
 from tfx.types import standard_component_specs
 from tfx.utils import io_utils
-from tfx_bsl.coders import csv_decoder
 
 
 def _int_handler(cell: csv_decoder.CSVCell) -> tf.train.Feature:
@@ -163,6 +164,7 @@ class _CsvToExample(beam.PTransform):
     """Init method for _CsvToExample.
 
     Args:
+    ----
       exec_properties: A dict of execution properties.
         - input_base: input dir that contains CSV data. CSV must have header
           line.

@@ -18,21 +18,18 @@ import os
 from typing import Any, Dict, List
 
 import absl
+from tensorflow.python.lib.io import (
+  file_io,  # pylint: disable=g-direct-tensorflow-import
+)
+
 from tfx import types
-from tfx.components.trainer import constants
-from tfx.components.trainer import fn_args_utils
-from tfx.components.util import udf_utils
 from tfx.components.statistics_gen import stats_artifact_utils
+from tfx.components.trainer import constants, fn_args_utils
+from tfx.components.util import udf_utils
 from tfx.dsl.components.base import base_executor
 from tfx.dsl.io import fileio
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import deprecation_utils
-from tfx.utils import io_utils
-from tfx.utils import path_utils
-
-from tensorflow.python.lib.io import file_io  # pylint: disable=g-direct-tensorflow-import
-
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import deprecation_utils, io_utils, path_utils
 
 TrainerFnArgs = deprecation_utils.deprecated_alias(  # pylint: disable=invalid-name
     deprecated_name='tfx.components.trainer.executor.TrainerFnArgs',
@@ -140,6 +137,7 @@ class GenericExecutor(base_executor.BaseExecutor):
     (e.g, Tensorboard logs) to the provided locations.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of ML-Metadata Artifacts.
         - examples: Examples used for training, must include 'train' and 'eval'
           if custom splits is not specified in train_args and eval_args.
@@ -170,9 +168,11 @@ class GenericExecutor(base_executor.BaseExecutor):
           to pass to trainer function.
 
     Returns:
+    -------
       None
 
     Raises:
+    ------
       ValueError: When not exactly one of `module_file`, `module_path` and
         `run_fn` are present in 'exec_properties'.
       RuntimeError: If run_fn failed to generate model in desired location.

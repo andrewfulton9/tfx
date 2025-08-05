@@ -19,15 +19,14 @@ import json
 import os
 from unittest import mock
 
+import yaml
 from absl.testing import parameterized
+
 from tfx import version
 from tfx.dsl.components.base import base_component
 from tfx.orchestration import pipeline as tfx_pipeline
-from tfx.orchestration.kubeflow.v2 import kubeflow_v2_dag_runner
-from tfx.orchestration.kubeflow.v2 import test_utils
-from tfx.utils import telemetry_utils
-from tfx.utils import test_case_utils
-import yaml
+from tfx.orchestration.kubeflow.v2 import kubeflow_v2_dag_runner, test_utils
+from tfx.utils import telemetry_utils, test_case_utils
 
 _TEST_DIR = 'testdir'
 

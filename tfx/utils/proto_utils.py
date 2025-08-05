@@ -13,15 +13,17 @@
 # limitations under the License.
 """Utilities for proto related manipulations."""
 
-from typing import Any, Dict, Iterator, TypeVar, Optional
+from typing import Any, Dict, Iterator, Optional, TypeVar
 
-from google.protobuf import any_pb2
-from google.protobuf import descriptor_pb2
+from google.protobuf import (
+  any_pb2,
+  descriptor_pb2,
+  descriptor_pool,
+  json_format,
+  message,
+  message_factory,
+)
 from google.protobuf import descriptor as descriptor_lib
-from google.protobuf import descriptor_pool
-from google.protobuf import json_format
-from google.protobuf import message
-from google.protobuf import message_factory
 
 
 def gather_file_descriptors(
@@ -30,9 +32,11 @@ def gather_file_descriptors(
   """Yields the file descriptor and all of its dependencies.
 
   Args:
+  ----
     file_descriptor: The proto descriptor to start the dependency search from.
 
   Yields:
+  ------
     All file descriptors in the transitive dependencies of the input descriptor,
     in topological order (i.e. dependencies before dependents).
     Each file descriptor is returned only once.

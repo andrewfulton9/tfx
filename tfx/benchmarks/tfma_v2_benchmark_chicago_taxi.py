@@ -13,10 +13,12 @@
 # limitations under the License.
 """TFMA v2 benchmark for Chicago Taxi dataset."""
 
+from tensorflow.python.platform import (
+  test,  # pylint: disable=g-direct-tensorflow-import
+)
+
 from tfx.benchmarks import tfma_v2_benchmark_base
 from tfx.benchmarks.datasets.chicago_taxi import dataset
-
-from tensorflow.python.platform import test  # pylint: disable=g-direct-tensorflow-import
 
 
 class TFMAV2BenchmarkChicagoTaxi(tfma_v2_benchmark_base.TFMAV2BenchmarkBase):

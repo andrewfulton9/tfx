@@ -14,8 +14,7 @@
 """Test pipeline for tfx.dsl.compiler.compiler."""
 import os
 
-from tfx.components import CsvExampleGen
-from tfx.components import StatisticsGen
+from tfx.components import CsvExampleGen, StatisticsGen
 from tfx.dsl.components.common import resolver
 from tfx.dsl.input_resolution.strategies import latest_artifact_strategy
 from tfx.orchestration import pipeline

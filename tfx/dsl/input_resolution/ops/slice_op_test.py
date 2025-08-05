@@ -14,8 +14,8 @@
 """Tests for tfx.dsl.input_resolution.ops.slice_op."""
 
 from absl.testing import parameterized
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import test_utils
+
+from tfx.dsl.input_resolution.ops import ops, test_utils
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.types import artifact
 

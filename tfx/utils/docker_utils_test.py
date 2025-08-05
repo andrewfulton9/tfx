@@ -17,8 +17,8 @@ import subprocess
 from unittest import mock
 
 import docker
-
 import tensorflow as tf
+
 from tfx.utils import docker_utils
 
 

@@ -15,11 +15,12 @@
 import os
 
 import tensorflow as tf
+from tfx_bsl.coders import tf_graph_record_decoder
+
 from tfx.components.experimental.data_view import provider_executor
 from tfx.components.testdata.module_file import data_view_module
 from tfx.types import standard_artifacts
 from tfx.utils import name_utils
-from tfx_bsl.coders import tf_graph_record_decoder
 
 
 class DataViewProviderExecutorTest(tf.test.TestCase):

@@ -17,27 +17,21 @@ import importlib
 import os
 from typing import Any, Callable, Dict, List, Optional, Union
 
-from absl import logging
 import apache_beam as beam
 import tensorflow as tf
-from tfx import types
-from tfx.components.bulk_inferrer import prediction_to_example_utils
-from tfx.components.util import model_utils
-from tfx.components.util import tfxio_utils
-from tfx.dsl.components.base import base_beam_executor
-from tfx.proto import bulk_inferrer_pb2
-from tfx.proto import example_gen_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
+from absl import logging
+from tensorflow_serving.apis import prediction_log_pb2
 from tfx_bsl.public.beam import run_inference
 from tfx_bsl.public.proto import model_spec_pb2
 from tfx_bsl.tfxio import record_based_tfxio
 
-from tensorflow_serving.apis import prediction_log_pb2
-
+from tfx import types
+from tfx.components.bulk_inferrer import prediction_to_example_utils
+from tfx.components.util import model_utils, tfxio_utils
+from tfx.dsl.components.base import base_beam_executor
+from tfx.proto import bulk_inferrer_pb2, example_gen_pb2
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import io_utils, path_utils, proto_utils
 
 # Workarounds for importing extra dependencies. Do not add more.
 for name in ['tensorflow_text', 'tensorflow_recommenders']:
@@ -61,6 +55,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     """Runs batch inference on a given model with given input examples.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts.
         - examples: examples for inference.
         - model: exported model.
@@ -72,6 +67,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
         - data_spec: JSON string of bulk_inferrer_pb2.DataSpec instance.
 
     Returns:
+    -------
       None
     """
     self._log_startup(input_dict, output_dict, exec_properties)
@@ -149,6 +145,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     """Runs model inference on given examples data.
 
     Args:
+    ----
       data_spec: bulk_inferrer_pb2.DataSpec instance.
       output_example_spec: bulk_inferrer_pb2.OutputExampleSpec instance.
       examples: List of `standard_artifacts.Examples` artifacts.
@@ -157,7 +154,6 @@ class Executor(base_beam_executor.BaseBeamExecutor):
         artifact.
       inference_endpoint: Model inference endpoint.
     """
-
     example_uris = {}
     for example_artifact in examples:
       for split in artifact_utils.decode_split_names(

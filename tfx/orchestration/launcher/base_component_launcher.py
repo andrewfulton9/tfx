@@ -18,13 +18,11 @@ import copy
 from typing import Any, Dict, List, Optional, cast
 
 import absl
+
 from tfx import types
-from tfx.dsl.components.base import base_node
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_node, executor_spec
 from tfx.dsl.components.common import resolver
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.orchestration import publisher
+from tfx.orchestration import data_types, metadata, publisher
 from tfx.orchestration.config import base_component_config
 from tfx.orchestration.portable import data_types as portable_data_types
 
@@ -46,6 +44,7 @@ class BaseComponentLauncher(abc.ABC):
     """Initialize a BaseComponentLauncher.
 
     Args:
+    ----
       component: The Tfx node to launch.
       pipeline_info: An instance of data_types.PipelineInfo that holds pipeline
         properties.
@@ -59,6 +58,7 @@ class BaseComponentLauncher(abc.ABC):
         launcher on how to launch a component.
 
     Raises:
+    ------
       ValueError: when component and component_config are not launchable by the
       launcher.
     """
@@ -116,6 +116,7 @@ class BaseComponentLauncher(abc.ABC):
     class must make sure it can be initialized by the method.
 
     Args:
+    ----
       component: The component to launch.
       pipeline_info: An instance of data_types.PipelineInfo that holds pipeline
         properties.
@@ -129,6 +130,7 @@ class BaseComponentLauncher(abc.ABC):
         launcher on how to launch a component.
 
     Returns:
+    -------
       A new instance of component launcher.
     """
     return cls(
@@ -154,7 +156,6 @@ class BaseComponentLauncher(abc.ABC):
       output_dict: Dict[str, types.Channel],
       exec_properties: Dict[str, Any]) -> data_types.ExecutionDecision:
     """Prepare inputs, outputs and execution properties for actual execution."""
-
     with self._metadata_connection as m:
       driver = self._driver_class(metadata_handle=m)
 
@@ -180,7 +181,6 @@ class BaseComponentLauncher(abc.ABC):
   def _run_publisher(self, output_dict: Dict[str,
                                              List[types.Artifact]]) -> None:
     """Publish execution result to ml metadata."""
-
     with self._metadata_connection as m:
       p = publisher.Publisher(metadata_handle=m)
       p.publish_execution(
@@ -189,7 +189,8 @@ class BaseComponentLauncher(abc.ABC):
   def launch(self) -> portable_data_types.ExecutionInfo:
     """Execute the component, includes driver, executor and publisher.
 
-    Returns:
+    Returns
+    -------
       The execution decision of the launch.
     """
     absl.logging.info('Running driver for %s',

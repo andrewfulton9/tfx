@@ -16,9 +16,9 @@
 import os
 from typing import Any, Dict
 
-from absl import logging
 import apache_beam as beam
 import tensorflow as tf
+from absl import logging
 
 from tfx.components.example_gen import utils
 from tfx.components.example_gen.base_example_gen_executor import BaseExampleGenExecutor
@@ -36,6 +36,7 @@ def _AvroToExample(  # pylint: disable=invalid-name
   Note that each input split will be transformed by this function separately.
 
   Args:
+  ----
     pipeline: beam pipeline.
     exec_properties: A dict of execution properties.
       - input_base: input dir that contains Avro data.
@@ -43,6 +44,7 @@ def _AvroToExample(  # pylint: disable=invalid-name
       that maps to input files with root directory given by input_base.
 
   Returns:
+  -------
     PCollection of TF examples.
   """
   input_base_uri = exec_properties[standard_component_specs.INPUT_BASE_KEY]

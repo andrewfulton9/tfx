@@ -15,10 +15,10 @@
 
 import random
 
-from absl.testing import parameterized
 import tensorflow as tf
-from tfx.dsl.input_resolution.ops import group_by_lineage_op
-from tfx.dsl.input_resolution.ops import test_utils
+from absl.testing import parameterized
+
+from tfx.dsl.input_resolution.ops import group_by_lineage_op, test_utils
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.types import artifact_utils
 from tfx.utils import test_case_utils

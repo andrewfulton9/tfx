@@ -17,18 +17,14 @@ import inspect
 from typing import Any, Callable, Mapping, Optional, Type
 
 from tfx import types
-from tfx.dsl.component.experimental import json_compat
-from tfx.dsl.component.experimental import utils
+from tfx.dsl.component.experimental import json_compat, utils
 from tfx.dsl.components.base import base_component
 from tfx.dsl.components.base import executor_spec as base_executor_spec
 from tfx.orchestration.portable.execution import context
 from tfx.proto.orchestration import executable_spec_pb2
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
+from tfx.types import component_spec, standard_artifacts
 from tfx.types.system_executions import SystemExecution
-from tfx.utils import name_utils
-from tfx.utils import pure_typing_utils
-
+from tfx.utils import name_utils, pure_typing_utils
 
 _VALUE_ARTIFACT_TO_TYPE = {
     standard_artifacts.Integer: int,
@@ -65,6 +61,7 @@ def _type_check_execution_function_params(
   the Artifact type or data type.
 
   Args:
+  ----
     spec: A component spec.
     fn: A function that is supposed to be aligned with the given component spec.
   """
@@ -193,10 +190,10 @@ def create_tfx_component_class(
       _type_check_execution_function_params(tfx_component_spec_class, fn)
       utils.assert_no_private_func_in_main(fn)
   try:
-    pre_execution_spec, post_execution_spec = [
+    pre_execution_spec, post_execution_spec = (
         _convert_function_to_python_executable_spec(fn)
         for fn in (pre_execution, post_execution)
-    ]
+    )
   except ValueError as e:
     raise ValueError(f'Invalid execution hook function of {name}') from e
 

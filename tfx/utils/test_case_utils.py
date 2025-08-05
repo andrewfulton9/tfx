@@ -17,23 +17,20 @@ from __future__ import annotations
 import contextlib
 import copy
 import os
-from typing import Dict, Iterable, Mapping, Optional, Sequence, Union, cast
 import unittest
+from typing import Dict, Iterable, Mapping, Optional, Sequence, Union, cast
 
 import tensorflow as tf
-from tfx import types
-from tfx.dsl.io import fileio
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
-from tfx.orchestration import mlmd_connection_manager as mlmd_cm
-from tfx.orchestration.portable.mlmd import event_lib
-from tfx.utils import io_utils
-
-from google.protobuf import message
-from google.protobuf import text_format
+from google.protobuf import message, text_format
 from ml_metadata import errors
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx import types
+from tfx.dsl.io import fileio
+from tfx.orchestration import data_types_utils, metadata
+from tfx.orchestration import mlmd_connection_manager as mlmd_cm
+from tfx.orchestration.portable.mlmd import event_lib
+from tfx.utils import io_utils
 
 _ArtifactMultiMap = Mapping[str, Sequence[metadata_store_pb2.Artifact]]
 
@@ -43,6 +40,7 @@ def override_env_var(name: str, value: str):
   """Overrides an environment variable and returns a context manager.
 
   Example:
+  -------
     with test_case_utils.override_env_var('HOME', new_home_dir):
 
     or
@@ -50,10 +48,12 @@ def override_env_var(name: str, value: str):
     self.enter_context(test_case_utils.override_env_var('HOME', new_home_dir))
 
   Args:
+  ----
     name: Name of the environment variable.
     value: Overriding value.
 
   Yields:
+  ------
     None.
   """
   old_value = os.getenv(name)
@@ -169,6 +169,7 @@ def change_working_dir(working_dir: str):
   """Changes working directory to a given temporary directory.
 
   Example:
+  -------
     with test_case_utils.change_working_dir(tmp_dir):
 
     or
@@ -176,12 +177,13 @@ def change_working_dir(working_dir: str):
     self.enter_context(test_case_utils.change_working_dir(self.tmp_dir))
 
   Args:
+  ----
     working_dir: The new working directory. This directory should already exist.
 
   Yields:
+  ------
     Old working directory.
   """
-
   old_dir = os.getcwd()
   os.chdir(working_dir)
 
@@ -318,6 +320,7 @@ class MlmdMixins:
     """Put an Artifact in the MLMD database.
 
     Args:
+    ----
       artifact_type: The artifact type. For example, "DummyArtifact".
       name: `Artifact.name`. Default not set.
       uri: `Artifact.uri`. Defaults to '/fake'.
@@ -330,6 +333,7 @@ class MlmdMixins:
         get an MLMD handle.
 
     Returns:
+    -------
       The MLMD artifact.
     """
     store = self.get_store(connection_config)

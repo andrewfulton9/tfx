@@ -14,11 +14,10 @@
 """Tests for tfx.extensions.google_cloud_big_query.example_gen.component."""
 
 import tensorflow as tf
+
 from tfx.extensions.google_cloud_big_query.example_gen import component
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.proto import example_gen_pb2, range_config_pb2
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import proto_utils
 
 

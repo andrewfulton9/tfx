@@ -13,14 +13,14 @@
 # limitations under the License.
 """Test for LatestBlessedModelStrategy."""
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.components.model_validator import constants as model_validator
 from tfx.dsl.input_resolution.strategies import latest_blessed_model_strategy
 from tfx.orchestration import metadata
 from tfx.types import standard_artifacts
 from tfx.utils import test_case_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 class LatestBlessedModelStrategyTest(test_case_utils.TfxTest):

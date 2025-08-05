@@ -15,7 +15,6 @@
 
 import functools
 import time
-
 from typing import Type
 
 from absl import logging
@@ -28,6 +27,7 @@ def retry(max_retries: int = 3,
   """Function decorator to retry a function automatically.
 
   Example:
+  -------
     from tfx.utils import retry
     @retry.retry()
     def some_fragile_func():
@@ -38,12 +38,14 @@ def retry(max_retries: int = 3,
   no exception will raised and will return None.
 
   Args:
+  ----
     max_retries: number of retries. Total trial count becomes 1 + max_retries.
     delay_seconds: there will be a predefined delay between each trial.
     expected_exception: this exception will be regarded as retriable failures.
     ignore_eventual_failure: See above description.
 
   Returns:
+  -------
     A decorator for retrying logic.
   """
 

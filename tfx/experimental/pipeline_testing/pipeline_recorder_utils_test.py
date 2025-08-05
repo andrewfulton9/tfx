@@ -15,6 +15,7 @@
 
 import os
 from unittest import mock
+
 import tensorflow as tf
 
 from tfx.dsl.io import fileio

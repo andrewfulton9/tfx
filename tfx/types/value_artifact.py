@@ -14,15 +14,14 @@
 """TFX artifact type definition."""
 
 import abc
-from typing import Any, Type, Optional
+from typing import Any, Optional, Type
+
+from ml_metadata.proto import metadata_store_pb2
 
 from tfx.dsl.io import fileio
-from tfx.types.artifact import Artifact
-from tfx.types.artifact import Property
-from tfx.types.artifact import PropertyType
+from tfx.types.artifact import Artifact, Property, PropertyType
 from tfx.types.system_artifacts import SystemArtifact
 from tfx.utils import doc_controls
-from ml_metadata.proto import metadata_store_pb2
 
 _IS_NULL_KEY = '__is_null__'
 
@@ -121,11 +120,13 @@ class ValueArtifact(Artifact):
         ```
 
     Args:
+    ----
       type_annotation: the standard annotations used to annotate the value
         artifact type. The possible values are in
         `tfx.v1.dsl.standard_annotations`.
 
     Returns:
+    -------
       A subclass of the method caller class (e.g., [`standard_artifacts.String`][tfx.v1.types.standard_artifacts.String],
         [`standard_artifacts.Float`][tfx.v1.types.standard_artifacts.Float]) with TYPE_ANNOTATION attribute set to be
         `type_annotation`; returns the original class if`type_annotation` is None.
@@ -158,15 +159,16 @@ def _ValueArtifactType(  # pylint: disable=invalid-name
   providing relevant properties.
 
   Args:
+  ----
     mlmd_artifact_type: A ML Metadata metadata_store_pb2.ArtifactType protobuf
       message corresponding to the type being created.
     base: base class of the created value artifact type. It is a subclass of
       ValueArtifact, for example, Integer, String.
 
   Returns:
+  -------
     A ValueArtifact subclass corresponding to the specified type and base.
   """
-
   if not mlmd_artifact_type.name:
     raise ValueError('ValueArtifact type proto must have "name" field set.')
   if not (base and issubclass(base, ValueArtifact)):

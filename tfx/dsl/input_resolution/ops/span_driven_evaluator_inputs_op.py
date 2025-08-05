@@ -17,8 +17,7 @@ from typing import Dict, List, Optional
 
 from tfx import types
 from tfx.dsl.input_resolution import resolver_op
-from tfx.dsl.input_resolution.ops import ops_utils
-from tfx.dsl.input_resolution.ops import training_range_op
+from tfx.dsl.input_resolution.ops import ops_utils, training_range_op
 from tfx.orchestration.portable.input_resolution import exceptions
 from tfx.utils import typing_utils
 
@@ -112,10 +111,12 @@ class SpanDrivenEvaluatorInputs(
     the standard TFleX Model and Examples artifacts are supported.
 
     Args:
+    ----
       input_dict: An input dict containing "model" and "examples" as keys and
         lists of Model and Examples, respectively.
 
     Returns:
+    -------
       A dictionary containing a single Model and the list of Examples to
       evaluate it with. Note that the Model will be latest created, eligible
       model.
@@ -127,6 +128,7 @@ class SpanDrivenEvaluatorInputs(
       }
 
     Raises:
+    ------
       InvalidArgument: If the input_dict is malformed.
       SkipSignal:
         1) input_dict is empty or either of its values are empty.

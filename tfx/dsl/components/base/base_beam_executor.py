@@ -16,14 +16,12 @@
 import sys
 from typing import Any, Callable, List, Optional, Union
 
-from absl import flags
-from absl import logging
+from absl import flags, logging
+
 from tfx.dsl.components.base.base_executor import BaseExecutor
 from tfx.dsl.placeholder import placeholder
 from tfx.proto.orchestration import pipeline_pb2
-from tfx.utils import name_utils
-from tfx.utils import telemetry_utils
-from tfx.utils import dependency_utils
+from tfx.utils import dependency_utils, name_utils, telemetry_utils
 
 try:
   import apache_beam as beam  # pytype: disable=import-error  # pylint: disable=g-import-not-at-top
@@ -109,8 +107,7 @@ class BaseBeamExecutor(BaseExecutor):
     #
     # pylint: disable=g-import-not-at-top
     # pytype: disable=import-error
-    from apache_beam.options.pipeline_options import DirectOptions
-    from apache_beam.options.pipeline_options import PipelineOptions
+    from apache_beam.options.pipeline_options import DirectOptions, PipelineOptions
     # pytype: enable=import-error
     options = PipelineOptions(self._beam_pipeline_args)
     direct_running_mode = options.view_as(DirectOptions).direct_running_mode

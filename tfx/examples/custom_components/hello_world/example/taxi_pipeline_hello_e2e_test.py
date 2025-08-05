@@ -15,16 +15,16 @@
 
 import os
 
+import pytest
 import tensorflow as tf
+
 from tfx.dsl.io import fileio
 from tfx.examples.custom_components.hello_world.example import taxi_pipeline_hello
 from tfx.orchestration import metadata
 from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
 
-import pytest
 
-
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class TaxiPipelineHelloEndToEndTest(tf.test.TestCase):
 
   def setUp(self):

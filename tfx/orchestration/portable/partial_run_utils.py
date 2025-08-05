@@ -16,21 +16,28 @@
 import collections
 import concurrent.futures
 import enum
-from typing import Collection, Dict, Final, List, Mapping, Optional, OrderedDict, Sequence, Set, Tuple
 import uuid
+from typing import (
+  Collection,
+  Dict,
+  Final,
+  List,
+  Mapping,
+  Optional,
+  OrderedDict,
+  Sequence,
+  Set,
+  Tuple,
+)
 
 from absl import logging
-from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.compiler import constants
-from tfx.orchestration import metadata
-from tfx.orchestration import node_proto_view
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable.mlmd import context_lib
-from tfx.orchestration.portable.mlmd import execution_lib
-from tfx.proto.orchestration import pipeline_pb2
-
 from ml_metadata.proto import metadata_store_pb2
 
+from tfx.dsl.compiler import compiler_utils, constants
+from tfx.orchestration import metadata, node_proto_view
+from tfx.orchestration.portable import execution_publish_utils
+from tfx.orchestration.portable.mlmd import context_lib, execution_lib
+from tfx.proto.orchestration import pipeline_pb2
 
 _default_snapshot_settings = pipeline_pb2.SnapshotSettings()
 _default_snapshot_settings.latest_pipeline_run_strategy.SetInParent()
@@ -79,6 +86,7 @@ def mark_pipeline(
   depend on a node that is marked to run.
 
   Args:
+  ----
     pipeline: A valid compiled Pipeline IR proto to be marked.
     from_nodes: The collection of nodes where the "sweep" starts (see detailed
       description). If None, selects all nodes.
@@ -96,9 +104,11 @@ def mark_pipeline(
       using LATEST_PIPELINE_RUN strategy.
 
   Returns:
+  -------
     Updated pipeline IR.
 
   Raises:
+  ------
     ValueError: If pipeline's execution_mode is not SYNC.
     ValueError: If pipeline contains a sub-pipeline.
     ValueError: If pipeline was already marked for partial run.
@@ -143,11 +153,13 @@ def snapshot(mlmd_handle: metadata.Metadata,
   same pipeline run.
 
   Args:
+  ----
     mlmd_handle: A handle to the MLMD db.
     pipeline: The marked pipeline IR.
     base_run_id: The base pipeline run ID to reuse artifacts from.
 
   Raises:
+  ------
     ValueError: If pipeline_node has a snashot_settings field set, but the
       artifact_reuse_strategy field is not set in it.
   """
@@ -267,9 +279,11 @@ def _ensure_topologically_sorted(
   created in another way.
 
   Args:
+  ----
     nodes: The input nodes.
 
   Raises:
+  ------
     ValueError: If the pipeline is not topologically sorted.
   """
   # Upstream check
@@ -300,9 +314,11 @@ def make_ordered_node_map(
   """Prepares the Pipeline proto for DAG traversal.
 
   Args:
+  ----
     nodes: The input nodes, which must be sorted topologically.
 
   Returns:
+  -------
     An OrderedDict that maps node_ids to PipelineNodes.
   """
   result = collections.OrderedDict()
@@ -320,11 +336,13 @@ def _traverse(
   """Traverses a DAG from start_nodes, either upstream or downstream.
 
   Args:
+  ----
     node_map: Mapping of node_id to nodes.
     direction: _Direction.UPSTREAM or _Direction.DOWNSTREAM.
     start_nodes: node_ids to start from.
 
   Returns:
+  -------
     Set of node_ids visited by this traversal.
   """
   result = set()
@@ -372,12 +390,14 @@ def _compute_nodes_to_reuse(
     correct lineage.
 
   Args:
+  ----
     node_map: Mapping of node_id to nodes.
     nodes_to_run: The set of nodes to run.
     skip_snapshot_node_ids: The set of nodes that can be skipped for
       snapshotting.
 
   Returns:
+  -------
     Set of node ids required to be reused.
   """
   exclusion_set = _traverse(
@@ -411,6 +431,7 @@ def _get_validated_new_run_id(pipeline: pipeline_pb2.Pipeline,
   """Attempts to obtain a unique new_run_id.
 
   Args:
+  ----
     pipeline: The pipeline IR, whose runtime parameters are already resolved.
     new_run_id: The pipeline_run_id to associate those output artifacts with.
       This function will always attempt to infer the new run id from `pipeline`.
@@ -419,9 +440,11 @@ def _get_validated_new_run_id(pipeline: pipeline_pb2.Pipeline,
       id, and raise an error if they are not equal.
 
   Returns:
+  -------
     The validated pipeline_run_id.
 
   Raises:
+  ------
     ValueError: If `pipeline` does not contain a pipeline run id, and
       `new_run_id` is not provided.
     ValueError: If `pipeline` does contain a pipeline run id, and
@@ -484,6 +507,7 @@ def _reuse_pipeline_run_artifacts(
   `pipeline`) as the child context.
 
   Args:
+  ----
     metadata_handle: A handler to access MLMD store.
     marked_pipeline: The output of mark_pipeline function.
     base_run_id: The pipeline_run_id where the output artifacts were produced.
@@ -496,6 +520,7 @@ def _reuse_pipeline_run_artifacts(
       the same.
 
   Raises:
+  ------
     ValueError: If `marked_pipeline` does not contain a pipeline run id, and
       `new_run_id` is not provided.
     ValueError: If `marked_pipeline` does contain a pipeline run id, and
@@ -656,11 +681,13 @@ class _ArtifactRecycler:
     are returned.
 
     Args:
+    ----
       node: The node to get the contexts for.
 
     Returns: The node contexts for the node.
 
     Raises:
+    ------
       LookupError: If the node context is not found.
       ValueError: If fetching contexts for a subpipeline with no parent pipeline
         ids.
@@ -711,12 +738,15 @@ class _ArtifactRecycler:
     """Gets all successful Executions of a given node in a given pipeline run.
 
     Args:
+    ----
       node: The node whose Executions to query.
 
     Returns:
+    -------
       All successful executions for that node at that run_id.
 
     Raises:
+    ------
       LookupError: If no successful Execution was found.
     """
     node_contexts = self._get_node_context(node)

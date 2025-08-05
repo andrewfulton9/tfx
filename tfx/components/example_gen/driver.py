@@ -15,25 +15,21 @@
 
 import copy
 import os
-from typing import Any, Dict, List, Iterable, Optional
+from typing import Any, Dict, Iterable, List, Optional
 
 from absl import logging
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
-from tfx.components.example_gen import input_processor
-from tfx.components.example_gen import utils
+from tfx.components.example_gen import input_processor, utils
 from tfx.dsl.components.base import base_driver
-from tfx.orchestration import data_types
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
+from tfx.orchestration import data_types, data_types_utils, metadata
 from tfx.orchestration.portable import base_driver as ir_base_driver
 from tfx.orchestration.portable import data_types as portable_data_types
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
+from tfx.proto import example_gen_pb2, range_config_pb2
 from tfx.proto.orchestration import driver_output_pb2
 from tfx.types import standard_component_specs
 from tfx.utils import proto_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 
 def update_output_artifact(
@@ -45,6 +41,7 @@ def update_output_artifact(
   new entries if not already exists.
 
   Args:
+  ----
     exec_properties: execution properties passed to the example gen.
     output_artifact: the example artifact to be output.
   """

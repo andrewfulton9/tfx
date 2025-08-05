@@ -13,9 +13,10 @@
 # limitations under the License.
 """Internal shared classes for ForEach."""
 
-from typing import Any, Sequence, Callable, Dict, TypeVar, Generic
+from typing import Any, Callable, Dict, Generic, Sequence, TypeVar
 
 import attr
+
 from tfx.dsl.context_managers import dsl_context
 from tfx.types import channel as channel_types
 

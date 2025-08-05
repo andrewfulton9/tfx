@@ -16,10 +16,11 @@
 import os
 from typing import Any, Dict, Union
 
-from absl import logging
 import apache_beam as beam
 import pyarrow.parquet as pq
 import tensorflow as tf
+from absl import logging
+
 from tfx.components.example_gen import base_example_gen_executor
 from tfx.dsl.io import fileio
 from tfx.proto import example_gen_pb2
@@ -37,6 +38,7 @@ def _ImportSerializedRecord(  # pylint: disable=invalid-name
   Note that each input split will be transformed by this function separately.
 
   Args:
+  ----
     pipeline: Beam pipeline.
     exec_properties: A dict of execution properties.
       - input_base: input dir that contains input data.
@@ -44,6 +46,7 @@ def _ImportSerializedRecord(  # pylint: disable=invalid-name
       that maps to input files with root directory given by input_base.
 
   Returns:
+  -------
     PCollection of records (tf.Example, tf.SequenceExample, bytes or
     dictionaries).
   """
@@ -69,6 +72,7 @@ def _ImportParquetRecord(  # pylint: disable=invalid-name
   Note that each input split will be transformed by this function separately.
 
   Args:
+  ----
     pipeline: Beam pipeline.
     exec_properties: A dict of execution properties. - input_base: input dir
       that contains input data.
@@ -76,6 +80,7 @@ def _ImportParquetRecord(  # pylint: disable=invalid-name
       that maps to input files with root directory given by input_base.
 
   Returns:
+  -------
     PCollection of parquet records represented by dictionaries.
   """
   input_base_uri = exec_properties[standard_component_specs.INPUT_BASE_KEY]
@@ -112,6 +117,7 @@ class Executor(base_example_gen_executor.BaseExampleGenExecutor):
       or serialized proto.
 
       Args:
+      ----
         pipeline: Beam pipeline.
         exec_properties: A dict of execution properties.
           - input_base: input dir that contains input data.
@@ -119,6 +125,7 @@ class Executor(base_example_gen_executor.BaseExampleGenExecutor):
           that maps to input files with root directory given by input_base.
 
       Returns:
+      -------
         PCollection of records (tf.Example, tf.SequenceExample, or bytes).
       """
       output_payload_format = exec_properties.get(

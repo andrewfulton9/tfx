@@ -18,15 +18,12 @@ import json
 import os
 
 import tensorflow as tf
+
 from tfx.components.trainer import executor
 from tfx.dsl.io import fileio
 from tfx.proto import trainer_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
+from tfx.utils import io_utils, path_utils, proto_utils
 
 
 class ExecutorTest(tf.test.TestCase):

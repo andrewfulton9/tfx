@@ -16,18 +16,15 @@ import copy
 import sys
 from typing import Optional, cast
 
+from google.protobuf import message
+
 from tfx import types
 from tfx.dsl.components.base import base_executor
 from tfx.dsl.io import fileio
-from tfx.orchestration.portable import base_executor_operator
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import outputs_utils
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_result_pb2
+from tfx.orchestration.portable import base_executor_operator, data_types, outputs_utils
+from tfx.proto.orchestration import executable_spec_pb2, execution_result_pb2
 from tfx.types.value_artifact import ValueArtifact
 from tfx.utils import import_utils
-
-from google.protobuf import message
 
 _STATEFUL_WORKING_DIR = 'stateful_working_dir'
 
@@ -72,10 +69,12 @@ def run_with_executor(
   """Invokes executors given an executor instance and input from the Launcher.
 
   Args:
+  ----
     execution_info: A wrapper of the details of this execution.
     executor: An executor instance.
 
   Returns:
+  -------
     The output from executor.
   """
   hydrate_value_artifacts(execution_info.input_dict)
@@ -92,7 +91,8 @@ def run_with_executor(
 class PythonExecutorOperator(base_executor_operator.BaseExecutorOperator):
   """PythonExecutorOperator handles python class based executor's init and execution.
 
-  Attributes:
+  Attributes
+  ----------
     extra_flags: Extra flags that will pass to Python executors. It come from
       two sources in the order:
       1. The `extra_flags` set in the executor spec.
@@ -111,6 +111,7 @@ class PythonExecutorOperator(base_executor_operator.BaseExecutorOperator):
     """Initializes a PythonExecutorOperator.
 
     Args:
+    ----
       executor_spec: The specification of how to initialize the executor.
       platform_config: The specification of how to allocate resource for the
         executor.
@@ -133,9 +134,11 @@ class PythonExecutorOperator(base_executor_operator.BaseExecutorOperator):
     """Invokes executors given input from the Launcher.
 
     Args:
+    ----
       execution_info: A wrapper of the details of this execution.
 
     Returns:
+    -------
       The output from executor.
     """
     context = base_executor.BaseExecutor.Context(

@@ -26,6 +26,7 @@ def resolve(
   """Resolves the given placeholder.
 
   Args:
+  ----
     placeholder: The placeholder to resolve.
     resolution_context: Contextual information. This defaults to an empty
       context, which still allows _some_ placeholder expressions to be resolved.
@@ -33,6 +34,7 @@ def resolve(
       appropriate information.
 
   Returns:
+  -------
     The resolved value.
   """
   return placeholder_utils.resolve_placeholder_expression(

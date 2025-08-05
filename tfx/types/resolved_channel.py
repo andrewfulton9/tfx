@@ -17,15 +17,12 @@ The main purpose of this module is to break the cyclic import dependency.
 """
 
 import dataclasses
-
-from typing import Any, Optional, Type, Set, Sequence, Mapping
+from typing import Any, Mapping, Optional, Sequence, Set, Type
 
 from tfx.dsl.control_flow import for_each_internal
 from tfx.dsl.input_resolution import resolver_op
-from tfx.types import artifact
-from tfx.types import channel
-from tfx.utils import doc_controls
-from tfx.utils import typing_utils
+from tfx.types import artifact, channel
+from tfx.utils import doc_controls, typing_utils
 
 
 # TODO(b/259604560): Make Invocation more general, e.g. to handle tracing
@@ -34,7 +31,8 @@ from tfx.utils import typing_utils
 class Invocation:
   """Stores resolver function invocation details for later reconstruction.
 
-  Attributes:
+  Attributes
+  ----------
     function: The called object.
     args: The non-keyword arguments to the resolver function.
     kwargs: The keyword argument dictionary to the resolver function.

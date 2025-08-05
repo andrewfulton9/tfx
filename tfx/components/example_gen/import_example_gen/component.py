@@ -19,8 +19,7 @@ from tfx.components.example_gen import component
 from tfx.components.example_gen.import_example_gen import executor
 from tfx.dsl.components.base import executor_spec
 from tfx.orchestration import data_types
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
+from tfx.proto import example_gen_pb2, range_config_pb2
 
 
 class ImportExampleGen(component.FileBasedExampleGen):  # pylint: disable=protected-access
@@ -52,6 +51,7 @@ class ImportExampleGen(component.FileBasedExampleGen):  # pylint: disable=protec
     """Construct an ImportExampleGen component.
 
     Args:
+    ----
       input_base: an external directory containing the TFRecord files.
       input_config: An example_gen_pb2.Input instance, providing input
         configuration. If unset, the files under input_base will be treated as a

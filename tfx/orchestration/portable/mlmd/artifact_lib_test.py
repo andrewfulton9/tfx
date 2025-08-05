@@ -15,13 +15,13 @@
 
 from typing import Optional, Sequence
 
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.orchestration import metadata
 from tfx.orchestration.portable.mlmd import artifact_lib
 from tfx.types import standard_artifacts
 from tfx.utils import test_case_utils
-
-from ml_metadata.proto import metadata_store_pb2
 
 _DEFAULT_ARTIFACT_TYPE = standard_artifacts.Examples
 

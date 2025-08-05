@@ -34,7 +34,6 @@ class AllSpans(
   def apply(self,
             input_list: Sequence[types.Artifact]) -> Sequence[types.Artifact]:
     """Returns the sorted artifacts with unique spans."""
-
     # Get artifacts with "span" and "version" in PROPERTIES.
     valid_artifacts = ops_utils.get_valid_artifacts(
         input_list, ops_utils.SPAN_AND_VERSION_PROPERTIES)

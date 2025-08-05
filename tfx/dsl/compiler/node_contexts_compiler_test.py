@@ -14,12 +14,11 @@
 """Tests for tfx.dsl.compiler.node_contexts_compiler."""
 
 import tensorflow as tf
-from tfx.dsl.compiler import compiler_context
-from tfx.dsl.compiler import node_contexts_compiler
+from google.protobuf import text_format
+
+from tfx.dsl.compiler import compiler_context, node_contexts_compiler
 from tfx.orchestration import pipeline
 from tfx.proto.orchestration import pipeline_pb2
-
-from google.protobuf import text_format
 
 _NODE_ID = 'test_node'
 _PIPELINE_NAME = 'test_pipeline'

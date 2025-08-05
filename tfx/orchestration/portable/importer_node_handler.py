@@ -16,14 +16,16 @@
 from typing import Any, Dict, List, cast
 
 from absl import logging
+
 from tfx import types
 from tfx.dsl.components.common import importer
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import inputs_utils
-from tfx.orchestration.portable import system_node_handler
+from tfx.orchestration import data_types_utils, metadata
+from tfx.orchestration.portable import (
+  data_types,
+  execution_publish_utils,
+  inputs_utils,
+  system_node_handler,
+)
 from tfx.orchestration.portable.mlmd import context_lib
 from tfx.proto.orchestration import pipeline_pb2
 
@@ -33,7 +35,7 @@ def _is_artifact_reimported(output_artifacts: Dict[str, List[types.Artifact]],
   # The artifacts are reimported only when there are artifacts in the output
   # dict and ids has been assign to them.
   return (bool(output_artifacts[output_key]) and all(
-      (bool(a.id) for a in output_artifacts[output_key])))
+      bool(a.id) for a in output_artifacts[output_key]))
 
 
 class ImporterNodeHandler(system_node_handler.SystemNodeHandler):
@@ -56,6 +58,7 @@ class ImporterNodeHandler(system_node_handler.SystemNodeHandler):
     """Runs Importer specific logic.
 
     Args:
+    ----
       mlmd_connection: ML metadata connection.
       pipeline_node: The specification of the node that this launcher lauches.
       pipeline_info: The information of the pipeline that this node runs in.
@@ -63,6 +66,7 @@ class ImporterNodeHandler(system_node_handler.SystemNodeHandler):
         node runs in.
 
     Returns:
+    -------
       The execution of the run.
     """
     logging.info('Running as an importer node.')

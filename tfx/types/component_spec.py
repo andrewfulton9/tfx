@@ -16,17 +16,15 @@
 import copy
 import inspect
 import itertools
-from typing import Any, cast, Dict, List, Mapping, Optional, Type
+from typing import Any, Dict, List, Mapping, Optional, Type, cast
+
+from google.protobuf import message
 
 from tfx.dsl.component.experimental.json_compat import check_strict_json_compat
 from tfx.dsl.placeholder import placeholder
-from tfx.types import artifact
-from tfx.types import channel
+from tfx.types import artifact, channel
 from tfx.types.system_executions import SystemExecution
-from tfx.utils import json_utils
-from tfx.utils import proto_utils
-
-from google.protobuf import message
+from tfx.utils import json_utils, proto_utils
 
 # Use Any to avoid cyclic import.
 _BaseNode = Any
@@ -60,9 +58,11 @@ def _make_default(data: Any) -> Any:
   """Replaces RuntimeParameter by its ptype's default.
 
   Args:
+  ----
     data: an object possibly containing RuntimeParameter.
 
   Returns:
+  -------
     A version of input data where RuntimeParameters are replaced with
     the default values of their ptype.
   """
@@ -145,7 +145,8 @@ class ComponentSpec(json_utils.Jsonable):
       input_examples=input_examples_channel,
       output_examples=output_examples_channel)
 
-  Attributes:
+  Attributes
+  ----------
     PARAMETERS: a dict of string keys and ExecutionParameter values.
     INPUTS: a dict of string keys and ChannelParameter values.
     OUTPUTS: a dict of string keys and ChannelParameter values.
@@ -167,6 +168,7 @@ class ComponentSpec(json_utils.Jsonable):
     """Initialize a ComponentSpec.
 
     Args:
+    ----
       **kwargs: Any inputs, outputs and execution parameters for this instance
         of the component spec.
     """
@@ -333,14 +335,15 @@ class ExecutionParameter:
     }
     # ...
 
-  Attributes:
+  Attributes
+  ----------
     type: Type of the execution parameter.
     optional: Boolean value indicating whether the parameter is optional.
     use_proto: Boolean value indicating whether pb message (and other
       non-primitive types like lists) should be stored in its original form.
   """
 
-  def __init__(self, type=None, optional=False, use_proto=False):  # pylint: disable=redefined-builtin
+  def __init__(self, type=None, optional=False, use_proto=False):  # noqa: A002
     self.type = type
     self.optional = optional
     self.use_proto = use_proto
@@ -419,7 +422,7 @@ class ChannelParameter:
 
   def __init__(
       self,
-      type: Optional[Type[artifact.Artifact]] = None,  # pylint: disable=redefined-builtin
+      type: Optional[Type[artifact.Artifact]] = None,  # noqa: A002
       optional: bool = False,
       allow_empty: Optional[bool] = None,
       is_async: bool = False,
@@ -435,6 +438,7 @@ class ChannelParameter:
     before the component is triggered (i.e. set `allow_empty` to False).
 
     Args:
+    ----
       type: Artifact type of artifacts in this channel.
       optional: Whether providing this channel is optional.
       allow_empty: Optional. Only applicable to input channels. Whether having

@@ -15,19 +15,19 @@
 from typing import Optional
 
 from absl import logging
-from tfx.proto.orchestration import local_deployment_config_pb2
-from tfx.proto.orchestration import metadata_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from google.protobuf import any_pb2, message
 
-from google.protobuf import any_pb2
-from google.protobuf import message
+from tfx.proto.orchestration import (
+  local_deployment_config_pb2,
+  metadata_pb2,
+  pipeline_pb2,
+)
 
 
 def extract_local_deployment_config(
     pipeline: pipeline_pb2.Pipeline
 ) -> local_deployment_config_pb2.LocalDeploymentConfig:
   """Extracts the proto.Any pipeline.deployment_config to LocalDeploymentConfig."""
-
   if not pipeline.deployment_config:
     raise ValueError('deployment_config is not available in the pipeline.')
 

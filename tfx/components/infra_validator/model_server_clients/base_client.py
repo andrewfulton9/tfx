@@ -18,8 +18,8 @@ import time
 from typing import List
 
 from absl import logging
-from tfx.components.infra_validator import error_types
-from tfx.components.infra_validator import types
+
+from tfx.components.infra_validator import error_types, types
 
 
 class BaseModelServerClient(abc.ABC):
@@ -29,7 +29,8 @@ class BaseModelServerClient(abc.ABC):
   def _GetServingStatus(self) -> types.ModelServingStatus:
     """Check whether the model is available for query or not.
 
-    Returns:
+    Returns
+    -------
       A ModelServingStatus.
     """
     pass
@@ -39,10 +40,12 @@ class BaseModelServerClient(abc.ABC):
     """Wait until model is loaded and available.
 
     Args:
+    ----
       deadline: A deadline time in UTC timestamp (in seconds).
       polling_interval_sec: GetServingStatus() polling interval.
 
     Raises:
+    ------
       DeadlineExceeded: When deadline exceeded before model is ready.
       ValidationFailed: If validation failed explicitly.
     """
@@ -70,6 +73,7 @@ class BaseModelServerClient(abc.ABC):
     """Send a request to the model server.
 
     Args:
+    ----
       request: A request proto.
     """
     pass
@@ -78,9 +82,11 @@ class BaseModelServerClient(abc.ABC):
     """Send requests to the model server.
 
     Args:
+    ----
       requests: A list of request protos.
 
     Raises:
+    ------
       ValidationFailed: If error occurred while sending requests.
     """
     for r in requests:

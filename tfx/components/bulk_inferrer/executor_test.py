@@ -16,17 +16,14 @@
 import os
 
 import tensorflow as tf
+from google.protobuf import text_format
+from tensorflow_serving.apis import prediction_log_pb2
+
 from tfx.components.bulk_inferrer import executor
 from tfx.dsl.io import fileio
 from tfx.proto import bulk_inferrer_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import proto_utils
-
-from google.protobuf import text_format
-from tensorflow_serving.apis import prediction_log_pb2
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
+from tfx.utils import io_utils, proto_utils
 
 
 class ExecutorTest(tf.test.TestCase):

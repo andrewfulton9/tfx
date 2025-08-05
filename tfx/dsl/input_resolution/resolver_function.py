@@ -14,15 +14,22 @@
 """Module for ResolverFunction."""
 import contextlib
 import inspect
-from typing import Callable, Type, Union, Mapping, Any, Optional, Sequence, cast, overload
+from typing import (
+  Any,
+  Callable,
+  Mapping,
+  Optional,
+  Sequence,
+  Type,
+  Union,
+  cast,
+  overload,
+)
 
 from tfx.dsl.control_flow import for_each_internal
 from tfx.dsl.input_resolution import resolver_op
-from tfx.types import artifact
-from tfx.types import channel
-from tfx.types import resolved_channel
-from tfx.utils import doc_controls
-from tfx.utils import typing_utils
+from tfx.types import artifact, channel, resolved_channel
+from tfx.utils import doc_controls, typing_utils
 
 _ArtifactType = Type[artifact.Artifact]
 _ArtifactTypeMap = Mapping[str, Type[artifact.Artifact]]
@@ -86,6 +93,7 @@ class ResolverFunction:
     """Constructor.
 
     Args:
+    ----
       f: A python function consists of ResolverOp invocations.
       output_type: Static output type, either a single ArtifactType or a
         dict[str, ArtifactType]. If output_type is not given,
@@ -182,9 +190,11 @@ class ResolverFunction:
         return channel.type
 
     Args:
+    ----
       f: A type inference function to decorate.
 
     Returns:
+    -------
       The given function.
     """
     self._output_type_inferrer = f
@@ -206,13 +216,16 @@ class ResolverFunction:
     ForEach context manager.
 
     Args:
+    ----
       *args: Arguments to the wrapped function.
       **kwargs: Keyword arguments to the wrapped function.
 
     Raises:
+    ------
       RuntimeError: if output_type is invalid or unset.
 
     Returns:
+    -------
       Resolver function result as a BaseChannels.
     """
     output_type = self._output_type or (
@@ -304,13 +317,16 @@ class ResolverFunction:
     and the inner python function is not invoked again on IR interpretation.
 
     Args:
+    ----
       *args: Substituted arguments to the resolver function.
       **kwargs: Substitued keyword arguments to the resolver function.
 
     Raises:
+    ------
       RuntimeError: if the tracing fails.
 
     Returns:
+    -------
       A traced result, which is a resolver_op.Node.
     """
     # TODO(b/188023509): Better debug support & error message.
@@ -352,6 +368,7 @@ def resolver_function(
   """Decorator for the resolver function.
 
   Args:
+  ----
     f: Python function to decorate. See the usage at canned_resolver_function.py
     output_type: Optional static output type hint.
     unwrap_dict_key: If present, it will add loopable transform that unwraps
@@ -360,6 +377,7 @@ def resolver_function(
       value is ARTIFACT_MULTIMAP_LIST type.
 
   Returns:
+  -------
     A ResolverFunction, or a decorator to create ResolverFunction.
   """
   if f is not None:

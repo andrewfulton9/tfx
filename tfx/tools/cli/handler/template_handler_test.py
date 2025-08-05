@@ -14,6 +14,7 @@
 """Tests for tfx.tools.cli.handler.template_handler."""
 
 import os
+
 import tensorflow as tf
 
 from tfx.tools.cli import labels

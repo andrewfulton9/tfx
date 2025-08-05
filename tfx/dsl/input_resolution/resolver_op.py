@@ -16,14 +16,26 @@
 from __future__ import annotations
 
 import abc
-from typing import Any, Generic, Literal, Mapping, Optional, Sequence, Set, Type, TypeVar, Union, cast
+from typing import (
+  Any,
+  Generic,
+  Literal,
+  Mapping,
+  Optional,
+  Sequence,
+  Set,
+  Type,
+  TypeVar,
+  Union,
+  cast,
+)
 
 import attr
+
 from tfx import types
 from tfx.orchestration import mlmd_connection_manager as mlmd_cm
 from tfx.proto.orchestration import pipeline_pb2
-from tfx.utils import json_utils
-from tfx.utils import typing_utils
+from tfx.utils import json_utils, typing_utils
 
 
 # Mark frozen as context instance may be used across multiple operator
@@ -126,7 +138,7 @@ class _ResolverOpMeta(abc.ABCMeta):
   def return_data_type(cls) -> DataType:
     return cls._return_data_type
 
-  def __call__(cls, *args: Union['Node', Mapping[str, 'Node']], **kwargs: Any):
+  def __call__(cls, *args: Union[Node, Mapping[str, Node]], **kwargs: Any):
     """Fake instantiation of the ResolverOp class.
 
     Original implementation of metaclass.__call__ method is to instantiate
@@ -138,10 +150,12 @@ class _ResolverOpMeta(abc.ABCMeta):
     classmethod instead.
 
     Args:
+    ----
       *args: Input arguments for the operator.
       **kwargs: Property values for the ResolverOp.
 
     Returns:
+    -------
       An OpNode instance that represents the operator call.
     """
     args = cls._check_and_transform_args(args)
@@ -152,7 +166,7 @@ class _ResolverOpMeta(abc.ABCMeta):
         output_data_type=cls._return_data_type,
         kwargs=kwargs)
 
-  def _check_and_transform_args(cls, args: Sequence[Any]) -> Sequence['Node']:
+  def _check_and_transform_args(cls, args: Sequence[Any]) -> Sequence[Node]:
     """Static check against ResolverOp positional arguments."""
     if len(args) != len(cls._arg_data_types):
       raise ValueError(f'{cls.__name__} expects {len(cls._arg_data_types)} '
@@ -183,7 +197,7 @@ class _ResolverOpMeta(abc.ABCMeta):
       prop = cls._props_by_name[name]
       prop.validate(value)
 
-  def create(cls, **props: Any) -> 'ResolverOp':
+  def create(cls, **props: Any) -> ResolverOp:
     """Actually create a ResolverOp instance.
 
     Note: Normal class call (e.g. MyResolver()) does not create a MyResolver
@@ -191,8 +205,11 @@ class _ResolverOpMeta(abc.ABCMeta):
     way of creating an actual MyResolver instance.
 
     Args:
+    ----
       **props: Property values for the ResolverOp.
+
     Returns:
+    -------
       A ResolverOp instance.
     """
     real_instance = super().__call__()
@@ -228,7 +245,7 @@ class Property(Generic[_T]):
 
   def __init__(
       self, *,
-      type: Type[_T],  # pylint: disable=redefined-builtin
+      type: Type[_T],  # noqa: A002
       default: Union[_T, _Empty] = _EMPTY):
     self._type = type
     self._required = default is _EMPTY

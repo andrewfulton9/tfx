@@ -17,6 +17,7 @@ import logging
 import os
 
 import tensorflow as tf
+
 from tfx.dsl.io import fileio
 from tfx.utils import logging_utils
 
@@ -49,9 +50,9 @@ class LoggingUtilsTest(tf.test.TestCase):
 
   def testOverrideSettings(self):
     """Ensure log overrides are set correctly."""
-    config = logging_utils.LoggerConfig(log_root='path', log_level=logging.WARN,
+    config = logging_utils.LoggerConfig(log_root='path', log_level=logging.WARNING,
                                         pipeline_name='pipe', worker_name='wrk')
     self.assertEqual(config.log_root, 'path')
-    self.assertEqual(config.log_level, logging.WARN)
+    self.assertEqual(config.log_level, logging.WARNING)
     self.assertEqual(config.pipeline_name, 'pipe')
     self.assertEqual(config.worker_name, 'wrk')

@@ -14,10 +14,10 @@
 """Public API for base type annotations."""
 
 # List of MLMD base artifact type annotations.
-from tfx.types.system_artifacts import Dataset, Model, Statistics, Metrics
+from tfx.types.system_artifacts import Dataset, Metrics, Model, Statistics
 
 # List of MLMD base execution type annotations.
-from tfx.types.system_executions import Train, Transform, Process, Evaluate, Deploy
+from tfx.types.system_executions import Deploy, Evaluate, Process, Train, Transform
 
 __all__ = [
     "Dataset",

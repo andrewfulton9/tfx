@@ -23,11 +23,8 @@ from tfx import types
 from tfx.components.transform import labels
 from tfx.components.util import value_utils
 from tfx.proto import transform_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_component_specs
-from tfx.utils import json_utils
-from tfx.utils import proto_utils
-
+from tfx.types import artifact_utils, standard_component_specs
+from tfx.utils import json_utils, proto_utils
 
 # Default file name prefix for transformed_examples.
 _DEFAULT_TRANSFORMED_EXAMPLES_PREFIX = 'transformed_examples'
@@ -52,13 +49,17 @@ def ValidateOnlyOneSpecified(inputs: Mapping[str, Any],
   NOTE: False-equivalent values like 0, '' are regarded as not specified.
 
   Args:
+  ----
     inputs: input dictionary.
     keys: keys to check the existence of values.
     allow_missing: If False, one of keys should be set in inputs.
 
   Returns:
+  -------
     True if one of the key has a value.
+
   Raises:
+  ------
     ValueError: if none of the keys have non empty value in the input.
   """
   counter = 0
@@ -86,6 +87,7 @@ def MatchNumberOfTransformedExamplesArtifacts(
   No-op if there is one or less Examples artifact in the input_dict.
 
   Args:
+  ----
     input_dict: input artifact dictionary of the Executor.
     output_dict: output artifact dictionary of the Executor.
   """

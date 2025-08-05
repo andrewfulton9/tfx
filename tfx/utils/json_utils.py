@@ -16,13 +16,11 @@
 import importlib
 import inspect
 import json
-from typing import Any, Dict, Type, Union, Mapping, Sequence
-
-from tfx.utils import deprecation_utils
-from tfx.utils import doc_controls
-from tfx.utils import proto_utils
+from typing import Any, Dict, Mapping, Sequence, Type, Union
 
 from google.protobuf import message
+
+from tfx.utils import deprecation_utils, doc_controls, proto_utils
 
 # This is the special key to indicate the serialized object type.
 # Depending on which, the utility knows how to deserialize it back to its
@@ -92,14 +90,14 @@ class _DefaultEncoder(json.JSONEncoder):
 
   def encode(self, obj: Any) -> str:
     """Override encode to prevent redundant dumping."""
-    if obj.__class__.__name__ == 'RuntimeParameter' and obj.ptype == str:
+    if obj.__class__.__name__ == 'RuntimeParameter' and obj.ptype is str:
       return self.default(obj)
 
     return super().encode(obj)
 
   def default(self, obj: Any) -> Any:
     # If obj is a str-typed RuntimeParameter, serialize it in place.
-    if obj.__class__.__name__ == 'RuntimeParameter' and obj.ptype == str:
+    if obj.__class__.__name__ == 'RuntimeParameter' and obj.ptype is str:
       dict_data = {
           _TFX_OBJECT_TYPE_KEY: _ObjectType.JSONABLE,
           _MODULE_KEY: obj.__class__.__module__,
@@ -117,7 +115,7 @@ class _DefaultEncoder(json.JSONEncoder):
       # Need to first check the existence of str-typed runtime parameter.
       data_patch = obj.to_json_dict()
       for k, v in data_patch.items():
-        if v.__class__.__name__ == 'RuntimeParameter' and v.ptype == str:
+        if v.__class__.__name__ == 'RuntimeParameter' and v.ptype is str:
           data_patch[k] = dumps(v)
       dict_data.update(data_patch)
       return dict_data
@@ -148,7 +146,7 @@ class _DefaultDecoder(json.JSONDecoder):
 
   def __init__(self, *args, **kwargs):
     super().__init__(
-        object_hook=self._dict_to_object, *args, **kwargs)
+        object_hook=self._dict_to_object, *args, **kwargs) # noqa: B026
 
   def _dict_to_object(self, dict_data: Dict[str, Any]) -> Any:
     """Converts a dictionary to an object."""

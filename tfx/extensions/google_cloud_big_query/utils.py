@@ -13,16 +13,16 @@
 # limitations under the License.
 """Utilities for Google Cloud BigQuery TFX extensions.
 
-
 Internal utilities, no backwards compatibility guarantees.
 """
 
 from typing import Any, Dict, List, Optional
 
 import apache_beam as beam
+import tensorflow as tf
 from apache_beam.io.gcp import bigquery
 from apache_beam.options import value_provider
-import tensorflow as tf
+
 from tfx.utils import telemetry_utils
 
 
@@ -37,10 +37,13 @@ def ReadFromBigQuery(  # pylint: disable=invalid-name
   """Read data from BigQuery.
 
   Args:
+  ----
     pipeline: Beam pipeline.
     query: A BigQuery sql string.
     big_query_custom_config: A BigQuery custom configs dict.
+
   Returns:
+  -------
     PCollection of dict.
   """
   if big_query_custom_config is None:
@@ -59,15 +62,18 @@ def row_to_example(  # pylint: disable=invalid-name
   """Convert bigquery result row to tf example.
 
   Args:
+  ----
     field_to_type: The name of the field to its type from BigQuery.
     field_name_to_data: The data need to be converted from BigQuery that
       contains field name and data.
 
   Returns:
+  -------
     A tf.train.Example that converted from the BigQuery row. Note that BOOLEAN
     type in BigQuery result will be converted to int in tf.train.Example.
 
   Raises:
+  ------
     RuntimeError: If the data type is not supported to be converted.
       Only INTEGER, BOOLEAN, FLOAT, STRING is supported now.
   """

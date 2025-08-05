@@ -20,23 +20,16 @@ import os
 import re
 from typing import Any, Callable, Optional, Union, cast
 
-from absl import logging
 import attr
+from absl import logging
+from google.protobuf import any_pb2, descriptor_pool, json_format, message, text_format
+from google.protobuf import descriptor as descriptor_lib
+
 from tfx.dsl.io import fileio
 from tfx.orchestration.portable import data_types
 from tfx.proto.orchestration import placeholder_pb2
-from tfx.types import artifact
-from tfx.types import artifact_utils
-from tfx.types import value_artifact
-from tfx.utils import json_utils
-from tfx.utils import proto_utils
-
-from google.protobuf import any_pb2
-from google.protobuf import descriptor as descriptor_lib
-from google.protobuf import descriptor_pool
-from google.protobuf import json_format
-from google.protobuf import message
-from google.protobuf import text_format
+from tfx.types import artifact, artifact_utils, value_artifact
+from tfx.utils import json_utils, proto_utils
 
 
 class NullDereferenceError(Exception):
@@ -51,7 +44,8 @@ class NullDereferenceError(Exception):
 class ResolutionContext:
   """A struct to store information needed for resolution.
 
-  Attributes:
+  Attributes
+  ----------
     exec_info: An ExecutionInfo object that includes needed information to
       render all kinds of placeholders.
     executor_spec: An executor spec proto for rendering context placeholder.
@@ -101,10 +95,12 @@ def resolve_placeholder_expression(
   The caller needs to perform desired string conversions.
 
   Args:
+  ----
     expression: A placeholder expression to be resolved.
     context: Information needed to resolve the expression.
 
   Returns:
+  -------
     Resolved expression value.
   """
   try:
@@ -169,6 +165,7 @@ def _resolve_and_ensure_boolean(
   future, this check can be removed.
 
   Args:
+  ----
     resolve_fn: The function for resolving placeholder expressions.
     expression: The placeholder expression to resolve.
     error_message: The error message to display if the expression does not
@@ -176,9 +173,11 @@ def _resolve_and_ensure_boolean(
     pool: Descriptor pool to pass down to nested resolutions.
 
   Returns:
+  -------
     The resolved boolean value.
 
   Raises:
+  ------
     ValueError if expression does not resolve to boolean type.
   """
   value = resolve_fn(expression, pool)
@@ -391,9 +390,9 @@ class _ExpressionResolver:
       if op.is_custom_property:
         return value.get_custom_property(op.key)
       return value.__getattr__(op.key)
-    except:
+    except Exception as e:
       raise ValueError("ArtifactPropertyOperator failed to find property with "
-                       f"key {op.key}.")
+                       f"key {op.key}.") from e
 
   @_register(placeholder_pb2.Base64EncodeOperator)
   def _resolve_base64_encode_operator(
@@ -514,18 +513,18 @@ class _ExpressionResolver:
         if field.startswith("."):
           try:
             value = getattr(value, field[1:])
-          except AttributeError:
+          except AttributeError as e:
             raise ValueError("While evaluting placeholder proto operator, "
                              f"got unknown proto field {field} on proto of "
-                             f"type {type(value)}.")
+                             f"type {type(value)}.") from e
           continue
         map_key = re.findall(r"\[['\"](.+)['\"]\]", field)
         if len(map_key) == 1:
           try:
             value = value[map_key[0]]
-          except KeyError:
+          except KeyError as e:
             raise ValueError("While evaluting placeholder proto operator, "
-                             f"got unknown map field {field}.")
+                             f"got unknown map field {field}.") from e
           continue
         # Going forward, index access for proto fields should be handled by
         # index op. This code here is kept to avoid breaking existing executor
@@ -534,9 +533,9 @@ class _ExpressionResolver:
         if index and str.isdecimal(index[0]):
           try:
             value = value[int(index[0])]
-          except IndexError:
+          except IndexError as e:
             raise ValueError("While evaluting placeholder proto operator, "
-                             f"got unknown index field {field}.")
+                             f"got unknown index field {field}.") from e
           continue
         raise ValueError(f"Got unsupported proto field path: {field}")
 
@@ -748,9 +747,11 @@ def debug_str(expression: placeholder_pb2.PlaceholderExpression) -> str:
   """Gets the debug string of a placeholder expression proto.
 
   Args:
+  ----
     expression: A placeholder expression proto.
 
   Returns:
+  -------
     Debug string of the placeholder expression.
   """
   if expression.HasField("value"):

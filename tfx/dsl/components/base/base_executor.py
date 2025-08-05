@@ -18,10 +18,10 @@ import os
 from typing import Any, Dict, List, Optional
 
 from absl import logging
+
 from tfx import types
 from tfx.dsl.io import fileio
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.proto.orchestration import execution_result_pb2, pipeline_pb2
 
 
 class BaseExecutor(abc.ABC):
@@ -90,6 +90,7 @@ class BaseExecutor(abc.ABC):
     """Execute underlying component implementation.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts. These are
         often outputs of another component in the pipeline and passed to the
         component by the orchestration system.
@@ -102,6 +103,7 @@ class BaseExecutor(abc.ABC):
         possible on these values.
 
     Returns:
+    -------
       execution_result_pb2.ExecutorOutput or None.
     """
     pass

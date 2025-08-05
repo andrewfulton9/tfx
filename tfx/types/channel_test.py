@@ -17,15 +17,13 @@
 from unittest import mock
 
 import tensorflow as tf
+from google.protobuf import struct_pb2
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.dsl.components.base.testing import test_node
 from tfx.dsl.input_resolution import resolver_op
 from tfx.dsl.placeholder import placeholder
-from tfx.types import artifact
-from tfx.types import channel
-from tfx.types import resolved_channel
-
-from google.protobuf import struct_pb2
-from ml_metadata.proto import metadata_store_pb2
+from tfx.types import artifact, channel, resolved_channel
 
 
 class _MyType(artifact.Artifact):

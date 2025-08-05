@@ -15,14 +15,12 @@
 
 import time
 
-
 import apache_beam as beam
 import tensorflow_model_analysis as tfma
 from tensorflow_model_analysis.eval_saved_model import load
 
 import tfx
-from tfx.benchmarks import benchmark_utils
-from tfx.benchmarks import benchmark_base
+from tfx.benchmarks import benchmark_base, benchmark_utils
 
 
 class TFMABenchmarkBase(benchmark_base.BenchmarkBase):
@@ -135,7 +133,6 @@ class TFMABenchmarkBase(benchmark_base.BenchmarkBase):
     Runs _AggregateCombineFn "manually" outside a Beam pipeline. Records the
     wall time taken.
     """
-
     # Run InputsToExtracts manually.
     records = []
     for x in self._dataset.read_raw_dataset(

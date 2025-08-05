@@ -14,11 +14,11 @@
 """TFX DataViewProvider component executor."""
 from typing import Any, Dict, List
 
-from tfx import types
-from tfx.components.util import udf_utils
-from tfx.components.util import value_utils
-from tfx.dsl.components.base import base_executor
 from tfx_bsl.coders import tf_graph_record_decoder
+
+from tfx import types
+from tfx.components.util import udf_utils, value_utils
+from tfx.dsl.components.base import base_executor
 
 # Keys for exec_properties dict.
 _CREATE_DECODER_FUNC_KEY = 'create_decoder_func'

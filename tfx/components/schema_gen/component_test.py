@@ -14,12 +14,15 @@
 """Tests for tfx.components.schema_gen.component."""
 
 import tensorflow as tf
+
 from tfx.components.schema_gen import component
 from tfx.orchestration import data_types
-from tfx.types import artifact_utils
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import (
+  artifact_utils,
+  channel_utils,
+  standard_artifacts,
+  standard_component_specs,
+)
 
 
 class SchemaGenTest(tf.test.TestCase):

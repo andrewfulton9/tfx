@@ -16,8 +16,8 @@
 from typing import List, Sequence, Tuple
 
 import tensorflow as tf
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import test_utils
+
+from tfx.dsl.input_resolution.ops import ops, test_utils
 
 
 def _get_artifacts(

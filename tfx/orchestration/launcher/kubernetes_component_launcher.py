@@ -17,13 +17,12 @@ from typing import Any, Dict, List, Optional, cast
 
 from absl import logging
 from kubernetes import client
+
 from tfx import types
 from tfx.dsl.component.experimental import executor_specs
 from tfx.dsl.components.base import executor_spec
-from tfx.orchestration.config import base_component_config
-from tfx.orchestration.config import kubernetes_component_config
-from tfx.orchestration.launcher import base_component_launcher
-from tfx.orchestration.launcher import container_common
+from tfx.orchestration.config import base_component_config, kubernetes_component_config
+from tfx.orchestration.launcher import base_component_launcher, container_common
 from tfx.utils import kube_utils
 
 
@@ -59,6 +58,7 @@ class KubernetesComponentLauncher(base_component_launcher.BaseComponentLauncher
     `Succeeded` or `Failed` state.
 
     Args:
+    ----
       execution_id: The ID of the execution.
       input_dict: Input dict from input key to a list of Artifacts. These are
         often outputs of another component in the pipeline and passed to the
@@ -72,11 +72,11 @@ class KubernetesComponentLauncher(base_component_launcher.BaseComponentLauncher
         possible on these values.
 
     Raises:
+    ------
       RuntimeError: when the pod is in `Failed` state or unexpected failure from
       Kubernetes API.
 
     """
-
     container_spec = cast(executor_spec.ExecutorContainerSpec,
                           self._component_executor_spec)
 
@@ -118,7 +118,7 @@ class KubernetesComponentLauncher(base_component_launcher.BaseComponentLauncher
       except client.rest.ApiException as e:
         raise RuntimeError(
             'Failed to created container executor pod!\nReason: %s\nBody: %s' %
-            (e.reason, e.body))
+            (e.reason, e.body)) from e
 
     # Wait up to 300 seconds for the pod to move from pending to another status.
     logging.info('Waiting for pod "%s:%s" to start.', namespace, pod_name)
@@ -141,7 +141,7 @@ class KubernetesComponentLauncher(base_component_launcher.BaseComponentLauncher
     except client.rest.ApiException as e:
       raise RuntimeError(
           'Failed to stream the logs from the pod!\nReason: %s\nBody: %s' %
-          (e.reason, e.body))
+          (e.reason, e.body)) from e
 
     for log in logs:
       logging.info(log.decode().rstrip('\n'))
@@ -169,10 +169,12 @@ class KubernetesComponentLauncher(base_component_launcher.BaseComponentLauncher
     the pod spec from component config.
 
     Args:
+    ----
       pod_name: The name of the pod.
       container_spec: The resolved executor container spec.
 
     Returns:
+    -------
       The pod manifest in dictionary format.
     """
     if self._component_config:

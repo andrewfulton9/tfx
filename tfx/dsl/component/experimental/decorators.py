@@ -23,16 +23,15 @@ import typing
 from typing import Any, Callable, ClassVar, Dict, List, Optional, Protocol, Type, Union
 
 from tfx import types as tfx_types
-from tfx.dsl.component.experimental import function_parser
-from tfx.dsl.component.experimental import json_compat
-from tfx.dsl.component.experimental import utils
-from tfx.dsl.components.base import base_beam_component
-from tfx.dsl.components.base import base_beam_executor
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
-from tfx.types import channel
-from tfx.types import system_executions
+from tfx.dsl.component.experimental import function_parser, json_compat, utils
+from tfx.dsl.components.base import (
+  base_beam_component,
+  base_beam_executor,
+  base_component,
+  base_executor,
+  executor_spec,
+)
+from tfx.types import channel, system_executions
 
 try:
   import apache_beam as beam  # pytype: disable=import-error  # pylint: disable=g-import-not-at-top
@@ -202,7 +201,7 @@ class _SimpleComponent(BaseFunctionalComponent):
       json_compat_typehint = getattr(channel_parameter, '_JSON_COMPAT_TYPEHINT',
                                      None)
       if json_compat_typehint:
-        setattr(spec_kwargs[key], '_JSON_COMPAT_TYPEHINT', json_compat_typehint)
+        spec_kwargs[key]._JSON_COMPAT_TYPEHINT = json_compat_typehint
     spec = self.SPEC_CLASS(**spec_kwargs)
     super().__init__(spec)
     # Set class name, which is the decorated function name, as the default id.
@@ -453,6 +452,7 @@ def component(
   Experimental: no backwards compatibility guarantees.
 
   Args:
+  ----
     func: Typehint-annotated component executor function.
     component_annotation: used to annotate the python function-based component.
       It is a subclass of SystemExecution from
@@ -462,6 +462,7 @@ def component(
       tfx-pipeline-wise beam_pipeline_args.
 
   Returns:
+  -------
     An object that:
 
       1. you can call like the initializer of a subclass of [`base_component.BaseComponent`][tfx.v1.types.BaseChannel] (or [`base_component.BaseBeamComponent`][tfx.v1.types.BaseBeamComponent]).
@@ -470,6 +471,7 @@ def component(
       Today, the returned object is literally a subclass of [BaseComponent][tfx.v1.types.BaseChannel], so it can be used as a `Type` e.g. in isinstance() checks. But you must not rely on this, as we reserve the right to reserve a different kind of object in the future, which _only_ satisfies the two criteria (1.) and (2.) above without being a `Type` itself.
 
   Raises:
+  ------
     EnvironmentError: if the current Python interpreter is not Python 3.
   '''
   if func is None:

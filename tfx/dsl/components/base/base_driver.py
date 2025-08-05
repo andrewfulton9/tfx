@@ -20,10 +20,8 @@ import absl
 
 from tfx import types
 from tfx.dsl.io import fileio
-from tfx.orchestration import data_types
-from tfx.orchestration import metadata
-from tfx.types import artifact_utils
-from tfx.types import channel_utils
+from tfx.orchestration import data_types, metadata
+from tfx.types import artifact_utils, channel_utils
 
 
 def _generate_output_uri(base_output_dir: str,
@@ -68,7 +66,8 @@ class BaseDriver:
   This can also be used as the default driver of a component if no custom logic
   is needed.
 
-  Attributes:
+  Attributes
+  ----------
     _metadata_handle: An instance of Metadata.
   """
 
@@ -80,9 +79,11 @@ class BaseDriver:
     """Verify that all artifacts have existing uri.
 
     Args:
+    ----
       artifacts_dict: key -> types.Artifact for inputs.
 
     Raises:
+    ------
       RuntimeError: if any input as an empty or non-existing uri.
     """
     artifact_utils.verify_artifacts(artifacts_dict)
@@ -114,6 +115,7 @@ class BaseDriver:
     artifact info passing from upstream components.
 
     Args:
+    ----
       input_dict: key -> Channel mapping for inputs generated in logical
         pipeline.
       exec_properties: Dict of other execution properties, e.g., configs.
@@ -123,9 +125,11 @@ class BaseDriver:
         related properties including component_type and component_id.
 
     Returns:
+    -------
       Final artifacts that will be used in execution.
 
     Raises:
+    ------
       ValueError: if in interactive mode, the given input channels have not been
         resolved.
     """
@@ -177,6 +181,7 @@ class BaseDriver:
     resolution logic.
 
     Args:
+    ----
       exec_properties: Original execution properties passed in.
       pipeline_info: An instance of data_types.PipelineInfo, holding pipeline
         related properties including pipeline_name, pipeline_root and run_id
@@ -184,6 +189,7 @@ class BaseDriver:
         related properties including component_type and component_id.
 
     Returns:
+    -------
       Final execution properties that will be used in execution.
     """
     return exec_properties
@@ -248,6 +254,7 @@ class BaseDriver:
       4b. If not (3), fetch cached output artifacts.
 
     Args:
+    ----
       input_dict: key -> Channel for inputs.
       output_dict: key -> Channel for outputs. Uris of the outputs are not
         assigned.
@@ -259,9 +266,11 @@ class BaseDriver:
         related properties including component_type and component_id.
 
     Returns:
+    -------
       data_types.ExecutionDecision object.
 
     Raises:
+    ------
       RuntimeError: if any input as an empty uri.
     """
     # Step 1. Fetch inputs from metadata.

@@ -13,9 +13,9 @@
 # limitations under the License.
 """Custom component for exit handler."""
 
+import tfx.v1 as tfx
 from tfx.orchestration.kubeflow import decorators
 from tfx.utils import io_utils
-import tfx.v1 as tfx
 
 
 @decorators.exit_handler

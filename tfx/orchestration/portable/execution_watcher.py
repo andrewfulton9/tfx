@@ -14,16 +14,14 @@
 """This module provides a gRPC service for updating remote job info to MLMD."""
 
 from concurrent import futures
-
 from typing import Optional
-from absl import logging
+
 import grpc
-from tfx.orchestration import metadata
-
-from tfx.proto.orchestration import execution_watcher_pb2
-from tfx.proto.orchestration import execution_watcher_pb2_grpc
-
+from absl import logging
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.orchestration import metadata
+from tfx.proto.orchestration import execution_watcher_pb2, execution_watcher_pb2_grpc
 
 
 def generate_service_stub(
@@ -40,7 +38,8 @@ class ExecutionWatcher(
     execution_watcher_pb2_grpc.ExecutionWatcherServiceServicer):
   """A gRPC service server for updating remote job info to MLMD.
 
-  Attributes:
+  Attributes
+  ----------
     local_address: Local network address to the server.
     address: Remote network address to the server, same as local_address if not
              configured.
@@ -55,6 +54,7 @@ class ExecutionWatcher(
     """Initializes the gRPC server.
 
     Args:
+    ----
       port: Which port the service will be using.
       mlmd_connection: ML metadata connection.
       execution: The MLMD Execution to keep track of.

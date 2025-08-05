@@ -34,7 +34,6 @@ _pipeline_root = os.path.join(_tfx_root, 'pipelines', _pipeline_name)
 def _create_pipeline(pipeline_name: str, pipeline_root: str,
                      data_root: str) -> pipeline.Pipeline:
   """Implements the chicago taxi pipeline with TFX."""
-
   # Brings data into the pipeline or otherwise joins/converts training data.
   example_gen = CsvExampleGen(input_base=data_root)
 

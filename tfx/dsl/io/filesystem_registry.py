@@ -35,6 +35,7 @@ class FilesystemRegistry:
     """Register a filesystem implementation.
 
     Args:
+    ----
       filesystem_cls: Subclass of `tfx.dsl.io.filesystem.Filesystem`.
       priority: Integer priority index (lower is more preferred) specifying
         plugin search order for filesystem schemes supported by the filesystem

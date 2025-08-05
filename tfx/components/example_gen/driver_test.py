@@ -16,21 +16,21 @@
 import os
 
 import tensorflow as tf
-from tfx.components.example_gen import driver
-from tfx.components.example_gen import utils
+
+from tfx.components.example_gen import driver, utils
 from tfx.dsl.components.base import base_driver
 from tfx.dsl.io import fileio
 from tfx.orchestration import data_types
 from tfx.orchestration.portable import data_types as portable_data_types
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
-from tfx.types import artifact
-from tfx.types import artifact_utils
-from tfx.types import channel_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import io_utils
-from tfx.utils import proto_utils
+from tfx.proto import example_gen_pb2, range_config_pb2
+from tfx.types import (
+  artifact,
+  artifact_utils,
+  channel_utils,
+  standard_artifacts,
+  standard_component_specs,
+)
+from tfx.utils import io_utils, proto_utils
 
 
 class _OutputArtifact(artifact.Artifact):

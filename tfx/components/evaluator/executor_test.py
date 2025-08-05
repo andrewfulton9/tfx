@@ -16,22 +16,19 @@
 
 import glob
 import os
-import pytest
 
-from absl import logging
-from absl.testing import parameterized
+import pytest
 import tensorflow as tf
 import tensorflow_model_analysis as tfma
+from absl import logging
+from absl.testing import parameterized
+
 from tfx.components.evaluator import executor
 from tfx.components.testdata.module_file import evaluator_module
 from tfx.dsl.io import fileio
 from tfx.proto import evaluator_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
-from tfx.utils import json_utils
-from tfx.utils import proto_utils
-
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
+from tfx.utils import json_utils, proto_utils
 
 
 class ExecutorTest(tf.test.TestCase, parameterized.TestCase):

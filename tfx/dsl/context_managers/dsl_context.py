@@ -16,7 +16,7 @@
 See more doc from dsl_context_manager.py.
 """
 
-from typing import Any, Optional, Iterable, cast, Sequence
+from typing import Any, Iterable, Optional, Sequence, cast
 
 # Use Any to avoid cyclic import.
 _BaseNode = Any

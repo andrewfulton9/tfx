@@ -15,28 +15,21 @@
 import itertools
 
 import tensorflow as tf
-from tfx import components
-from tfx import types
+from google.protobuf import text_format
+from ml_metadata.proto import metadata_store_pb2
+
+from tfx import components, types
 from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.dsl.components.base.testing import test_node
-from tfx.dsl.components.common import importer
-from tfx.dsl.components.common import resolver
+from tfx.dsl.components.common import importer, resolver
 from tfx.dsl.input_resolution.strategies import latest_blessed_model_strategy
 from tfx.dsl.placeholder import placeholder as ph
 from tfx.orchestration import pipeline
 from tfx.proto.orchestration import pipeline_pb2
-from tfx.types import channel
-from tfx.types import standard_artifacts
-from tfx.types.artifact import Artifact
-from tfx.types.artifact import Property
-from tfx.types.artifact import PropertyType
+from tfx.types import channel, standard_artifacts
+from tfx.types.artifact import Artifact, Property, PropertyType
 from tfx.types.channel_utils import external_pipeline_artifact_query
-
-from google.protobuf import text_format
-from ml_metadata.proto import metadata_store_pb2
 
 
 class EmptyComponentSpec(types.ComponentSpec):

@@ -18,19 +18,20 @@ from typing import List
 
 import absl
 import tensorflow_model_analysis as tfma
-from tfx.components import Evaluator
-from tfx.components import ExampleValidator
-from tfx.components import ImportExampleGen
-from tfx.components import Pusher
-from tfx.components import SchemaGen
-from tfx.components import StatisticsGen
-from tfx.components import Trainer
-from tfx.components import Transform
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+
+from tfx.components import (
+  Evaluator,
+  ExampleValidator,
+  ImportExampleGen,
+  Pusher,
+  SchemaGen,
+  StatisticsGen,
+  Trainer,
+  Transform,
+)
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration.beam.beam_dag_runner import BeamDagRunner
-from tfx.proto import pusher_pb2
-from tfx.proto import trainer_pb2
+from tfx.proto import pusher_pb2, trainer_pb2
 
 _pipeline_name = 'mnist_native_keras'
 

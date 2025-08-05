@@ -16,23 +16,23 @@
 import datetime
 from typing import Any, Iterable, List, Optional
 
-from absl import logging
 import apache_beam as beam
+from absl import logging
+from google.protobuf import any_pb2, message
+
 from tfx.dsl.compiler import constants
 from tfx.orchestration import metadata
 from tfx.orchestration.beam.legacy import beam_dag_runner as legacy_beam_dag_runner
 from tfx.orchestration.config import pipeline_config
 from tfx.orchestration.local import runner_utils
-from tfx.orchestration.portable import launcher
-from tfx.orchestration.portable import partial_run_utils
-from tfx.orchestration.portable import runtime_parameter_utils
-from tfx.orchestration.portable import tfx_runner
-from tfx.proto.orchestration import local_deployment_config_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.orchestration.portable import (
+  launcher,
+  partial_run_utils,
+  runtime_parameter_utils,
+  tfx_runner,
+)
+from tfx.proto.orchestration import local_deployment_config_pb2, pipeline_pb2
 from tfx.utils import telemetry_utils
-
-from google.protobuf import any_pb2
-from google.protobuf import message
 
 
 # TODO(jyzhao): confirm it's re-executable, add test case.
@@ -52,6 +52,7 @@ class PipelineNodeAsDoFn(beam.DoFn):
     """Initializes the PipelineNodeAsDoFn.
 
     Args:
+    ----
       pipeline_node: The specification of the node that this launcher lauches.
       mlmd_connection_config: ML metadata connection config.
       pipeline_info: The information of the pipeline that this node runs in.
@@ -80,6 +81,7 @@ class PipelineNodeAsDoFn(beam.DoFn):
     """Executes node based on signals.
 
     Args:
+    ----
       element: a signal element to trigger the node.
       *signals: side input signals indicate completeness of upstream nodes.
     """
@@ -129,6 +131,7 @@ class BeamDagRunner(tfx_runner.IrBasedRunner):
     guide will be provided in a future TFX version for users of these arguments.
 
     Args:
+    ----
       beam_orchestrator_args: Deprecated beam args for the beam orchestrator.
         Note that this is different from the beam_pipeline_args within
         additional_pipeline_args, which is for beam pipelines in components. If
@@ -140,6 +143,7 @@ class BeamDagRunner(tfx_runner.IrBasedRunner):
         is used, the legacy non-IR-based BeamDagRunner will be constructed.
 
     Returns:
+    -------
       Legacy or IR-based BeamDagRunner object.
     """
     if beam_orchestrator_args or config:
@@ -206,10 +210,12 @@ class BeamDagRunner(tfx_runner.IrBasedRunner):
     """Deploys given logical pipeline on Beam.
 
     Args:
+    ----
       pipeline: Logical pipeline in IR format.
       run_options: Optional args for the run.
 
     Raises:
+    ------
       ValueError: If run_options is provided, and partial_run_options.from_nodes
         and partial_run_options.to_nodes are both empty.
     """

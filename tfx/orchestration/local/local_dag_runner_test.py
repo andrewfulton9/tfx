@@ -18,17 +18,15 @@ import tempfile
 from typing import Any, Dict, List
 
 import absl.testing.absltest
+
 from tfx import types
 from tfx.dsl.compiler import compiler
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
 from tfx.orchestration import pipeline as pipeline_py
 from tfx.orchestration.local import local_dag_runner
 from tfx.orchestration.metadata import sqlite_metadata_connection_config
 from tfx.proto.orchestration import pipeline_pb2
-from tfx.types.component_spec import ChannelParameter
-from tfx.types.component_spec import ExecutionParameter
+from tfx.types.component_spec import ChannelParameter, ExecutionParameter
 
 _executed_components = []
 _COMPONENT_NAME = 'component_name'

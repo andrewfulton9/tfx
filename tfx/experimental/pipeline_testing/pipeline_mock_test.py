@@ -14,10 +14,10 @@
 """Tests for tfx.experimental.pipeline_testing.pipeline_mock."""
 
 import tensorflow as tf
+from google.protobuf import text_format
+
 from tfx.experimental.pipeline_testing import pipeline_mock
 from tfx.proto.orchestration import pipeline_pb2
-
-from google.protobuf import text_format
 
 
 class PipelineMockTest(tf.test.TestCase):

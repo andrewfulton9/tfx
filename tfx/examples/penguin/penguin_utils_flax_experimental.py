@@ -31,22 +31,18 @@ import functools
 from typing import Callable, Dict, List
 
 import absl
-
-from flax import linen as nn
-from flax.metrics import tensorboard
-
 import jax
-from jax import numpy as jnp
-from jax.experimental import jax2tf
 import numpy as np
 import optax
-
 import tensorflow as tf
 import tensorflow_transform as tft
+from flax import linen as nn
+from flax.metrics import tensorboard
+from jax import numpy as jnp
+from jax.experimental import jax2tf
 
 from tfx import v1 as tfx
 from tfx.examples.penguin import penguin_utils_base as base
-
 
 # The transformed feature names
 _FEATURE_KEYS_XF = list(map(base.transformed_name, base.FEATURE_KEYS))
@@ -71,6 +67,7 @@ def _make_trained_model(train_data: tf.data.Dataset,
   """Execute model training and evaluation loop.
 
   Args:
+  ----
     train_data: a dataset with training pairs (_InputBatch, _LabelBatch).
     eval_data: a dataset with evaluation pairs (_InputBatch, _LabelBatch).
     num_epochs: number of training epochs.
@@ -82,6 +79,7 @@ def _make_trained_model(train_data: tf.data.Dataset,
     tensorboard_log_dir: Directory where the tensorboard summaries are written.
 
   Returns:
+  -------
     An instance of tf.Model.
   """
   learning_rate = 1e-2
@@ -282,6 +280,7 @@ class _SavedModelWrapper(tf.train.Checkpoint):
     """Builds the tf.Module.
 
     Args:
+    ----
       tf_graph: a tf.function taking one argument (the inputs), which can be be
         tuples/lists/dictionaries of np.ndarray or tensors. The function may
         have references to the tf.Variables in `param_vars`.
@@ -311,6 +310,7 @@ def run_fn(fn_args: tfx.components.FnArgs):
   """Train the model based on given args.
 
   Args:
+  ----
     fn_args: Holds args used to train the model as name/value pairs.
   """
   tf_transform_output = tft.TFTransformOutput(fn_args.transform_output)

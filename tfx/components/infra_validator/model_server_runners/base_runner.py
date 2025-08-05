@@ -77,7 +77,8 @@ class BaseModelServerRunner(abc.ABC):
     Endpoint will be available after the model server job has reached the
     Running state.
 
-    Raises:
+    Raises
+    ------
       AssertionError: if runner hasn't reached the Running state.
     """
 
@@ -111,8 +112,11 @@ class BaseModelServerRunner(abc.ABC):
     blame model for this.
 
     Args:
+    ----
       deadline: A deadline time in UTC timestamp (in seconds).
+
     Returns:
+    -------
       Whether the model is available or not.
     """
 

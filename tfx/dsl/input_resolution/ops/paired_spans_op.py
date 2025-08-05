@@ -112,9 +112,11 @@ class PairedSpans(
     this cannot be used together with `keep_all_versions=True`.
 
     Args:
+    ----
       input_dict: A dictionary of artifacts.
 
     Returns:
+    -------
       List of dicts of paired input elements with the same span and version.
     """
     if self.keep_all_versions and not self.match_version:

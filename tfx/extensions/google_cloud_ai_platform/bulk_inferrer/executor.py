@@ -17,26 +17,30 @@ import hashlib
 import re
 from typing import Any, Dict, List
 
+import tensorflow as tf
 from absl import logging
 from google.api_core import client_options
 from googleapiclient import discovery
-import tensorflow as tf
+from tensorflow.python.saved_model import (
+  loader_impl,  # pylint:disable=g-direct-tensorflow-import
+)
+from tfx_bsl.public.proto import model_spec_pb2
+
 from tfx import types
 from tfx.components.bulk_inferrer import executor as bulk_inferrer_executor
 from tfx.components.util import model_utils
-from tfx.extensions.google_cloud_ai_platform import constants
-from tfx.extensions.google_cloud_ai_platform import runner
+from tfx.extensions.google_cloud_ai_platform import constants, runner
 from tfx.proto import bulk_inferrer_pb2
 from tfx.types import artifact_utils
-from tfx.utils import doc_controls
-from tfx.utils import json_utils
-from tfx.utils import name_utils
-from tfx.utils import path_utils
-from tfx.utils import proto_utils
-from tfx.utils import telemetry_utils
-from tfx_bsl.public.proto import model_spec_pb2
+from tfx.utils import (
+  doc_controls,
+  json_utils,
+  name_utils,
+  path_utils,
+  proto_utils,
+  telemetry_utils,
+)
 
-from tensorflow.python.saved_model import loader_impl  # pylint:disable=g-direct-tensorflow-import
 # TODO(b/140306674): Stop using the internal TF API.
 
 _CLOUD_PUSH_DESTINATION_RE = re.compile(
@@ -71,6 +75,7 @@ class Executor(bulk_inferrer_executor.Executor):
     during the process even inference job failed.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts.
         - examples: examples for inference.
         - model: exported model.
@@ -85,6 +90,7 @@ class Executor(bulk_inferrer_executor.Executor):
           https://cloud.google.com/ml-engine/reference/rest/v1/projects.models
 
     Returns:
+    -------
       None
     """
     self._log_startup(input_dict, output_dict, exec_properties)
@@ -220,7 +226,6 @@ class Executor(bulk_inferrer_executor.Executor):
 
   def _get_model_signature(self, model_path: str) -> _SignatureDef:
     """Returns a model signature."""
-
     saved_model_pb = loader_impl.parse_saved_model(model_path)
     meta_graph_def = None
     for graph_def in saved_model_pb.meta_graphs:

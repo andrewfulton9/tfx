@@ -21,10 +21,8 @@ import tensorflow as tf
 from tfx.components.example_gen import utils
 from tfx.dsl.io import fileio
 from tfx.orchestration import data_types
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
-from tfx.utils import io_utils
-from tfx.utils import json_utils
+from tfx.proto import example_gen_pb2, range_config_pb2
+from tfx.utils import io_utils, json_utils
 
 
 class UtilsTest(tf.test.TestCase):
@@ -150,7 +148,7 @@ class UtilsTest(tf.test.TestCase):
 
   def testMakeOutputSplitNamesWithParameter(self):
     split_name_param = data_types.RuntimeParameter(
-        name='split-name', ptype=str, default=u'train')
+        name='split-name', ptype=str, default='train')
     split_names = utils.generate_output_split_names(
         input_config={
             'splits': [{
@@ -191,7 +189,7 @@ class UtilsTest(tf.test.TestCase):
 
   def testMakeDefaultOutputConfigWithParameter(self):
     split_name_param = data_types.RuntimeParameter(
-        name='split-name', ptype=str, default=u'train')
+        name='split-name', ptype=str, default='train')
     output_config = utils.make_default_output_config({
         'splits': [{
             'name': split_name_param,

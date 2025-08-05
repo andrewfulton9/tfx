@@ -18,16 +18,15 @@ import inspect
 import sys
 import types
 import typing
-from typing import Any, Iterable, Literal, Mapping, Type, TypeVar, TypedDict
-
-from typing_extensions import (  # pylint: disable=g-multiple-import
-    Annotated,  # New in python 3.9
-    NotRequired,  # New in python 3.11  # pytype: disable=not-supported-yet
-    Required,  # New in python 3.11  # pytype: disable=not-supported-yet
-    TypeGuard,  # New in python 3.10
-)
+from typing import Any, Iterable, Literal, Mapping, Type, TypedDict, TypeVar
 
 from google.protobuf.internal import enum_type_wrapper
+from typing_extensions import (  # pylint: disable=g-multiple-import
+  Annotated,  # New in python 3.9
+  NotRequired,  # New in python 3.11  # pytype: disable=not-supported-yet
+  Required,  # New in python 3.11  # pytype: disable=not-supported-yet
+  TypeGuard,  # New in python 3.10
+)
 
 _T = TypeVar('_T')
 _TTypedDict = TypeVar('_TTypedDict', bound=TypedDict)
@@ -81,10 +80,12 @@ def is_compatible(value: Any, tp: Type[_T]) -> TypeGuard[_T]:
   hints.
 
   Args:
+  ----
     value: The value under test.
     tp: The type to check acceptability.
 
   Returns:
+  -------
     Whether the `value` is compatible with the type `tp`.
   """
   maybe_origin = typing.get_origin(tp)

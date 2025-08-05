@@ -30,6 +30,7 @@ class TfxRunner(abc.ABC):
     """Initializes a TfxRunner instance.
 
     Args:
+    ----
       config: Optional pipeline config for customizing the launching
         of each component.
     """
@@ -40,9 +41,11 @@ class TfxRunner(abc.ABC):
     """Runs logical TFX pipeline on specific platform.
 
     Args:
+    ----
       pipeline: logical TFX pipeline definition.
 
     Returns:
+    -------
       Platform-specific object.
     """
     pass

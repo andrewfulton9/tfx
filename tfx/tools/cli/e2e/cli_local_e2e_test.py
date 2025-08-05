@@ -17,18 +17,16 @@ import codecs
 import locale
 import os
 
+import pytest
 from absl import logging
 from click import testing as click_testing
 
 from tfx.dsl.io import fileio
 from tfx.tools.cli.cli_main import cli_group
-from tfx.utils import io_utils
-from tfx.utils import test_case_utils
-
-import pytest
+from tfx.utils import io_utils, test_case_utils
 
 
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class CliLocalEndToEndTest(test_case_utils.TfxTest):
 
   def setUp(self):

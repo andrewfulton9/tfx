@@ -19,16 +19,16 @@ import random
 from unittest import mock
 
 import apache_beam as beam
+import tensorflow as tf
 from apache_beam.testing import util
 from google.cloud import bigquery
-import tensorflow as tf
+
 from tfx.dsl.components.base import base_beam_executor
 from tfx.dsl.io import fileio
 from tfx.extensions.google_cloud_big_query import utils
 from tfx.extensions.google_cloud_big_query.example_gen import executor
 from tfx.proto import example_gen_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
+from tfx.types import artifact_utils, standard_artifacts
 from tfx.utils import proto_utils
 
 

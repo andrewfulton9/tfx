@@ -20,18 +20,15 @@ import typing
 from typing import Any, Dict, List, Mapping, Optional, Union
 
 from absl import logging
+from google.protobuf import json_format
 from kfp.pipeline_spec import pipeline_spec_pb2 as pipeline_pb2
+
 from tfx.dsl.components.base import base_node
 from tfx.dsl.placeholder import placeholder
-from tfx.orchestration import data_types
-from tfx.orchestration import pipeline
+from tfx.orchestration import data_types, pipeline
 from tfx.orchestration.kubeflow import utils
-from tfx.orchestration.kubeflow.v2 import compiler_utils
-from tfx.orchestration.kubeflow.v2 import parameter_utils
-from tfx.orchestration.kubeflow.v2 import step_builder
+from tfx.orchestration.kubeflow.v2 import compiler_utils, parameter_utils, step_builder
 from tfx.types import channel_utils
-
-from google.protobuf import json_format
 
 _LEGAL_NAME_PATTERN = re.compile(r'[a-z0-9][a-z0-9-]{0,127}')
 
@@ -94,6 +91,7 @@ class RuntimeConfigBuilder:
     """Creates a RuntimeConfigBuilder object.
 
     Args:
+    ----
       pipeline_info: a TFX pipeline info object, containing pipeline root info.
       parameter_values: mapping from runtime parameter names to its values.
       use_pipeline_spec_2_1: Use the KFP pipeline spec schema 2.1 to support
@@ -142,6 +140,7 @@ class PipelineBuilder:
     PipelineBuilder.build() outputs Kubeflow PipelineSpec proto.
 
     Args:
+    ----
       tfx_pipeline: A TFX pipeline object.
       default_image: Specifies the TFX container image used in CMLE container
         tasks. Can be overriden by per component specification.
@@ -176,7 +175,6 @@ class PipelineBuilder:
 
   def build(self) -> pipeline_pb2.PipelineSpec:
     """Build a pipeline PipelineSpec."""
-
     _check_name(self._pipeline_info.pipeline_name)
     _check_default_image(self._default_image)
 

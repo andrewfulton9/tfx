@@ -15,11 +15,11 @@
 from typing import Dict, Sequence, Union
 
 from absl import logging
+
 from tfx import types
 from tfx.dsl.compiler import placeholder_utils
 from tfx.orchestration import mlmd_connection_manager as mlmd_cm
-from tfx.orchestration.portable.input_resolution import exceptions
-from tfx.orchestration.portable.input_resolution import node_inputs_resolver
+from tfx.orchestration.portable.input_resolution import exceptions, node_inputs_resolver
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.utils import typing_utils
 
@@ -47,14 +47,17 @@ def resolve_input_artifacts(
   """Resolve input artifacts according to a pipeline node IR definition.
 
   Args:
+  ----
     pipeline_node: Current PipelineNode on which input resolution is running.
     metadata_handle: Metadata or MLMDConnectionManager instance for handling
       mlmd db connections.
 
   Raises:
+  ------
     InputResolutionError: If input resolution went wrong.
 
   Returns:
+  -------
     Trigger: a non-empty list of input dicts. All resolved input dicts should be
         executed.
     Skip: an empty list. Should effectively skip the current component
@@ -82,12 +85,15 @@ def resolve_parameters(
   """Resolves parameters given parameter spec.
 
   Args:
+  ----
     node_parameters: The spec to get parameters.
 
   Returns:
+  -------
     A Dict of parameters.
 
   Raises:
+  ------
     RuntimeError: When there is at least one parameter still in runtime
       parameter form.
   """
@@ -107,12 +113,15 @@ def resolve_parameters_with_schema(
   """Resolves parameter schemas given parameter spec.
 
   Args:
+  ----
     node_parameters: The spec to get parameters.
 
   Returns:
+  -------
     A Dict of parameters with schema.
 
   Raises:
+  ------
     RuntimeError: When there is no field_value available.
   """
   result = {}
@@ -133,13 +142,16 @@ def resolve_dynamic_parameters(
   """Resolves dynamic execution properties given the context.
 
   Args:
+  ----
     node_parameters: The spec to get parameters.
     context: Contextual information for resolving placeholders.
 
   Returns:
+  -------
     A Dict of resolved dynamic parameters.
 
   Raises:
+  ------
     InputResolutionError: If the resolution of dynamic exec property fails.
   """
   result = {}

@@ -18,15 +18,14 @@ from typing import Any, Dict, List
 
 import absl
 import apache_beam as beam
-
 import tensorflow_model_analysis as tfma
+
 from tfx import types
 from tfx.components.model_validator import constants
 from tfx.dsl.components.base import base_beam_executor
 from tfx.dsl.io import fileio
 from tfx.types import artifact_utils
-from tfx.utils import io_utils
-from tfx.utils import path_utils
+from tfx.utils import io_utils, path_utils
 
 try:
   # Try to access EvalResult from tfma directly
@@ -151,6 +150,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
     """Validate current model against last blessed model.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts.
         - examples: examples for eval the model.
         - model: current model for validation.
@@ -161,6 +161,7 @@ class Executor(base_beam_executor.BaseBeamExecutor):
         - blessed_model_id: last blessed model id.
 
     Returns:
+    -------
       None
     """
     self._log_startup(input_dict, output_dict, exec_properties)

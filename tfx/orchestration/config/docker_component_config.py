@@ -21,7 +21,8 @@ from tfx.orchestration.config import base_component_config
 class DockerComponentConfig(base_component_config.BaseComponentConfig):
   """Component config which holds docker run args.
 
-  Attributes:
+  Attributes
+  ----------
     docker_server_url: URL to the Docker server. For example,
       `unix:///var/run/docker.sock` or `tcp://127.0.0.1:1234`. Uses environment
         viarable to initialize the docker client if this parameter is not set.

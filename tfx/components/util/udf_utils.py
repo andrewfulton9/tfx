@@ -24,15 +24,13 @@ import struct
 import subprocess
 import sys
 import tempfile
-
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from absl import logging
 
 from tfx.dsl.components.base import base_component
 from tfx.dsl.io import fileio
-from tfx.utils import import_utils
-from tfx.utils import io_utils
+from tfx.utils import import_utils, io_utils
 
 # Key for module file path.
 _MODULE_FILE_KEY = 'module_file'
@@ -184,18 +182,21 @@ def package_user_module_file(instance_name: str, module_path: str,
   """Package the given user module file into a Python Wheel package.
 
   Args:
+  ----
       instance_name: Name of the component instance, for creating a unique wheel
         package name.
       module_path: Path to the module file to be packaged.
       pipeline_root: Text
 
   Returns:
+  -------
       dist_file_path: Path to the generated wheel file.
       user_module_path: Path for referencing the user module when stored
         as the _MODULE_PATH_KEY execution property. Format should be treated
         as opaque by the user.
 
   Raises:
+  ------
       RuntimeError: When wheel building fails.
   """
   module_path = os.path.abspath(io_utils.ensure_local(module_path))
@@ -329,11 +330,13 @@ def install_to_temp_directory(pip_dependency: str,
   """Install the given pip dependency specifier to a temporary directory.
 
   Args:
+  ----
       pip_dependency: Path to a wheel file or a pip dependency specifier (e.g.
         "setuptools==18.0").
       temp_dir: Path to temporary installation location (optional).
 
   Returns:
+  -------
       Temporary directory where the package was installed, that should be added
       to the Python import path.
   """

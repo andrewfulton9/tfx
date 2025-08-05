@@ -16,14 +16,13 @@
 import os
 from unittest import mock
 
+import pytest
 from absl.testing import parameterized
+
 from tfx.dsl.components.base import base_component
 from tfx.orchestration import test_utils
 from tfx.orchestration.kubeflow.v2 import test_utils as kubeflow_v2_test_utils
 from tfx.orchestration.kubeflow.v2.e2e_tests import base_test_case
-
-import pytest
-
 
 # The query to get data from BigQuery.
 # The threshold number (0.0004) is for extracting minimal data to run
@@ -53,8 +52,8 @@ _BIGQUERY_QUERY = """
           < 0.0004"""
 
 
-@pytest.mark.integration
-@pytest.mark.e2e
+@pytest.mark.integration()
+@pytest.mark.e2e()
 class BigqueryIntegrationTest(
     base_test_case.BaseKubeflowV2Test, parameterized.TestCase
 ):

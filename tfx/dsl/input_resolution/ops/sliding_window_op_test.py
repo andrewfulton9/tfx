@@ -14,8 +14,8 @@
 """Tests for tfx.dsl.input_resolution.ops.sliding_window_op."""
 
 import tensorflow as tf
-from tfx.dsl.input_resolution.ops import ops
-from tfx.dsl.input_resolution.ops import test_utils
+
+from tfx.dsl.input_resolution.ops import ops, test_utils
 
 
 class SlidingWindowOpTest(tf.test.TestCase):

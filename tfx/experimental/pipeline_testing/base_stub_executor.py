@@ -17,6 +17,7 @@ import os
 from typing import Any, Dict, List, Optional
 
 from absl import logging
+
 from tfx import types
 from tfx.dsl.components.base import base_executor
 from tfx.dsl.io import fileio
@@ -36,6 +37,7 @@ class BaseStubExecutor(base_executor.BaseExecutor):
     """Initializes a BaseStubExecutor.
 
     Args:
+    ----
       component_id: component id of a component associated with the stub
         executor.
       test_data_dir: The directory to test data (pipeline_recorder.py).
@@ -43,6 +45,7 @@ class BaseStubExecutor(base_executor.BaseExecutor):
         component_id and test_data_dir can be encoded in the context as well.
 
     Raises:
+    ------
       ValueError: If the recorded pipeline data doesn't exist at test_data_dir.
     """
     # Fill parameters from extra_flags if empty.
@@ -67,14 +70,17 @@ class BaseStubExecutor(base_executor.BaseExecutor):
     """Copies over recorded data to pipeline output uri.
 
     Args:
+    ----
       input_dict: Input dict from input key to a list of Artifacts.
       output_dict: Output dict from output key to a list of Artifacts.
       exec_properties: A dict of execution properties.
 
     Returns:
+    -------
       None
 
     Raises:
+    ------
       FileNotFoundError: If the recorded test data dir doesn't exist any more.
     """
     for output_key, artifact_list in output_dict.items():

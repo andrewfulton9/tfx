@@ -17,25 +17,25 @@ import base64
 import functools
 import importlib
 import os
-import pytest
 from typing import Any, Optional, TypeVar, Union
 
+import pytest
 import tensorflow as tf
+from google.protobuf import (
+    descriptor_pb2,
+    descriptor_pool,
+    empty_pb2,
+    message,
+    text_format,
+)
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx.dsl.compiler import placeholder_utils
 from tfx.dsl.placeholder import placeholder as ph
 from tfx.dsl.placeholder import proto_placeholder
 from tfx.orchestration.portable import data_types
-from tfx.proto.orchestration import execution_invocation_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.proto.orchestration import execution_invocation_pb2, pipeline_pb2
 from tfx.utils import proto_utils
-
-from google.protobuf import descriptor_pb2
-from google.protobuf import empty_pb2
-from google.protobuf import descriptor_pool
-from google.protobuf import message
-from google.protobuf import text_format
-from ml_metadata.proto import metadata_store_pb2
-
 
 
 @pytest.fixture(autouse=True,scope="module")

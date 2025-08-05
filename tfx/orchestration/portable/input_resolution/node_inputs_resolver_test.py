@@ -18,19 +18,20 @@ from typing import Set
 from unittest import mock
 
 import tensorflow as tf
-from tfx.dsl.components.base.testing import test_node
-from tfx.orchestration.portable.input_resolution import exceptions
-from tfx.orchestration.portable.input_resolution import input_graph_resolver
-from tfx.orchestration.portable.input_resolution import node_inputs_resolver
-from tfx.orchestration.portable.input_resolution import partition_utils
-from tfx.orchestration.portable.input_resolution import channel_resolver
-from tfx.proto.orchestration import pipeline_pb2
-import tfx.types
-from tfx.types import channel
-from tfx.types import channel_utils
-from tfx.utils import test_case_utils
-
 from google.protobuf import text_format
+
+import tfx.types
+from tfx.dsl.components.base.testing import test_node
+from tfx.orchestration.portable.input_resolution import (
+  channel_resolver,
+  exceptions,
+  input_graph_resolver,
+  node_inputs_resolver,
+  partition_utils,
+)
+from tfx.proto.orchestration import pipeline_pb2
+from tfx.types import channel, channel_utils
+from tfx.utils import test_case_utils
 
 NodeInputs = pipeline_pb2.NodeInputs
 InputSpec = pipeline_pb2.InputSpec
@@ -177,8 +178,8 @@ class ProtectedFunctionTest(tf.test.TestCase):
       result = node_inputs_resolver._join_artifacts(entries_map, input_keys)
       self.assertEqual(result, expected)
 
-    a1, a2, b1, b2, c1, c2, d1, d2, d3, d4, e1, e2 = [
-        mock.MagicMock() for _ in range(12)]
+    a1, a2, b1, b2, c1, c2, d1, d2, d3, d4, e1, e2 = (
+        mock.MagicMock() for _ in range(12))
 
     entries_map = {
         'a': [

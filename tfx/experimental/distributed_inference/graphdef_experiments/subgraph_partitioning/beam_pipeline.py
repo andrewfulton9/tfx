@@ -45,10 +45,13 @@ be the same as the results from the original model.
 
 import copy
 from typing import Any, Dict, Iterator, List, Mapping
+
 import apache_beam as beam
 import tensorflow as tf
 
-from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import execution_spec
+from tfx.experimental.distributed_inference.graphdef_experiments.subgraph_partitioning import (
+  execution_spec,
+)
 
 
 @beam.ptransform_fn
@@ -80,6 +83,7 @@ def ExecuteGraph(  # pylint: disable=invalid-name
   intermediate output names and values to PColl.
 
   Args:
+  ----
     pcoll: A PCollection of inputs to the graph. Each element is a dictionary
       from remote op names to a dictionary from tensor names to values. Here,
       element[remote_op_name] contains graph inputs.
@@ -93,6 +97,7 @@ def ExecuteGraph(  # pylint: disable=invalid-name
       {graph name: {remote op name: {placeholder name: input name}}}.
 
   Returns:
+  -------
     A PCollection of results of this graph. Each element is a dictionary from
     remote op names to a dictionary from tensor names to values. Here,
     element[remote_op_name] stores graph inputs, intermediate results, and
@@ -156,6 +161,7 @@ class _SubgraphLayerDoFn(beam.DoFn):
     that there is one output per node.
 
     Args:
+    ----
       element: A dictionary from remote op names to a dictionary from tensor
         names to values. Element[remote_op_name] stores graph inputs and
         previous specs' outputs.
@@ -163,6 +169,7 @@ class _SubgraphLayerDoFn(beam.DoFn):
       remote_op_name: The remote op name of the current graph.
 
     Yields:
+    ------
       A dictionary from remote op names to a dictionary from tensor names to
       values. The dictionary is a copy of the input element, to which the
       outputs of this subgraph layer have been added.
@@ -213,6 +220,7 @@ def _LoadRemoteGraphInputs(  # pylint: disable=invalid-name
   graph's key to the remote graph's key.
 
   Args:
+  ----
     pcoll: A PCollection of child graph inputs not loaded yet. Each element is a
       dictionary from remote op names to a dictionary from tensor names to
       values. Here, element[child_remote_op_name] is empty now.
@@ -224,6 +232,7 @@ def _LoadRemoteGraphInputs(  # pylint: disable=invalid-name
       {graph name: {remote op name: {placeholder name: input name}}}.
 
   Returns:
+  -------
     A PCollection of inputs to the child graph. Each element is a dictionary
     from remote op names to a dictionary from tensor names to values. Here,
     element[child_remote_op_name] stores the inputs of child graph.
@@ -279,6 +288,7 @@ def _ExtractRemoteGraphOutput(  # pylint: disable=invalid-name
   to remote op. This means that a remote graph can only have one output.
 
   Args:
+  ----
     pcoll: A PCollection of child graph results. Each element is a dictionary
       from remote op names to a dictionary from tensor names to values. Here,
       element[child_remote_op_name] stores graph inputs, intermediate results,
@@ -289,6 +299,7 @@ def _ExtractRemoteGraphOutput(  # pylint: disable=invalid-name
     graph_name_to_specs: A mapping from graph names to a list of ExecutionSpecs.
 
   Returns:
+  -------
     A PCollection of child graph output in parent graph. Each element is a
     dictionary from remote op names to a dictionary from tensor names to
     values. Here, element[parent_remote_op_name] contains the output from

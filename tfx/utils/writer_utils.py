@@ -13,8 +13,9 @@
 # limitations under the License.
 """Utilities for writing Artifacts to disk."""
 
-from tfx.utils import io_utils
 from tensorflow_metadata.proto.v0 import anomalies_pb2
+
+from tfx.utils import io_utils
 
 
 def write_anomalies(

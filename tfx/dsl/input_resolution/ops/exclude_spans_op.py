@@ -43,9 +43,11 @@ class ExcludeSpans(
     denylist = [1, 2], then only the artifact [4] will be returned.
 
     Args:
+    ----
       input_list: The list of Artifacts to parse.
 
     Returns:
+    -------
       Artifacts with spans not in denylist.
     """
     valid_artifacts = ops_utils.get_valid_artifacts(input_list,

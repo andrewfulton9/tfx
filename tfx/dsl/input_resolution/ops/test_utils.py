@@ -16,29 +16,27 @@
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple, Type, Union
 from unittest import mock
 
+import ml_metadata as mlmd
 from absl.testing import parameterized
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
-from tfx.dsl.compiler import compiler_context
-from tfx.dsl.compiler import node_inputs_compiler
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_driver
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.compiler import compiler_context, node_inputs_compiler
+from tfx.dsl.components.base import (
+  base_component,
+  base_driver,
+  base_executor,
+  executor_spec,
+)
 from tfx.dsl.input_resolution import resolver_op
 from tfx.dsl.input_resolution.ops import ops_utils
-from tfx.orchestration import metadata
-from tfx.orchestration import pipeline
+from tfx.orchestration import metadata, pipeline
 from tfx.orchestration import mlmd_connection_manager as mlmd_cm
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.types import artifact as tfx_artifact
-from tfx.types import artifact_utils
+from tfx.types import artifact_utils, component_spec
 from tfx.types import channel as channel_types
-from tfx.types import component_spec
-from tfx.utils import test_case_utils
-from tfx.utils import typing_utils
-
-import ml_metadata as mlmd
-from ml_metadata.proto import metadata_store_pb2
+from tfx.utils import test_case_utils, typing_utils
 
 
 class DummyArtifact(types.Artifact):
@@ -51,10 +49,10 @@ class DummyArtifact(types.Artifact):
       'version': tfx_artifact.Property(type=tfx_artifact.PropertyType.INT),
   }
 
-  # pylint: disable=redefined-builtin
+  # noqa: A002
   def __init__(
       self,
-      id: Optional[str] = None,
+      id: Optional[str] = None, # noqa: A001, A002
       uri: Optional[str] = None,
       create_time_since_epoch: Optional[int] = None,
   ):
@@ -149,7 +147,7 @@ class FakeComponent(base_component.BaseComponent):
 
   DRIVER_CLASS = base_driver.BaseDriver
 
-  def __init__(self, id: str, inputs=None, exec_properties=None):  # pylint: disable=redefined-builtin
+  def __init__(self, id: str, inputs=None, exec_properties=None):  # noqa: A002
     super().__init__(spec=FakeSpec())
     self.with_id(id)
 

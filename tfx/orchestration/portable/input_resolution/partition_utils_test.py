@@ -14,6 +14,7 @@
 """Tests for tfx.orchestration.portable.input_resolution.partition_utils."""
 
 import tensorflow as tf
+
 from tfx.orchestration.portable.input_resolution import partition_utils
 
 

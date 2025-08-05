@@ -17,9 +17,8 @@ import dataclasses
 from typing import Optional, Union
 
 import tensorflow as tf
-from tfx.utils.di import errors
-from tfx.utils.di import module
 
+from tfx.utils.di import errors, module
 
 ANY_NAME = 'this_is_not_a_name'
 

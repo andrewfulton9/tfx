@@ -17,40 +17,42 @@ import sys
 import traceback
 from typing import Any, Dict, List, Mapping, Optional, Type, TypeVar
 
-from absl import logging
 import attr
 import grpc
 import portpicker
+from absl import logging
+from google.protobuf import message
+from ml_metadata.proto import metadata_store_pb2
+
 from tfx import types
 from tfx.dsl.compiler import placeholder_utils
 from tfx.dsl.io import fileio
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import metadata
-from tfx.orchestration.portable import base_driver_operator
-from tfx.orchestration.portable import base_executor_operator
-from tfx.orchestration.portable import beam_executor_operator
-from tfx.orchestration.portable import cache_utils
-from tfx.orchestration.portable import data_types
-from tfx.orchestration.portable import docker_executor_operator
-from tfx.orchestration.portable import execution_publish_utils
-from tfx.orchestration.portable import execution_watcher
-from tfx.orchestration.portable import importer_node_handler
-from tfx.orchestration.portable import inputs_utils
-from tfx.orchestration.portable import outputs_utils
-from tfx.orchestration.portable import python_driver_operator
-from tfx.orchestration.portable import python_executor_operator
-from tfx.orchestration.portable import resolver_node_handler
+from tfx.orchestration import data_types_utils, metadata
+from tfx.orchestration.portable import (
+  base_driver_operator,
+  base_executor_operator,
+  beam_executor_operator,
+  cache_utils,
+  data_types,
+  docker_executor_operator,
+  execution_publish_utils,
+  execution_watcher,
+  importer_node_handler,
+  inputs_utils,
+  outputs_utils,
+  python_driver_operator,
+  python_executor_operator,
+  resolver_node_handler,
+)
 from tfx.orchestration.portable.input_resolution import exceptions
-from tfx.orchestration.portable.mlmd import context_lib
-from tfx.orchestration.portable.mlmd import execution_lib
-from tfx.proto.orchestration import driver_output_pb2
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import execution_result_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.orchestration.portable.mlmd import context_lib, execution_lib
+from tfx.proto.orchestration import (
+  driver_output_pb2,
+  executable_spec_pb2,
+  execution_result_pb2,
+  pipeline_pb2,
+)
 from tfx.utils import typing_utils
-
-from google.protobuf import message
-from ml_metadata.proto import metadata_store_pb2
 
 # Subclasses of BaseExecutorOperator
 ExecutorOperator = TypeVar(
@@ -136,8 +138,8 @@ def _register_execution(
 class Launcher:
   """Launcher is the main entrance of nodes in TFleX.
 
-     It handles TFX internal details like artifact resolving, execution
-     triggering and result publishing.
+  It handles TFX internal details like artifact resolving, execution
+  triggering and result publishing.
   """
 
   def __init__(
@@ -156,6 +158,7 @@ class Launcher:
     """Initializes a Launcher.
 
     Args:
+    ----
       pipeline_node: The specification of the node that this launcher lauches.
       mlmd_connection: ML metadata connection.
       pipeline_info: The information of the pipeline that this node runs in.
@@ -176,6 +179,7 @@ class Launcher:
         implementation.
 
     Raises:
+    ------
       ValueError: when component and component_config are not launchable by the
       launcher.
     """
@@ -574,11 +578,13 @@ class Launcher:
   def launch(self) -> Optional[data_types.ExecutionInfo]:
     """Executes the component, includes driver, executor and publisher.
 
-    Returns:
+    Returns
+    -------
       The metadata of this execution that is registered in MLMD. It can be None
       if the driver decides not to run the execution.
 
-    Raises:
+    Raises
+    ------
       Exception: If the executor fails.
     """
     logging.info('Running launcher for %s', self._pipeline_node)

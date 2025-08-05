@@ -14,11 +14,11 @@
 """Tests for tfx.orchestration.portable.input_resolution.channel_resolver."""
 
 
+from google.protobuf import text_format
+
 from tfx.orchestration.portable.input_resolution import channel_resolver
 from tfx.proto.orchestration import pipeline_pb2
 from tfx.utils import test_case_utils
-
-from google.protobuf import text_format
 
 
 class ChannelResolverTest(test_case_utils.TfxTest, test_case_utils.MlmdMixins):

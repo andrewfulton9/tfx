@@ -15,14 +15,13 @@
 
 from typing import Any, Callable, Dict
 
-from tfx.dsl.component.experimental import container_component
-from tfx.dsl.component.experimental import placeholders
+import yaml
+from google.protobuf import json_format
+
+from tfx.dsl.component.experimental import container_component, placeholders
 from tfx.dsl.components.base import base_component
 from tfx.extensions.experimental.kfp_compatibility.proto import kfp_component_spec_pb2
 from tfx.types import standard_artifacts
-import yaml
-
-from google.protobuf import json_format
 
 
 def load_kfp_yaml_container_component(
@@ -33,14 +32,17 @@ def load_kfp_yaml_container_component(
   https://www.kubeflow.org/docs/pipelines/reference/component-spec/
 
   Example:
+  -------
     component = load_kfp_yaml_container_component(
       "kfp_pipelines_root/components/datasets/Chicago_Taxi_Trips/component.yaml"
     )
 
   Args:
+  ----
     path: local file path of a Kubeflow Pipelines component YAML file.
 
   Returns:
+  -------
     Container component that can be instantiated in a TFX pipeline.
   """
   with open(path) as component_file:
@@ -74,10 +76,12 @@ def _convert_target_fields_to_kv_pair(parsed_dict: Dict[str, Any]) -> None:
   """Converts in place specific string fields to key value pairs of {constantValue: [Text]} for proto3 compatibility.
 
   Args:
+  ----
     parsed_dict: dictionary obtained from parsing a Kubeflow component spec.
       This argument is modified in place.
 
   Returns:
+  -------
     None
   """
   conversion_string_paths = [
@@ -100,9 +104,11 @@ def _get_command_line_argument_type(
   """Converts a container command to the corresponding type.
 
   Args:
+  ----
     command: StringOrPlaceholder which encodes a container command.
 
   Returns:
+  -------
     command to be passed into create_container_component.
   """
   if command.HasField('constantValue'):

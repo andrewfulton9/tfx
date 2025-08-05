@@ -15,14 +15,12 @@
 
 from typing import Optional, Union
 
-from tfx.components.example_gen import component
-from tfx.components.example_gen import utils
+from tfx.components.example_gen import component, utils
 from tfx.dsl.components.base import executor_spec
 from tfx.dsl.placeholder import placeholder as ph
 from tfx.extensions.google_cloud_big_query.example_gen import executor
 from tfx.orchestration import data_types
-from tfx.proto import example_gen_pb2
-from tfx.proto import range_config_pb2
+from tfx.proto import example_gen_pb2, range_config_pb2
 
 
 class BigQueryExampleGen(component.QueryBasedExampleGen):
@@ -63,6 +61,7 @@ class BigQueryExampleGen(component.QueryBasedExampleGen):
     """Constructs a BigQueryExampleGen component.
 
     Args:
+    ----
       query: BigQuery sql string, query result will be treated as a single
         split, can be overwritten by input_config.
       input_config: An example_gen_pb2.Input instance with Split.pattern as
@@ -84,6 +83,7 @@ class BigQueryExampleGen(component.QueryBasedExampleGen):
         instance, providing custom configuration for ExampleGen.
 
     Raises:
+    ------
       RuntimeError: Only one of query and input_config should be set.
     """
     if bool(query) == bool(input_config):

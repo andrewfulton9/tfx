@@ -15,10 +15,8 @@
 
 import tensorflow as tf
 
-from tfx.dsl.io import filesystem
-from tfx.dsl.io import filesystem_registry
-from tfx.dsl.io.plugins import local
-from tfx.dsl.io.plugins import tensorflow_gfile
+from tfx.dsl.io import filesystem, filesystem_registry
+from tfx.dsl.io.plugins import local, tensorflow_gfile
 
 
 class FakeFilesystemA(filesystem.Filesystem):

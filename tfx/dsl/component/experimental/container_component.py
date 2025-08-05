@@ -15,12 +15,9 @@
 
 from typing import Any, Callable, Dict, List, Optional
 
-from tfx.dsl.component.experimental import component_utils
-from tfx.dsl.component.experimental import executor_specs
-from tfx.dsl.component.experimental import placeholders
+from tfx.dsl.component.experimental import component_utils, executor_specs, placeholders
 from tfx.dsl.components.base import base_component
-from tfx.types import channel_utils
-from tfx.types import component_spec
+from tfx.types import channel_utils, component_spec
 
 
 def create_container_component(
@@ -34,6 +31,7 @@ def create_container_component(
   """Creates a container-based component.
 
   Args:
+  ----
     name: The name of the component
     image: Container image name.
     command: Container entrypoint command-line. Not executed within a shell. The
@@ -46,6 +44,7 @@ def create_container_component(
     parameters: The list of component parameters
 
   Returns:
+  -------
     Component that can be instantiated and user inside pipeline.
 
   !!! Example

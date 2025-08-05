@@ -15,14 +15,12 @@
 
 import os
 
-from absl.testing import parameterized
 import tensorflow as tf
-from tfx.types import standard_artifacts
-from tfx.utils import io_utils
-from tfx.utils import path_utils
-from tfx.utils import path_constants
-
+from absl.testing import parameterized
 from ml_metadata.proto import metadata_store_pb2
+
+from tfx.types import standard_artifacts
+from tfx.utils import io_utils, path_constants, path_utils
 
 
 class PathUtilsTest(tf.test.TestCase, parameterized.TestCase):

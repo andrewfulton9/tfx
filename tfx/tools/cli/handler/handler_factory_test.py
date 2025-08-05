@@ -23,9 +23,7 @@ from unittest import mock
 import tensorflow as tf
 
 from tfx.tools.cli import labels
-from tfx.tools.cli.handler import beam_handler
-from tfx.tools.cli.handler import handler_factory
-from tfx.tools.cli.handler import local_handler
+from tfx.tools.cli.handler import beam_handler, handler_factory, local_handler
 
 
 class _MockClientClass:
@@ -49,7 +47,9 @@ class HandlerFactoryTest(tf.test.TestCase):
   @mock.patch('subprocess.check_output', _MockSubprocessAirflow)
   def testCreateHandlerAirflow(self):
     try:
-      from tfx.tools.cli.handler import airflow_handler  # pylint: disable=g-import-not-at-top
+      from tfx.tools.cli.handler import (
+        airflow_handler,  # pylint: disable=g-import-not-at-top
+      )
     except ImportError:
       self.skipTest('Airflow is not available.')
 

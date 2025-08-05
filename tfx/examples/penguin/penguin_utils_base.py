@@ -18,14 +18,13 @@ Flax.
 """
 
 from typing import List
-from absl import logging
 
 import tensorflow as tf
 import tensorflow_transform as tft
+from absl import logging
+from tfx_bsl.public import tfxio
 
 from tfx import v1 as tfx
-
-from tfx_bsl.public import tfxio
 
 FEATURE_KEYS = [
     'culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g'
@@ -45,18 +44,19 @@ def make_serving_signatures(model,
   """Returns the serving signatures.
 
   Args:
+  ----
     model: the model function to apply to the transformed features.
     tf_transform_output: The transformation to apply to the serialized
       tf.Example.
 
   Returns:
+  -------
     The signatures to use for saving the mode. The 'serving_default' signature
     will be a concrete function that takes a batch of unspecified length of
     serialized tf.Example, parses them, transformes the features and
     then applies the model. The 'transform_features' signature will parses the
     example and transforms the features.
   """
-
   # We need to track the layers in the model in order to save it.
   # TODO(b/162357359): Revise once the bug is resolved.
   model.tft_layer = tf_transform_output.transform_features_layer()
@@ -102,6 +102,7 @@ def input_fn(file_pattern: List[str],
   """Generates features and label for tuning/training.
 
   Args:
+  ----
     file_pattern: List of paths or patterns of input tfrecord files.
     data_accessor: DataAccessor for converting input to RecordBatch.
     tf_transform_output: A TFTransformOutput.
@@ -109,6 +110,7 @@ def input_fn(file_pattern: List[str],
       dataset to combine in a single batch
 
   Returns:
+  -------
     A dataset that contains (features, indices) tuple where features is a
       dictionary of Tensors, and indices is a single Tensor of label indices.
   """
@@ -124,9 +126,11 @@ def preprocessing_fn(inputs):
   """tf.transform's callback function for preprocessing inputs.
 
   Args:
+  ----
     inputs: map from feature keys to raw not-yet-transformed features.
 
   Returns:
+  -------
     Map from string feature key to transformed feature operations.
   """
   outputs = {}

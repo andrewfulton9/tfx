@@ -15,17 +15,16 @@
 
 from typing import List, Optional, Union
 
-from absl import logging
 import tensorflow_model_analysis as tfma
+from absl import logging
+
 from tfx import types
 from tfx.components.evaluator import executor
 from tfx.components.util import udf_utils
-from tfx.dsl.components.base import base_beam_component
-from tfx.dsl.components.base import executor_spec
+from tfx.dsl.components.base import base_beam_component, executor_spec
 from tfx.orchestration import data_types
 from tfx.proto import evaluator_pb2
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import standard_artifacts, standard_component_specs
 from tfx.utils import json_utils
 
 
@@ -64,6 +63,7 @@ class Evaluator(base_beam_component.BaseBeamComponent):
     """Construct an Evaluator component.
 
     Args:
+    ----
       examples: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Examples`][tfx.v1.types.standard_artifacts.Examples], usually
         produced by an ExampleGen component. _required_
       model: A [BaseChannel][tfx.v1.types.BaseChannel] of type [`standard_artifacts.Model`][tfx.v1.types.standard_artifacts.Model], usually produced

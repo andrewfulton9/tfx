@@ -15,13 +15,13 @@
 
 import os
 
+import pytest
 from absl import logging
+
 from tfx.experimental.templates import container_based_test_case
 
-import pytest
 
-
-@pytest.mark.e2e
+@pytest.mark.e2e()
 class TaxiTemplateKubeflowV2E2ETest(
     container_based_test_case.BaseVertexEndToEndTest):
 

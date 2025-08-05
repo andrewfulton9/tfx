@@ -15,10 +15,13 @@
 from typing import Sequence
 
 import attr
+
 from tfx.dsl.components.base import base_node
-from tfx.dsl.context_managers import dsl_context
-from tfx.dsl.context_managers import dsl_context_manager
-from tfx.dsl.context_managers import dsl_context_registry
+from tfx.dsl.context_managers import (
+  dsl_context,
+  dsl_context_manager,
+  dsl_context_registry,
+)
 from tfx.dsl.placeholder import placeholder
 
 

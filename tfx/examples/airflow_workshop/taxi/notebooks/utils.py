@@ -15,11 +15,10 @@
 
 import re
 
-from IPython.display import display_html
 import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
-
+from IPython.display import display_html
 from ml_metadata.proto import metadata_store_pb2
 
 
@@ -53,6 +52,7 @@ class _LineageGraphHelper:
     """Initializes the _LineageGraphBuilder with given metadata store.
 
     Args:
+    ----
       store: An instance of `metadata_store.MetadataStore`.
     """
     self.metadata_store = store
@@ -61,6 +61,7 @@ class _LineageGraphHelper:
     """Returns a tuple of most recent execution id and whether it is cached run.
 
     Args:
+    ----
       artifact_id: The artifact used to retrieve the upstream executions.
     """
     events = self.metadata_store.get_events_by_artifact_ids([artifact_id])
@@ -112,12 +113,14 @@ class _LineageGraphHelper:
     """Returns a `nx.DiGraph` representing the lineage of given `artifact_id`.
 
     Args:
+    ----
       artifact_id: An `int` indicating the id of an Artifact.
       max_depth: (Optional): An `int` indicating how far back the lineage should
         be computed for `artifact_id`. By default the entire lineage is
         computed.
 
     Returns:
+    -------
       A `nx.DiGraph` for the lineage of given `artifact_id`.
       Nodes with positive ids indicate an Artifact.
       Nodes with negative ids indicate an Execution.
@@ -137,6 +140,7 @@ class _LineageGraphHelper:
     Nodes are positioned in a bipartite graph layout.
 
     Args:
+    ----
       g: A `nx.DiGraph` object.
     """
     # make a copy of the graph; add auxiliary nodes
@@ -268,6 +272,7 @@ class ReadonlyMetadataStore:
     """Initializes a ReadonlyMetadataStore with given store.
 
     Args:
+    ----
       store: An instance of `metadata_store.MetadataStore`.
     """
     self.metadata_store = store
@@ -277,10 +282,12 @@ class ReadonlyMetadataStore:
     """Returns a `pd.DataFrame` based on an artifact/execution properties.
 
     Args:
+    ----
       obj: An instance of `metadata_store_pb2.Artifact` or
         `metadata_store_pb2.Execution`.
 
     Returns:
+    -------
       A `pd.DataFrame` to display the properties of an artifact/execution.
     """
     data = {}
@@ -313,9 +320,11 @@ class ReadonlyMetadataStore:
     """Returns a `pd.DataFrame` for an artifact with `artifact_id`.
 
     Args:
+    ----
       artifact_id: An `int` indicating the id of an artifact in the store.
 
     Returns:
+    -------
       A `pd.DataFrame` to display the properties of the artifact corresponding
       to `artifact_id` or None if no such artifact exists in the store.
     """
@@ -327,9 +336,11 @@ class ReadonlyMetadataStore:
     """Returns a `pd.DataFrame` for an execution with `execution_id`.
 
     Args:
+    ----
       execution_id: An `int` indicating the id of an execution in the store.
 
     Returns:
+    -------
       A `pd.DataFrame` to display the properties of the execution corresponding
       to `execution_id` or None if no such execution exists in the store.
     """
@@ -341,9 +352,11 @@ class ReadonlyMetadataStore:
     """Returns a `pd.DataFrame` for all artifacts of given `type_name`.
 
     Args:
+    ----
       type_name: A `str` indicating the name of an artifact type in the store.
 
     Returns:
+    -------
       A `pd.DataFrame` to display the properties of all artifacts with given
       type in the store.
     """
@@ -354,9 +367,11 @@ class ReadonlyMetadataStore:
     """Returns a `pd.DataFrame` for all executions of given `type_name`.
 
     Args:
+    ----
       type_name: A `str` indicating the name of an execution type in the store.
 
     Returns:
+    -------
       A `pd.DataFrame` to display the properties of all executions with given
       type in the store.
     """
@@ -371,11 +386,13 @@ class ReadonlyMetadataStore:
     `source_type_name` that was an input for these events.
 
     Args:
+    ----
       artifact_id: A `int` indicating the id of an artifact.
       source_type_name: A `str` indicating the type of an artifact that is a
         direct or indirect input for generating `artifact_id`.
 
     Returns:
+    -------
       A `metadata_store_pb2.Artifact` of type `source_type_name` that is a
       direct/indirect input for generating `artifact_id` or `None` if no such
       artifact exists.
@@ -409,11 +426,13 @@ class ReadonlyMetadataStore:
     an output for these events.
 
     Args:
+    ----
       artifact_id: A `int` indicating the id of an artifact.
       dest_type_name: A `str` indicating the type of an artifact that is a
         output of an event that directly/indirectly consumed `artifact_id`.
 
     Returns:
+    -------
       A `metadata_store_pb2.Artifact` of type `dest_type_name` that is a
       direct/indirect output from `artifact_id` or `None` if no such artifact
       exists.
@@ -443,11 +462,13 @@ class ReadonlyMetadataStore:
     """Returns the execution of `type_name` that generated `artifact_id`.
 
     Args:
+    ----
       artifact_id: A `int` indicating the id of an artifact.
       type_name: A `str` indicating the type of an Execution that generated
         `artifact_id`.
 
     Returns:
+    -------
       A `metadata_store_pb2.Execution` of type `type_name` that generated
       `artifact_id` or `None` if no such execution exists.
     """
@@ -467,6 +488,7 @@ class ReadonlyMetadataStore:
     """Displays properties of artifact and the execution that generated it.
 
     Args:
+    ----
       artifact_id: A `int` indicating the id of an artifact.
       execution_type_name: A `str` indicating the type of an execution that
         generated `artifact_id`.
@@ -501,6 +523,7 @@ class ReadonlyMetadataStore:
     """Displays properties of 2 artifacts and executions that generated them.
 
     Args:
+    ----
       artifact_id: A `int` indicating the id of one artifact.
       other_artifact_id: A `int` indicating the id of another artifact.
       execution_type_name: A `str` indicating the type of executions that
@@ -538,6 +561,7 @@ class ReadonlyMetadataStore:
     """Computes and plots the lineage graph for `artifact_id` upto `max_depth`.
 
     Args:
+    ----
       artifact_id: An `int` indicating the id of an Artifact.
       max_depth: (Optional): An `int` indicating how far back the lineage should
         be computed for `artifact_id`. By default the entire lineage is

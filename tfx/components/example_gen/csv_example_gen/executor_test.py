@@ -15,16 +15,15 @@
 
 
 import os
-from absl.testing import absltest
 
 import apache_beam as beam
+from absl.testing import absltest
 from apache_beam.testing import util
+
 from tfx.components.example_gen.csv_example_gen import executor
 from tfx.dsl.io import fileio
 from tfx.proto import example_gen_pb2
-from tfx.types import artifact_utils
-from tfx.types import standard_artifacts
-from tfx.types import standard_component_specs
+from tfx.types import artifact_utils, standard_artifacts, standard_component_specs
 from tfx.utils import proto_utils
 
 
@@ -48,9 +47,9 @@ class ExecutorTest(absltest.TestCase):
 
       def check_results(results):
         # We use Python assertion here to avoid Beam serialization error.
-        assert (15000 == len(results)), 'Unexpected example count {}.'.format(
+        assert (len(results) == 15000), 'Unexpected example count {}.'.format(
             len(results))
-        assert (18 == len(results[0].features.feature)), 'Example not match.'
+        assert (len(results[0].features.feature) == 18), 'Example not match.'
 
       util.assert_that(examples, check_results)
 
@@ -66,7 +65,7 @@ class ExecutorTest(absltest.TestCase):
 
       def check_results(results):
         # We use Python assertion here to avoid Beam serialization error.
-        assert (3 == len(results)), 'Unexpected example count {}.'.format(
+        assert (len(results) == 3), 'Unexpected example count {}.'.format(
             len(results))
         for example in results:
           assert (example.features.feature['A'].HasField('int64_list')
@@ -92,7 +91,7 @@ class ExecutorTest(absltest.TestCase):
 
       def check_results(results):
         # We use Python assertion here to avoid Beam serialization error.
-        assert (3 == len(results)), 'Unexpected example count: {}.'.format(
+        assert (len(results) == 3), 'Unexpected example count: {}.'.format(
             len(results))
         instance = results[1]
         assert (instance.features.feature['B'].HasField('bytes_list')

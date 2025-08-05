@@ -16,26 +16,22 @@ import itertools
 from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, Type, cast
 
 from tfx import types
-from tfx.dsl.compiler import compiler_context
-from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.compiler import constants
-from tfx.dsl.compiler import node_contexts_compiler
-from tfx.dsl.compiler import node_execution_options_utils
-from tfx.dsl.compiler import node_inputs_compiler
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_driver
-from tfx.dsl.components.base import base_node
+from tfx.dsl.compiler import (
+  compiler_context,
+  compiler_utils,
+  constants,
+  node_contexts_compiler,
+  node_execution_options_utils,
+  node_inputs_compiler,
+)
+from tfx.dsl.components.base import base_component, base_driver, base_node
 from tfx.dsl.experimental.node_execution_options import utils as execution_options_utils
 from tfx.dsl.placeholder import placeholder
-from tfx.orchestration import data_types
-from tfx.orchestration import data_types_utils
-from tfx.orchestration import pipeline
-from tfx.proto.orchestration import executable_spec_pb2
-from tfx.proto.orchestration import pipeline_pb2
+from tfx.orchestration import data_types, data_types_utils, pipeline
+from tfx.proto.orchestration import executable_spec_pb2, pipeline_pb2
 from tfx.types import channel as channel_types
 from tfx.types import channel_utils
-from tfx.utils import deprecation_utils
-from tfx.utils import name_utils
+from tfx.utils import deprecation_utils, name_utils
 
 
 class Compiler:
@@ -182,6 +178,7 @@ class Compiler:
     """Compiles an individual TFX node into a PipelineNode proto.
 
     Args:
+    ----
       tfx_node: A TFX node.
       pipeline_ctx: Resources needed to compile the node.
       deployment_config: Intermediate deployment config to set. Will include
@@ -189,9 +186,11 @@ class Compiler:
       enable_cache: whether cache is enabled
 
     Raises:
+    ------
       TypeError: When supplied tfx_node has values of invalid type.
 
     Returns:
+    -------
       A PipelineNode proto that encodes information of the node.
     """
     node = pipeline_pb2.PipelineNode()
@@ -277,12 +276,14 @@ class Compiler:
     """Compiles a tfx pipeline into uDSL proto.
 
     Args:
+    ----
       tfx_pipeline: A TFX pipeline.
       parent_pipeline_ctx: Optional PipelineContext that includes info for
         the immediate parent pipeline. This is mainly used by a pipeline begin
         node get info for artifacts from its parent pipeline.
 
     Returns:
+    -------
       A Pipeline proto that encodes all necessary information of the pipeline.
     """
     # Prepare pipeline compiler context.

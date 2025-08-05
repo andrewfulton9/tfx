@@ -14,11 +14,11 @@
 """Define KubeflowDagRunner to run the pipeline using Kubeflow."""
 
 import os
+
 from absl import logging
 
 from tfx import v1 as tfx
-from tfx.experimental.templates.penguin.pipeline import configs
-from tfx.experimental.templates.penguin.pipeline import pipeline
+from tfx.experimental.templates.penguin.pipeline import configs, pipeline
 
 # TFX pipeline produces many output files and metadata. All output data will be
 # stored under this OUTPUT_DIR.
@@ -49,7 +49,6 @@ DATA_PATH = 'gs://{}/tfx-template/data/penguin/'.format(configs.GCS_BUCKET_NAME)
 
 def run():
   """Define a kubeflow pipeline."""
-
   # Metadata config. The defaults works work with the installation of
   # KF Pipelines using Kubeflow. If installing KF Pipelines using the
   # lightweight deployment option, you may need to override the defaults.

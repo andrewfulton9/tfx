@@ -24,15 +24,17 @@ from unittest import mock
 import jinja2
 import nbformat
 import tensorflow as tf
+
 from tfx import types
-from tfx.dsl.components.base import base_component
-from tfx.dsl.components.base import base_executor
-from tfx.dsl.components.base import executor_spec
-from tfx.orchestration.experimental.interactive import interactive_context
-from tfx.orchestration.experimental.interactive import standard_visualizations
-from tfx.orchestration.launcher.in_process_component_launcher import InProcessComponentLauncher
-from tfx.types import component_spec
-from tfx.types import standard_artifacts
+from tfx.dsl.components.base import base_component, base_executor, executor_spec
+from tfx.orchestration.experimental.interactive import (
+  interactive_context,
+  standard_visualizations,
+)
+from tfx.orchestration.launcher.in_process_component_launcher import (
+  InProcessComponentLauncher,
+)
+from tfx.types import component_spec, standard_artifacts
 from tfx.utils import telemetry_utils
 
 
@@ -156,7 +158,7 @@ class InteractiveContextTest(tf.test.TestCase):
                          export_filepath=export_filepath,
                          runner_type='beam')
 
-    with open(export_filepath, 'r') as exported_pipeline:
+    with open(export_filepath) as exported_pipeline:
       code = exported_pipeline.read()
       self.assertEqual(code, textwrap.dedent('''\
           foo = 1

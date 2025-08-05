@@ -13,9 +13,11 @@
 # limitations under the License.
 """Handler for local orchestrator."""
 
-from tfx.tools.cli.handler import beam_handler
-from tfx.tools.cli.handler import dag_runner_patcher
-from tfx.tools.cli.handler import local_dag_runner_patcher
+from tfx.tools.cli.handler import (
+  beam_handler,
+  dag_runner_patcher,
+  local_dag_runner_patcher,
+)
 
 
 class LocalHandler(beam_handler.BeamHandler):
@@ -24,4 +26,3 @@ class LocalHandler(beam_handler.BeamHandler):
 
   def _get_dag_runner_patcher(self) -> dag_runner_patcher.DagRunnerPatcher:
     return local_dag_runner_patcher.LocalDagRunnerPatcher()
-

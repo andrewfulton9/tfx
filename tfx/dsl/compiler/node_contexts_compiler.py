@@ -13,9 +13,7 @@
 # limitations under the License.
 """Compiles NodeContexts."""
 
-from tfx.dsl.compiler import compiler_context
-from tfx.dsl.compiler import compiler_utils
-from tfx.dsl.compiler import constants
+from tfx.dsl.compiler import compiler_context, compiler_utils, constants
 from tfx.orchestration import pipeline
 from tfx.proto.orchestration import pipeline_pb2
 
@@ -25,7 +23,6 @@ def compile_node_contexts(
     node_id: str,
 ) -> pipeline_pb2.NodeContexts:
   """Compiles the node contexts of a pipeline node."""
-
   if pipeline_ctx.pipeline_info is None:
     return pipeline_pb2.NodeContexts()
   if maybe_contexts := pipeline_ctx.node_context_protos_cache.get(node_id):
