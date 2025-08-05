@@ -65,13 +65,13 @@ class DockerfileTest(test_case_utils.TfxTest):
     dockerfile.Dockerfile(
         filename=generated_dockerfile_path,
         base_image='my_customized_image:latest')
-    with open(generated_dockerfile_path, 'r') as f:
+    with open(generated_dockerfile_path) as f:
       content = f.read()
       print(content)
     self.assertTrue(
         filecmp.cmp(
             os.path.join(self._testdata_dir, 'test_dockerfile_with_base'),
-            generated_dockerfile_path, shallow=False))
+            generated_dockerfile_path))
 
   def testDevVersionRequirement(self):
     with self._patchVersion('0.23.0.dev'):
